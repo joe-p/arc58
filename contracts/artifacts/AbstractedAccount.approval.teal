@@ -36,49 +36,151 @@ abi_route_createApplication:
 	return
 
 // createApplication(address)void
+//
+// Create an abstracted account for an EOA
+//
+// @param eoa The EOA to create the abstracted account for
 createApplication:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:8
+	// contracts/abstracted_account.algo.ts:22
 	// this.eoa.value = eoa
 	byte 0x656f61 // "eoa"
 	frame_dig -1 // eoa: Address
 	app_global_put
+
+	// contracts/abstracted_account.algo.ts:23
+	// this.eoaAuthAddr.value = eoa.authAddr === Address.zeroAddress ? eoa : eoa.authAddr
+	byte 0x656f614175746841646472 // "eoaAuthAddr"
+	frame_dig -1 // eoa: Address
+	acct_params_get AcctAuthAddr
+	assert
+	global ZeroAddress
+	==
+	bz ternary0_false
+	frame_dig -1 // eoa: Address
+	b ternary0_end
+
+ternary0_false:
+	frame_dig -1 // eoa: Address
+	acct_params_get AcctAuthAddr
+	assert
+
+ternary0_end:
+	app_global_put
+	retsub
+
+abi_route_saveAuthAddr:
+	// execute saveAuthAddr()void
+	callsub saveAuthAddr
+	int 1
+	return
+
+// saveAuthAddr()void
+//
+// Save the auth addr of the EOA in state so we can rekey back to it later
+saveAuthAddr:
+	proto 0 0
+
+	// contracts/abstracted_account.algo.ts:30
+	// this.eoaAuthAddr.value = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr
+	byte 0x656f614175746841646472 // "eoaAuthAddr"
+	byte 0x656f61 // "eoa"
+	app_global_get
+	acct_params_get AcctAuthAddr
+	assert
+	global ZeroAddress
+	==
+	bz ternary1_false
+	byte 0x656f61 // "eoa"
+	app_global_get
+	b ternary1_end
+
+ternary1_false:
+	byte 0x656f61 // "eoa"
+	app_global_get
+	acct_params_get AcctAuthAddr
+	assert
+
+ternary1_end:
+	app_global_put
 	retsub
 
 abi_route_rekey:
-	// execute rekey()void
+	// flash: bool
+	txna ApplicationArgs 1
+	dup
+	len
+	int 1
+	==
+	assert
+	int 0
+	getbit
+
+	// saveAuthAddrCall: appl
+	txn GroupIndex
+	int 1
+	-
+	dup
+	gtxns TypeEnum
+	int appl
+	==
+	assert
+
+	// execute rekey(bool,appl)void
 	callsub rekey
 	int 1
 	return
 
-// rekey()void
+// rekey(bool,appl)void
+//
+// Rekey this contract account to the EOA
+//
+// @param saveAuthAddrCall Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state
+// @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn as the call to saveAuthAddr()
 rekey:
-	proto 0 0
+	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:12
+	// contracts/abstracted_account.algo.ts:40
+	// verifyAppCallTxn(saveAuthAddrCall, { applicationID: this.app })
+	// verify applicationID
+	frame_dig -1 // saveAuthAddrCall: AppCallTxn
+	gtxns ApplicationID
+	txna Applications 0
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:41
+	// assert(saveAuthAddrCall.applicationArgs[0] === method('saveAuthAddr()void'))
+	frame_dig -1 // saveAuthAddrCall: AppCallTxn
+	gtxns ApplicationArgs 0
+	method "saveAuthAddr()void"
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:43
 	// sendPayment({
 	//       receiver: this.eoa.value,
-	//       rekeyTo: this.eoa.value,
+	//       rekeyTo: this.eoaAuthAddr.value,
 	//       note: 'rekeying to EOA',
 	//     })
 	itxn_begin
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:13
+	// contracts/abstracted_account.algo.ts:44
 	// receiver: this.eoa.value
 	byte 0x656f61 // "eoa"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:14
-	// rekeyTo: this.eoa.value
-	byte 0x656f61 // "eoa"
+	// contracts/abstracted_account.algo.ts:45
+	// rekeyTo: this.eoaAuthAddr.value
+	byte 0x656f614175746841646472 // "eoaAuthAddr"
 	app_global_get
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:15
+	// contracts/abstracted_account.algo.ts:46
 	// note: 'rekeying to EOA'
 	byte 0x72656b6579696e6720746f20454f41 // "rekeying to EOA"
 	itxn_field Note
@@ -89,17 +191,48 @@ rekey:
 
 	// Submit inner transaction
 	itxn_submit
-	retsub
 
-abi_route_atomicRekey:
-	// execute atomicRekey()void
-	callsub atomicRekey
+	// if0_condition
+	// contracts/abstracted_account.algo.ts:49
+	// flash || this.forceFlash.value
+	frame_dig -2 // flash: boolean
+	dup
+	bnz skip_or0
+	byte 0x666f726365466c617368 // "forceFlash"
+	app_global_get
+	int 0
+	getbit
+	||
+
+skip_or0:
+	bz if0_end
+
+	// if0_consequent
+	// contracts/abstracted_account.algo.ts:50
+	// verifyTxn(this.txnGroup[this.txnGroup.length - 1], {
+	//         sender: this.app.address,
+	//         rekeyTo: this.app.address,
+	//       })
+	global GroupSize
 	int 1
-	return
+	-
+	store 248 // verifyTxn index
 
-// atomicRekey()void
-atomicRekey:
-	proto 0 0
+	// verify sender
+	load 248 // verifyTxn index
+	gtxns Sender
+	global CurrentApplicationAddress
+	==
+	assert
+
+	// verify rekeyTo
+	load 248 // verifyTxn index
+	gtxns RekeyTo
+	global CurrentApplicationAddress
+	==
+	assert
+
+if0_end:
 	retsub
 
 abi_route_updateApplication:
@@ -109,10 +242,13 @@ abi_route_updateApplication:
 	return
 
 // updateApplication()void
+//
+// Update the application, presumably to add more functionality to the abstracted account
+// WARNING: A bad update can irreversibly break the abstracted account and any funds inside of it
 updateApplication:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:22
+	// contracts/abstracted_account.algo.ts:62
 	// verifyAppCallTxn(this.txn, { sender: this.eoa.value })
 	// verify sender
 	txn Sender
@@ -129,10 +265,10 @@ create_NoOp:
 	err
 
 call_NoOp:
-	method "rekey()void"
-	method "atomicRekey()void"
+	method "saveAuthAddr()void"
+	method "rekey(appl,bool)void"
 	txna ApplicationArgs 0
-	match abi_route_rekey abi_route_atomicRekey
+	match abi_route_saveAuthAddr abi_route_rekey
 	err
 
 call_UpdateApplication:

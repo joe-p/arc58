@@ -32,12 +32,12 @@ export const APP_SPEC: AppSpec = {
         "no_op": "CREATE"
       }
     },
-    "rekey()void": {
+    "saveAuthAddr()void": {
       "call_config": {
         "no_op": "CALL"
       }
     },
-    "atomicRekey()void": {
+    "rekey(appl,bool)void": {
       "call_config": {
         "no_op": "CALL"
       }
@@ -65,6 +65,14 @@ export const APP_SPEC: AppSpec = {
         "eoa": {
           "type": "bytes",
           "key": "eoa"
+        },
+        "eoaAuthAddr": {
+          "type": "bytes",
+          "key": "eoaAuthAddr"
+        },
+        "forceFlash": {
+          "type": "bytes",
+          "key": "forceFlash"
         }
       },
       "reserved": {}
@@ -72,7 +80,7 @@ export const APP_SPEC: AppSpec = {
   },
   "state": {
     "global": {
-      "num_byte_slices": 1,
+      "num_byte_slices": 3,
       "num_uints": 0
     },
     "local": {
@@ -81,7 +89,7 @@ export const APP_SPEC: AppSpec = {
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDkKCi8vIFRoaXMgVEVBTCB3YXMgZ2VuZXJhdGVkIGJ5IFRFQUxTY3JpcHQgdjAuNjguMAovLyBodHRwczovL2dpdGh1Yi5jb20vYWxnb3JhbmRmb3VuZGF0aW9uL1RFQUxTY3JpcHQKCi8vIFRoaXMgY29udHJhY3QgaXMgY29tcGxpYW50IHdpdGggYW5kL29yIGltcGxlbWVudHMgdGhlIGZvbGxvd2luZyBBUkNzOiBbIEFSQzQgXQoKLy8gVGhlIGZvbGxvd2luZyB0ZW4gbGluZXMgb2YgVEVBTCBoYW5kbGUgaW5pdGlhbCBwcm9ncmFtIGZsb3cKLy8gVGhpcyBwYXR0ZXJuIGlzIHVzZWQgdG8gbWFrZSBpdCBlYXN5IGZvciBhbnlvbmUgdG8gcGFyc2UgdGhlIHN0YXJ0IG9mIHRoZSBwcm9ncmFtIGFuZCBkZXRlcm1pbmUgaWYgYSBzcGVjaWZpYyBhY3Rpb24gaXMgYWxsb3dlZAovLyBIZXJlLCBhY3Rpb24gcmVmZXJzIHRvIHRoZSBPbkNvbXBsZXRlIGluIGNvbWJpbmF0aW9uIHdpdGggd2hldGhlciB0aGUgYXBwIGlzIGJlaW5nIGNyZWF0ZWQgb3IgY2FsbGVkCi8vIEV2ZXJ5IHBvc3NpYmxlIGFjdGlvbiBmb3IgdGhpcyBjb250cmFjdCBpcyByZXByZXNlbnRlZCBpbiB0aGUgc3dpdGNoIHN0YXRlbWVudAovLyBJZiB0aGUgYWN0aW9uIGlzIG5vdCBpbXBsbWVudGVkIGluIHRoZSBjb250cmFjdCwgaXRzIHJlc3BlY3RpdmUgYnJhbmNoIHdpbGwgYmUgIk5PVF9JTVBMRU1FTlRFRCIgd2hpY2gganVzdCBjb250YWlucyAiZXJyIgp0eG4gQXBwbGljYXRpb25JRAohCmludCA2CioKdHhuIE9uQ29tcGxldGlvbgorCnN3aXRjaCBjYWxsX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY2FsbF9VcGRhdGVBcHBsaWNhdGlvbiBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBlb2E6IGFkZHJlc3MKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWR1cAoJbGVuCglpbnQgMzIKCT09Cglhc3NlcnQKCgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKGFkZHJlc3Mpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50IDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oYWRkcmVzcyl2b2lkCmNyZWF0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjgKCS8vIHRoaXMuZW9hLnZhbHVlID0gZW9hCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglmcmFtZV9kaWcgLTEgLy8gZW9hOiBBZGRyZXNzCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfcmVrZXk6CgkvLyBleGVjdXRlIHJla2V5KCl2b2lkCgljYWxsc3ViIHJla2V5CglpbnQgMQoJcmV0dXJuCgovLyByZWtleSgpdm9pZApyZWtleToKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMgoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlLAoJLy8gICAgICAgcmVrZXlUbzogdGhpcy5lb2EudmFsdWUsCgkvLyAgICAgICBub3RlOiAncmVrZXlpbmcgdG8gRU9BJywKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMwoJLy8gcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxNAoJLy8gcmVrZXlUbzogdGhpcy5lb2EudmFsdWUKCWJ5dGUgMHg2NTZmNjEgLy8gImVvYSIKCWFwcF9nbG9iYWxfZ2V0CglpdHhuX2ZpZWxkIFJla2V5VG8KCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MTUKCS8vIG5vdGU6ICdyZWtleWluZyB0byBFT0EnCglieXRlIDB4NzI2NTZiNjU3OTY5NmU2NzIwNzQ2ZjIwNDU0ZjQxIC8vICJyZWtleWluZyB0byBFT0EiCglpdHhuX2ZpZWxkIE5vdGUKCgkvLyBGZWUgZmllbGQgbm90IHNldCwgZGVmYXVsdGluZyB0byAwCglpbnQgMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglyZXRzdWIKCmFiaV9yb3V0ZV9hdG9taWNSZWtleToKCS8vIGV4ZWN1dGUgYXRvbWljUmVrZXkoKXZvaWQKCWNhbGxzdWIgYXRvbWljUmVrZXkKCWludCAxCglyZXR1cm4KCi8vIGF0b21pY1Jla2V5KCl2b2lkCmF0b21pY1Jla2V5OgoJcHJvdG8gMCAwCglyZXRzdWIKCmFiaV9yb3V0ZV91cGRhdGVBcHBsaWNhdGlvbjoKCS8vIGV4ZWN1dGUgdXBkYXRlQXBwbGljYXRpb24oKXZvaWQKCWNhbGxzdWIgdXBkYXRlQXBwbGljYXRpb24KCWludCAxCglyZXR1cm4KCi8vIHVwZGF0ZUFwcGxpY2F0aW9uKCl2b2lkCnVwZGF0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjIyCgkvLyB2ZXJpZnlBcHBDYWxsVHhuKHRoaXMudHhuLCB7IHNlbmRlcjogdGhpcy5lb2EudmFsdWUgfSkKCS8vIHZlcmlmeSBzZW5kZXIKCXR4biBTZW5kZXIKCWJ5dGUgMHg2NTZmNjEgLy8gImVvYSIKCWFwcF9nbG9iYWxfZ2V0Cgk9PQoJYXNzZXJ0CglyZXRzdWIKCmNyZWF0ZV9Ob09wOgoJbWV0aG9kICJjcmVhdGVBcHBsaWNhdGlvbihhZGRyZXNzKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWVycgoKY2FsbF9Ob09wOgoJbWV0aG9kICJyZWtleSgpdm9pZCIKCW1ldGhvZCAiYXRvbWljUmVrZXkoKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfcmVrZXkgYWJpX3JvdXRlX2F0b21pY1Jla2V5CgllcnIKCmNhbGxfVXBkYXRlQXBwbGljYXRpb246CgltZXRob2QgInVwZGF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX3VwZGF0ZUFwcGxpY2F0aW9uCgllcnI=",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDkKCi8vIFRoaXMgVEVBTCB3YXMgZ2VuZXJhdGVkIGJ5IFRFQUxTY3JpcHQgdjAuNjguMAovLyBodHRwczovL2dpdGh1Yi5jb20vYWxnb3JhbmRmb3VuZGF0aW9uL1RFQUxTY3JpcHQKCi8vIFRoaXMgY29udHJhY3QgaXMgY29tcGxpYW50IHdpdGggYW5kL29yIGltcGxlbWVudHMgdGhlIGZvbGxvd2luZyBBUkNzOiBbIEFSQzQgXQoKLy8gVGhlIGZvbGxvd2luZyB0ZW4gbGluZXMgb2YgVEVBTCBoYW5kbGUgaW5pdGlhbCBwcm9ncmFtIGZsb3cKLy8gVGhpcyBwYXR0ZXJuIGlzIHVzZWQgdG8gbWFrZSBpdCBlYXN5IGZvciBhbnlvbmUgdG8gcGFyc2UgdGhlIHN0YXJ0IG9mIHRoZSBwcm9ncmFtIGFuZCBkZXRlcm1pbmUgaWYgYSBzcGVjaWZpYyBhY3Rpb24gaXMgYWxsb3dlZAovLyBIZXJlLCBhY3Rpb24gcmVmZXJzIHRvIHRoZSBPbkNvbXBsZXRlIGluIGNvbWJpbmF0aW9uIHdpdGggd2hldGhlciB0aGUgYXBwIGlzIGJlaW5nIGNyZWF0ZWQgb3IgY2FsbGVkCi8vIEV2ZXJ5IHBvc3NpYmxlIGFjdGlvbiBmb3IgdGhpcyBjb250cmFjdCBpcyByZXByZXNlbnRlZCBpbiB0aGUgc3dpdGNoIHN0YXRlbWVudAovLyBJZiB0aGUgYWN0aW9uIGlzIG5vdCBpbXBsbWVudGVkIGluIHRoZSBjb250cmFjdCwgaXRzIHJlc3BlY3RpdmUgYnJhbmNoIHdpbGwgYmUgIk5PVF9JTVBMRU1FTlRFRCIgd2hpY2gganVzdCBjb250YWlucyAiZXJyIgp0eG4gQXBwbGljYXRpb25JRAohCmludCA2CioKdHhuIE9uQ29tcGxldGlvbgorCnN3aXRjaCBjYWxsX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY2FsbF9VcGRhdGVBcHBsaWNhdGlvbiBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBlb2E6IGFkZHJlc3MKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWR1cAoJbGVuCglpbnQgMzIKCT09Cglhc3NlcnQKCgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKGFkZHJlc3Mpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50IDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oYWRkcmVzcyl2b2lkCi8vCi8vIENyZWF0ZSBhbiBhYnN0cmFjdGVkIGFjY291bnQgZm9yIGFuIEVPQQovLwovLyBAcGFyYW0gZW9hIFRoZSBFT0EgdG8gY3JlYXRlIHRoZSBhYnN0cmFjdGVkIGFjY291bnQgZm9yCmNyZWF0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjIyCgkvLyB0aGlzLmVvYS52YWx1ZSA9IGVvYQoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJZnJhbWVfZGlnIC0xIC8vIGVvYTogQWRkcmVzcwoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MjMKCS8vIHRoaXMuZW9hQXV0aEFkZHIudmFsdWUgPSBlb2EuYXV0aEFkZHIgPT09IEFkZHJlc3MuemVyb0FkZHJlc3MgPyBlb2EgOiBlb2EuYXV0aEFkZHIKCWJ5dGUgMHg2NTZmNjE0MTc1NzQ2ODQxNjQ2NDcyIC8vICJlb2FBdXRoQWRkciIKCWZyYW1lX2RpZyAtMSAvLyBlb2E6IEFkZHJlc3MKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYnogdGVybmFyeTBfZmFsc2UKCWZyYW1lX2RpZyAtMSAvLyBlb2E6IEFkZHJlc3MKCWIgdGVybmFyeTBfZW5kCgp0ZXJuYXJ5MF9mYWxzZToKCWZyYW1lX2RpZyAtMSAvLyBlb2E6IEFkZHJlc3MKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoKdGVybmFyeTBfZW5kOgoJYXBwX2dsb2JhbF9wdXQKCXJldHN1YgoKYWJpX3JvdXRlX3NhdmVBdXRoQWRkcjoKCS8vIGV4ZWN1dGUgc2F2ZUF1dGhBZGRyKCl2b2lkCgljYWxsc3ViIHNhdmVBdXRoQWRkcgoJaW50IDEKCXJldHVybgoKLy8gc2F2ZUF1dGhBZGRyKCl2b2lkCi8vCi8vIFNhdmUgdGhlIGF1dGggYWRkciBvZiB0aGUgRU9BIGluIHN0YXRlIHNvIHdlIGNhbiByZWtleSBiYWNrIHRvIGl0IGxhdGVyCnNhdmVBdXRoQWRkcjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czozMAoJLy8gdGhpcy5lb2FBdXRoQWRkci52YWx1ZSA9IHRoaXMuZW9hLnZhbHVlLmF1dGhBZGRyID09PSBBZGRyZXNzLnplcm9BZGRyZXNzID8gdGhpcy5lb2EudmFsdWUgOiB0aGlzLmVvYS52YWx1ZS5hdXRoQWRkcgoJYnl0ZSAweDY1NmY2MTQxNzU3NDY4NDE2NDY0NzIgLy8gImVvYUF1dGhBZGRyIgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYnogdGVybmFyeTFfZmFsc2UKCWJ5dGUgMHg2NTZmNjEgLy8gImVvYSIKCWFwcF9nbG9iYWxfZ2V0CgliIHRlcm5hcnkxX2VuZAoKdGVybmFyeTFfZmFsc2U6CglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJYWNjdF9wYXJhbXNfZ2V0IEFjY3RBdXRoQWRkcgoJYXNzZXJ0Cgp0ZXJuYXJ5MV9lbmQ6CglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfcmVrZXk6CgkvLyBmbGFzaDogYm9vbAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJZHVwCglsZW4KCWludCAxCgk9PQoJYXNzZXJ0CglpbnQgMAoJZ2V0Yml0CgoJLy8gc2F2ZUF1dGhBZGRyQ2FsbDogYXBwbAoJdHhuIEdyb3VwSW5kZXgKCWludCAxCgktCglkdXAKCWd0eG5zIFR5cGVFbnVtCglpbnQgYXBwbAoJPT0KCWFzc2VydAoKCS8vIGV4ZWN1dGUgcmVrZXkoYm9vbCxhcHBsKXZvaWQKCWNhbGxzdWIgcmVrZXkKCWludCAxCglyZXR1cm4KCi8vIHJla2V5KGJvb2wsYXBwbCl2b2lkCi8vCi8vIFJla2V5IHRoaXMgY29udHJhY3QgYWNjb3VudCB0byB0aGUgRU9BCi8vCi8vIEBwYXJhbSBzYXZlQXV0aEFkZHJDYWxsIENhbGwgdG8gc2F2ZUF1dGhBZGRyKCkgdG8gZW5zdXJlIHRoZSBFT0EncyBhdXRoIGFkZHIgaXMgc2F2ZWQgaW4gc3RhdGUKLy8gQHBhcmFtIGZsYXNoIFdoZXRoZXIgb3Igbm90IHRoaXMgc2hvdWxkIGJlIGEgZmxhc2ggcmVrZXkuIElmIHRydWUsIHRoZSByZWtleSBiYWNrIHRvIHRoaXMgY29udHJhY3QgbXVzdCBkb25lIGluIHRoZSBzYW1lIHR4biBhcyB0aGUgY2FsbCB0byBzYXZlQXV0aEFkZHIoKQpyZWtleToKCXByb3RvIDIgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo0MAoJLy8gdmVyaWZ5QXBwQ2FsbFR4bihzYXZlQXV0aEFkZHJDYWxsLCB7IGFwcGxpY2F0aW9uSUQ6IHRoaXMuYXBwIH0pCgkvLyB2ZXJpZnkgYXBwbGljYXRpb25JRAoJZnJhbWVfZGlnIC0xIC8vIHNhdmVBdXRoQWRkckNhbGw6IEFwcENhbGxUeG4KCWd0eG5zIEFwcGxpY2F0aW9uSUQKCXR4bmEgQXBwbGljYXRpb25zIDAKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NDEKCS8vIGFzc2VydChzYXZlQXV0aEFkZHJDYWxsLmFwcGxpY2F0aW9uQXJnc1swXSA9PT0gbWV0aG9kKCdzYXZlQXV0aEFkZHIoKXZvaWQnKSkKCWZyYW1lX2RpZyAtMSAvLyBzYXZlQXV0aEFkZHJDYWxsOiBBcHBDYWxsVHhuCglndHhucyBBcHBsaWNhdGlvbkFyZ3MgMAoJbWV0aG9kICJzYXZlQXV0aEFkZHIoKXZvaWQiCgk9PQoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjQzCgkvLyBzZW5kUGF5bWVudCh7CgkvLyAgICAgICByZWNlaXZlcjogdGhpcy5lb2EudmFsdWUsCgkvLyAgICAgICByZWtleVRvOiB0aGlzLmVvYUF1dGhBZGRyLnZhbHVlLAoJLy8gICAgICAgbm90ZTogJ3Jla2V5aW5nIHRvIEVPQScsCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludCBwYXkKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NDQKCS8vIHJlY2VpdmVyOiB0aGlzLmVvYS52YWx1ZQoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWl0eG5fZmllbGQgUmVjZWl2ZXIKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NDUKCS8vIHJla2V5VG86IHRoaXMuZW9hQXV0aEFkZHIudmFsdWUKCWJ5dGUgMHg2NTZmNjE0MTc1NzQ2ODQxNjQ2NDcyIC8vICJlb2FBdXRoQWRkciIKCWFwcF9nbG9iYWxfZ2V0CglpdHhuX2ZpZWxkIFJla2V5VG8KCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NDYKCS8vIG5vdGU6ICdyZWtleWluZyB0byBFT0EnCglieXRlIDB4NzI2NTZiNjU3OTY5NmU2NzIwNzQ2ZjIwNDU0ZjQxIC8vICJyZWtleWluZyB0byBFT0EiCglpdHhuX2ZpZWxkIE5vdGUKCgkvLyBGZWUgZmllbGQgbm90IHNldCwgZGVmYXVsdGluZyB0byAwCglpbnQgMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CgoJLy8gaWYwX2NvbmRpdGlvbgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjQ5CgkvLyBmbGFzaCB8fCB0aGlzLmZvcmNlRmxhc2gudmFsdWUKCWZyYW1lX2RpZyAtMiAvLyBmbGFzaDogYm9vbGVhbgoJZHVwCglibnogc2tpcF9vcjAKCWJ5dGUgMHg2NjZmNzI2MzY1NDY2YzYxNzM2OCAvLyAiZm9yY2VGbGFzaCIKCWFwcF9nbG9iYWxfZ2V0CglpbnQgMAoJZ2V0Yml0Cgl8fAoKc2tpcF9vcjA6CglieiBpZjBfZW5kCgoJLy8gaWYwX2NvbnNlcXVlbnQKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo1MAoJLy8gdmVyaWZ5VHhuKHRoaXMudHhuR3JvdXBbdGhpcy50eG5Hcm91cC5sZW5ndGggLSAxXSwgewoJLy8gICAgICAgICBzZW5kZXI6IHRoaXMuYXBwLmFkZHJlc3MsCgkvLyAgICAgICAgIHJla2V5VG86IHRoaXMuYXBwLmFkZHJlc3MsCgkvLyAgICAgICB9KQoJZ2xvYmFsIEdyb3VwU2l6ZQoJaW50IDEKCS0KCXN0b3JlIDI0OCAvLyB2ZXJpZnlUeG4gaW5kZXgKCgkvLyB2ZXJpZnkgc2VuZGVyCglsb2FkIDI0OCAvLyB2ZXJpZnlUeG4gaW5kZXgKCWd0eG5zIFNlbmRlcgoJZ2xvYmFsIEN1cnJlbnRBcHBsaWNhdGlvbkFkZHJlc3MKCT09Cglhc3NlcnQKCgkvLyB2ZXJpZnkgcmVrZXlUbwoJbG9hZCAyNDggLy8gdmVyaWZ5VHhuIGluZGV4CglndHhucyBSZWtleVRvCglnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uQWRkcmVzcwoJPT0KCWFzc2VydAoKaWYwX2VuZDoKCXJldHN1YgoKYWJpX3JvdXRlX3VwZGF0ZUFwcGxpY2F0aW9uOgoJLy8gZXhlY3V0ZSB1cGRhdGVBcHBsaWNhdGlvbigpdm9pZAoJY2FsbHN1YiB1cGRhdGVBcHBsaWNhdGlvbgoJaW50IDEKCXJldHVybgoKLy8gdXBkYXRlQXBwbGljYXRpb24oKXZvaWQKLy8KLy8gVXBkYXRlIHRoZSBhcHBsaWNhdGlvbiwgcHJlc3VtYWJseSB0byBhZGQgbW9yZSBmdW5jdGlvbmFsaXR5IHRvIHRoZSBhYnN0cmFjdGVkIGFjY291bnQKLy8gV0FSTklORzogQSBiYWQgdXBkYXRlIGNhbiBpcnJldmVyc2libHkgYnJlYWsgdGhlIGFic3RyYWN0ZWQgYWNjb3VudCBhbmQgYW55IGZ1bmRzIGluc2lkZSBvZiBpdAp1cGRhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo2MgoJLy8gdmVyaWZ5QXBwQ2FsbFR4bih0aGlzLnR4biwgeyBzZW5kZXI6IHRoaXMuZW9hLnZhbHVlIH0pCgkvLyB2ZXJpZnkgc2VuZGVyCgl0eG4gU2VuZGVyCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJPT0KCWFzc2VydAoJcmV0c3ViCgpjcmVhdGVfTm9PcDoKCW1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oYWRkcmVzcyl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgllcnIKCmNhbGxfTm9PcDoKCW1ldGhvZCAic2F2ZUF1dGhBZGRyKCl2b2lkIgoJbWV0aG9kICJyZWtleShhcHBsLGJvb2wpdm9pZCIKCXR4bmEgQXBwbGljYXRpb25BcmdzIDAKCW1hdGNoIGFiaV9yb3V0ZV9zYXZlQXV0aEFkZHIgYWJpX3JvdXRlX3Jla2V5CgllcnIKCmNhbGxfVXBkYXRlQXBwbGljYXRpb246CgltZXRob2QgInVwZGF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX3VwZGF0ZUFwcGxpY2F0aW9uCgllcnI=",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDk="
   },
   "contract": {
@@ -90,10 +98,12 @@ export const APP_SPEC: AppSpec = {
     "methods": [
       {
         "name": "createApplication",
+        "desc": "Create an abstracted account for an EOA",
         "args": [
           {
             "name": "eoa",
-            "type": "address"
+            "type": "address",
+            "desc": "The EOA to create the abstracted account for"
           }
         ],
         "returns": {
@@ -101,21 +111,35 @@ export const APP_SPEC: AppSpec = {
         }
       },
       {
-        "name": "rekey",
+        "name": "saveAuthAddr",
+        "desc": "Save the auth addr of the EOA in state so we can rekey back to it later",
         "args": [],
         "returns": {
           "type": "void"
         }
       },
       {
-        "name": "atomicRekey",
-        "args": [],
+        "name": "rekey",
+        "desc": "Rekey this contract account to the EOA",
+        "args": [
+          {
+            "name": "saveAuthAddrCall",
+            "type": "appl",
+            "desc": "Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state"
+          },
+          {
+            "name": "flash",
+            "type": "bool",
+            "desc": "Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn as the call to saveAuthAddr()"
+          }
+        ],
         "returns": {
           "type": "void"
         }
       },
       {
         "name": "updateApplication",
+        "desc": "Update the application, presumably to add more functionality to the abstracted accountWARNING: A bad update can irreversibly break the abstracted account and any funds inside of it",
         "args": [],
         "returns": {
           "type": "void"
@@ -182,21 +206,32 @@ export type AbstractedAccount = {
   methods:
     & Record<'createApplication(address)void' | 'createApplication', {
       argsObj: {
+        /**
+         * The EOA to create the abstracted account for
+         */
         eoa: string
       }
       argsTuple: [eoa: string]
       returns: void
     }>
-    & Record<'rekey()void' | 'rekey', {
+    & Record<'saveAuthAddr()void' | 'saveAuthAddr', {
       argsObj: {
       }
       argsTuple: []
       returns: void
     }>
-    & Record<'atomicRekey()void' | 'atomicRekey', {
+    & Record<'rekey(appl,bool)void' | 'rekey', {
       argsObj: {
+        /**
+         * Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state
+         */
+        saveAuthAddrCall: TransactionToSign | Transaction | Promise<SendTransactionResult>
+        /**
+         * Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn as the call to saveAuthAddr()
+         */
+        flash: boolean
       }
-      argsTuple: []
+      argsTuple: [saveAuthAddrCall: TransactionToSign | Transaction | Promise<SendTransactionResult>, flash: boolean]
       returns: void
     }>
     & Record<'updateApplication()void' | 'updateApplication', {
@@ -211,6 +246,8 @@ export type AbstractedAccount = {
   state: {
     global: {
       'eoa'?: BinaryState
+      'eoaAuthAddr'?: BinaryState
+      'forceFlash'?: BinaryState
     }
   }
 }
@@ -321,30 +358,34 @@ export abstract class AbstractedAccountCallFactory {
   }
 
   /**
-   * Constructs a no op call for the rekey()void ABI method
+   * Constructs a no op call for the saveAuthAddr()void ABI method
+   *
+   * Save the auth addr of the EOA in state so we can rekey back to it later
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static rekey(args: MethodArgs<'rekey()void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static saveAuthAddr(args: MethodArgs<'saveAuthAddr()void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'rekey()void' as const,
+      method: 'saveAuthAddr()void' as const,
       methodArgs: Array.isArray(args) ? args : [],
       ...params,
     }
   }
   /**
-   * Constructs a no op call for the atomicRekey()void ABI method
+   * Constructs a no op call for the rekey(appl,bool)void ABI method
+   *
+   * Rekey this contract account to the EOA
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static atomicRekey(args: MethodArgs<'atomicRekey()void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static rekey(args: MethodArgs<'rekey(appl,bool)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'atomicRekey()void' as const,
-      methodArgs: Array.isArray(args) ? args : [],
+      method: 'rekey(appl,bool)void' as const,
+      methodArgs: Array.isArray(args) ? args : [args.saveAuthAddrCall, args.flash],
       ...params,
     }
   }
@@ -469,25 +510,29 @@ export class AbstractedAccountClient {
   }
 
   /**
-   * Calls the rekey()void ABI method.
+   * Calls the saveAuthAddr()void ABI method.
+   *
+   * Save the auth addr of the EOA in state so we can rekey back to it later
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public rekey(args: MethodArgs<'rekey()void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(AbstractedAccountCallFactory.rekey(args, params))
+  public saveAuthAddr(args: MethodArgs<'saveAuthAddr()void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+    return this.call(AbstractedAccountCallFactory.saveAuthAddr(args, params))
   }
 
   /**
-   * Calls the atomicRekey()void ABI method.
+   * Calls the rekey(appl,bool)void ABI method.
+   *
+   * Rekey this contract account to the EOA
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public atomicRekey(args: MethodArgs<'atomicRekey()void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(AbstractedAccountCallFactory.atomicRekey(args, params))
+  public rekey(args: MethodArgs<'rekey(appl,bool)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+    return this.call(AbstractedAccountCallFactory.rekey(args, params))
   }
 
   /**
@@ -543,6 +588,12 @@ export class AbstractedAccountClient {
       get eoa() {
         return AbstractedAccountClient.getBinaryState(state, 'eoa')
       },
+      get eoaAuthAddr() {
+        return AbstractedAccountClient.getBinaryState(state, 'eoaAuthAddr')
+      },
+      get forceFlash() {
+        return AbstractedAccountClient.getBinaryState(state, 'forceFlash')
+      },
     }
   }
 
@@ -552,13 +603,13 @@ export class AbstractedAccountClient {
     let promiseChain:Promise<unknown> = Promise.resolve()
     const resultMappers: Array<undefined | ((x: any) => any)> = []
     return {
-      rekey(args: MethodArgs<'rekey()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
-        promiseChain = promiseChain.then(() => client.rekey(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
+      saveAuthAddr(args: MethodArgs<'saveAuthAddr()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+        promiseChain = promiseChain.then(() => client.saveAuthAddr(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
-      atomicRekey(args: MethodArgs<'atomicRekey()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
-        promiseChain = promiseChain.then(() => client.atomicRekey(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
+      rekey(args: MethodArgs<'rekey(appl,bool)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+        promiseChain = promiseChain.then(() => client.rekey(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
@@ -603,22 +654,26 @@ export class AbstractedAccountClient {
 }
 export type AbstractedAccountComposer<TReturns extends [...any[]] = []> = {
   /**
-   * Calls the rekey()void ABI method.
+   * Calls the saveAuthAddr()void ABI method.
+   *
+   * Save the auth addr of the EOA in state so we can rekey back to it later
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  rekey(args: MethodArgs<'rekey()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekey()void'>]>
+  saveAuthAddr(args: MethodArgs<'saveAuthAddr()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'saveAuthAddr()void'>]>
 
   /**
-   * Calls the atomicRekey()void ABI method.
+   * Calls the rekey(appl,bool)void ABI method.
+   *
+   * Rekey this contract account to the EOA
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  atomicRekey(args: MethodArgs<'atomicRekey()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'atomicRekey()void'>]>
+  rekey(args: MethodArgs<'rekey(appl,bool)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekey(appl,bool)void'>]>
 
   /**
    * Gets available update methods
