@@ -1,6 +1,8 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
 export class AbstractedAccount extends Contract {
+  programVersion = 10;
+
   /** The EOA (Externally Owned Account) */
   eoa = GlobalStateKey<Address>();
 

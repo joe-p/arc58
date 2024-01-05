@@ -1,0 +1,71 @@
+{
+  "name": "AbstractedOptIn",
+  "desc": "",
+  "methods": [
+    {
+      "name": "createApplication",
+      "desc": "Create an abstracted account for an EOA",
+      "args": [
+        {
+          "name": "eoa",
+          "type": "address",
+          "desc": "The EOA to create the abstracted account for"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "saveAuthAddr",
+      "desc": "Save the auth addr of the EOA in state so we can rekey back to it later",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "rekey",
+      "desc": "Rekey this contract account to the EOA",
+      "args": [
+        {
+          "name": "saveAuthAddrCall",
+          "type": "appl",
+          "desc": "Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state"
+        },
+        {
+          "name": "flash",
+          "type": "bool",
+          "desc": "Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn as the call to saveAuthAddr()"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "updateApplication",
+      "desc": "Update the application, presumably to add more functionality to the abstracted accountWARNING: A bad update can irreversibly break the abstracted account and any funds inside of it",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "optInToAsset",
+      "args": [
+        {
+          "name": "asset",
+          "type": "asset"
+        },
+        {
+          "name": "mbrPayment",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    }
+  ]
+}

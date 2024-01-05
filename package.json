@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "generate-client": "algokitgen generate -a contracts/artifacts/AbstractedAccount.arc32.json -o contracts/clients/AbstractedAccountClient.ts",
-    "compile-contract": "tealscript contracts/abstracted_account.algo.ts contracts/artifacts",
-    "generate-components": "algokit-generate-component contracts/artifacts/AbstractedAccount.arc32.json contracts/artifacts/components",
+    "generate-client": "algokit generate client contracts/artifacts/ --language typescript  --output contracts/clients/{contract_name}Client.ts",
+    "compile-contract": "tealscript contracts/*.algo.ts contracts/artifacts",
+    "generate-components": "algokit-generate-component contracts/artifacts/*.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contract && npm run generate-client",
     "test": "npm run build && jest",
     "lint": "eslint . --ext .ts",

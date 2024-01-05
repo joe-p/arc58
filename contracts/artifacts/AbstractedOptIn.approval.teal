@@ -258,6 +258,86 @@ updateApplication:
 	assert
 	retsub
 
+abi_route_optInToAsset:
+	// mbrPayment: pay
+	txn GroupIndex
+	int 1
+	-
+	dup
+	gtxns TypeEnum
+	int pay
+	==
+	assert
+
+	// asset: asset
+	txna ApplicationArgs 1
+	btoi
+	txnas Assets
+
+	// execute optInToAsset(pay,asset)void
+	callsub optInToAsset
+	int 1
+	return
+
+// optInToAsset(pay,asset)void
+optInToAsset:
+	proto 2 0
+
+	// contracts/abstracted_optin.algo.ts:5
+	// verifyPayTxn(mbrPayment, {
+	//       receiver: this.app.address,
+	//       amount: {
+	//         // @ts-expect-error TODO: add assetOptInMinBalance to the TEALScript types
+	//         greaterThan: globals.assetOptInMinBalance,
+	//       },
+	//     })
+	// verify receiver
+	frame_dig -2 // mbrPayment: PayTxn
+	gtxns Receiver
+	global CurrentApplicationAddress
+	==
+	assert
+
+	// verify amount
+	frame_dig -2 // mbrPayment: PayTxn
+	gtxns Amount
+	global AssetOptInMinBalance
+	>
+	assert
+
+	// contracts/abstracted_optin.algo.ts:13
+	// sendAssetTransfer({
+	//       assetReceiver: this.app.address,
+	//       assetAmount: 0,
+	//       xferAsset: asset,
+	//     })
+	itxn_begin
+	int axfer
+	itxn_field TypeEnum
+
+	// contracts/abstracted_optin.algo.ts:14
+	// assetReceiver: this.app.address
+	global CurrentApplicationAddress
+	itxn_field AssetReceiver
+
+	// contracts/abstracted_optin.algo.ts:15
+	// assetAmount: 0
+	int 0
+	itxn_field AssetAmount
+
+	// contracts/abstracted_optin.algo.ts:16
+	// xferAsset: asset
+	frame_dig -1 // asset: Asset
+	itxn_field XferAsset
+
+	// Fee field not set, defaulting to 0
+	int 0
+	itxn_field Fee
+
+	// Submit inner transaction
+	itxn_submit
+	retsub
+
 create_NoOp:
 	method "createApplication(address)void"
 	txna ApplicationArgs 0
@@ -267,8 +347,9 @@ create_NoOp:
 call_NoOp:
 	method "saveAuthAddr()void"
 	method "rekey(appl,bool)void"
+	method "optInToAsset(asset,pay)void"
 	txna ApplicationArgs 0
-	match abi_route_saveAuthAddr abi_route_rekey
+	match abi_route_saveAuthAddr abi_route_rekey abi_route_optInToAsset
 	err
 
 call_UpdateApplication:
