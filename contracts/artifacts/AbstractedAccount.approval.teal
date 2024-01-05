@@ -22,47 +22,38 @@ NOT_IMPLEMENTED:
 	err
 
 abi_route_createApplication:
-	// eoa: address
-	txna ApplicationArgs 1
-	dup
-	len
-	int 32
-	==
-	assert
-
-	// execute createApplication(address)void
+	// execute createApplication()void
 	callsub createApplication
 	int 1
 	return
 
-// createApplication(address)void
+// createApplication()void
 //
 // Create an abstracted account for an EOA
-//
-// @param eoa The EOA to create the abstracted account for
 createApplication:
-	proto 1 0
+	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:24
-	// this.eoa.value = eoa
+	// contracts/abstracted_account.algo.ts:22
+	// this.eoa.value = this.txn.sender
 	byte 0x656f61 // "eoa"
-	frame_dig -1 // eoa: Address
+	txn Sender
 	app_global_put
 
-	// contracts/abstracted_account.algo.ts:25
-	// this.eoaAuthAddr.value = eoa.authAddr === Address.zeroAddress ? eoa : eoa.authAddr
+	// contracts/abstracted_account.algo.ts:23
+	// this.eoaAuthAddr.value =
+	//       this.txn.sender.authAddr === Address.zeroAddress ? this.txn.sender : this.txn.sender.authAddr
 	byte 0x656f614175746841646472 // "eoaAuthAddr"
-	frame_dig -1 // eoa: Address
+	txn Sender
 	acct_params_get AcctAuthAddr
 	assert
 	global ZeroAddress
 	==
 	bz ternary0_false
-	frame_dig -1 // eoa: Address
+	txn Sender
 	b ternary0_end
 
 ternary0_false:
-	frame_dig -1 // eoa: Address
+	txn Sender
 	acct_params_get AcctAuthAddr
 	assert
 
@@ -82,7 +73,7 @@ abi_route_saveAuthAddr:
 saveAuthAddr:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:32
+	// contracts/abstracted_account.algo.ts:31
 	// this.eoaAuthAddr.value = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr
 	byte 0x656f614175746841646472 // "eoaAuthAddr"
 	byte 0x656f61 // "eoa"
@@ -141,7 +132,7 @@ abi_route_rekey:
 rekey:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:42
+	// contracts/abstracted_account.algo.ts:41
 	// verifyAppCallTxn(saveAuthAddrCall, { applicationID: this.app })
 	// verify applicationID
 	frame_dig -1 // saveAuthAddrCall: AppCallTxn
@@ -150,7 +141,7 @@ rekey:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:43
+	// contracts/abstracted_account.algo.ts:42
 	// assert(saveAuthAddrCall.applicationArgs[0] === method('saveAuthAddr()void'))
 	frame_dig -1 // saveAuthAddrCall: AppCallTxn
 	gtxns ApplicationArgs 0
@@ -158,7 +149,7 @@ rekey:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:45
+	// contracts/abstracted_account.algo.ts:44
 	// sendPayment({
 	//       receiver: this.eoa.value,
 	//       rekeyTo: this.eoaAuthAddr.value,
@@ -168,19 +159,19 @@ rekey:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:46
+	// contracts/abstracted_account.algo.ts:45
 	// receiver: this.eoa.value
 	byte 0x656f61 // "eoa"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:47
+	// contracts/abstracted_account.algo.ts:46
 	// rekeyTo: this.eoaAuthAddr.value
 	byte 0x656f614175746841646472 // "eoaAuthAddr"
 	app_global_get
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:48
+	// contracts/abstracted_account.algo.ts:47
 	// note: 'rekeying to EOA'
 	byte 0x72656b6579696e6720746f20454f41 // "rekeying to EOA"
 	itxn_field Note
@@ -193,7 +184,7 @@ rekey:
 	itxn_submit
 
 	// if0_condition
-	// contracts/abstracted_account.algo.ts:51
+	// contracts/abstracted_account.algo.ts:50
 	// flash || this.forceFlash.value
 	frame_dig -2 // flash: boolean
 	dup
@@ -208,7 +199,7 @@ skip_or0:
 	bz if0_end
 
 	// if0_consequent
-	// contracts/abstracted_account.algo.ts:52
+	// contracts/abstracted_account.algo.ts:51
 	// verifyTxn(this.txnGroup[this.txnGroup.length - 1], {
 	//         sender: this.app.address,
 	//         rekeyTo: this.app.address,
@@ -248,7 +239,7 @@ abi_route_updateApplication:
 updateApplication:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:64
+	// contracts/abstracted_account.algo.ts:63
 	// verifyAppCallTxn(this.txn, { sender: this.eoa.value })
 	// verify sender
 	txn Sender
@@ -259,7 +250,7 @@ updateApplication:
 	retsub
 
 create_NoOp:
-	method "createApplication(address)void"
+	method "createApplication()void"
 	txna ApplicationArgs 0
 	match abi_route_createApplication
 	err

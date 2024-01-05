@@ -5,13 +5,7 @@
     {
       "name": "createApplication",
       "desc": "Create an abstracted account for an EOA",
-      "args": [
-        {
-          "name": "eoa",
-          "type": "address",
-          "desc": "The EOA to create the abstracted account for"
-        }
-      ],
+      "args": [],
       "returns": {
         "type": "void"
       }

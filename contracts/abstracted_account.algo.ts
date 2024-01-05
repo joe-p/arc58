@@ -17,12 +17,11 @@ export class AbstractedAccount extends Contract {
 
   /**
    * Create an abstracted account for an EOA
-   *
-   * @param eoa The EOA to create the abstracted account for
    */
-  createApplication(eoa: Address): void {
-    this.eoa.value = eoa;
-    this.eoaAuthAddr.value = eoa.authAddr === Address.zeroAddress ? eoa : eoa.authAddr;
+  createApplication(): void {
+    this.eoa.value = this.txn.sender;
+    this.eoaAuthAddr.value =
+      this.txn.sender.authAddr === Address.zeroAddress ? this.txn.sender : this.txn.sender.authAddr;
   }
 
   /**
