@@ -1,0 +1,36 @@
+{
+  "name": "account_abstraction",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "generate-client": "algokitgen generate -a contracts/artifacts/AccountAbstraction.arc32.json -o contracts/clients/AccountAbstractionClient.ts",
+    "compile-contract": "tealscript contracts/account_abstraction.algo.ts contracts/artifacts",
+    "generate-components": "algokit-generate-component contracts/artifacts/AccountAbstraction.arc32.json contracts/artifacts/components",
+    "build": "npm run compile-contract && npm run generate-client",
+    "test": "npm run build && jest",
+    "lint": "eslint . --ext .ts",
+    "fix": "eslint . --ext .ts --fix"
+  },
+  "dependencies": {
+    "@algorandfoundation/algokit-utils": "^2.2.0",
+    "algosdk": "^2.4.0"
+  },
+  "devDependencies": {
+    "@algorandfoundation/algokit-client-generator": "^2.2.1",
+    "@algorandfoundation/tealscript": "^0.68.0",
+    "@jest/globals": "^29.5.0",
+    "@joe-p/algokit-generate-component": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.5.0",
+    "prettier": "^3.0.3",
+    "ts-jest": "^29.1.0",
+    "typescript": "5.0.2"
+  }
+}
