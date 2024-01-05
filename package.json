@@ -1,11 +1,11 @@
 {
-  "name": "account_abstraction",
+  "name": "abstracted_account",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "generate-client": "algokitgen generate -a contracts/artifacts/AccountAbstraction.arc32.json -o contracts/clients/AccountAbstractionClient.ts",
-    "compile-contract": "tealscript contracts/account_abstraction.algo.ts contracts/artifacts",
-    "generate-components": "algokit-generate-component contracts/artifacts/AccountAbstraction.arc32.json contracts/artifacts/components",
+    "generate-client": "algokitgen generate -a contracts/artifacts/AbstractedAccount.arc32.json -o contracts/clients/AbstractedAccountClient.ts",
+    "compile-contract": "tealscript contracts/abstracted_account.algo.ts contracts/artifacts",
+    "generate-components": "algokit-generate-component contracts/artifacts/AbstractedAccount.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contract && npm run generate-client",
     "test": "npm run build && jest",
     "lint": "eslint . --ext .ts",

@@ -1,19 +1,19 @@
 import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
-import { AccountAbstractionClient } from '../contracts/clients/AccountAbstractionClient';
+import { AbstractedAccountClient } from '../contracts/clients/AbstractedAccountClient';
 
 const fixture = algorandFixture();
 
-let appClient: AccountAbstractionClient;
+let appClient: AbstractedAccountClient;
 
-describe('AccountAbstraction', () => {
+describe('AbstractedAccount', () => {
   beforeEach(fixture.beforeEach);
 
   beforeAll(async () => {
     await fixture.beforeEach();
     const { algod, testAccount } = fixture.context;
 
-    appClient = new AccountAbstractionClient(
+    appClient = new AbstractedAccountClient(
       {
         sender: testAccount,
         resolveBy: 'id',
