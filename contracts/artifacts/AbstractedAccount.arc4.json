@@ -38,9 +38,73 @@
       }
     },
     {
-      "name": "updateApplication",
-      "desc": "Update the application, presumably to add more functionality to the abstracted accountWARNING: A bad update can irreversibly break the abstracted account and any funds inside of it",
-      "args": [],
+      "name": "addProgram",
+      "desc": "Add a program to this abstracted account",
+      "args": [
+        {
+          "name": "program",
+          "type": "byte[]",
+          "desc": "The program to add"
+        },
+        {
+          "name": "globalNumUint",
+          "type": "uint64",
+          "desc": "The number of global uints this program requires"
+        },
+        {
+          "name": "globalNumByteSlice",
+          "type": "uint64",
+          "desc": "The number of global byte slices this program requires"
+        },
+        {
+          "name": "localNumByteSlice",
+          "type": "uint64",
+          "desc": "The number of local byte slices this program requires"
+        },
+        {
+          "name": "localNumUint",
+          "type": "uint64",
+          "desc": "The number of local uints this program requires"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "removeProgram",
+      "desc": "Remove a program from this abstracted account",
+      "args": [
+        {
+          "name": "programHash",
+          "type": "byte[][32]",
+          "desc": "The hash of the program to remove"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "callProgram",
+      "desc": "Calls one of the deploy programs for this abstracted accountTODO: Think of better way to pass ABI args",
+      "args": [
+        {
+          "name": "programHash",
+          "type": "byte[][32]",
+          "desc": "The hash of the program to call"
+        },
+        {
+          "name": "method",
+          "type": "byte[]",
+          "desc": "The method selector to call"
+        },
+        {
+          "name": "args",
+          "type": "byte[]",
+          "desc": "The arguments to pass to the method"
+        }
+      ],
       "returns": {
         "type": "void"
       }

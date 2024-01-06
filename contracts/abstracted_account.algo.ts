@@ -1,5 +1,7 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
+type bytes32 = StaticArray<bytes, 32>;
+
 export class AbstractedAccount extends Contract {
   programVersion = 10;
 
@@ -14,6 +16,8 @@ export class AbstractedAccount extends Contract {
    * A "flash" rekey ensures that the rekey back is done atomically in the same group
    */
   forceFlash = GlobalStateKey<boolean>();
+
+  programs = BoxMap<bytes32, Application>();
 
   /**
    * Create an abstracted account for an EOA
@@ -56,10 +60,64 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Update the application, presumably to add more functionality to the abstracted account
-   * WARNING: A bad update can irreversibly break the abstracted account and any funds inside of it
+   * Add a program to this abstracted account
+   *
+   * @param program The program to add
+   * @param globalNumUint The number of global uints this program requires
+   * @param globalNumByteSlice The number of global byte slices this program requires
+   * @param localNumByteSlice The number of local byte slices this program requires
+   * @param localNumUint The number of local uints this program requires
+   *
    */
-  updateApplication(): void {
-    verifyAppCallTxn(this.txn, { sender: this.eoa.value });
+  addProgram(
+    program: bytes,
+    globalNumUint: number,
+    globalNumByteSlice: number,
+    localNumByteSlice: number,
+    localNumUint: number
+  ): void {
+    assert(this.txn.sender === this.eoa.value);
+
+    sendAppCall({
+      approvalProgram: program,
+      clearStateProgram: this.app.clearStateProgram,
+      globalNumByteSlice: globalNumByteSlice,
+      globalNumUint: globalNumUint,
+      localNumByteSlice: localNumByteSlice,
+      localNumUint: localNumUint,
+    });
+
+    this.programs(sha256(program)).value = this.itxn.createdApplicationID;
+  }
+
+  /**
+   * Remove a program from this abstracted account
+   *
+   * @param programHash The hash of the program to remove
+   */
+  removeProgram(programHash: bytes32): void {
+    assert(this.txn.sender === this.eoa.value);
+
+    this.programs(programHash).delete();
+  }
+
+  /**
+   * Calls one of the deploy programs for this abstracted account
+   *
+   * TODO: Think of better way to pass ABI args
+   *
+   * @param programHash The hash of the program to call
+   * @param method The method selector to call
+   * @param args The arguments to pass to the method
+   *
+   */
+  callProgram(programHash: bytes32, method: bytes, args: bytes): void {
+    const app = this.programs(programHash).value;
+
+    sendAppCall({
+      applicationID: app,
+      rekeyTo: app.address,
+      applicationArgs: [method, args],
+    });
   }
 }
