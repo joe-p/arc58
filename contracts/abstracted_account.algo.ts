@@ -1,6 +1,7 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
 export class AbstractedAccount extends Contract {
+  /** Target AVM 10 */
   programVersion = 10;
 
   /** The EOA (Externally Owned Account) */
@@ -20,6 +21,18 @@ export class AbstractedAccount extends Contract {
    * The box map values aren't actually used and are always empty
    */
   apps = BoxMap<Application, StaticArray<byte, 0>>();
+
+  /**
+   * Make sure that verifyAppAuthAddr is called by the end of the txn group
+   */
+  private assertVerifyAppAuthAddrIsCalled(): void {
+    // Verify that by the end of the txn group, the rekey back to this app account is done
+    const appl = this.txnGroup[this.txnGroup.length - 1];
+    verifyAppCallTxn(appl, {
+      applicationID: this.app,
+    });
+    assert(appl.applicationArgs[0] === method('verifyAppAuthAddr()void'));
+  }
 
   /**
    * Create an abstracted account for an EOA
@@ -42,18 +55,6 @@ export class AbstractedAccount extends Contract {
    */
   verifyAppAuthAddr(): void {
     assert(this.app.address.authAddr === globals.zeroAddress);
-  }
-
-  /**
-   * Make sure that verifyAppAuthAddr is called by the end of the txn group
-   */
-  private assertVerifyAppAuthAddrIsCalled(): void {
-    // Verify that by the end of the txn group, the rekey back to this app account is done
-    const appl = this.txnGroup[this.txnGroup.length - 1];
-    verifyAppCallTxn(appl, {
-      applicationID: this.app,
-    });
-    assert(appl.applicationArgs[0] === method('verifyAppAuthAddr()void'));
   }
 
   /**
@@ -92,6 +93,17 @@ export class AbstractedAccount extends Contract {
     });
 
     this.assertVerifyAppAuthAddrIsCalled();
+  }
+
+  /**
+   * Transfer the abstracted account to a new EOA.
+   *
+   * @param newEOA The new EOA
+   */
+  transferEOA(newEOA: Account): void {
+    assert(this.txn.sender === this.eoa.value);
+    this.eoa.value = newEOA;
+    this.eoaAuthAddr.value = newEOA.authAddr === Address.zeroAddress ? newEOA : newEOA.authAddr;
   }
 
   /**
