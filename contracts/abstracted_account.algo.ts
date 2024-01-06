@@ -7,9 +7,6 @@ export class AbstractedAccount extends Contract {
   /** The EOA (Externally Owned Account) */
   eoa = GlobalStateKey<Address>();
 
-  /** The EOA's auth addr, if it has one */
-  eoaAuthAddr = GlobalStateKey<Address>();
-
   /**
    * Whether or not this abstracted account must always use a "flash" rekey
    * A "flash" rekey ensures that the rekey back is done atomically in the same group
@@ -39,15 +36,6 @@ export class AbstractedAccount extends Contract {
    */
   createApplication(): void {
     this.eoa.value = this.txn.sender;
-    this.eoaAuthAddr.value =
-      this.txn.sender.authAddr === Address.zeroAddress ? this.txn.sender : this.txn.sender.authAddr;
-  }
-
-  /**
-   * Save the auth addr of the EOA in state so we can rekey back to it later
-   */
-  saveAuthAddr(): void {
-    this.eoaAuthAddr.value = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr;
   }
 
   /**
@@ -60,16 +48,14 @@ export class AbstractedAccount extends Contract {
   /**
    * Rekey this contract account to the EOA
    *
-   * @param saveAuthAddrCall Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state
    * @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
    */
-  rekeyToEOA(saveAuthAddrCall: AppCallTxn, flash: boolean): void {
-    verifyAppCallTxn(saveAuthAddrCall, { applicationID: this.app });
-    assert(saveAuthAddrCall.applicationArgs[0] === method('saveAuthAddr()void'));
+  rekeyToEOA(flash: boolean): void {
+    const authAddr = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr;
 
     sendPayment({
       receiver: this.eoa.value,
-      rekeyTo: this.eoaAuthAddr.value,
+      rekeyTo: authAddr,
       note: 'rekeying to EOA',
     });
 
@@ -103,7 +89,6 @@ export class AbstractedAccount extends Contract {
   transferEOA(newEOA: Account): void {
     assert(this.txn.sender === this.eoa.value);
     this.eoa.value = newEOA;
-    this.eoaAuthAddr.value = newEOA.authAddr === Address.zeroAddress ? newEOA : newEOA.authAddr;
   }
 
   /**

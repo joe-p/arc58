@@ -11,14 +11,6 @@
       }
     },
     {
-      "name": "saveAuthAddr",
-      "desc": "Save the auth addr of the EOA in state so we can rekey back to it later",
-      "args": [],
-      "returns": {
-        "type": "void"
-      }
-    },
-    {
       "name": "verifyAppAuthAddr",
       "desc": "Verify the contract account is not rekeyed",
       "args": [],
@@ -30,11 +22,6 @@
       "name": "rekeyToEOA",
       "desc": "Rekey this contract account to the EOA",
       "args": [
-        {
-          "name": "saveAuthAddrCall",
-          "type": "appl",
-          "desc": "Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state"
-        },
         {
           "name": "flash",
           "type": "bool",

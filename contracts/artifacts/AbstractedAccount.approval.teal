@@ -30,14 +30,14 @@ assertVerifyAppAuthAddrIsCalled:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:30
+	// contracts/abstracted_account.algo.ts:27
 	// appl = this.txnGroup[this.txnGroup.length - 1]
 	global GroupSize
 	int 1
 	-
 	frame_bury 0 // appl: txn
 
-	// contracts/abstracted_account.algo.ts:31
+	// contracts/abstracted_account.algo.ts:28
 	// verifyAppCallTxn(appl, {
 	//       applicationID: this.app,
 	//     })
@@ -55,7 +55,7 @@ assertVerifyAppAuthAddrIsCalled:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:34
+	// contracts/abstracted_account.algo.ts:31
 	// assert(appl.applicationArgs[0] === method('verifyAppAuthAddr()void'))
 	frame_dig 0 // appl: txn
 	gtxns ApplicationArgs 0
@@ -76,67 +76,10 @@ abi_route_createApplication:
 createApplication:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:41
+	// contracts/abstracted_account.algo.ts:38
 	// this.eoa.value = this.txn.sender
 	byte 0x656f61 // "eoa"
 	txn Sender
-	app_global_put
-
-	// contracts/abstracted_account.algo.ts:42
-	// this.eoaAuthAddr.value =
-	//       this.txn.sender.authAddr === Address.zeroAddress ? this.txn.sender : this.txn.sender.authAddr
-	byte 0x656f614175746841646472 // "eoaAuthAddr"
-	txn Sender
-	acct_params_get AcctAuthAddr
-	assert
-	global ZeroAddress
-	==
-	bz ternary0_false
-	txn Sender
-	b ternary0_end
-
-ternary0_false:
-	txn Sender
-	acct_params_get AcctAuthAddr
-	assert
-
-ternary0_end:
-	app_global_put
-	retsub
-
-abi_route_saveAuthAddr:
-	// execute saveAuthAddr()void
-	callsub saveAuthAddr
-	int 1
-	return
-
-// saveAuthAddr()void
-//
-// Save the auth addr of the EOA in state so we can rekey back to it later
-saveAuthAddr:
-	proto 0 0
-
-	// contracts/abstracted_account.algo.ts:50
-	// this.eoaAuthAddr.value = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr
-	byte 0x656f614175746841646472 // "eoaAuthAddr"
-	byte 0x656f61 // "eoa"
-	app_global_get
-	acct_params_get AcctAuthAddr
-	assert
-	global ZeroAddress
-	==
-	bz ternary1_false
-	byte 0x656f61 // "eoa"
-	app_global_get
-	b ternary1_end
-
-ternary1_false:
-	byte 0x656f61 // "eoa"
-	app_global_get
-	acct_params_get AcctAuthAddr
-	assert
-
-ternary1_end:
 	app_global_put
 	retsub
 
@@ -152,7 +95,7 @@ abi_route_verifyAppAuthAddr:
 verifyAppAuthAddr:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:57
+	// contracts/abstracted_account.algo.ts:45
 	// assert(this.app.address.authAddr === globals.zeroAddress)
 	global CurrentApplicationAddress
 	acct_params_get AcctAuthAddr
@@ -173,70 +116,66 @@ abi_route_rekeyToEOA:
 	int 0
 	getbit
 
-	// saveAuthAddrCall: appl
-	txn GroupIndex
-	int 1
-	-
-	dup
-	gtxns TypeEnum
-	int appl
-	==
-	assert
-
-	// execute rekeyToEOA(bool,appl)void
+	// execute rekeyToEOA(bool)void
 	callsub rekeyToEOA
 	int 1
 	return
 
-// rekeyToEOA(bool,appl)void
+// rekeyToEOA(bool)void
 //
 // Rekey this contract account to the EOA
 //
-// @param saveAuthAddrCall Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state
 // @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
 rekeyToEOA:
-	proto 2 0
+	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:67
-	// verifyAppCallTxn(saveAuthAddrCall, { applicationID: this.app })
-	// verify applicationID
-	frame_dig -1 // saveAuthAddrCall: AppCallTxn
-	gtxns ApplicationID
-	txna Applications 0
+	// Push empty bytes after the frame pointer to reserve space for local variables
+	byte 0x
+
+	// contracts/abstracted_account.algo.ts:54
+	// authAddr = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr
+	byte 0x656f61 // "eoa"
+	app_global_get
+	acct_params_get AcctAuthAddr
+	assert
+	global ZeroAddress
 	==
+	bz ternary1_false
+	byte 0x656f61 // "eoa"
+	app_global_get
+	b ternary1_end
+
+ternary1_false:
+	byte 0x656f61 // "eoa"
+	app_global_get
+	acct_params_get AcctAuthAddr
 	assert
 
-	// contracts/abstracted_account.algo.ts:68
-	// assert(saveAuthAddrCall.applicationArgs[0] === method('saveAuthAddr()void'))
-	frame_dig -1 // saveAuthAddrCall: AppCallTxn
-	gtxns ApplicationArgs 0
-	method "saveAuthAddr()void"
-	==
-	assert
+ternary1_end:
+	frame_bury 0 // authAddr: address
 
-	// contracts/abstracted_account.algo.ts:70
+	// contracts/abstracted_account.algo.ts:56
 	// sendPayment({
 	//       receiver: this.eoa.value,
-	//       rekeyTo: this.eoaAuthAddr.value,
+	//       rekeyTo: authAddr,
 	//       note: 'rekeying to EOA',
 	//     })
 	itxn_begin
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:71
+	// contracts/abstracted_account.algo.ts:57
 	// receiver: this.eoa.value
 	byte 0x656f61 // "eoa"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:72
-	// rekeyTo: this.eoaAuthAddr.value
-	byte 0x656f614175746841646472 // "eoaAuthAddr"
-	app_global_get
+	// contracts/abstracted_account.algo.ts:58
+	// rekeyTo: authAddr
+	frame_dig 0 // authAddr: address
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:73
+	// contracts/abstracted_account.algo.ts:59
 	// note: 'rekeying to EOA'
 	byte 0x72656b6579696e6720746f20454f41 // "rekeying to EOA"
 	itxn_field Note
@@ -249,9 +188,9 @@ rekeyToEOA:
 	itxn_submit
 
 	// if0_condition
-	// contracts/abstracted_account.algo.ts:76
+	// contracts/abstracted_account.algo.ts:62
 	// flash || this.forceFlash.value
-	frame_dig -2 // flash: boolean
+	frame_dig -1 // flash: boolean
 	dup
 	bnz skip_or0
 	byte 0x666f726365466c617368 // "forceFlash"
@@ -264,7 +203,7 @@ skip_or0:
 	bz if0_end
 
 	// if0_consequent
-	// contracts/abstracted_account.algo.ts:77
+	// contracts/abstracted_account.algo.ts:63
 	// this.assertVerifyAppAuthAddrIsCalled()
 	callsub assertVerifyAppAuthAddrIsCalled
 
@@ -290,7 +229,7 @@ abi_route_rekeyToApp:
 rekeyToApp:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:87
+	// contracts/abstracted_account.algo.ts:73
 	// assert(this.apps(app).exists)
 	frame_dig -1 // app: Application
 	itob
@@ -299,7 +238,7 @@ rekeyToApp:
 	pop
 	assert
 
-	// contracts/abstracted_account.algo.ts:89
+	// contracts/abstracted_account.algo.ts:75
 	// sendPayment({
 	//       receiver: this.eoa.value,
 	//       rekeyTo: app.address,
@@ -309,20 +248,20 @@ rekeyToApp:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:90
+	// contracts/abstracted_account.algo.ts:76
 	// receiver: this.eoa.value
 	byte 0x656f61 // "eoa"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:91
+	// contracts/abstracted_account.algo.ts:77
 	// rekeyTo: app.address
 	frame_dig -1 // app: Application
 	app_params_get AppAddress
 	assert
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:92
+	// contracts/abstracted_account.algo.ts:78
 	// note: 'rekeying to app'
 	byte 0x72656b6579696e6720746f20617070 // "rekeying to app"
 	itxn_field Note
@@ -334,7 +273,7 @@ rekeyToApp:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/abstracted_account.algo.ts:95
+	// contracts/abstracted_account.algo.ts:81
 	// this.assertVerifyAppAuthAddrIsCalled()
 	callsub assertVerifyAppAuthAddrIsCalled
 	retsub
@@ -358,7 +297,7 @@ abi_route_transferEOA:
 transferEOA:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:104
+	// contracts/abstracted_account.algo.ts:90
 	// assert(this.txn.sender === this.eoa.value)
 	txn Sender
 	byte 0x656f61 // "eoa"
@@ -366,30 +305,10 @@ transferEOA:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:105
+	// contracts/abstracted_account.algo.ts:91
 	// this.eoa.value = newEOA
 	byte 0x656f61 // "eoa"
 	frame_dig -1 // newEOA: Account
-	app_global_put
-
-	// contracts/abstracted_account.algo.ts:106
-	// this.eoaAuthAddr.value = newEOA.authAddr === Address.zeroAddress ? newEOA : newEOA.authAddr
-	byte 0x656f614175746841646472 // "eoaAuthAddr"
-	frame_dig -1 // newEOA: Account
-	acct_params_get AcctAuthAddr
-	assert
-	global ZeroAddress
-	==
-	bz ternary2_false
-	frame_dig -1 // newEOA: Account
-	b ternary2_end
-
-ternary2_false:
-	frame_dig -1 // newEOA: Account
-	acct_params_get AcctAuthAddr
-	assert
-
-ternary2_end:
 	app_global_put
 	retsub
 
@@ -412,7 +331,7 @@ abi_route_addApp:
 addApp:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:115
+	// contracts/abstracted_account.algo.ts:100
 	// assert(this.txn.sender === this.eoa.value)
 	txn Sender
 	byte 0x656f61 // "eoa"
@@ -420,7 +339,7 @@ addApp:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:117
+	// contracts/abstracted_account.algo.ts:102
 	// this.apps(app).create(0)
 	frame_dig -1 // app: Application
 	itob
@@ -447,7 +366,7 @@ abi_route_removeApp:
 removeApp:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:126
+	// contracts/abstracted_account.algo.ts:111
 	// assert(this.txn.sender === this.eoa.value)
 	txn Sender
 	byte 0x656f61 // "eoa"
@@ -455,7 +374,7 @@ removeApp:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:128
+	// contracts/abstracted_account.algo.ts:113
 	// this.apps(app).delete()
 	frame_dig -1 // app: Application
 	itob
@@ -469,13 +388,12 @@ create_NoOp:
 	err
 
 call_NoOp:
-	method "saveAuthAddr()void"
 	method "verifyAppAuthAddr()void"
-	method "rekeyToEOA(appl,bool)void"
+	method "rekeyToEOA(bool)void"
 	method "rekeyToApp(application)void"
 	method "transferEOA(account)void"
 	method "addApp(application)void"
 	method "removeApp(application)void"
 	txna ApplicationArgs 0
-	match abi_route_saveAuthAddr abi_route_verifyAppAuthAddr abi_route_rekeyToEOA abi_route_rekeyToApp abi_route_transferEOA abi_route_addApp abi_route_removeApp
+	match abi_route_verifyAppAuthAddr abi_route_rekeyToEOA abi_route_rekeyToApp abi_route_transferEOA abi_route_addApp abi_route_removeApp
 	err
