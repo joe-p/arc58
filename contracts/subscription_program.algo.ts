@@ -19,15 +19,19 @@ export class SubscriptionProgram extends Contract {
     this.lastPayment.value = 0;
   }
 
-  makePayment(): void {
+  makePayment(
+    sender: Address,
+    // eslint-disable-next-line no-unused-vars
+    _acctRef: Account
+  ): void {
     assert(globals.round - this.lastPayment.value > FREQUENCY);
     this.lastPayment.value = globals.round;
 
     sendPayment({
-      sender: this.txn.sender,
+      sender: sender,
       amount: AMOUNT,
       receiver: RECEIVER,
-      rekeyTo: this.txn.sender,
+      rekeyTo: sender,
     });
   }
 }

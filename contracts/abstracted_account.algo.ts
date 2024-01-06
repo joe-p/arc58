@@ -1,7 +1,5 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-type bytes32 = StaticArray<byte, 32>;
-
 export class AbstractedAccount extends Contract {
   programVersion = 10;
 
@@ -17,7 +15,8 @@ export class AbstractedAccount extends Contract {
    */
   forceFlash = GlobalStateKey<boolean>();
 
-  programs = BoxMap<bytes32, Application>();
+  /** The apps that are authorized to send itxns from this account */
+  apps = BoxMap<Application, boolean>();
 
   /**
    * Create an abstracted account for an EOA
@@ -33,6 +32,25 @@ export class AbstractedAccount extends Contract {
    */
   saveAuthAddr(): void {
     this.eoaAuthAddr.value = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr;
+  }
+
+  /**
+   * Verify the contract account is not rekeyed
+   */
+  verifyAppAuthAddr(): void {
+    assert(this.app.address.authAddr === globals.zeroAddress);
+  }
+
+  /**
+   * Make sure that verifyAppAuthAddr is called by the end of the txn group
+   */
+  private assertVerifyAppAuthAddrIsCalled(): void {
+    // Verify that by the end of the txn group, the rekey back to this app account is done
+    const appl = this.txnGroup[this.txnGroup.length - 1];
+    verifyAppCallTxn(appl, {
+      applicationID: this.app,
+    });
+    assert(appl.applicationArgs[0] === method('verifyAppAuthAddr()void'));
   }
 
   /**
@@ -52,71 +70,46 @@ export class AbstractedAccount extends Contract {
     });
 
     if (flash || this.forceFlash.value) {
-      verifyTxn(this.txnGroup[this.txnGroup.length - 1], {
-        sender: this.app.address,
-        rekeyTo: this.app.address,
-      });
+      this.assertVerifyAppAuthAddrIsCalled();
     }
   }
 
   /**
-   * Add a program to this abstracted account
+   * Temporarily rekey to an approved app
    *
-   * @param program The program to add
-   * @param globalNumUint The number of global uints this program requires
-   * @param globalNumByteSlice The number of global byte slices this program requires
-   * @param localNumByteSlice The number of local byte slices this program requires
-   * @param localNumUint The number of local uints this program requires
-   *
+   * @param app The app to rekey to
    */
-  addProgram(
-    program: bytes,
-    globalNumUint: number,
-    globalNumByteSlice: number,
-    localNumByteSlice: number,
-    localNumUint: number
-  ): void {
-    assert(this.txn.sender === this.eoa.value);
+  rekeyToApp(app: Application): void {
+    assert(this.apps(app).exists);
 
-    sendAppCall({
-      approvalProgram: program,
-      clearStateProgram: this.app.clearStateProgram,
-      globalNumByteSlice: globalNumByteSlice,
-      globalNumUint: globalNumUint,
-      localNumByteSlice: localNumByteSlice,
-      localNumUint: localNumUint,
-    });
-
-    this.programs(sha256(program)).value = this.itxn.createdApplicationID;
-  }
-
-  /**
-   * Remove a program from this abstracted account
-   *
-   * @param programHash The hash of the program to remove
-   */
-  removeProgram(programHash: bytes32): void {
-    assert(this.txn.sender === this.eoa.value);
-
-    this.programs(programHash).delete();
-  }
-
-  /**
-   * Calls one of the deploy programs for this abstracted account
-   *
-   * TODO: Think of good way to pass args
-   *
-   * @param programHash The hash of the program to call
-   * @param method The method selector to call
-   *
-   */
-  callProgram(_appID: Application, programHash: bytes32, method: bytes): void {
-    const app = this.programs(programHash).value;
-
-    sendAppCall({
-      applicationID: app,
+    sendPayment({
+      receiver: this.eoa.value,
       rekeyTo: app.address,
-      applicationArgs: [method],
+      note: 'rekeying to app',
     });
+
+    this.assertVerifyAppAuthAddrIsCalled();
+  }
+
+  /**
+   * Add an app to the list of approved apps
+   *
+   * @param app The app to add
+   */
+  addApp(app: Application): void {
+    assert(this.txn.sender === this.eoa.value);
+
+    this.apps(app).value = true;
+  }
+
+  /**
+   * Remove an app from the list of approved apps
+   *
+   * @param app The app to remove
+   */
+  removeApp(app: Application): void {
+    assert(this.txn.sender === this.eoa.value);
+
+    this.apps(app).delete();
   }
 }

@@ -19,6 +19,14 @@
       }
     },
     {
+      "name": "verifyAppAuthAddr",
+      "desc": "Verify the contract account is not rekeyed",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "rekey",
       "desc": "Rekey this contract account to the EOA",
       "args": [
@@ -30,7 +38,7 @@
         {
           "name": "flash",
           "type": "bool",
-          "desc": "Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn as the call to saveAuthAddr()"
+          "desc": "Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call"
         }
       ],
       "returns": {
@@ -38,33 +46,13 @@
       }
     },
     {
-      "name": "addProgram",
-      "desc": "Add a program to this abstracted account",
+      "name": "rekeyToApp",
+      "desc": "Temporarily rekey to an approved app",
       "args": [
         {
-          "name": "program",
-          "type": "byte[]",
-          "desc": "The program to add"
-        },
-        {
-          "name": "globalNumUint",
-          "type": "uint64",
-          "desc": "The number of global uints this program requires"
-        },
-        {
-          "name": "globalNumByteSlice",
-          "type": "uint64",
-          "desc": "The number of global byte slices this program requires"
-        },
-        {
-          "name": "localNumByteSlice",
-          "type": "uint64",
-          "desc": "The number of local byte slices this program requires"
-        },
-        {
-          "name": "localNumUint",
-          "type": "uint64",
-          "desc": "The number of local uints this program requires"
+          "name": "app",
+          "type": "application",
+          "desc": "The app to rekey to"
         }
       ],
       "returns": {
@@ -72,13 +60,13 @@
       }
     },
     {
-      "name": "removeProgram",
-      "desc": "Remove a program from this abstracted account",
+      "name": "addApp",
+      "desc": "Add an app to the list of approved apps",
       "args": [
         {
-          "name": "programHash",
-          "type": "byte[32]",
-          "desc": "The hash of the program to remove"
+          "name": "app",
+          "type": "application",
+          "desc": "The app to add"
         }
       ],
       "returns": {
@@ -86,22 +74,13 @@
       }
     },
     {
-      "name": "callProgram",
-      "desc": "Calls one of the deploy programs for this abstracted accountTODO: Think of good way to pass args",
+      "name": "removeApp",
+      "desc": "Remove an app from the list of approved apps",
       "args": [
         {
-          "name": "_appID",
-          "type": "application"
-        },
-        {
-          "name": "programHash",
-          "type": "byte[32]",
-          "desc": "The hash of the program to call"
-        },
-        {
-          "name": "method",
-          "type": "byte[]",
-          "desc": "The method selector to call"
+          "name": "app",
+          "type": "application",
+          "desc": "The app to remove"
         }
       ],
       "returns": {

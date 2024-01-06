@@ -32,7 +32,7 @@ export const APP_SPEC: AppSpec = {
         "no_op": "CREATE"
       }
     },
-    "makePayment()void": {
+    "makePayment(address,account)void": {
       "call_config": {
         "no_op": "CALL"
       }
@@ -71,7 +71,7 @@ export const APP_SPEC: AppSpec = {
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjE5CgkvLyB0aGlzLmxhc3RQYXltZW50LnZhbHVlID0gMAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJaW50IDAKCWFwcF9nbG9iYWxfcHV0CglyZXRzdWIKCmFiaV9yb3V0ZV9tYWtlUGF5bWVudDoKCS8vIGV4ZWN1dGUgbWFrZVBheW1lbnQoKXZvaWQKCWNhbGxzdWIgbWFrZVBheW1lbnQKCWludCAxCglyZXR1cm4KCi8vIG1ha2VQYXltZW50KCl2b2lkCm1ha2VQYXltZW50OgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL3N1YnNjcmlwdGlvbl9wcm9ncmFtLmFsZ28udHM6MjMKCS8vIGFzc2VydChnbG9iYWxzLnJvdW5kIC0gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA+IEZSRVFVRU5DWSkKCWdsb2JhbCBSb3VuZAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJYXBwX2dsb2JhbF9nZXQKCS0KCWludCAxMDAwCgk+Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czoyNAoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IGdsb2JhbHMucm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWdsb2JhbCBSb3VuZAoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czoyNgoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgc2VuZGVyOiB0aGlzLnR4bi5zZW5kZXIsCgkvLyAgICAgICBhbW91bnQ6IEFNT1VOVCwKCS8vICAgICAgIHJlY2VpdmVyOiBSRUNFSVZFUiwKCS8vICAgICAgIHJla2V5VG86IHRoaXMudHhuLnNlbmRlciwKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjI3CgkvLyBzZW5kZXI6IHRoaXMudHhuLnNlbmRlcgoJdHhuIFNlbmRlcgoJaXR4bl9maWVsZCBTZW5kZXIKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czoyOAoJLy8gYW1vdW50OiBBTU9VTlQKCWludCAxMDBfMDAwCglpdHhuX2ZpZWxkIEFtb3VudAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjI5CgkvLyByZWNlaXZlcjogUkVDRUlWRVIKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjEwCgkvLyBhZGRyKCc0NlhZUjdPVFJaWElTSTJUUlNCRFdQVVZRVDRFQ0JXTkk3VEZXUFBTNkVLQVBKN1c1T0JYU05HNjZNJykKCWFkZHIgNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TQoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjMwCgkvLyByZWtleVRvOiB0aGlzLnR4bi5zZW5kZXIKCXR4biBTZW5kZXIKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKY3JlYXRlX05vT3A6Cgl0eG4gTnVtQXBwQXJncwoJYnogYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgltZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgllcnIKCmNhbGxfTm9PcDoKCW1ldGhvZCAibWFrZVBheW1lbnQoKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfbWFrZVBheW1lbnQKCWVycg==",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjE5CgkvLyB0aGlzLmxhc3RQYXltZW50LnZhbHVlID0gMAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJaW50IDAKCWFwcF9nbG9iYWxfcHV0CglyZXRzdWIKCmFiaV9yb3V0ZV9tYWtlUGF5bWVudDoKCS8vIF9hY2N0UmVmOiBhY2NvdW50Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglidG9pCgl0eG5hcyBBY2NvdW50cwoKCS8vIHNlbmRlcjogYWRkcmVzcwoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJZHVwCglsZW4KCWludCAzMgoJPT0KCWFzc2VydAoKCS8vIGV4ZWN1dGUgbWFrZVBheW1lbnQoYWNjb3VudCxhZGRyZXNzKXZvaWQKCWNhbGxzdWIgbWFrZVBheW1lbnQKCWludCAxCglyZXR1cm4KCi8vIG1ha2VQYXltZW50KGFjY291bnQsYWRkcmVzcyl2b2lkCm1ha2VQYXltZW50OgoJcHJvdG8gMiAwCgoJLy8gY29udHJhY3RzL3N1YnNjcmlwdGlvbl9wcm9ncmFtLmFsZ28udHM6MjcKCS8vIGFzc2VydChnbG9iYWxzLnJvdW5kIC0gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA+IEZSRVFVRU5DWSkKCWdsb2JhbCBSb3VuZAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJYXBwX2dsb2JhbF9nZXQKCS0KCWludCAxMDAwCgk+Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czoyOAoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IGdsb2JhbHMucm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWdsb2JhbCBSb3VuZAoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czozMAoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgc2VuZGVyOiBzZW5kZXIsCgkvLyAgICAgICBhbW91bnQ6IEFNT1VOVCwKCS8vICAgICAgIHJlY2VpdmVyOiBSRUNFSVZFUiwKCS8vICAgICAgIHJla2V5VG86IHNlbmRlciwKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjMxCgkvLyBzZW5kZXI6IHNlbmRlcgoJZnJhbWVfZGlnIC0xIC8vIHNlbmRlcjogQWRkcmVzcwoJaXR4bl9maWVsZCBTZW5kZXIKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czozMgoJLy8gYW1vdW50OiBBTU9VTlQKCWludCAxMDBfMDAwCglpdHhuX2ZpZWxkIEFtb3VudAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjMzCgkvLyByZWNlaXZlcjogUkVDRUlWRVIKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjEwCgkvLyBhZGRyKCc0NlhZUjdPVFJaWElTSTJUUlNCRFdQVVZRVDRFQ0JXTkk3VEZXUFBTNkVLQVBKN1c1T0JYU05HNjZNJykKCWFkZHIgNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TQoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjM0CgkvLyByZWtleVRvOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKY3JlYXRlX05vT3A6Cgl0eG4gTnVtQXBwQXJncwoJYnogYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgltZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgllcnIKCmNhbGxfTm9PcDoKCW1ldGhvZCAibWFrZVBheW1lbnQoYWRkcmVzcyxhY2NvdW50KXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfbWFrZVBheW1lbnQKCWVycg==",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "contract": {
@@ -87,7 +87,16 @@ export const APP_SPEC: AppSpec = {
       },
       {
         "name": "makePayment",
-        "args": [],
+        "args": [
+          {
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "name": "_acctRef",
+            "type": "account"
+          }
+        ],
         "returns": {
           "type": "void"
         }
@@ -157,10 +166,12 @@ export type SubscriptionProgram = {
       argsTuple: []
       returns: void
     }>
-    & Record<'makePayment()void' | 'makePayment', {
+    & Record<'makePayment(address,account)void' | 'makePayment', {
       argsObj: {
+        sender: string
+        _acctRef: string | Uint8Array
       }
-      argsTuple: []
+      argsTuple: [sender: string, _acctRef: string | Uint8Array]
       returns: void
     }>
   /**
@@ -258,16 +269,16 @@ export abstract class SubscriptionProgramCallFactory {
   }
 
   /**
-   * Constructs a no op call for the makePayment()void ABI method
+   * Constructs a no op call for the makePayment(address,account)void ABI method
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static makePayment(args: MethodArgs<'makePayment()void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static makePayment(args: MethodArgs<'makePayment(address,account)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'makePayment()void' as const,
-      methodArgs: Array.isArray(args) ? args : [],
+      method: 'makePayment(address,account)void' as const,
+      methodArgs: Array.isArray(args) ? args : [args.sender, args._acctRef],
       ...params,
     }
   }
@@ -380,13 +391,13 @@ export class SubscriptionProgramClient {
   }
 
   /**
-   * Calls the makePayment()void ABI method.
+   * Calls the makePayment(address,account)void ABI method.
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public makePayment(args: MethodArgs<'makePayment()void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+  public makePayment(args: MethodArgs<'makePayment(address,account)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
     return this.call(SubscriptionProgramCallFactory.makePayment(args, params))
   }
 
@@ -452,7 +463,7 @@ export class SubscriptionProgramClient {
     let promiseChain:Promise<unknown> = Promise.resolve()
     const resultMappers: Array<undefined | ((x: any) => any)> = []
     return {
-      makePayment(args: MethodArgs<'makePayment()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+      makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
         promiseChain = promiseChain.then(() => client.makePayment(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
@@ -488,13 +499,13 @@ export class SubscriptionProgramClient {
 }
 export type SubscriptionProgramComposer<TReturns extends [...any[]] = []> = {
   /**
-   * Calls the makePayment()void ABI method.
+   * Calls the makePayment(address,account)void ABI method.
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  makePayment(args: MethodArgs<'makePayment()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): SubscriptionProgramComposer<[...TReturns, MethodReturn<'makePayment()void'>]>
+  makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): SubscriptionProgramComposer<[...TReturns, MethodReturn<'makePayment(address,account)void'>]>
 
   /**
    * Makes a clear_state call to an existing instance of the SubscriptionProgram smart contract.

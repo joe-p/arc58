@@ -33,13 +33,13 @@ abi_route_createApplication:
 createApplication:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:26
+	// contracts/abstracted_account.algo.ts:25
 	// this.eoa.value = this.txn.sender
 	byte 0x656f61 // "eoa"
 	txn Sender
 	app_global_put
 
-	// contracts/abstracted_account.algo.ts:27
+	// contracts/abstracted_account.algo.ts:26
 	// this.eoaAuthAddr.value =
 	//       this.txn.sender.authAddr === Address.zeroAddress ? this.txn.sender : this.txn.sender.authAddr
 	byte 0x656f614175746841646472 // "eoaAuthAddr"
@@ -73,7 +73,7 @@ abi_route_saveAuthAddr:
 saveAuthAddr:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:35
+	// contracts/abstracted_account.algo.ts:34
 	// this.eoaAuthAddr.value = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr
 	byte 0x656f614175746841646472 // "eoaAuthAddr"
 	byte 0x656f61 // "eoa"
@@ -95,6 +95,71 @@ ternary1_false:
 
 ternary1_end:
 	app_global_put
+	retsub
+
+abi_route_verifyAppAuthAddr:
+	// execute verifyAppAuthAddr()void
+	callsub verifyAppAuthAddr
+	int 1
+	return
+
+// verifyAppAuthAddr()void
+//
+// Verify the contract account is not rekeyed
+verifyAppAuthAddr:
+	proto 0 0
+
+	// contracts/abstracted_account.algo.ts:41
+	// assert(this.app.address.authAddr === globals.zeroAddress)
+	global CurrentApplicationAddress
+	acct_params_get AcctAuthAddr
+	assert
+	global ZeroAddress
+	==
+	assert
+	retsub
+
+// assertVerifyAppAuthAddrIsCalled()void
+//
+// Make sure that verifyAppAuthAddr is called by the end of the txn group
+assertVerifyAppAuthAddrIsCalled:
+	proto 0 0
+
+	// Push empty bytes after the frame pointer to reserve space for local variables
+	byte 0x
+
+	// contracts/abstracted_account.algo.ts:49
+	// appl = this.txnGroup[this.txnGroup.length - 1]
+	global GroupSize
+	int 1
+	-
+	frame_bury 0 // appl: txn
+
+	// contracts/abstracted_account.algo.ts:50
+	// verifyAppCallTxn(appl, {
+	//       applicationID: this.app,
+	//     })
+	// verify appl
+	frame_dig 0 // appl: txn
+	gtxns TypeEnum
+	int appl
+	==
+	assert
+
+	// verify applicationID
+	frame_dig 0 // appl: txn
+	gtxns ApplicationID
+	txna Applications 0
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:53
+	// assert(appl.applicationArgs[0] === method('verifyAppAuthAddr()void'))
+	frame_dig 0 // appl: txn
+	gtxns ApplicationArgs 0
+	method "verifyAppAuthAddr()void"
+	==
+	assert
 	retsub
 
 abi_route_rekey:
@@ -128,11 +193,11 @@ abi_route_rekey:
 // Rekey this contract account to the EOA
 //
 // @param saveAuthAddrCall Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state
-// @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn as the call to saveAuthAddr()
+// @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
 rekey:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:45
+	// contracts/abstracted_account.algo.ts:63
 	// verifyAppCallTxn(saveAuthAddrCall, { applicationID: this.app })
 	// verify applicationID
 	frame_dig -1 // saveAuthAddrCall: AppCallTxn
@@ -141,7 +206,7 @@ rekey:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:46
+	// contracts/abstracted_account.algo.ts:64
 	// assert(saveAuthAddrCall.applicationArgs[0] === method('saveAuthAddr()void'))
 	frame_dig -1 // saveAuthAddrCall: AppCallTxn
 	gtxns ApplicationArgs 0
@@ -149,7 +214,7 @@ rekey:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:48
+	// contracts/abstracted_account.algo.ts:66
 	// sendPayment({
 	//       receiver: this.eoa.value,
 	//       rekeyTo: this.eoaAuthAddr.value,
@@ -159,19 +224,19 @@ rekey:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:49
+	// contracts/abstracted_account.algo.ts:67
 	// receiver: this.eoa.value
 	byte 0x656f61 // "eoa"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:50
+	// contracts/abstracted_account.algo.ts:68
 	// rekeyTo: this.eoaAuthAddr.value
 	byte 0x656f614175746841646472 // "eoaAuthAddr"
 	app_global_get
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:51
+	// contracts/abstracted_account.algo.ts:69
 	// note: 'rekeying to EOA'
 	byte 0x72656b6579696e6720746f20454f41 // "rekeying to EOA"
 	itxn_field Note
@@ -184,7 +249,7 @@ rekey:
 	itxn_submit
 
 	// if0_condition
-	// contracts/abstracted_account.algo.ts:54
+	// contracts/abstracted_account.algo.ts:72
 	// flash || this.forceFlash.value
 	frame_dig -2 // flash: boolean
 	dup
@@ -199,247 +264,68 @@ skip_or0:
 	bz if0_end
 
 	// if0_consequent
-	// contracts/abstracted_account.algo.ts:55
-	// verifyTxn(this.txnGroup[this.txnGroup.length - 1], {
-	//         sender: this.app.address,
-	//         rekeyTo: this.app.address,
-	//       })
-	global GroupSize
-	int 1
-	-
-	store 248 // verifyTxn index
-
-	// verify sender
-	load 248 // verifyTxn index
-	gtxns Sender
-	global CurrentApplicationAddress
-	==
-	assert
-
-	// verify rekeyTo
-	load 248 // verifyTxn index
-	gtxns RekeyTo
-	global CurrentApplicationAddress
-	==
-	assert
+	// contracts/abstracted_account.algo.ts:73
+	// this.assertVerifyAppAuthAddrIsCalled()
+	callsub assertVerifyAppAuthAddrIsCalled
 
 if0_end:
 	retsub
 
-abi_route_addProgram:
-	// localNumUint: uint64
-	txna ApplicationArgs 5
-	btoi
-
-	// localNumByteSlice: uint64
-	txna ApplicationArgs 4
-	btoi
-
-	// globalNumByteSlice: uint64
-	txna ApplicationArgs 3
-	btoi
-
-	// globalNumUint: uint64
-	txna ApplicationArgs 2
-	btoi
-
-	// program: byte[]
-	txna ApplicationArgs 1
-	extract 2 0
-
-	// execute addProgram(uint64,uint64,uint64,uint64,byte[])void
-	callsub addProgram
-	int 1
-	return
-
-// addProgram(uint64,uint64,uint64,uint64,byte[])void
-//
-// Add a program to this abstracted account
-//
-// @param program The program to add
-// @param globalNumUint The number of global uints this program requires
-// @param globalNumByteSlice The number of global byte slices this program requires
-// @param localNumByteSlice The number of local byte slices this program requires
-// @param localNumUint The number of local uints this program requires
-addProgram:
-	proto 5 0
-
-	// contracts/abstracted_account.algo.ts:79
-	// assert(this.txn.sender === this.eoa.value)
-	txn Sender
-	byte 0x656f61 // "eoa"
-	app_global_get
-	==
-	assert
-
-	// contracts/abstracted_account.algo.ts:81
-	// sendAppCall({
-	//       approvalProgram: program,
-	//       clearStateProgram: this.app.clearStateProgram,
-	//       globalNumByteSlice: globalNumByteSlice,
-	//       globalNumUint: globalNumUint,
-	//       localNumByteSlice: localNumByteSlice,
-	//       localNumUint: localNumUint,
-	//     })
-	itxn_begin
-	int appl
-	itxn_field TypeEnum
-
-	// contracts/abstracted_account.algo.ts:82
-	// approvalProgram: program
-	frame_dig -1 // program: bytes
-	itxn_field ApprovalProgram
-
-	// contracts/abstracted_account.algo.ts:83
-	// clearStateProgram: this.app.clearStateProgram
-	txna Applications 0
-	app_params_get AppClearStateProgram
-	assert
-	itxn_field ClearStateProgram
-
-	// contracts/abstracted_account.algo.ts:84
-	// globalNumByteSlice: globalNumByteSlice
-	frame_dig -3 // globalNumByteSlice: number
-	itxn_field GlobalNumByteSlice
-
-	// contracts/abstracted_account.algo.ts:85
-	// globalNumUint: globalNumUint
-	frame_dig -2 // globalNumUint: number
-	itxn_field GlobalNumUint
-
-	// contracts/abstracted_account.algo.ts:86
-	// localNumByteSlice: localNumByteSlice
-	frame_dig -4 // localNumByteSlice: number
-	itxn_field LocalNumByteSlice
-
-	// contracts/abstracted_account.algo.ts:87
-	// localNumUint: localNumUint
-	frame_dig -5 // localNumUint: number
-	itxn_field LocalNumUint
-
-	// Fee field not set, defaulting to 0
-	int 0
-	itxn_field Fee
-
-	// Submit inner transaction
-	itxn_submit
-
-	// contracts/abstracted_account.algo.ts:90
-	// this.programs(sha256(program)).value = this.itxn.createdApplicationID
-	frame_dig -1 // program: bytes
-	sha256
-	itxn CreatedApplicationID
-	itob
-	box_put
-	retsub
-
-abi_route_removeProgram:
-	// programHash: byte[32]
-	txna ApplicationArgs 1
-	dup
-	len
-	int 32
-	==
-	assert
-
-	// execute removeProgram(byte[32])void
-	callsub removeProgram
-	int 1
-	return
-
-// removeProgram(byte[32])void
-//
-// Remove a program from this abstracted account
-//
-// @param programHash The hash of the program to remove
-removeProgram:
-	proto 1 0
-
-	// contracts/abstracted_account.algo.ts:99
-	// assert(this.txn.sender === this.eoa.value)
-	txn Sender
-	byte 0x656f61 // "eoa"
-	app_global_get
-	==
-	assert
-
-	// contracts/abstracted_account.algo.ts:101
-	// this.programs(programHash).delete()
-	frame_dig -1 // programHash: bytes32
-	box_del
-	retsub
-
-abi_route_callProgram:
-	// method: byte[]
-	txna ApplicationArgs 3
-	extract 2 0
-
-	// programHash: byte[32]
-	txna ApplicationArgs 2
-	dup
-	len
-	int 32
-	==
-	assert
-
-	// _appID: application
+abi_route_rekeyToApp:
+	// app: application
 	txna ApplicationArgs 1
 	btoi
 	txnas Applications
 
-	// execute callProgram(byte[],byte[32],application)void
-	callsub callProgram
+	// execute rekeyToApp(application)void
+	callsub rekeyToApp
 	int 1
 	return
 
-// callProgram(byte[],byte[32],application)void
+// rekeyToApp(application)void
 //
-// Calls one of the deploy programs for this abstracted account
+// Temporarily rekey to an approved app
 //
-// TODO: Think of good way to pass args
-//
-// @param programHash The hash of the program to call
-// @param method The method selector to call
-callProgram:
-	proto 3 0
+// @param app The app to rekey to
+rekeyToApp:
+	proto 1 0
 
-	// Push empty bytes after the frame pointer to reserve space for local variables
-	byte 0x
-
-	// contracts/abstracted_account.algo.ts:114
-	// app = this.programs(programHash).value
-	frame_dig -2 // programHash: bytes32
-	box_get
+	// contracts/abstracted_account.algo.ts:83
+	// assert(this.apps(app).exists)
+	frame_dig -1 // app: Application
+	itob
+	box_len
+	swap
+	pop
 	assert
-	btoi
-	frame_bury 0 // app: application
 
-	// contracts/abstracted_account.algo.ts:116
-	// sendAppCall({
-	//       applicationID: app,
+	// contracts/abstracted_account.algo.ts:85
+	// sendPayment({
+	//       receiver: this.eoa.value,
 	//       rekeyTo: app.address,
-	//       applicationArgs: [method],
+	//       note: 'rekeying to app',
 	//     })
 	itxn_begin
-	int appl
+	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:117
-	// applicationID: app
-	frame_dig 0 // app: application
-	itxn_field ApplicationID
+	// contracts/abstracted_account.algo.ts:86
+	// receiver: this.eoa.value
+	byte 0x656f61 // "eoa"
+	app_global_get
+	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:118
+	// contracts/abstracted_account.algo.ts:87
 	// rekeyTo: app.address
-	frame_dig 0 // app: application
+	frame_dig -1 // app: Application
 	app_params_get AppAddress
 	assert
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:119
-	// applicationArgs: [method]
-	frame_dig -3 // method: bytes
-	itxn_field ApplicationArgs
+	// contracts/abstracted_account.algo.ts:88
+	// note: 'rekeying to app'
+	byte 0x72656b6579696e6720746f20617070 // "rekeying to app"
+	itxn_field Note
 
 	// Fee field not set, defaulting to 0
 	int 0
@@ -447,6 +333,83 @@ callProgram:
 
 	// Submit inner transaction
 	itxn_submit
+
+	// contracts/abstracted_account.algo.ts:91
+	// this.assertVerifyAppAuthAddrIsCalled()
+	callsub assertVerifyAppAuthAddrIsCalled
+	retsub
+
+abi_route_addApp:
+	// app: application
+	txna ApplicationArgs 1
+	btoi
+	txnas Applications
+
+	// execute addApp(application)void
+	callsub addApp
+	int 1
+	return
+
+// addApp(application)void
+//
+// Add an app to the list of approved apps
+//
+// @param app The app to add
+addApp:
+	proto 1 0
+
+	// contracts/abstracted_account.algo.ts:100
+	// assert(this.txn.sender === this.eoa.value)
+	txn Sender
+	byte 0x656f61 // "eoa"
+	app_global_get
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:102
+	// this.apps(app).value = true
+	frame_dig -1 // app: Application
+	itob
+	int 1
+	byte 0x00
+	int 0
+	uncover 2
+	setbit
+	box_put
+	retsub
+
+abi_route_removeApp:
+	// app: application
+	txna ApplicationArgs 1
+	btoi
+	txnas Applications
+
+	// execute removeApp(application)void
+	callsub removeApp
+	int 1
+	return
+
+// removeApp(application)void
+//
+// Remove an app from the list of approved apps
+//
+// @param app The app to remove
+removeApp:
+	proto 1 0
+
+	// contracts/abstracted_account.algo.ts:111
+	// assert(this.txn.sender === this.eoa.value)
+	txn Sender
+	byte 0x656f61 // "eoa"
+	app_global_get
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:113
+	// this.apps(app).delete()
+	frame_dig -1 // app: Application
+	itob
+	box_del
 	retsub
 
 create_NoOp:
@@ -457,10 +420,11 @@ create_NoOp:
 
 call_NoOp:
 	method "saveAuthAddr()void"
+	method "verifyAppAuthAddr()void"
 	method "rekey(appl,bool)void"
-	method "addProgram(byte[],uint64,uint64,uint64,uint64)void"
-	method "removeProgram(byte[32])void"
-	method "callProgram(application,byte[32],byte[])void"
+	method "rekeyToApp(application)void"
+	method "addApp(application)void"
+	method "removeApp(application)void"
 	txna ApplicationArgs 0
-	match abi_route_saveAuthAddr abi_route_rekey abi_route_addProgram abi_route_removeProgram abi_route_callProgram
+	match abi_route_saveAuthAddr abi_route_verifyAppAuthAddr abi_route_rekey abi_route_rekeyToApp abi_route_addApp abi_route_removeApp
 	err
