@@ -162,7 +162,7 @@ assertVerifyAppAuthAddrIsCalled:
 	assert
 	retsub
 
-abi_route_rekey:
+abi_route_rekeyToEOA:
 	// flash: bool
 	txna ApplicationArgs 1
 	dup
@@ -183,18 +183,18 @@ abi_route_rekey:
 	==
 	assert
 
-	// execute rekey(bool,appl)void
-	callsub rekey
+	// execute rekeyToEOA(bool,appl)void
+	callsub rekeyToEOA
 	int 1
 	return
 
-// rekey(bool,appl)void
+// rekeyToEOA(bool,appl)void
 //
 // Rekey this contract account to the EOA
 //
 // @param saveAuthAddrCall Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state
 // @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
-rekey:
+rekeyToEOA:
 	proto 2 0
 
 	// contracts/abstracted_account.algo.ts:66
@@ -497,11 +497,11 @@ create_NoOp:
 call_NoOp:
 	method "saveAuthAddr()void"
 	method "verifyAppAuthAddr()void"
-	method "rekey(appl,bool)void"
+	method "rekeyToEOA(appl,bool)void"
 	method "rekeyToApp(application)void"
 	method "addApp(application)void"
 	method "removeApp(application)void"
 	method "optInToAsset(asset,pay)void"
 	txna ApplicationArgs 0
-	match abi_route_saveAuthAddr abi_route_verifyAppAuthAddr abi_route_rekey abi_route_rekeyToApp abi_route_addApp abi_route_removeApp abi_route_optInToAsset
+	match abi_route_saveAuthAddr abi_route_verifyAppAuthAddr abi_route_rekeyToEOA abi_route_rekeyToApp abi_route_addApp abi_route_removeApp abi_route_optInToAsset
 	err

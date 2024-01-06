@@ -62,7 +62,7 @@ export class AbstractedAccount extends Contract {
    * @param saveAuthAddrCall Call to saveAuthAddr() to ensure the EOA's auth addr is saved in state
    * @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
    */
-  rekey(saveAuthAddrCall: AppCallTxn, flash: boolean): void {
+  rekeyToEOA(saveAuthAddrCall: AppCallTxn, flash: boolean): void {
     verifyAppCallTxn(saveAuthAddrCall, { applicationID: this.app });
     assert(saveAuthAddrCall.applicationArgs[0] === method('saveAuthAddr()void'));
 

@@ -27,7 +27,7 @@
       }
     },
     {
-      "name": "rekey",
+      "name": "rekeyToEOA",
       "desc": "Rekey this contract account to the EOA",
       "args": [
         {

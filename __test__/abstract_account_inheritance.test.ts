@@ -83,7 +83,7 @@ describe('AbstractedOptIn', () => {
   test('Alice rekeys the abstracted account to her EOA key to send the asset back to Bob', async () => {
     const saveAuthAddrCall = (await appClient.compose().saveAuthAddr({}).atc()).buildGroup()[0];
 
-    await appClient.rekey(
+    await appClient.rekeyToEoa(
       { saveAuthAddrCall: { transaction: saveAuthAddrCall.txn, signer: aliceEOA }, flash: false },
       { sender: aliceEOA, sendParams: { fee: algokit.microAlgos(2000) } }
     );
