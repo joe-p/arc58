@@ -15,8 +15,11 @@ export class AbstractedAccount extends Contract {
    */
   forceFlash = GlobalStateKey<boolean>();
 
-  /** The apps that are authorized to send itxns from this account */
-  apps = BoxMap<Application, boolean>();
+  /**
+   * The apps that are authorized to send itxns from this account
+   * The box map values aren't actually used and are always empty
+   */
+  apps = BoxMap<Application, StaticArray<byte, 0>>();
 
   /**
    * Create an abstracted account for an EOA
@@ -99,7 +102,7 @@ export class AbstractedAccount extends Contract {
   addApp(app: Application): void {
     assert(this.txn.sender === this.eoa.value);
 
-    this.apps(app).value = true;
+    this.apps(app).create(0);
   }
 
   /**

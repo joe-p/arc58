@@ -36,7 +36,7 @@ describe('Abstracted Subscription Program', () => {
 
     aliceAbstractedAccount = (await appClient.appClient.getAppReference()).appAddress;
 
-    await appClient.appClient.fundAppAccount({ amount: algokit.microAlgos(300_000) });
+    await appClient.appClient.fundAppAccount({ amount: algokit.microAlgos(200_000) });
 
     subAppClient = new SubscriptionProgramClient(
       {
@@ -53,6 +53,7 @@ describe('Abstracted Subscription Program', () => {
   });
 
   test('Alice adds the app to the abstracted account', async () => {
+    await appClient.appClient.fundAppAccount({ amount: algokit.microAlgos(5_700) });
     await appClient.addApp({ app: subAppID }, { boxes: [algosdk.encodeUint64(subAppID)] });
   });
 
