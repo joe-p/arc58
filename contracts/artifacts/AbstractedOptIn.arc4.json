@@ -60,6 +60,20 @@
       }
     },
     {
+      "name": "transferEOA",
+      "desc": "Transfer the abstracted account to a new EOA.",
+      "args": [
+        {
+          "name": "newEOA",
+          "type": "account",
+          "desc": "The new EOA"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "addApp",
       "desc": "Add an app to the list of approved apps",
       "args": [

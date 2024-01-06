@@ -1,0 +1,33 @@
+{
+  "name": "OptInProgram",
+  "desc": "",
+  "methods": [
+    {
+      "name": "optInToAsset",
+      "args": [
+        {
+          "name": "sender",
+          "type": "account"
+        },
+        {
+          "name": "asset",
+          "type": "asset"
+        },
+        {
+          "name": "mbrPayment",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "createApplication",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    }
+  ]
+}
