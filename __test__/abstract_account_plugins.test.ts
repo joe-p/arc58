@@ -71,7 +71,7 @@ describe('Abstracted Subscription Program', () => {
   describe('Subscription Plugin', () => {
     test('Alice adds the app to the abstracted account', async () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(5_700) });
-      await abstractedAccountClient.addApp({ app: subPluginID }, { boxes: [algosdk.encodeUint64(subPluginID)] });
+      await abstractedAccountClient.addPlugin({ app: subPluginID }, { boxes: [algosdk.encodeUint64(subPluginID)] });
     });
 
     test('Someone calls the program to trigger payment', async () => {
@@ -93,8 +93,8 @@ describe('Abstracted Subscription Program', () => {
 
       await abstractedAccountClient
         .compose()
-        .rekeyToApp(
-          { app: subPluginID },
+        .rekeyToPlugin(
+          { plugin: subPluginID },
           {
             sender: testAccount,
             boxes: [algosdk.encodeUint64(subPluginID)],
@@ -135,7 +135,7 @@ describe('Abstracted Subscription Program', () => {
 
     test('Alice adds the app to the abstracted account', async () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(5_700) });
-      await abstractedAccountClient.addApp({ app: optInPluginID }, { boxes: [algosdk.encodeUint64(optInPluginID)] });
+      await abstractedAccountClient.addPlugin({ app: optInPluginID }, { boxes: [algosdk.encodeUint64(optInPluginID)] });
     });
 
     test("Bob opts Alice's abstracted account into the asset", async () => {
@@ -163,8 +163,8 @@ describe('Abstracted Subscription Program', () => {
 
       await abstractedAccountClient
         .compose()
-        .rekeyToApp(
-          { app: optInPluginID },
+        .rekeyToPlugin(
+          { plugin: optInPluginID },
           { boxes: [algosdk.encodeUint64(optInPluginID)], sendParams: { fee: algokit.microAlgos(2000) } }
         )
         .addTransaction({ transaction: optInGroup[0].txn, signer: bob })

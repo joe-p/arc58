@@ -210,28 +210,28 @@ skip_or0:
 if0_end:
 	retsub
 
-abi_route_rekeyToApp:
-	// app: application
+abi_route_rekeyToPlugin:
+	// plugin: application
 	txna ApplicationArgs 1
 	btoi
 	txnas Applications
 
-	// execute rekeyToApp(application)void
-	callsub rekeyToApp
+	// execute rekeyToPlugin(application)void
+	callsub rekeyToPlugin
 	int 1
 	return
 
-// rekeyToApp(application)void
+// rekeyToPlugin(application)void
 //
-// Temporarily rekey to an approved app
+// Temporarily rekey to an approved plugin app address
 //
-// @param app The app to rekey to
-rekeyToApp:
+// @param plugin The app to rekey to
+rekeyToPlugin:
 	proto 1 0
 
 	// contracts/abstracted_account.algo.ts:73
-	// assert(this.apps(app).exists)
-	frame_dig -1 // app: Application
+	// assert(this.plugins(plugin).exists)
+	frame_dig -1 // plugin: Application
 	itob
 	box_len
 	swap
@@ -241,8 +241,8 @@ rekeyToApp:
 	// contracts/abstracted_account.algo.ts:75
 	// sendPayment({
 	//       receiver: this.eoa.value,
-	//       rekeyTo: app.address,
-	//       note: 'rekeying to app',
+	//       rekeyTo: plugin.address,
+	//       note: 'rekeying to plugin',
 	//     })
 	itxn_begin
 	int pay
@@ -255,15 +255,15 @@ rekeyToApp:
 	itxn_field Receiver
 
 	// contracts/abstracted_account.algo.ts:77
-	// rekeyTo: app.address
-	frame_dig -1 // app: Application
+	// rekeyTo: plugin.address
+	frame_dig -1 // plugin: Application
 	app_params_get AppAddress
 	assert
 	itxn_field RekeyTo
 
 	// contracts/abstracted_account.algo.ts:78
-	// note: 'rekeying to app'
-	byte 0x72656b6579696e6720746f20617070 // "rekeying to app"
+	// note: 'rekeying to plugin'
+	byte 0x72656b6579696e6720746f20706c7567696e // "rekeying to plugin"
 	itxn_field Note
 
 	// Fee field not set, defaulting to 0
@@ -312,23 +312,23 @@ transferEOA:
 	app_global_put
 	retsub
 
-abi_route_addApp:
+abi_route_addPlugin:
 	// app: application
 	txna ApplicationArgs 1
 	btoi
 	txnas Applications
 
-	// execute addApp(application)void
-	callsub addApp
+	// execute addPlugin(application)void
+	callsub addPlugin
 	int 1
 	return
 
-// addApp(application)void
+// addPlugin(application)void
 //
-// Add an app to the list of approved apps
+// Add an app to the list of approved plugins
 //
 // @param app The app to add
-addApp:
+addPlugin:
 	proto 1 0
 
 	// contracts/abstracted_account.algo.ts:100
@@ -340,30 +340,30 @@ addApp:
 	assert
 
 	// contracts/abstracted_account.algo.ts:102
-	// this.apps(app).create(0)
+	// this.plugins(app).create(0)
 	frame_dig -1 // app: Application
 	itob
 	int 0
 	box_create
 	retsub
 
-abi_route_removeApp:
+abi_route_removePlugin:
 	// app: application
 	txna ApplicationArgs 1
 	btoi
 	txnas Applications
 
-	// execute removeApp(application)void
-	callsub removeApp
+	// execute removePlugin(application)void
+	callsub removePlugin
 	int 1
 	return
 
-// removeApp(application)void
+// removePlugin(application)void
 //
-// Remove an app from the list of approved apps
+// Remove an app from the list of approved plugins
 //
 // @param app The app to remove
-removeApp:
+removePlugin:
 	proto 1 0
 
 	// contracts/abstracted_account.algo.ts:111
@@ -375,7 +375,7 @@ removeApp:
 	assert
 
 	// contracts/abstracted_account.algo.ts:113
-	// this.apps(app).delete()
+	// this.plugins(app).delete()
 	frame_dig -1 // app: Application
 	itob
 	box_del
@@ -390,10 +390,10 @@ create_NoOp:
 call_NoOp:
 	method "verifyAppAuthAddr()void"
 	method "rekeyToEOA(bool)void"
-	method "rekeyToApp(application)void"
+	method "rekeyToPlugin(application)void"
 	method "transferEOA(account)void"
-	method "addApp(application)void"
-	method "removeApp(application)void"
+	method "addPlugin(application)void"
+	method "removePlugin(application)void"
 	txna ApplicationArgs 0
-	match abi_route_verifyAppAuthAddr abi_route_rekeyToEOA abi_route_rekeyToApp abi_route_transferEOA abi_route_addApp abi_route_removeApp
+	match abi_route_verifyAppAuthAddr abi_route_rekeyToEOA abi_route_rekeyToPlugin abi_route_transferEOA abi_route_addPlugin abi_route_removePlugin
 	err

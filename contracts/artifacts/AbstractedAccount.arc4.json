@@ -33,11 +33,11 @@
       }
     },
     {
-      "name": "rekeyToApp",
-      "desc": "Temporarily rekey to an approved app",
+      "name": "rekeyToPlugin",
+      "desc": "Temporarily rekey to an approved plugin app address",
       "args": [
         {
-          "name": "app",
+          "name": "plugin",
           "type": "application",
           "desc": "The app to rekey to"
         }
@@ -61,8 +61,8 @@
       }
     },
     {
-      "name": "addApp",
-      "desc": "Add an app to the list of approved apps",
+      "name": "addPlugin",
+      "desc": "Add an app to the list of approved plugins",
       "args": [
         {
           "name": "app",
@@ -75,8 +75,8 @@
       }
     },
     {
-      "name": "removeApp",
-      "desc": "Remove an app from the list of approved apps",
+      "name": "removePlugin",
+      "desc": "Remove an app from the list of approved plugins",
       "args": [
         {
           "name": "app",

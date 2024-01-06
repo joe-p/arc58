@@ -42,7 +42,7 @@ export const APP_SPEC: AppSpec = {
         "no_op": "CALL"
       }
     },
-    "rekeyToApp(application)void": {
+    "rekeyToPlugin(application)void": {
       "call_config": {
         "no_op": "CALL"
       }
@@ -52,12 +52,12 @@ export const APP_SPEC: AppSpec = {
         "no_op": "CALL"
       }
     },
-    "addApp(application)void": {
+    "addPlugin(application)void": {
       "call_config": {
         "no_op": "CALL"
       }
     },
-    "removeApp(application)void": {
+    "removePlugin(application)void": {
       "call_config": {
         "no_op": "CALL"
       }
@@ -100,7 +100,7 @@ export const APP_SPEC: AppSpec = {
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgovLyBhc3NlcnRWZXJpZnlBcHBBdXRoQWRkcklzQ2FsbGVkKCl2b2lkCi8vCi8vIE1ha2Ugc3VyZSB0aGF0IHZlcmlmeUFwcEF1dGhBZGRyIGlzIGNhbGxlZCBieSB0aGUgZW5kIG9mIHRoZSB0eG4gZ3JvdXAKYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZDoKCXByb3RvIDAgMAoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlIDB4CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjI3CgkvLyBhcHBsID0gdGhpcy50eG5Hcm91cFt0aGlzLnR4bkdyb3VwLmxlbmd0aCAtIDFdCglnbG9iYWwgR3JvdXBTaXplCglpbnQgMQoJLQoJZnJhbWVfYnVyeSAwIC8vIGFwcGw6IHR4bgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoyOAoJLy8gdmVyaWZ5QXBwQ2FsbFR4bihhcHBsLCB7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiB0aGlzLmFwcCwKCS8vICAgICB9KQoJLy8gdmVyaWZ5IGFwcGwKCWZyYW1lX2RpZyAwIC8vIGFwcGw6IHR4bgoJZ3R4bnMgVHlwZUVudW0KCWludCBhcHBsCgk9PQoJYXNzZXJ0CgoJLy8gdmVyaWZ5IGFwcGxpY2F0aW9uSUQKCWZyYW1lX2RpZyAwIC8vIGFwcGw6IHR4bgoJZ3R4bnMgQXBwbGljYXRpb25JRAoJdHhuYSBBcHBsaWNhdGlvbnMgMAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czozMQoJLy8gYXNzZXJ0KGFwcGwuYXBwbGljYXRpb25BcmdzWzBdID09PSBtZXRob2QoJ3ZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkJykpCglmcmFtZV9kaWcgMCAvLyBhcHBsOiB0eG4KCWd0eG5zIEFwcGxpY2F0aW9uQXJncyAwCgltZXRob2QgInZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkIgoJPT0KCWFzc2VydAoJcmV0c3ViCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAovLwovLyBDcmVhdGUgYW4gYWJzdHJhY3RlZCBhY2NvdW50IGZvciBhbiBFT0EKY3JlYXRlQXBwbGljYXRpb246Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MzgKCS8vIHRoaXMuZW9hLnZhbHVlID0gdGhpcy50eG4uc2VuZGVyCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCgl0eG4gU2VuZGVyCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfdmVyaWZ5QXBwQXV0aEFkZHI6CgkvLyBleGVjdXRlIHZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkCgljYWxsc3ViIHZlcmlmeUFwcEF1dGhBZGRyCglpbnQgMQoJcmV0dXJuCgovLyB2ZXJpZnlBcHBBdXRoQWRkcigpdm9pZAovLwovLyBWZXJpZnkgdGhlIGNvbnRyYWN0IGFjY291bnQgaXMgbm90IHJla2V5ZWQKdmVyaWZ5QXBwQXV0aEFkZHI6Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NDUKCS8vIGFzc2VydCh0aGlzLmFwcC5hZGRyZXNzLmF1dGhBZGRyID09PSBnbG9iYWxzLnplcm9BZGRyZXNzKQoJZ2xvYmFsIEN1cnJlbnRBcHBsaWNhdGlvbkFkZHJlc3MKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYXNzZXJ0CglyZXRzdWIKCmFiaV9yb3V0ZV9yZWtleVRvRU9BOgoJLy8gZmxhc2g6IGJvb2wKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWR1cAoJbGVuCglpbnQgMQoJPT0KCWFzc2VydAoJaW50IDAKCWdldGJpdAoKCS8vIGV4ZWN1dGUgcmVrZXlUb0VPQShib29sKXZvaWQKCWNhbGxzdWIgcmVrZXlUb0VPQQoJaW50IDEKCXJldHVybgoKLy8gcmVrZXlUb0VPQShib29sKXZvaWQKLy8KLy8gUmVrZXkgdGhpcyBjb250cmFjdCBhY2NvdW50IHRvIHRoZSBFT0EKLy8KLy8gQHBhcmFtIGZsYXNoIFdoZXRoZXIgb3Igbm90IHRoaXMgc2hvdWxkIGJlIGEgZmxhc2ggcmVrZXkuIElmIHRydWUsIHRoZSByZWtleSBiYWNrIHRvIHRoaXMgY29udHJhY3QgbXVzdCBkb25lIGluIHRoZSBzYW1lIHR4biBncm91cCBhcyB0aGlzIGNhbGwKcmVrZXlUb0VPQToKCXByb3RvIDEgMAoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlIDB4CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjU0CgkvLyBhdXRoQWRkciA9IHRoaXMuZW9hLnZhbHVlLmF1dGhBZGRyID09PSBBZGRyZXNzLnplcm9BZGRyZXNzID8gdGhpcy5lb2EudmFsdWUgOiB0aGlzLmVvYS52YWx1ZS5hdXRoQWRkcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYnogdGVybmFyeTFfZmFsc2UKCWJ5dGUgMHg2NTZmNjEgLy8gImVvYSIKCWFwcF9nbG9iYWxfZ2V0CgliIHRlcm5hcnkxX2VuZAoKdGVybmFyeTFfZmFsc2U6CglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJYWNjdF9wYXJhbXNfZ2V0IEFjY3RBdXRoQWRkcgoJYXNzZXJ0Cgp0ZXJuYXJ5MV9lbmQ6CglmcmFtZV9idXJ5IDAgLy8gYXV0aEFkZHI6IGFkZHJlc3MKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTYKCS8vIHNlbmRQYXltZW50KHsKCS8vICAgICAgIHJlY2VpdmVyOiB0aGlzLmVvYS52YWx1ZSwKCS8vICAgICAgIHJla2V5VG86IGF1dGhBZGRyLAoJLy8gICAgICAgbm90ZTogJ3Jla2V5aW5nIHRvIEVPQScsCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludCBwYXkKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTcKCS8vIHJlY2VpdmVyOiB0aGlzLmVvYS52YWx1ZQoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWl0eG5fZmllbGQgUmVjZWl2ZXIKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTgKCS8vIHJla2V5VG86IGF1dGhBZGRyCglmcmFtZV9kaWcgMCAvLyBhdXRoQWRkcjogYWRkcmVzcwoJaXR4bl9maWVsZCBSZWtleVRvCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjU5CgkvLyBub3RlOiAncmVrZXlpbmcgdG8gRU9BJwoJYnl0ZSAweDcyNjU2YjY1Nzk2OTZlNjcyMDc0NmYyMDQ1NGY0MSAvLyAicmVrZXlpbmcgdG8gRU9BIgoJaXR4bl9maWVsZCBOb3RlCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50IDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoKCS8vIGlmMF9jb25kaXRpb24KCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo2MgoJLy8gZmxhc2ggfHwgdGhpcy5mb3JjZUZsYXNoLnZhbHVlCglmcmFtZV9kaWcgLTEgLy8gZmxhc2g6IGJvb2xlYW4KCWR1cAoJYm56IHNraXBfb3IwCglieXRlIDB4NjY2ZjcyNjM2NTQ2NmM2MTczNjggLy8gImZvcmNlRmxhc2giCglhcHBfZ2xvYmFsX2dldAoJaW50IDAKCWdldGJpdAoJfHwKCnNraXBfb3IwOgoJYnogaWYwX2VuZAoKCS8vIGlmMF9jb25zZXF1ZW50CgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NjMKCS8vIHRoaXMuYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZCgpCgljYWxsc3ViIGFzc2VydFZlcmlmeUFwcEF1dGhBZGRySXNDYWxsZWQKCmlmMF9lbmQ6CglyZXRzdWIKCmFiaV9yb3V0ZV9yZWtleVRvQXBwOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSByZWtleVRvQXBwKGFwcGxpY2F0aW9uKXZvaWQKCWNhbGxzdWIgcmVrZXlUb0FwcAoJaW50IDEKCXJldHVybgoKLy8gcmVrZXlUb0FwcChhcHBsaWNhdGlvbil2b2lkCi8vCi8vIFRlbXBvcmFyaWx5IHJla2V5IHRvIGFuIGFwcHJvdmVkIGFwcAovLwovLyBAcGFyYW0gYXBwIFRoZSBhcHAgdG8gcmVrZXkgdG8KcmVrZXlUb0FwcDoKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3MwoJLy8gYXNzZXJ0KHRoaXMuYXBwcyhhcHApLmV4aXN0cykKCWZyYW1lX2RpZyAtMSAvLyBhcHA6IEFwcGxpY2F0aW9uCglpdG9iCglib3hfbGVuCglzd2FwCglwb3AKCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NQoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlLAoJLy8gICAgICAgcmVrZXlUbzogYXBwLmFkZHJlc3MsCgkvLyAgICAgICBub3RlOiAncmVrZXlpbmcgdG8gYXBwJywKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NgoJLy8gcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NwoJLy8gcmVrZXlUbzogYXBwLmFkZHJlc3MKCWZyYW1lX2RpZyAtMSAvLyBhcHA6IEFwcGxpY2F0aW9uCglhcHBfcGFyYW1zX2dldCBBcHBBZGRyZXNzCglhc3NlcnQKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3OAoJLy8gbm90ZTogJ3Jla2V5aW5nIHRvIGFwcCcKCWJ5dGUgMHg3MjY1NmI2NTc5Njk2ZTY3MjA3NDZmMjA2MTcwNzAgLy8gInJla2V5aW5nIHRvIGFwcCIKCWl0eG5fZmllbGQgTm90ZQoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6ODEKCS8vIHRoaXMuYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZCgpCgljYWxsc3ViIGFzc2VydFZlcmlmeUFwcEF1dGhBZGRySXNDYWxsZWQKCXJldHN1YgoKYWJpX3JvdXRlX3RyYW5zZmVyRU9BOgoJLy8gbmV3RU9BOiBhY2NvdW50Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgl0eG5hcyBBY2NvdW50cwoKCS8vIGV4ZWN1dGUgdHJhbnNmZXJFT0EoYWNjb3VudCl2b2lkCgljYWxsc3ViIHRyYW5zZmVyRU9BCglpbnQgMQoJcmV0dXJuCgovLyB0cmFuc2ZlckVPQShhY2NvdW50KXZvaWQKLy8KLy8gVHJhbnNmZXIgdGhlIGFic3RyYWN0ZWQgYWNjb3VudCB0byBhIG5ldyBFT0EuCi8vCi8vIEBwYXJhbSBuZXdFT0EgVGhlIG5ldyBFT0EKdHJhbnNmZXJFT0E6Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTAKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMuZW9hLnZhbHVlKQoJdHhuIFNlbmRlcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTEKCS8vIHRoaXMuZW9hLnZhbHVlID0gbmV3RU9BCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglmcmFtZV9kaWcgLTEgLy8gbmV3RU9BOiBBY2NvdW50CglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfYWRkQXBwOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSBhZGRBcHAoYXBwbGljYXRpb24pdm9pZAoJY2FsbHN1YiBhZGRBcHAKCWludCAxCglyZXR1cm4KCi8vIGFkZEFwcChhcHBsaWNhdGlvbil2b2lkCi8vCi8vIEFkZCBhbiBhcHAgdG8gdGhlIGxpc3Qgb2YgYXBwcm92ZWQgYXBwcwovLwovLyBAcGFyYW0gYXBwIFRoZSBhcHAgdG8gYWRkCmFkZEFwcDoKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMDAKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMuZW9hLnZhbHVlKQoJdHhuIFNlbmRlcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MTAyCgkvLyB0aGlzLmFwcHMoYXBwKS5jcmVhdGUoMCkKCWZyYW1lX2RpZyAtMSAvLyBhcHA6IEFwcGxpY2F0aW9uCglpdG9iCglpbnQgMAoJYm94X2NyZWF0ZQoJcmV0c3ViCgphYmlfcm91dGVfcmVtb3ZlQXBwOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSByZW1vdmVBcHAoYXBwbGljYXRpb24pdm9pZAoJY2FsbHN1YiByZW1vdmVBcHAKCWludCAxCglyZXR1cm4KCi8vIHJlbW92ZUFwcChhcHBsaWNhdGlvbil2b2lkCi8vCi8vIFJlbW92ZSBhbiBhcHAgZnJvbSB0aGUgbGlzdCBvZiBhcHByb3ZlZCBhcHBzCi8vCi8vIEBwYXJhbSBhcHAgVGhlIGFwcCB0byByZW1vdmUKcmVtb3ZlQXBwOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjExMQoJLy8gYXNzZXJ0KHRoaXMudHhuLnNlbmRlciA9PT0gdGhpcy5lb2EudmFsdWUpCgl0eG4gU2VuZGVyCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMTMKCS8vIHRoaXMuYXBwcyhhcHApLmRlbGV0ZSgpCglmcmFtZV9kaWcgLTEgLy8gYXBwOiBBcHBsaWNhdGlvbgoJaXRvYgoJYm94X2RlbAoJcmV0c3ViCgpjcmVhdGVfTm9PcDoKCW1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWVycgoKY2FsbF9Ob09wOgoJbWV0aG9kICJ2ZXJpZnlBcHBBdXRoQWRkcigpdm9pZCIKCW1ldGhvZCAicmVrZXlUb0VPQShib29sKXZvaWQiCgltZXRob2QgInJla2V5VG9BcHAoYXBwbGljYXRpb24pdm9pZCIKCW1ldGhvZCAidHJhbnNmZXJFT0EoYWNjb3VudCl2b2lkIgoJbWV0aG9kICJhZGRBcHAoYXBwbGljYXRpb24pdm9pZCIKCW1ldGhvZCAicmVtb3ZlQXBwKGFwcGxpY2F0aW9uKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfdmVyaWZ5QXBwQXV0aEFkZHIgYWJpX3JvdXRlX3Jla2V5VG9FT0EgYWJpX3JvdXRlX3Jla2V5VG9BcHAgYWJpX3JvdXRlX3RyYW5zZmVyRU9BIGFiaV9yb3V0ZV9hZGRBcHAgYWJpX3JvdXRlX3JlbW92ZUFwcAoJZXJy",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgovLyBhc3NlcnRWZXJpZnlBcHBBdXRoQWRkcklzQ2FsbGVkKCl2b2lkCi8vCi8vIE1ha2Ugc3VyZSB0aGF0IHZlcmlmeUFwcEF1dGhBZGRyIGlzIGNhbGxlZCBieSB0aGUgZW5kIG9mIHRoZSB0eG4gZ3JvdXAKYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZDoKCXByb3RvIDAgMAoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlIDB4CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjI3CgkvLyBhcHBsID0gdGhpcy50eG5Hcm91cFt0aGlzLnR4bkdyb3VwLmxlbmd0aCAtIDFdCglnbG9iYWwgR3JvdXBTaXplCglpbnQgMQoJLQoJZnJhbWVfYnVyeSAwIC8vIGFwcGw6IHR4bgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoyOAoJLy8gdmVyaWZ5QXBwQ2FsbFR4bihhcHBsLCB7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiB0aGlzLmFwcCwKCS8vICAgICB9KQoJLy8gdmVyaWZ5IGFwcGwKCWZyYW1lX2RpZyAwIC8vIGFwcGw6IHR4bgoJZ3R4bnMgVHlwZUVudW0KCWludCBhcHBsCgk9PQoJYXNzZXJ0CgoJLy8gdmVyaWZ5IGFwcGxpY2F0aW9uSUQKCWZyYW1lX2RpZyAwIC8vIGFwcGw6IHR4bgoJZ3R4bnMgQXBwbGljYXRpb25JRAoJdHhuYSBBcHBsaWNhdGlvbnMgMAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czozMQoJLy8gYXNzZXJ0KGFwcGwuYXBwbGljYXRpb25BcmdzWzBdID09PSBtZXRob2QoJ3ZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkJykpCglmcmFtZV9kaWcgMCAvLyBhcHBsOiB0eG4KCWd0eG5zIEFwcGxpY2F0aW9uQXJncyAwCgltZXRob2QgInZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkIgoJPT0KCWFzc2VydAoJcmV0c3ViCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAovLwovLyBDcmVhdGUgYW4gYWJzdHJhY3RlZCBhY2NvdW50IGZvciBhbiBFT0EKY3JlYXRlQXBwbGljYXRpb246Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MzgKCS8vIHRoaXMuZW9hLnZhbHVlID0gdGhpcy50eG4uc2VuZGVyCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCgl0eG4gU2VuZGVyCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfdmVyaWZ5QXBwQXV0aEFkZHI6CgkvLyBleGVjdXRlIHZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkCgljYWxsc3ViIHZlcmlmeUFwcEF1dGhBZGRyCglpbnQgMQoJcmV0dXJuCgovLyB2ZXJpZnlBcHBBdXRoQWRkcigpdm9pZAovLwovLyBWZXJpZnkgdGhlIGNvbnRyYWN0IGFjY291bnQgaXMgbm90IHJla2V5ZWQKdmVyaWZ5QXBwQXV0aEFkZHI6Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NDUKCS8vIGFzc2VydCh0aGlzLmFwcC5hZGRyZXNzLmF1dGhBZGRyID09PSBnbG9iYWxzLnplcm9BZGRyZXNzKQoJZ2xvYmFsIEN1cnJlbnRBcHBsaWNhdGlvbkFkZHJlc3MKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYXNzZXJ0CglyZXRzdWIKCmFiaV9yb3V0ZV9yZWtleVRvRU9BOgoJLy8gZmxhc2g6IGJvb2wKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWR1cAoJbGVuCglpbnQgMQoJPT0KCWFzc2VydAoJaW50IDAKCWdldGJpdAoKCS8vIGV4ZWN1dGUgcmVrZXlUb0VPQShib29sKXZvaWQKCWNhbGxzdWIgcmVrZXlUb0VPQQoJaW50IDEKCXJldHVybgoKLy8gcmVrZXlUb0VPQShib29sKXZvaWQKLy8KLy8gUmVrZXkgdGhpcyBjb250cmFjdCBhY2NvdW50IHRvIHRoZSBFT0EKLy8KLy8gQHBhcmFtIGZsYXNoIFdoZXRoZXIgb3Igbm90IHRoaXMgc2hvdWxkIGJlIGEgZmxhc2ggcmVrZXkuIElmIHRydWUsIHRoZSByZWtleSBiYWNrIHRvIHRoaXMgY29udHJhY3QgbXVzdCBkb25lIGluIHRoZSBzYW1lIHR4biBncm91cCBhcyB0aGlzIGNhbGwKcmVrZXlUb0VPQToKCXByb3RvIDEgMAoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlIDB4CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjU0CgkvLyBhdXRoQWRkciA9IHRoaXMuZW9hLnZhbHVlLmF1dGhBZGRyID09PSBBZGRyZXNzLnplcm9BZGRyZXNzID8gdGhpcy5lb2EudmFsdWUgOiB0aGlzLmVvYS52YWx1ZS5hdXRoQWRkcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYnogdGVybmFyeTFfZmFsc2UKCWJ5dGUgMHg2NTZmNjEgLy8gImVvYSIKCWFwcF9nbG9iYWxfZ2V0CgliIHRlcm5hcnkxX2VuZAoKdGVybmFyeTFfZmFsc2U6CglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJYWNjdF9wYXJhbXNfZ2V0IEFjY3RBdXRoQWRkcgoJYXNzZXJ0Cgp0ZXJuYXJ5MV9lbmQ6CglmcmFtZV9idXJ5IDAgLy8gYXV0aEFkZHI6IGFkZHJlc3MKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTYKCS8vIHNlbmRQYXltZW50KHsKCS8vICAgICAgIHJlY2VpdmVyOiB0aGlzLmVvYS52YWx1ZSwKCS8vICAgICAgIHJla2V5VG86IGF1dGhBZGRyLAoJLy8gICAgICAgbm90ZTogJ3Jla2V5aW5nIHRvIEVPQScsCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludCBwYXkKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTcKCS8vIHJlY2VpdmVyOiB0aGlzLmVvYS52YWx1ZQoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWl0eG5fZmllbGQgUmVjZWl2ZXIKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTgKCS8vIHJla2V5VG86IGF1dGhBZGRyCglmcmFtZV9kaWcgMCAvLyBhdXRoQWRkcjogYWRkcmVzcwoJaXR4bl9maWVsZCBSZWtleVRvCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjU5CgkvLyBub3RlOiAncmVrZXlpbmcgdG8gRU9BJwoJYnl0ZSAweDcyNjU2YjY1Nzk2OTZlNjcyMDc0NmYyMDQ1NGY0MSAvLyAicmVrZXlpbmcgdG8gRU9BIgoJaXR4bl9maWVsZCBOb3RlCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50IDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoKCS8vIGlmMF9jb25kaXRpb24KCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo2MgoJLy8gZmxhc2ggfHwgdGhpcy5mb3JjZUZsYXNoLnZhbHVlCglmcmFtZV9kaWcgLTEgLy8gZmxhc2g6IGJvb2xlYW4KCWR1cAoJYm56IHNraXBfb3IwCglieXRlIDB4NjY2ZjcyNjM2NTQ2NmM2MTczNjggLy8gImZvcmNlRmxhc2giCglhcHBfZ2xvYmFsX2dldAoJaW50IDAKCWdldGJpdAoJfHwKCnNraXBfb3IwOgoJYnogaWYwX2VuZAoKCS8vIGlmMF9jb25zZXF1ZW50CgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NjMKCS8vIHRoaXMuYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZCgpCgljYWxsc3ViIGFzc2VydFZlcmlmeUFwcEF1dGhBZGRySXNDYWxsZWQKCmlmMF9lbmQ6CglyZXRzdWIKCmFiaV9yb3V0ZV9yZWtleVRvUGx1Z2luOgoJLy8gcGx1Z2luOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSByZWtleVRvUGx1Z2luKGFwcGxpY2F0aW9uKXZvaWQKCWNhbGxzdWIgcmVrZXlUb1BsdWdpbgoJaW50IDEKCXJldHVybgoKLy8gcmVrZXlUb1BsdWdpbihhcHBsaWNhdGlvbil2b2lkCi8vCi8vIFRlbXBvcmFyaWx5IHJla2V5IHRvIGFuIGFwcHJvdmVkIHBsdWdpbiBhcHAgYWRkcmVzcwovLwovLyBAcGFyYW0gcGx1Z2luIFRoZSBhcHAgdG8gcmVrZXkgdG8KcmVrZXlUb1BsdWdpbjoKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3MwoJLy8gYXNzZXJ0KHRoaXMucGx1Z2lucyhwbHVnaW4pLmV4aXN0cykKCWZyYW1lX2RpZyAtMSAvLyBwbHVnaW46IEFwcGxpY2F0aW9uCglpdG9iCglib3hfbGVuCglzd2FwCglwb3AKCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NQoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlLAoJLy8gICAgICAgcmVrZXlUbzogcGx1Z2luLmFkZHJlc3MsCgkvLyAgICAgICBub3RlOiAncmVrZXlpbmcgdG8gcGx1Z2luJywKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NgoJLy8gcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NwoJLy8gcmVrZXlUbzogcGx1Z2luLmFkZHJlc3MKCWZyYW1lX2RpZyAtMSAvLyBwbHVnaW46IEFwcGxpY2F0aW9uCglhcHBfcGFyYW1zX2dldCBBcHBBZGRyZXNzCglhc3NlcnQKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3OAoJLy8gbm90ZTogJ3Jla2V5aW5nIHRvIHBsdWdpbicKCWJ5dGUgMHg3MjY1NmI2NTc5Njk2ZTY3MjA3NDZmMjA3MDZjNzU2NzY5NmUgLy8gInJla2V5aW5nIHRvIHBsdWdpbiIKCWl0eG5fZmllbGQgTm90ZQoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6ODEKCS8vIHRoaXMuYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZCgpCgljYWxsc3ViIGFzc2VydFZlcmlmeUFwcEF1dGhBZGRySXNDYWxsZWQKCXJldHN1YgoKYWJpX3JvdXRlX3RyYW5zZmVyRU9BOgoJLy8gbmV3RU9BOiBhY2NvdW50Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgl0eG5hcyBBY2NvdW50cwoKCS8vIGV4ZWN1dGUgdHJhbnNmZXJFT0EoYWNjb3VudCl2b2lkCgljYWxsc3ViIHRyYW5zZmVyRU9BCglpbnQgMQoJcmV0dXJuCgovLyB0cmFuc2ZlckVPQShhY2NvdW50KXZvaWQKLy8KLy8gVHJhbnNmZXIgdGhlIGFic3RyYWN0ZWQgYWNjb3VudCB0byBhIG5ldyBFT0EuCi8vCi8vIEBwYXJhbSBuZXdFT0EgVGhlIG5ldyBFT0EKdHJhbnNmZXJFT0E6Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTAKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMuZW9hLnZhbHVlKQoJdHhuIFNlbmRlcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTEKCS8vIHRoaXMuZW9hLnZhbHVlID0gbmV3RU9BCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglmcmFtZV9kaWcgLTEgLy8gbmV3RU9BOiBBY2NvdW50CglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfYWRkUGx1Z2luOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSBhZGRQbHVnaW4oYXBwbGljYXRpb24pdm9pZAoJY2FsbHN1YiBhZGRQbHVnaW4KCWludCAxCglyZXR1cm4KCi8vIGFkZFBsdWdpbihhcHBsaWNhdGlvbil2b2lkCi8vCi8vIEFkZCBhbiBhcHAgdG8gdGhlIGxpc3Qgb2YgYXBwcm92ZWQgcGx1Z2lucwovLwovLyBAcGFyYW0gYXBwIFRoZSBhcHAgdG8gYWRkCmFkZFBsdWdpbjoKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMDAKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMuZW9hLnZhbHVlKQoJdHhuIFNlbmRlcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MTAyCgkvLyB0aGlzLnBsdWdpbnMoYXBwKS5jcmVhdGUoMCkKCWZyYW1lX2RpZyAtMSAvLyBhcHA6IEFwcGxpY2F0aW9uCglpdG9iCglpbnQgMAoJYm94X2NyZWF0ZQoJcmV0c3ViCgphYmlfcm91dGVfcmVtb3ZlUGx1Z2luOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSByZW1vdmVQbHVnaW4oYXBwbGljYXRpb24pdm9pZAoJY2FsbHN1YiByZW1vdmVQbHVnaW4KCWludCAxCglyZXR1cm4KCi8vIHJlbW92ZVBsdWdpbihhcHBsaWNhdGlvbil2b2lkCi8vCi8vIFJlbW92ZSBhbiBhcHAgZnJvbSB0aGUgbGlzdCBvZiBhcHByb3ZlZCBwbHVnaW5zCi8vCi8vIEBwYXJhbSBhcHAgVGhlIGFwcCB0byByZW1vdmUKcmVtb3ZlUGx1Z2luOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjExMQoJLy8gYXNzZXJ0KHRoaXMudHhuLnNlbmRlciA9PT0gdGhpcy5lb2EudmFsdWUpCgl0eG4gU2VuZGVyCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMTMKCS8vIHRoaXMucGx1Z2lucyhhcHApLmRlbGV0ZSgpCglmcmFtZV9kaWcgLTEgLy8gYXBwOiBBcHBsaWNhdGlvbgoJaXRvYgoJYm94X2RlbAoJcmV0c3ViCgpjcmVhdGVfTm9PcDoKCW1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWVycgoKY2FsbF9Ob09wOgoJbWV0aG9kICJ2ZXJpZnlBcHBBdXRoQWRkcigpdm9pZCIKCW1ldGhvZCAicmVrZXlUb0VPQShib29sKXZvaWQiCgltZXRob2QgInJla2V5VG9QbHVnaW4oYXBwbGljYXRpb24pdm9pZCIKCW1ldGhvZCAidHJhbnNmZXJFT0EoYWNjb3VudCl2b2lkIgoJbWV0aG9kICJhZGRQbHVnaW4oYXBwbGljYXRpb24pdm9pZCIKCW1ldGhvZCAicmVtb3ZlUGx1Z2luKGFwcGxpY2F0aW9uKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfdmVyaWZ5QXBwQXV0aEFkZHIgYWJpX3JvdXRlX3Jla2V5VG9FT0EgYWJpX3JvdXRlX3Jla2V5VG9QbHVnaW4gYWJpX3JvdXRlX3RyYW5zZmVyRU9BIGFiaV9yb3V0ZV9hZGRQbHVnaW4gYWJpX3JvdXRlX3JlbW92ZVBsdWdpbgoJZXJy",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "contract": {
@@ -138,11 +138,11 @@ export const APP_SPEC: AppSpec = {
         }
       },
       {
-        "name": "rekeyToApp",
-        "desc": "Temporarily rekey to an approved app",
+        "name": "rekeyToPlugin",
+        "desc": "Temporarily rekey to an approved plugin app address",
         "args": [
           {
-            "name": "app",
+            "name": "plugin",
             "type": "application",
             "desc": "The app to rekey to"
           }
@@ -166,8 +166,8 @@ export const APP_SPEC: AppSpec = {
         }
       },
       {
-        "name": "addApp",
-        "desc": "Add an app to the list of approved apps",
+        "name": "addPlugin",
+        "desc": "Add an app to the list of approved plugins",
         "args": [
           {
             "name": "app",
@@ -180,8 +180,8 @@ export const APP_SPEC: AppSpec = {
         }
       },
       {
-        "name": "removeApp",
-        "desc": "Remove an app from the list of approved apps",
+        "name": "removePlugin",
+        "desc": "Remove an app from the list of approved plugins",
         "args": [
           {
             "name": "app",
@@ -274,14 +274,14 @@ export type AbstractedAccount = {
       argsTuple: [flash: boolean]
       returns: void
     }>
-    & Record<'rekeyToApp(application)void' | 'rekeyToApp', {
+    & Record<'rekeyToPlugin(application)void' | 'rekeyToPlugin', {
       argsObj: {
         /**
          * The app to rekey to
          */
-        app: number | bigint
+        plugin: number | bigint
       }
-      argsTuple: [app: number | bigint]
+      argsTuple: [plugin: number | bigint]
       returns: void
     }>
     & Record<'transferEOA(account)void' | 'transferEOA', {
@@ -294,7 +294,7 @@ export type AbstractedAccount = {
       argsTuple: [newEOA: string | Uint8Array]
       returns: void
     }>
-    & Record<'addApp(application)void' | 'addApp', {
+    & Record<'addPlugin(application)void' | 'addPlugin', {
       argsObj: {
         /**
          * The app to add
@@ -304,7 +304,7 @@ export type AbstractedAccount = {
       argsTuple: [app: number | bigint]
       returns: void
     }>
-    & Record<'removeApp(application)void' | 'removeApp', {
+    & Record<'removePlugin(application)void' | 'removePlugin', {
       argsObj: {
         /**
          * The app to remove
@@ -428,18 +428,18 @@ export abstract class AbstractedAccountCallFactory {
     }
   }
   /**
-   * Constructs a no op call for the rekeyToApp(application)void ABI method
+   * Constructs a no op call for the rekeyToPlugin(application)void ABI method
    *
-   * Temporarily rekey to an approved app
+   * Temporarily rekey to an approved plugin app address
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static rekeyToApp(args: MethodArgs<'rekeyToApp(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static rekeyToPlugin(args: MethodArgs<'rekeyToPlugin(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'rekeyToApp(application)void' as const,
-      methodArgs: Array.isArray(args) ? args : [args.app],
+      method: 'rekeyToPlugin(application)void' as const,
+      methodArgs: Array.isArray(args) ? args : [args.plugin],
       ...params,
     }
   }
@@ -460,33 +460,33 @@ export abstract class AbstractedAccountCallFactory {
     }
   }
   /**
-   * Constructs a no op call for the addApp(application)void ABI method
+   * Constructs a no op call for the addPlugin(application)void ABI method
    *
-   * Add an app to the list of approved apps
+   * Add an app to the list of approved plugins
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static addApp(args: MethodArgs<'addApp(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static addPlugin(args: MethodArgs<'addPlugin(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'addApp(application)void' as const,
+      method: 'addPlugin(application)void' as const,
       methodArgs: Array.isArray(args) ? args : [args.app],
       ...params,
     }
   }
   /**
-   * Constructs a no op call for the removeApp(application)void ABI method
+   * Constructs a no op call for the removePlugin(application)void ABI method
    *
-   * Remove an app from the list of approved apps
+   * Remove an app from the list of approved plugins
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static removeApp(args: MethodArgs<'removeApp(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static removePlugin(args: MethodArgs<'removePlugin(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'removeApp(application)void' as const,
+      method: 'removePlugin(application)void' as const,
       methodArgs: Array.isArray(args) ? args : [args.app],
       ...params,
     }
@@ -617,16 +617,16 @@ export class AbstractedAccountClient {
   }
 
   /**
-   * Calls the rekeyToApp(application)void ABI method.
+   * Calls the rekeyToPlugin(application)void ABI method.
    *
-   * Temporarily rekey to an approved app
+   * Temporarily rekey to an approved plugin app address
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public rekeyToApp(args: MethodArgs<'rekeyToApp(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(AbstractedAccountCallFactory.rekeyToApp(args, params))
+  public rekeyToPlugin(args: MethodArgs<'rekeyToPlugin(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+    return this.call(AbstractedAccountCallFactory.rekeyToPlugin(args, params))
   }
 
   /**
@@ -643,29 +643,29 @@ export class AbstractedAccountClient {
   }
 
   /**
-   * Calls the addApp(application)void ABI method.
+   * Calls the addPlugin(application)void ABI method.
    *
-   * Add an app to the list of approved apps
+   * Add an app to the list of approved plugins
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public addApp(args: MethodArgs<'addApp(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(AbstractedAccountCallFactory.addApp(args, params))
+  public addPlugin(args: MethodArgs<'addPlugin(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+    return this.call(AbstractedAccountCallFactory.addPlugin(args, params))
   }
 
   /**
-   * Calls the removeApp(application)void ABI method.
+   * Calls the removePlugin(application)void ABI method.
    *
-   * Remove an app from the list of approved apps
+   * Remove an app from the list of approved plugins
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public removeApp(args: MethodArgs<'removeApp(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(AbstractedAccountCallFactory.removeApp(args, params))
+  public removePlugin(args: MethodArgs<'removePlugin(application)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+    return this.call(AbstractedAccountCallFactory.removePlugin(args, params))
   }
 
   /**
@@ -743,8 +743,8 @@ export class AbstractedAccountClient {
         resultMappers.push(undefined)
         return this
       },
-      rekeyToApp(args: MethodArgs<'rekeyToApp(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
-        promiseChain = promiseChain.then(() => client.rekeyToApp(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
+      rekeyToPlugin(args: MethodArgs<'rekeyToPlugin(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+        promiseChain = promiseChain.then(() => client.rekeyToPlugin(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
@@ -753,13 +753,13 @@ export class AbstractedAccountClient {
         resultMappers.push(undefined)
         return this
       },
-      addApp(args: MethodArgs<'addApp(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
-        promiseChain = promiseChain.then(() => client.addApp(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
+      addPlugin(args: MethodArgs<'addPlugin(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+        promiseChain = promiseChain.then(() => client.addPlugin(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
-      removeApp(args: MethodArgs<'removeApp(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
-        promiseChain = promiseChain.then(() => client.removeApp(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
+      removePlugin(args: MethodArgs<'removePlugin(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+        promiseChain = promiseChain.then(() => client.removePlugin(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
@@ -816,15 +816,15 @@ export type AbstractedAccountComposer<TReturns extends [...any[]] = []> = {
   rekeyToEoa(args: MethodArgs<'rekeyToEOA(bool)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekeyToEOA(bool)void'>]>
 
   /**
-   * Calls the rekeyToApp(application)void ABI method.
+   * Calls the rekeyToPlugin(application)void ABI method.
    *
-   * Temporarily rekey to an approved app
+   * Temporarily rekey to an approved plugin app address
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  rekeyToApp(args: MethodArgs<'rekeyToApp(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekeyToApp(application)void'>]>
+  rekeyToPlugin(args: MethodArgs<'rekeyToPlugin(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekeyToPlugin(application)void'>]>
 
   /**
    * Calls the transferEOA(account)void ABI method.
@@ -838,26 +838,26 @@ export type AbstractedAccountComposer<TReturns extends [...any[]] = []> = {
   transferEoa(args: MethodArgs<'transferEOA(account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'transferEOA(account)void'>]>
 
   /**
-   * Calls the addApp(application)void ABI method.
+   * Calls the addPlugin(application)void ABI method.
    *
-   * Add an app to the list of approved apps
+   * Add an app to the list of approved plugins
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  addApp(args: MethodArgs<'addApp(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'addApp(application)void'>]>
+  addPlugin(args: MethodArgs<'addPlugin(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'addPlugin(application)void'>]>
 
   /**
-   * Calls the removeApp(application)void ABI method.
+   * Calls the removePlugin(application)void ABI method.
    *
-   * Remove an app from the list of approved apps
+   * Remove an app from the list of approved plugins
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  removeApp(args: MethodArgs<'removeApp(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'removeApp(application)void'>]>
+  removePlugin(args: MethodArgs<'removePlugin(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'removePlugin(application)void'>]>
 
   /**
    * Makes a clear_state call to an existing instance of the AbstractedAccount smart contract.

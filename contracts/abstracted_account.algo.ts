@@ -17,7 +17,7 @@ export class AbstractedAccount extends Contract {
    * The apps that are authorized to send itxns from this account
    * The box map values aren't actually used and are always empty
    */
-  apps = BoxMap<Application, StaticArray<byte, 0>>();
+  plugins = BoxMap<Application, StaticArray<byte, 0>>();
 
   /**
    * Make sure that verifyAppAuthAddr is called by the end of the txn group
@@ -65,17 +65,17 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Temporarily rekey to an approved app
+   * Temporarily rekey to an approved plugin app address
    *
-   * @param app The app to rekey to
+   * @param plugin The app to rekey to
    */
-  rekeyToApp(app: Application): void {
-    assert(this.apps(app).exists);
+  rekeyToPlugin(plugin: Application): void {
+    assert(this.plugins(plugin).exists);
 
     sendPayment({
       receiver: this.eoa.value,
-      rekeyTo: app.address,
-      note: 'rekeying to app',
+      rekeyTo: plugin.address,
+      note: 'rekeying to plugin app',
     });
 
     this.assertVerifyAppAuthAddrIsCalled();
@@ -92,24 +92,24 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Add an app to the list of approved apps
+   * Add an app to the list of approved plugins
    *
    * @param app The app to add
    */
-  addApp(app: Application): void {
+  addPlugin(app: Application): void {
     assert(this.txn.sender === this.eoa.value);
 
-    this.apps(app).create(0);
+    this.plugins(app).create(0);
   }
 
   /**
-   * Remove an app from the list of approved apps
+   * Remove an app from the list of approved plugins
    *
    * @param app The app to remove
    */
-  removeApp(app: Application): void {
+  removePlugin(app: Application): void {
     assert(this.txn.sender === this.eoa.value);
 
-    this.apps(app).delete();
+    this.plugins(app).delete();
   }
 }
