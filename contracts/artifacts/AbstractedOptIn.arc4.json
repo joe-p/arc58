@@ -77,7 +77,7 @@
       "args": [
         {
           "name": "programHash",
-          "type": "byte[][32]",
+          "type": "byte[32]",
           "desc": "The hash of the program to remove"
         }
       ],
@@ -87,22 +87,21 @@
     },
     {
       "name": "callProgram",
-      "desc": "Calls one of the deploy programs for this abstracted accountTODO: Think of better way to pass ABI args",
+      "desc": "Calls one of the deploy programs for this abstracted accountTODO: Think of good way to pass args",
       "args": [
         {
+          "name": "_appID",
+          "type": "application"
+        },
+        {
           "name": "programHash",
-          "type": "byte[][32]",
+          "type": "byte[32]",
           "desc": "The hash of the program to call"
         },
         {
           "name": "method",
           "type": "byte[]",
           "desc": "The method selector to call"
-        },
-        {
-          "name": "args",
-          "type": "byte[]",
-          "desc": "The arguments to pass to the method"
         }
       ],
       "returns": {

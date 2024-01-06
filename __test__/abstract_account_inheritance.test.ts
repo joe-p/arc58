@@ -8,7 +8,7 @@ const fixture = algorandFixture();
 
 let appClient: AbstractedOptInClient;
 
-describe('AbstractedAccount', () => {
+describe('AbstractedOptIn', () => {
   let aliceEOA: algosdk.Account;
   let aliceAbstractedAccount: string;
   let bob: algosdk.Account;

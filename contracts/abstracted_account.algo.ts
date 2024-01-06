@@ -1,6 +1,6 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-type bytes32 = StaticArray<bytes, 32>;
+type bytes32 = StaticArray<byte, 32>;
 
 export class AbstractedAccount extends Contract {
   programVersion = 10;
@@ -104,20 +104,19 @@ export class AbstractedAccount extends Contract {
   /**
    * Calls one of the deploy programs for this abstracted account
    *
-   * TODO: Think of better way to pass ABI args
+   * TODO: Think of good way to pass args
    *
    * @param programHash The hash of the program to call
    * @param method The method selector to call
-   * @param args The arguments to pass to the method
    *
    */
-  callProgram(programHash: bytes32, method: bytes, args: bytes): void {
+  callProgram(_appID: Application, programHash: bytes32, method: bytes): void {
     const app = this.programs(programHash).value;
 
     sendAppCall({
       applicationID: app,
       rekeyTo: app.address,
-      applicationArgs: [method, args],
+      applicationArgs: [method],
     });
   }
 }

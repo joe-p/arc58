@@ -334,15 +334,20 @@ addProgram:
 	retsub
 
 abi_route_removeProgram:
-	// programHash: byte[][32]
+	// programHash: byte[32]
 	txna ApplicationArgs 1
+	dup
+	len
+	int 32
+	==
+	assert
 
-	// execute removeProgram(byte[][32])void
+	// execute removeProgram(byte[32])void
 	callsub removeProgram
 	int 1
 	return
 
-// removeProgram(byte[][32])void
+// removeProgram(byte[32])void
 //
 // Remove a program from this abstracted account
 //
@@ -365,72 +370,75 @@ removeProgram:
 	retsub
 
 abi_route_callProgram:
-	// args: byte[]
+	// method: byte[]
 	txna ApplicationArgs 3
 	extract 2 0
 
-	// method: byte[]
+	// programHash: byte[32]
 	txna ApplicationArgs 2
-	extract 2 0
+	dup
+	len
+	int 32
+	==
+	assert
 
-	// programHash: byte[][32]
+	// _appID: application
 	txna ApplicationArgs 1
+	btoi
+	txnas Applications
 
-	// execute callProgram(byte[],byte[],byte[][32])void
+	// execute callProgram(byte[],byte[32],application)void
 	callsub callProgram
 	int 1
 	return
 
-// callProgram(byte[],byte[],byte[][32])void
+// callProgram(byte[],byte[32],application)void
 //
 // Calls one of the deploy programs for this abstracted account
 //
-// TODO: Think of better way to pass ABI args
+// TODO: Think of good way to pass args
 //
 // @param programHash The hash of the program to call
 // @param method The method selector to call
-// @param args The arguments to pass to the method
 callProgram:
 	proto 3 0
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:115
+	// contracts/abstracted_account.algo.ts:114
 	// app = this.programs(programHash).value
-	frame_dig -1 // programHash: bytes32
+	frame_dig -2 // programHash: bytes32
 	box_get
 	assert
 	btoi
 	frame_bury 0 // app: application
 
-	// contracts/abstracted_account.algo.ts:117
+	// contracts/abstracted_account.algo.ts:116
 	// sendAppCall({
 	//       applicationID: app,
 	//       rekeyTo: app.address,
-	//       applicationArgs: [method, args],
+	//       applicationArgs: [method],
 	//     })
 	itxn_begin
 	int appl
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:118
+	// contracts/abstracted_account.algo.ts:117
 	// applicationID: app
 	frame_dig 0 // app: application
 	itxn_field ApplicationID
 
-	// contracts/abstracted_account.algo.ts:119
+	// contracts/abstracted_account.algo.ts:118
 	// rekeyTo: app.address
 	frame_dig 0 // app: application
 	app_params_get AppAddress
 	assert
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:120
-	// applicationArgs: [method, args]
-	frame_dig -2 // method: bytes
-	itxn_field ApplicationArgs
-	frame_dig -3 // args: bytes
+	// contracts/abstracted_account.algo.ts:119
+	// applicationArgs: [method]
+	frame_dig -3 // method: bytes
 	itxn_field ApplicationArgs
 
 	// Fee field not set, defaulting to 0
@@ -451,8 +459,8 @@ call_NoOp:
 	method "saveAuthAddr()void"
 	method "rekey(appl,bool)void"
 	method "addProgram(byte[],uint64,uint64,uint64,uint64)void"
-	method "removeProgram(byte[][32])void"
-	method "callProgram(byte[][32],byte[],byte[])void"
+	method "removeProgram(byte[32])void"
+	method "callProgram(application,byte[32],byte[])void"
 	txna ApplicationArgs 0
 	match abi_route_saveAuthAddr abi_route_rekey abi_route_addProgram abi_route_removeProgram abi_route_callProgram
 	err
