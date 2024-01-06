@@ -71,11 +71,11 @@ export const APP_SPEC: AppSpec = {
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjE5CgkvLyB0aGlzLmxhc3RQYXltZW50LnZhbHVlID0gMAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJaW50IDAKCWFwcF9nbG9iYWxfcHV0CglyZXRzdWIKCmFiaV9yb3V0ZV9tYWtlUGF5bWVudDoKCS8vIF9hY2N0UmVmOiBhY2NvdW50Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglidG9pCgl0eG5hcyBBY2NvdW50cwoKCS8vIHNlbmRlcjogYWRkcmVzcwoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJZHVwCglsZW4KCWludCAzMgoJPT0KCWFzc2VydAoKCS8vIGV4ZWN1dGUgbWFrZVBheW1lbnQoYWNjb3VudCxhZGRyZXNzKXZvaWQKCWNhbGxzdWIgbWFrZVBheW1lbnQKCWludCAxCglyZXR1cm4KCi8vIG1ha2VQYXltZW50KGFjY291bnQsYWRkcmVzcyl2b2lkCm1ha2VQYXltZW50OgoJcHJvdG8gMiAwCgoJLy8gY29udHJhY3RzL3N1YnNjcmlwdGlvbl9wcm9ncmFtLmFsZ28udHM6MjcKCS8vIGFzc2VydChnbG9iYWxzLnJvdW5kIC0gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA+IEZSRVFVRU5DWSkKCWdsb2JhbCBSb3VuZAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJYXBwX2dsb2JhbF9nZXQKCS0KCWludCAxMDAwCgk+Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czoyOAoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IGdsb2JhbHMucm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWdsb2JhbCBSb3VuZAoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czozMAoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgc2VuZGVyOiBzZW5kZXIsCgkvLyAgICAgICBhbW91bnQ6IEFNT1VOVCwKCS8vICAgICAgIHJlY2VpdmVyOiBSRUNFSVZFUiwKCS8vICAgICAgIHJla2V5VG86IHNlbmRlciwKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjMxCgkvLyBzZW5kZXI6IHNlbmRlcgoJZnJhbWVfZGlnIC0xIC8vIHNlbmRlcjogQWRkcmVzcwoJaXR4bl9maWVsZCBTZW5kZXIKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3Byb2dyYW0uYWxnby50czozMgoJLy8gYW1vdW50OiBBTU9VTlQKCWludCAxMDBfMDAwCglpdHhuX2ZpZWxkIEFtb3VudAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjMzCgkvLyByZWNlaXZlcjogUkVDRUlWRVIKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjEwCgkvLyBhZGRyKCc0NlhZUjdPVFJaWElTSTJUUlNCRFdQVVZRVDRFQ0JXTkk3VEZXUFBTNkVLQVBKN1c1T0JYU05HNjZNJykKCWFkZHIgNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TQoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcHJvZ3JhbS5hbGdvLnRzOjM0CgkvLyByZWtleVRvOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKY3JlYXRlX05vT3A6Cgl0eG4gTnVtQXBwQXJncwoJYnogYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgltZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgllcnIKCmNhbGxfTm9PcDoKCW1ldGhvZCAibWFrZVBheW1lbnQoYWRkcmVzcyxhY2NvdW50KXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfbWFrZVBheW1lbnQKCWVycg==",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MTkKCS8vIHRoaXMubGFzdFBheW1lbnQudmFsdWUgPSAwCglieXRlIDB4NmM2MTczNzQ1MDYxNzk2ZDY1NmU3NCAvLyAibGFzdFBheW1lbnQiCglpbnQgMAoJYXBwX2dsb2JhbF9wdXQKCXJldHN1YgoKYWJpX3JvdXRlX21ha2VQYXltZW50OgoJLy8gX2FjY3RSZWY6IGFjY291bnQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWJ0b2kKCXR4bmFzIEFjY291bnRzCgoJLy8gc2VuZGVyOiBhZGRyZXNzCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglkdXAKCWxlbgoJaW50IDMyCgk9PQoJYXNzZXJ0CgoJLy8gZXhlY3V0ZSBtYWtlUGF5bWVudChhY2NvdW50LGFkZHJlc3Mpdm9pZAoJY2FsbHN1YiBtYWtlUGF5bWVudAoJaW50IDEKCXJldHVybgoKLy8gbWFrZVBheW1lbnQoYWNjb3VudCxhZGRyZXNzKXZvaWQKbWFrZVBheW1lbnQ6Cglwcm90byAyIDAKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjI3CgkvLyBhc3NlcnQoZ2xvYmFscy5yb3VuZCAtIHRoaXMubGFzdFBheW1lbnQudmFsdWUgPiBGUkVRVUVOQ1kpCglnbG9iYWwgUm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWFwcF9nbG9iYWxfZ2V0CgktCglpbnQgMTAwMAoJPgoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyOAoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IGdsb2JhbHMucm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWdsb2JhbCBSb3VuZAoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjMwCgkvLyBzZW5kUGF5bWVudCh7CgkvLyAgICAgICBzZW5kZXI6IHNlbmRlciwKCS8vICAgICAgIGFtb3VudDogQU1PVU5ULAoJLy8gICAgICAgcmVjZWl2ZXI6IFJFQ0VJVkVSLAoJLy8gICAgICAgcmVrZXlUbzogc2VuZGVyLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnQgcGF5CglpdHhuX2ZpZWxkIFR5cGVFbnVtCgoJLy8gY29udHJhY3RzL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czozMQoJLy8gc2VuZGVyOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgU2VuZGVyCgoJLy8gY29udHJhY3RzL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czozMgoJLy8gYW1vdW50OiBBTU9VTlQKCWludCAxMDBfMDAwCglpdHhuX2ZpZWxkIEFtb3VudAoKCS8vIGNvbnRyYWN0cy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MzMKCS8vIHJlY2VpdmVyOiBSRUNFSVZFUgoJLy8gY29udHJhY3RzL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoxMAoJLy8gYWRkcignNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TScpCglhZGRyIDQ2WFlSN09UUlpYSVNJMlRSU0JEV1BVVlFUNEVDQldOSTdURldQUFM2RUtBUEo3VzVPQlhTTkc2Nk0KCWl0eG5fZmllbGQgUmVjZWl2ZXIKCgkvLyBjb250cmFjdHMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjM0CgkvLyByZWtleVRvOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKY3JlYXRlX05vT3A6Cgl0eG4gTnVtQXBwQXJncwoJYnogYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgltZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgllcnIKCmNhbGxfTm9PcDoKCW1ldGhvZCAibWFrZVBheW1lbnQoYWRkcmVzcyxhY2NvdW50KXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfbWFrZVBheW1lbnQKCWVycg==",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "contract": {
-    "name": "SubscriptionProgram",
+    "name": "SubscriptionPlugin",
     "desc": "",
     "methods": [
       {
@@ -153,9 +153,9 @@ export type BinaryState = {
 }
 
 /**
- * Defines the types of available calls and state of the SubscriptionProgram smart contract.
+ * Defines the types of available calls and state of the SubscriptionPlugin smart contract.
  */
-export type SubscriptionProgram = {
+export type SubscriptionPlugin = {
   /**
    * Maps method signatures / names to their argument and return types.
    */
@@ -186,11 +186,11 @@ export type SubscriptionProgram = {
 /**
  * Defines the possible abi call signatures
  */
-export type SubscriptionProgramSig = keyof SubscriptionProgram['methods']
+export type SubscriptionPluginSig = keyof SubscriptionPlugin['methods']
 /**
  * Defines an object containing all relevant parameters for a single call to the contract. Where TSignature is undefined, a bare call is made
  */
-export type TypedCallParams<TSignature extends SubscriptionProgramSig | undefined> = {
+export type TypedCallParams<TSignature extends SubscriptionPluginSig | undefined> = {
   method: TSignature
   methodArgs: TSignature extends undefined ? undefined : Array<ABIAppCallArg | undefined>
 } & AppClientCallCoreParams & CoreAppCallArgs
@@ -199,47 +199,47 @@ export type TypedCallParams<TSignature extends SubscriptionProgramSig | undefine
  */
 export type BareCallArgs = Omit<RawAppCallArgs, keyof CoreAppCallArgs>
 /**
- * Maps a method signature from the SubscriptionProgram smart contract to the method's arguments in either tuple of struct form
+ * Maps a method signature from the SubscriptionPlugin smart contract to the method's arguments in either tuple of struct form
  */
-export type MethodArgs<TSignature extends SubscriptionProgramSig> = SubscriptionProgram['methods'][TSignature]['argsObj' | 'argsTuple']
+export type MethodArgs<TSignature extends SubscriptionPluginSig> = SubscriptionPlugin['methods'][TSignature]['argsObj' | 'argsTuple']
 /**
- * Maps a method signature from the SubscriptionProgram smart contract to the method's return type
+ * Maps a method signature from the SubscriptionPlugin smart contract to the method's return type
  */
-export type MethodReturn<TSignature extends SubscriptionProgramSig> = SubscriptionProgram['methods'][TSignature]['returns']
+export type MethodReturn<TSignature extends SubscriptionPluginSig> = SubscriptionPlugin['methods'][TSignature]['returns']
 
 /**
  * A factory for available 'create' calls
  */
-export type SubscriptionProgramCreateCalls = (typeof SubscriptionProgramCallFactory)['create']
+export type SubscriptionPluginCreateCalls = (typeof SubscriptionPluginCallFactory)['create']
 /**
  * Defines supported create methods for this smart contract
  */
-export type SubscriptionProgramCreateCallParams =
+export type SubscriptionPluginCreateCallParams =
   | (TypedCallParams<undefined> & (OnCompleteNoOp))
   | (TypedCallParams<'createApplication()void'> & (OnCompleteNoOp))
 /**
  * Defines arguments required for the deploy method.
  */
-export type SubscriptionProgramDeployArgs = {
+export type SubscriptionPluginDeployArgs = {
   deployTimeParams?: TealTemplateParams
   /**
    * A delegate which takes a create call factory and returns the create call params for this smart contract
    */
-  createCall?: (callFactory: SubscriptionProgramCreateCalls) => SubscriptionProgramCreateCallParams
+  createCall?: (callFactory: SubscriptionPluginCreateCalls) => SubscriptionPluginCreateCallParams
 }
 
 
 /**
  * Exposes methods for constructing all available smart contract calls
  */
-export abstract class SubscriptionProgramCallFactory {
+export abstract class SubscriptionPluginCallFactory {
   /**
    * Gets available create call factories
    */
   static get create() {
     return {
       /**
-       * Constructs a create call for the SubscriptionProgram smart contract using a bare call
+       * Constructs a create call for the SubscriptionPlugin smart contract using a bare call
        *
        * @param params Any parameters for the call
        * @returns A TypedCallParams object for the call
@@ -252,7 +252,7 @@ export abstract class SubscriptionProgramCallFactory {
         }
       },
       /**
-       * Constructs a create call for the SubscriptionProgram smart contract using the createApplication()void ABI method
+       * Constructs a create call for the SubscriptionPlugin smart contract using the createApplication()void ABI method
        *
        * @param args Any args for the contract call
        * @param params Any additional parameters for the call
@@ -285,9 +285,9 @@ export abstract class SubscriptionProgramCallFactory {
 }
 
 /**
- * A client to make calls to the SubscriptionProgram smart contract
+ * A client to make calls to the SubscriptionPlugin smart contract
  */
-export class SubscriptionProgramClient {
+export class SubscriptionPluginClient {
   /**
    * The underlying `ApplicationClient` for when you want to have more flexibility
    */
@@ -296,7 +296,7 @@ export class SubscriptionProgramClient {
   private readonly sender: SendTransactionFrom | undefined
 
   /**
-   * Creates a new instance of `SubscriptionProgramClient`
+   * Creates a new instance of `SubscriptionPluginClient`
    *
    * @param appDetails appDetails The details to identify the app to deploy
    * @param algod An algod client instance
@@ -333,18 +333,18 @@ export class SubscriptionProgramClient {
    * @param returnValueFormatter An optional delegate which when provided will be used to map non-undefined return values to the target type
    * @returns The result of the smart contract call
    */
-  public async call<TSignature extends keyof SubscriptionProgram['methods']>(typedCallParams: TypedCallParams<TSignature>, returnValueFormatter?: (value: any) => MethodReturn<TSignature>) {
+  public async call<TSignature extends keyof SubscriptionPlugin['methods']>(typedCallParams: TypedCallParams<TSignature>, returnValueFormatter?: (value: any) => MethodReturn<TSignature>) {
     return this.mapReturnValue<MethodReturn<TSignature>>(await this.appClient.call(typedCallParams), returnValueFormatter)
   }
 
   /**
-   * Idempotently deploys the SubscriptionProgram smart contract.
+   * Idempotently deploys the SubscriptionPlugin smart contract.
    *
    * @param params The arguments for the contract calls and any additional parameters for the call
    * @returns The deployment result
    */
-  public deploy(params: SubscriptionProgramDeployArgs & AppClientDeployCoreParams = {}): ReturnType<ApplicationClient['deploy']> {
-    const createArgs = params.createCall?.(SubscriptionProgramCallFactory.create)
+  public deploy(params: SubscriptionPluginDeployArgs & AppClientDeployCoreParams = {}): ReturnType<ApplicationClient['deploy']> {
+    const createArgs = params.createCall?.(SubscriptionPluginCallFactory.create)
     return this.appClient.deploy({
       ...params,
       createArgs,
@@ -359,7 +359,7 @@ export class SubscriptionProgramClient {
     const $this = this
     return {
       /**
-       * Creates a new instance of the SubscriptionProgram smart contract using a bare call.
+       * Creates a new instance of the SubscriptionPlugin smart contract using a bare call.
        *
        * @param args The arguments for the bare call
        * @returns The create result
@@ -368,20 +368,20 @@ export class SubscriptionProgramClient {
         return $this.appClient.create(args) as unknown as Promise<AppCallTransactionResultOfType<undefined>>
       },
       /**
-       * Creates a new instance of the SubscriptionProgram smart contract using the createApplication()void ABI method.
+       * Creates a new instance of the SubscriptionPlugin smart contract using the createApplication()void ABI method.
        *
        * @param args The arguments for the smart contract call
        * @param params Any additional parameters for the call
        * @returns The create result
        */
       async createApplication(args: MethodArgs<'createApplication()void'>, params: AppClientCallCoreParams & AppClientCompilationParams & (OnCompleteNoOp) = {}): Promise<AppCallTransactionResultOfType<MethodReturn<'createApplication()void'>>> {
-        return $this.mapReturnValue(await $this.appClient.create(SubscriptionProgramCallFactory.create.createApplication(args, params)))
+        return $this.mapReturnValue(await $this.appClient.create(SubscriptionPluginCallFactory.create.createApplication(args, params)))
       },
     }
   }
 
   /**
-   * Makes a clear_state call to an existing instance of the SubscriptionProgram smart contract.
+   * Makes a clear_state call to an existing instance of the SubscriptionPlugin smart contract.
    *
    * @param args The arguments for the bare call
    * @returns The clear_state result
@@ -398,7 +398,7 @@ export class SubscriptionProgramClient {
    * @returns The result of the call
    */
   public makePayment(args: MethodArgs<'makePayment(address,account)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(SubscriptionProgramCallFactory.makePayment(args, params))
+    return this.call(SubscriptionPluginCallFactory.makePayment(args, params))
   }
 
   /**
@@ -448,16 +448,16 @@ export class SubscriptionProgramClient {
   /**
    * Returns the smart contract's global state wrapped in a strongly typed accessor with options to format the stored value
    */
-  public async getGlobalState(): Promise<SubscriptionProgram['state']['global']> {
+  public async getGlobalState(): Promise<SubscriptionPlugin['state']['global']> {
     const state = await this.appClient.getGlobalState()
     return {
       get lastPayment() {
-        return SubscriptionProgramClient.getIntegerState(state, 'lastPayment')
+        return SubscriptionPluginClient.getIntegerState(state, 'lastPayment')
       },
     }
   }
 
-  public compose(): SubscriptionProgramComposer {
+  public compose(): SubscriptionPluginComposer {
     const client = this
     const atc = new AtomicTransactionComposer()
     let promiseChain:Promise<unknown> = Promise.resolve()
@@ -494,10 +494,10 @@ export class SubscriptionProgramClient {
           returns: result.returns?.map((val, i) => resultMappers[i] !== undefined ? resultMappers[i]!(val.returnValue) : val.returnValue)
         }
       }
-    } as unknown as SubscriptionProgramComposer
+    } as unknown as SubscriptionPluginComposer
   }
 }
-export type SubscriptionProgramComposer<TReturns extends [...any[]] = []> = {
+export type SubscriptionPluginComposer<TReturns extends [...any[]] = []> = {
   /**
    * Calls the makePayment(address,account)void ABI method.
    *
@@ -505,15 +505,15 @@ export type SubscriptionProgramComposer<TReturns extends [...any[]] = []> = {
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): SubscriptionProgramComposer<[...TReturns, MethodReturn<'makePayment(address,account)void'>]>
+  makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): SubscriptionPluginComposer<[...TReturns, MethodReturn<'makePayment(address,account)void'>]>
 
   /**
-   * Makes a clear_state call to an existing instance of the SubscriptionProgram smart contract.
+   * Makes a clear_state call to an existing instance of the SubscriptionPlugin smart contract.
    *
    * @param args The arguments for the bare call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  clearState(args?: BareCallArgs & AppClientCallCoreParams & CoreAppCallArgs): SubscriptionProgramComposer<[...TReturns, undefined]>
+  clearState(args?: BareCallArgs & AppClientCallCoreParams & CoreAppCallArgs): SubscriptionPluginComposer<[...TReturns, undefined]>
 
   /**
    * Adds a transaction to the composer
@@ -521,7 +521,7 @@ export type SubscriptionProgramComposer<TReturns extends [...any[]] = []> = {
    * @param txn One of: A TransactionWithSigner object (returned as is), a TransactionToSign object (signer is obtained from the signer property), a Transaction object (signer is extracted from the defaultSender parameter), an async SendTransactionResult returned by one of algokit utils helpers (signer is obtained from the defaultSender parameter)
    * @param defaultSender The default sender to be used to obtain a signer where the object provided to the transaction parameter does not include a signer.
    */
-  addTransaction(txn: TransactionWithSigner | TransactionToSign | Transaction | Promise<SendTransactionResult>, defaultSender?: SendTransactionFrom): SubscriptionProgramComposer<TReturns>
+  addTransaction(txn: TransactionWithSigner | TransactionToSign | Transaction | Promise<SendTransactionResult>, defaultSender?: SendTransactionFrom): SubscriptionPluginComposer<TReturns>
   /**
    * Returns the underlying AtomicTransactionComposer instance
    */
@@ -529,17 +529,17 @@ export type SubscriptionProgramComposer<TReturns extends [...any[]] = []> = {
   /**
    * Simulates the transaction group and returns the result
    */
-  simulate(): Promise<SubscriptionProgramComposerSimulateResult>
+  simulate(): Promise<SubscriptionPluginComposerSimulateResult>
   /**
    * Executes the transaction group and returns the results
    */
-  execute(): Promise<SubscriptionProgramComposerResults<TReturns>>
+  execute(): Promise<SubscriptionPluginComposerResults<TReturns>>
 }
-export type SubscriptionProgramComposerSimulateResult = {
+export type SubscriptionPluginComposerSimulateResult = {
   methodResults: ABIResult[]
   simulateResponse: modelsv2.SimulateResponse
 }
-export type SubscriptionProgramComposerResults<TReturns extends [...any[]]> = {
+export type SubscriptionPluginComposerResults<TReturns extends [...any[]]> = {
   returns: TReturns
   groupId: string
   txIds: string[]

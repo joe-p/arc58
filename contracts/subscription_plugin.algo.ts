@@ -9,7 +9,7 @@ const AMOUNT = 100_000;
 /** Payment receiver */
 const RECEIVER = addr('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M');
 
-export class SubscriptionProgram extends Contract {
+export class SubscriptionPlugin extends Contract {
   programVersion = 10;
 
   lastPayment = GlobalStateKey<number>();

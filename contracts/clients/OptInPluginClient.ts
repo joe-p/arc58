@@ -66,11 +66,11 @@ export const APP_SPEC: AppSpec = {
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfb3B0SW5Ub0Fzc2V0OgoJLy8gbWJyUGF5bWVudDogcGF5Cgl0eG4gR3JvdXBJbmRleAoJaW50IDEKCS0KCWR1cAoJZ3R4bnMgVHlwZUVudW0KCWludCBwYXkKCT09Cglhc3NlcnQKCgkvLyBhc3NldDogYXNzZXQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWJ0b2kKCXR4bmFzIEFzc2V0cwoKCS8vIHNlbmRlcjogYWNjb3VudAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQWNjb3VudHMKCgkvLyBleGVjdXRlIG9wdEluVG9Bc3NldChwYXksYXNzZXQsYWNjb3VudCl2b2lkCgljYWxsc3ViIG9wdEluVG9Bc3NldAoJaW50IDEKCXJldHVybgoKLy8gb3B0SW5Ub0Fzc2V0KHBheSxhc3NldCxhY2NvdW50KXZvaWQKb3B0SW5Ub0Fzc2V0OgoJcHJvdG8gMyAwCgoJLy8gY29udHJhY3RzL29wdGluX3Byb2dyYW0uYWxnby50czo3CgkvLyB2ZXJpZnlQYXlUeG4obWJyUGF5bWVudCwgewoJLy8gICAgICAgcmVjZWl2ZXI6IHNlbmRlciwKCS8vICAgICAgIGFtb3VudDogewoJLy8gICAgICAgICAvLyBAdHMtZXhwZWN0LWVycm9yIFRPRE86IGFkZCBhc3NldE9wdEluTWluQmFsYW5jZSB0byB0aGUgVEVBTFNjcmlwdCB0eXBlcwoJLy8gICAgICAgICBncmVhdGVyVGhhbjogZ2xvYmFscy5hc3NldE9wdEluTWluQmFsYW5jZSwKCS8vICAgICAgIH0sCgkvLyAgICAgfSkKCS8vIHZlcmlmeSByZWNlaXZlcgoJZnJhbWVfZGlnIC0zIC8vIG1iclBheW1lbnQ6IFBheVR4bgoJZ3R4bnMgUmVjZWl2ZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFjY291bnQKCT09Cglhc3NlcnQKCgkvLyB2ZXJpZnkgYW1vdW50CglmcmFtZV9kaWcgLTMgLy8gbWJyUGF5bWVudDogUGF5VHhuCglndHhucyBBbW91bnQKCWdsb2JhbCBBc3NldE9wdEluTWluQmFsYW5jZQoJPgoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL29wdGluX3Byb2dyYW0uYWxnby50czoxNQoJLy8gc2VuZEFzc2V0VHJhbnNmZXIoewoJLy8gICAgICAgc2VuZGVyOiBzZW5kZXIsCgkvLyAgICAgICBhc3NldFJlY2VpdmVyOiBzZW5kZXIsCgkvLyAgICAgICBhc3NldEFtb3VudDogMCwKCS8vICAgICAgIHhmZXJBc3NldDogYXNzZXQsCgkvLyAgICAgICByZWtleVRvOiBzZW5kZXIsCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludCBheGZlcgoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9vcHRpbl9wcm9ncmFtLmFsZ28udHM6MTYKCS8vIHNlbmRlcjogc2VuZGVyCglmcmFtZV9kaWcgLTEgLy8gc2VuZGVyOiBBY2NvdW50CglpdHhuX2ZpZWxkIFNlbmRlcgoKCS8vIGNvbnRyYWN0cy9vcHRpbl9wcm9ncmFtLmFsZ28udHM6MTcKCS8vIGFzc2V0UmVjZWl2ZXI6IHNlbmRlcgoJZnJhbWVfZGlnIC0xIC8vIHNlbmRlcjogQWNjb3VudAoJaXR4bl9maWVsZCBBc3NldFJlY2VpdmVyCgoJLy8gY29udHJhY3RzL29wdGluX3Byb2dyYW0uYWxnby50czoxOAoJLy8gYXNzZXRBbW91bnQ6IDAKCWludCAwCglpdHhuX2ZpZWxkIEFzc2V0QW1vdW50CgoJLy8gY29udHJhY3RzL29wdGluX3Byb2dyYW0uYWxnby50czoxOQoJLy8geGZlckFzc2V0OiBhc3NldAoJZnJhbWVfZGlnIC0yIC8vIGFzc2V0OiBBc3NldAoJaXR4bl9maWVsZCBYZmVyQXNzZXQKCgkvLyBjb250cmFjdHMvb3B0aW5fcHJvZ3JhbS5hbGdvLnRzOjIwCgkvLyByZWtleVRvOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFjY291bnQKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJaW50IDEKCXJldHVybgoKY3JlYXRlX05vT3A6CgltZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgllcnIKCmNhbGxfTm9PcDoKCW1ldGhvZCAib3B0SW5Ub0Fzc2V0KGFjY291bnQsYXNzZXQscGF5KXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfb3B0SW5Ub0Fzc2V0CgllcnI=",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfb3B0SW5Ub0Fzc2V0OgoJLy8gbWJyUGF5bWVudDogcGF5Cgl0eG4gR3JvdXBJbmRleAoJaW50IDEKCS0KCWR1cAoJZ3R4bnMgVHlwZUVudW0KCWludCBwYXkKCT09Cglhc3NlcnQKCgkvLyBhc3NldDogYXNzZXQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWJ0b2kKCXR4bmFzIEFzc2V0cwoKCS8vIHNlbmRlcjogYWNjb3VudAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQWNjb3VudHMKCgkvLyBleGVjdXRlIG9wdEluVG9Bc3NldChwYXksYXNzZXQsYWNjb3VudCl2b2lkCgljYWxsc3ViIG9wdEluVG9Bc3NldAoJaW50IDEKCXJldHVybgoKLy8gb3B0SW5Ub0Fzc2V0KHBheSxhc3NldCxhY2NvdW50KXZvaWQKb3B0SW5Ub0Fzc2V0OgoJcHJvdG8gMyAwCgoJLy8gY29udHJhY3RzL29wdGluX3BsdWdpbi5hbGdvLnRzOjcKCS8vIHZlcmlmeVBheVR4bihtYnJQYXltZW50LCB7CgkvLyAgICAgICByZWNlaXZlcjogc2VuZGVyLAoJLy8gICAgICAgYW1vdW50OiB7CgkvLyAgICAgICAgIC8vIEB0cy1leHBlY3QtZXJyb3IgVE9ETzogYWRkIGFzc2V0T3B0SW5NaW5CYWxhbmNlIHRvIHRoZSBURUFMU2NyaXB0IHR5cGVzCgkvLyAgICAgICAgIGdyZWF0ZXJUaGFuOiBnbG9iYWxzLmFzc2V0T3B0SW5NaW5CYWxhbmNlLAoJLy8gICAgICAgfSwKCS8vICAgICB9KQoJLy8gdmVyaWZ5IHJlY2VpdmVyCglmcmFtZV9kaWcgLTMgLy8gbWJyUGF5bWVudDogUGF5VHhuCglndHhucyBSZWNlaXZlcgoJZnJhbWVfZGlnIC0xIC8vIHNlbmRlcjogQWNjb3VudAoJPT0KCWFzc2VydAoKCS8vIHZlcmlmeSBhbW91bnQKCWZyYW1lX2RpZyAtMyAvLyBtYnJQYXltZW50OiBQYXlUeG4KCWd0eG5zIEFtb3VudAoJZ2xvYmFsIEFzc2V0T3B0SW5NaW5CYWxhbmNlCgk+Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MTUKCS8vIHNlbmRBc3NldFRyYW5zZmVyKHsKCS8vICAgICAgIHNlbmRlcjogc2VuZGVyLAoJLy8gICAgICAgYXNzZXRSZWNlaXZlcjogc2VuZGVyLAoJLy8gICAgICAgYXNzZXRBbW91bnQ6IDAsCgkvLyAgICAgICB4ZmVyQXNzZXQ6IGFzc2V0LAoJLy8gICAgICAgcmVrZXlUbzogc2VuZGVyLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnQgYXhmZXIKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MTYKCS8vIHNlbmRlcjogc2VuZGVyCglmcmFtZV9kaWcgLTEgLy8gc2VuZGVyOiBBY2NvdW50CglpdHhuX2ZpZWxkIFNlbmRlcgoKCS8vIGNvbnRyYWN0cy9vcHRpbl9wbHVnaW4uYWxnby50czoxNwoJLy8gYXNzZXRSZWNlaXZlcjogc2VuZGVyCglmcmFtZV9kaWcgLTEgLy8gc2VuZGVyOiBBY2NvdW50CglpdHhuX2ZpZWxkIEFzc2V0UmVjZWl2ZXIKCgkvLyBjb250cmFjdHMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MTgKCS8vIGFzc2V0QW1vdW50OiAwCglpbnQgMAoJaXR4bl9maWVsZCBBc3NldEFtb3VudAoKCS8vIGNvbnRyYWN0cy9vcHRpbl9wbHVnaW4uYWxnby50czoxOQoJLy8geGZlckFzc2V0OiBhc3NldAoJZnJhbWVfZGlnIC0yIC8vIGFzc2V0OiBBc3NldAoJaXR4bl9maWVsZCBYZmVyQXNzZXQKCgkvLyBjb250cmFjdHMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MjAKCS8vIHJla2V5VG86IHNlbmRlcgoJZnJhbWVfZGlnIC0xIC8vIHNlbmRlcjogQWNjb3VudAoJaXR4bl9maWVsZCBSZWtleVRvCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50IDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoJcmV0c3ViCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CglpbnQgMQoJcmV0dXJuCgpjcmVhdGVfTm9PcDoKCW1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWVycgoKY2FsbF9Ob09wOgoJbWV0aG9kICJvcHRJblRvQXNzZXQoYWNjb3VudCxhc3NldCxwYXkpdm9pZCIKCXR4bmEgQXBwbGljYXRpb25BcmdzIDAKCW1hdGNoIGFiaV9yb3V0ZV9vcHRJblRvQXNzZXQKCWVycg==",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "contract": {
-    "name": "OptInProgram",
+    "name": "OptInPlugin",
     "desc": "",
     "methods": [
       {
@@ -152,9 +152,9 @@ export type BinaryState = {
 }
 
 /**
- * Defines the types of available calls and state of the OptInProgram smart contract.
+ * Defines the types of available calls and state of the OptInPlugin smart contract.
  */
-export type OptInProgram = {
+export type OptInPlugin = {
   /**
    * Maps method signatures / names to their argument and return types.
    */
@@ -178,11 +178,11 @@ export type OptInProgram = {
 /**
  * Defines the possible abi call signatures
  */
-export type OptInProgramSig = keyof OptInProgram['methods']
+export type OptInPluginSig = keyof OptInPlugin['methods']
 /**
  * Defines an object containing all relevant parameters for a single call to the contract. Where TSignature is undefined, a bare call is made
  */
-export type TypedCallParams<TSignature extends OptInProgramSig | undefined> = {
+export type TypedCallParams<TSignature extends OptInPluginSig | undefined> = {
   method: TSignature
   methodArgs: TSignature extends undefined ? undefined : Array<ABIAppCallArg | undefined>
 } & AppClientCallCoreParams & CoreAppCallArgs
@@ -191,46 +191,46 @@ export type TypedCallParams<TSignature extends OptInProgramSig | undefined> = {
  */
 export type BareCallArgs = Omit<RawAppCallArgs, keyof CoreAppCallArgs>
 /**
- * Maps a method signature from the OptInProgram smart contract to the method's arguments in either tuple of struct form
+ * Maps a method signature from the OptInPlugin smart contract to the method's arguments in either tuple of struct form
  */
-export type MethodArgs<TSignature extends OptInProgramSig> = OptInProgram['methods'][TSignature]['argsObj' | 'argsTuple']
+export type MethodArgs<TSignature extends OptInPluginSig> = OptInPlugin['methods'][TSignature]['argsObj' | 'argsTuple']
 /**
- * Maps a method signature from the OptInProgram smart contract to the method's return type
+ * Maps a method signature from the OptInPlugin smart contract to the method's return type
  */
-export type MethodReturn<TSignature extends OptInProgramSig> = OptInProgram['methods'][TSignature]['returns']
+export type MethodReturn<TSignature extends OptInPluginSig> = OptInPlugin['methods'][TSignature]['returns']
 
 /**
  * A factory for available 'create' calls
  */
-export type OptInProgramCreateCalls = (typeof OptInProgramCallFactory)['create']
+export type OptInPluginCreateCalls = (typeof OptInPluginCallFactory)['create']
 /**
  * Defines supported create methods for this smart contract
  */
-export type OptInProgramCreateCallParams =
+export type OptInPluginCreateCallParams =
   | (TypedCallParams<'createApplication()void'> & (OnCompleteNoOp))
 /**
  * Defines arguments required for the deploy method.
  */
-export type OptInProgramDeployArgs = {
+export type OptInPluginDeployArgs = {
   deployTimeParams?: TealTemplateParams
   /**
    * A delegate which takes a create call factory and returns the create call params for this smart contract
    */
-  createCall?: (callFactory: OptInProgramCreateCalls) => OptInProgramCreateCallParams
+  createCall?: (callFactory: OptInPluginCreateCalls) => OptInPluginCreateCallParams
 }
 
 
 /**
  * Exposes methods for constructing all available smart contract calls
  */
-export abstract class OptInProgramCallFactory {
+export abstract class OptInPluginCallFactory {
   /**
    * Gets available create call factories
    */
   static get create() {
     return {
       /**
-       * Constructs a create call for the OptInProgram smart contract using the createApplication()void ABI method
+       * Constructs a create call for the OptInPlugin smart contract using the createApplication()void ABI method
        *
        * @param args Any args for the contract call
        * @param params Any additional parameters for the call
@@ -263,9 +263,9 @@ export abstract class OptInProgramCallFactory {
 }
 
 /**
- * A client to make calls to the OptInProgram smart contract
+ * A client to make calls to the OptInPlugin smart contract
  */
-export class OptInProgramClient {
+export class OptInPluginClient {
   /**
    * The underlying `ApplicationClient` for when you want to have more flexibility
    */
@@ -274,7 +274,7 @@ export class OptInProgramClient {
   private readonly sender: SendTransactionFrom | undefined
 
   /**
-   * Creates a new instance of `OptInProgramClient`
+   * Creates a new instance of `OptInPluginClient`
    *
    * @param appDetails appDetails The details to identify the app to deploy
    * @param algod An algod client instance
@@ -311,18 +311,18 @@ export class OptInProgramClient {
    * @param returnValueFormatter An optional delegate which when provided will be used to map non-undefined return values to the target type
    * @returns The result of the smart contract call
    */
-  public async call<TSignature extends keyof OptInProgram['methods']>(typedCallParams: TypedCallParams<TSignature>, returnValueFormatter?: (value: any) => MethodReturn<TSignature>) {
+  public async call<TSignature extends keyof OptInPlugin['methods']>(typedCallParams: TypedCallParams<TSignature>, returnValueFormatter?: (value: any) => MethodReturn<TSignature>) {
     return this.mapReturnValue<MethodReturn<TSignature>>(await this.appClient.call(typedCallParams), returnValueFormatter)
   }
 
   /**
-   * Idempotently deploys the OptInProgram smart contract.
+   * Idempotently deploys the OptInPlugin smart contract.
    *
    * @param params The arguments for the contract calls and any additional parameters for the call
    * @returns The deployment result
    */
-  public deploy(params: OptInProgramDeployArgs & AppClientDeployCoreParams = {}): ReturnType<ApplicationClient['deploy']> {
-    const createArgs = params.createCall?.(OptInProgramCallFactory.create)
+  public deploy(params: OptInPluginDeployArgs & AppClientDeployCoreParams = {}): ReturnType<ApplicationClient['deploy']> {
+    const createArgs = params.createCall?.(OptInPluginCallFactory.create)
     return this.appClient.deploy({
       ...params,
       createArgs,
@@ -337,20 +337,20 @@ export class OptInProgramClient {
     const $this = this
     return {
       /**
-       * Creates a new instance of the OptInProgram smart contract using the createApplication()void ABI method.
+       * Creates a new instance of the OptInPlugin smart contract using the createApplication()void ABI method.
        *
        * @param args The arguments for the smart contract call
        * @param params Any additional parameters for the call
        * @returns The create result
        */
       async createApplication(args: MethodArgs<'createApplication()void'>, params: AppClientCallCoreParams & AppClientCompilationParams & (OnCompleteNoOp) = {}): Promise<AppCallTransactionResultOfType<MethodReturn<'createApplication()void'>>> {
-        return $this.mapReturnValue(await $this.appClient.create(OptInProgramCallFactory.create.createApplication(args, params)))
+        return $this.mapReturnValue(await $this.appClient.create(OptInPluginCallFactory.create.createApplication(args, params)))
       },
     }
   }
 
   /**
-   * Makes a clear_state call to an existing instance of the OptInProgram smart contract.
+   * Makes a clear_state call to an existing instance of the OptInPlugin smart contract.
    *
    * @param args The arguments for the bare call
    * @returns The clear_state result
@@ -367,10 +367,10 @@ export class OptInProgramClient {
    * @returns The result of the call
    */
   public optInToAsset(args: MethodArgs<'optInToAsset(account,asset,pay)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(OptInProgramCallFactory.optInToAsset(args, params))
+    return this.call(OptInPluginCallFactory.optInToAsset(args, params))
   }
 
-  public compose(): OptInProgramComposer {
+  public compose(): OptInPluginComposer {
     const client = this
     const atc = new AtomicTransactionComposer()
     let promiseChain:Promise<unknown> = Promise.resolve()
@@ -407,10 +407,10 @@ export class OptInProgramClient {
           returns: result.returns?.map((val, i) => resultMappers[i] !== undefined ? resultMappers[i]!(val.returnValue) : val.returnValue)
         }
       }
-    } as unknown as OptInProgramComposer
+    } as unknown as OptInPluginComposer
   }
 }
-export type OptInProgramComposer<TReturns extends [...any[]] = []> = {
+export type OptInPluginComposer<TReturns extends [...any[]] = []> = {
   /**
    * Calls the optInToAsset(account,asset,pay)void ABI method.
    *
@@ -418,15 +418,15 @@ export type OptInProgramComposer<TReturns extends [...any[]] = []> = {
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  optInToAsset(args: MethodArgs<'optInToAsset(account,asset,pay)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): OptInProgramComposer<[...TReturns, MethodReturn<'optInToAsset(account,asset,pay)void'>]>
+  optInToAsset(args: MethodArgs<'optInToAsset(account,asset,pay)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): OptInPluginComposer<[...TReturns, MethodReturn<'optInToAsset(account,asset,pay)void'>]>
 
   /**
-   * Makes a clear_state call to an existing instance of the OptInProgram smart contract.
+   * Makes a clear_state call to an existing instance of the OptInPlugin smart contract.
    *
    * @param args The arguments for the bare call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  clearState(args?: BareCallArgs & AppClientCallCoreParams & CoreAppCallArgs): OptInProgramComposer<[...TReturns, undefined]>
+  clearState(args?: BareCallArgs & AppClientCallCoreParams & CoreAppCallArgs): OptInPluginComposer<[...TReturns, undefined]>
 
   /**
    * Adds a transaction to the composer
@@ -434,7 +434,7 @@ export type OptInProgramComposer<TReturns extends [...any[]] = []> = {
    * @param txn One of: A TransactionWithSigner object (returned as is), a TransactionToSign object (signer is obtained from the signer property), a Transaction object (signer is extracted from the defaultSender parameter), an async SendTransactionResult returned by one of algokit utils helpers (signer is obtained from the defaultSender parameter)
    * @param defaultSender The default sender to be used to obtain a signer where the object provided to the transaction parameter does not include a signer.
    */
-  addTransaction(txn: TransactionWithSigner | TransactionToSign | Transaction | Promise<SendTransactionResult>, defaultSender?: SendTransactionFrom): OptInProgramComposer<TReturns>
+  addTransaction(txn: TransactionWithSigner | TransactionToSign | Transaction | Promise<SendTransactionResult>, defaultSender?: SendTransactionFrom): OptInPluginComposer<TReturns>
   /**
    * Returns the underlying AtomicTransactionComposer instance
    */
@@ -442,17 +442,17 @@ export type OptInProgramComposer<TReturns extends [...any[]] = []> = {
   /**
    * Simulates the transaction group and returns the result
    */
-  simulate(): Promise<OptInProgramComposerSimulateResult>
+  simulate(): Promise<OptInPluginComposerSimulateResult>
   /**
    * Executes the transaction group and returns the results
    */
-  execute(): Promise<OptInProgramComposerResults<TReturns>>
+  execute(): Promise<OptInPluginComposerResults<TReturns>>
 }
-export type OptInProgramComposerSimulateResult = {
+export type OptInPluginComposerSimulateResult = {
   methodResults: ABIResult[]
   simulateResponse: modelsv2.SimulateResponse
 }
-export type OptInProgramComposerResults<TReturns extends [...any[]]> = {
+export type OptInPluginComposerResults<TReturns extends [...any[]]> = {
   returns: TReturns
   groupId: string
   txIds: string[]

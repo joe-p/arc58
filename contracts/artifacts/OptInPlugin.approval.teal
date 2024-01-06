@@ -51,7 +51,7 @@ abi_route_optInToAsset:
 optInToAsset:
 	proto 3 0
 
-	// contracts/optin_program.algo.ts:7
+	// contracts/optin_plugin.algo.ts:7
 	// verifyPayTxn(mbrPayment, {
 	//       receiver: sender,
 	//       amount: {
@@ -73,7 +73,7 @@ optInToAsset:
 	>
 	assert
 
-	// contracts/optin_program.algo.ts:15
+	// contracts/optin_plugin.algo.ts:15
 	// sendAssetTransfer({
 	//       sender: sender,
 	//       assetReceiver: sender,
@@ -85,27 +85,27 @@ optInToAsset:
 	int axfer
 	itxn_field TypeEnum
 
-	// contracts/optin_program.algo.ts:16
+	// contracts/optin_plugin.algo.ts:16
 	// sender: sender
 	frame_dig -1 // sender: Account
 	itxn_field Sender
 
-	// contracts/optin_program.algo.ts:17
+	// contracts/optin_plugin.algo.ts:17
 	// assetReceiver: sender
 	frame_dig -1 // sender: Account
 	itxn_field AssetReceiver
 
-	// contracts/optin_program.algo.ts:18
+	// contracts/optin_plugin.algo.ts:18
 	// assetAmount: 0
 	int 0
 	itxn_field AssetAmount
 
-	// contracts/optin_program.algo.ts:19
+	// contracts/optin_plugin.algo.ts:19
 	// xferAsset: asset
 	frame_dig -2 // asset: Asset
 	itxn_field XferAsset
 
-	// contracts/optin_program.algo.ts:20
+	// contracts/optin_plugin.algo.ts:20
 	// rekeyTo: sender
 	frame_dig -1 // sender: Account
 	itxn_field RekeyTo

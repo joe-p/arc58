@@ -1,6 +1,6 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-export class OptInProgram extends Contract {
+export class OptInPlugin extends Contract {
   programVersion = 10;
 
   optInToAsset(sender: Account, asset: Asset, mbrPayment: PayTxn): void {
