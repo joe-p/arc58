@@ -1,25 +1,17 @@
-# TEALScript Project
+# Plugin-Based Account Abstaction
 
-## Documentation
+This repo contains proof-of-concept contracts for plugin-based account abstraction.
 
-For TEALScript documentation, go to https://tealscript.algo.xyz
+## Abstracted Account
+[The abstracted account app](./contracts/abstracted_account.algo.ts) acts as the primary logic for the abstracted account. The app address of this app is effectively the end-user's address. The user can always rekey the contract address to their externally owned account (EOA) to gain more flexible control over the account. If the user wants to add more functionality to their abstracted account, they can add a plugin. A plugin is an app deployment that contains some functionality that sends inner transactions from the abstracted account (and eventually rekeys back).
 
-## Usage
+## Plugins
+[The subscription plugin](./contracts/subscription_plugin.algo.ts) is a plugin that allows someone to set up a recurring payment from the abstracted account.
 
-### Algokit
+[The OptIn plugin](./contracts/optin_plugin.algo.ts) is a plugin that allows anyone to opt the abstracted account into an asset, provided they pay for the MBR.
 
-This template assumes you have a local network running on your machine. The easiet way to setup a local network is with [algokit](https://github.com/algorandfoundation/algokit-cli). If you don't have Algokit or its dependencies installed locally you can open this repository in a GitHub codespace via https://codespaces.new and choosing this repo.
+## Tests
 
-### Build Contract
+Testing of both plugins can be found at [./\_\_test\_\_/abstract_account_plugins.test.ts](./__test__/abstract_account_plugins.test.ts)
 
-`npm run build` will compile the contract to TEAL and generate an ABI and appspec JSON in [./contracts/artifacts](./contracts/artifacts/) and a algokit TypeScript client in [./contracts/clients](./contracts/clients/).
-
-`npm run compile-contract` or `npm run generate-client` can be used to compile the contract or generate the contract seperately.
-
-### Run Tests
-
-`npm run test` will execute the tests defined in [./\_\_test\_\_](./__test__) 
-
-### Lint
-
-`npm run lint` will lint the contracts and tests with ESLint.
+Not all functionality of the abstracted account has been tested yet.
