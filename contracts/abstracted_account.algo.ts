@@ -17,7 +17,8 @@ export class AbstractedAccount extends Contract {
    * The apps that are authorized to send itxns from this account
    * The box map values aren't actually used and are always empty
    */
-  plugins = BoxMap<Application, StaticArray<byte, 0>>();
+  plugins = BoxMap<Address, StaticArray<bytes, 0>>()
+  // plugins = BoxMap<Application, StaticArray<byte, 0>>();
 
   /**
    * Make sure that verifyAppAuthAddr is called by the end of the txn group
@@ -42,6 +43,20 @@ export class AbstractedAccount extends Contract {
    * Verify the contract account is not rekeyed
    */
   verifyAppAuthAddr(): void {
+    /** dont force the caller to rekey in a separate txn
+     * if this gets called and its not rekeyed back
+     * then we'll do it in an itxn
+     */
+    if (this.app.address.authAddr !== globals.zeroAddress) {
+      sendPayment({
+        sender: this.app.address.authAddr,
+        receiver: this.app.address.authAddr,
+        amount: 0,
+        note: 'rekeying back to abstracted account',
+        rekeyTo: globals.currentApplicationAddress,
+        fee: 0,
+      })
+    }
     assert(this.app.address.authAddr === globals.zeroAddress);
   }
 
