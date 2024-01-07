@@ -17,8 +17,7 @@ export class AbstractedAccount extends Contract {
    * The apps that are authorized to send itxns from this account
    * The box map values aren't actually used and are always empty
    */
-  plugins = BoxMap<Address, StaticArray<bytes, 0>>()
-  // plugins = BoxMap<Application, StaticArray<byte, 0>>();
+  plugins = BoxMap<Application, StaticArray<byte, 0>>();
 
   /**
    * Make sure that verifyAppAuthAddr is called by the end of the txn group
