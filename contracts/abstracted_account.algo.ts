@@ -20,15 +20,18 @@ export class AbstractedAccount extends Contract {
   plugins = BoxMap<Application, StaticArray<byte, 0>>();
 
   /**
-   * Make sure that verifyAppAuthAddr is called by the end of the txn group
+   * Ensure that by the end of the group the abstracted account has control of its own address
    */
-  private assertVerifyAppAuthAddrIsCalled(): void {
-    // Verify that by the end of the txn group, the rekey back to this app account is done
-    const appl = this.txnGroup[this.txnGroup.length - 1];
-    verifyAppCallTxn(appl, {
-      applicationID: this.app,
-    });
-    assert(appl.applicationArgs[0] === method('verifyAppAuthAddr()void'));
+  private verifyRekeyToAbstractedAccount(): void {
+    const lastTxn = this.txnGroup[this.txnGroup.length - 1];
+
+    // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAppAuthAddr
+    if (lastTxn.sender !== this.txn.sender || lastTxn.rekeyTo !== this.app.address) {
+      verifyAppCallTxn(lastTxn, {
+        applicationID: this.app,
+      });
+      assert(lastTxn.applicationArgs[0] === method('verifyAppAuthAddr()void'));
+    }
   }
 
   /**
@@ -42,20 +45,6 @@ export class AbstractedAccount extends Contract {
    * Verify the contract account is not rekeyed
    */
   verifyAppAuthAddr(): void {
-    /** dont force the caller to rekey in a separate txn
-     * if this gets called and its not rekeyed back
-     * then we'll do it in an itxn
-     */
-    if (this.app.address.authAddr !== globals.zeroAddress) {
-      sendPayment({
-        sender: this.app.address.authAddr,
-        receiver: this.app.address.authAddr,
-        amount: 0,
-        note: 'rekeying back to abstracted account',
-        rekeyTo: globals.currentApplicationAddress,
-        fee: 0,
-      })
-    }
     assert(this.app.address.authAddr === globals.zeroAddress);
   }
 
@@ -74,7 +63,7 @@ export class AbstractedAccount extends Contract {
     });
 
     if (flash || this.forceFlash.value) {
-      this.assertVerifyAppAuthAddrIsCalled();
+      this.verifyRekeyToAbstractedAccount();
     }
   }
 
@@ -92,7 +81,7 @@ export class AbstractedAccount extends Contract {
       note: 'rekeying to plugin app',
     });
 
-    this.assertVerifyAppAuthAddrIsCalled();
+    this.verifyRekeyToAbstractedAccount();
   }
 
   /**
