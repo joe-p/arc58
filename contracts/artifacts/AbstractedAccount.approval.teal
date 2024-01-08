@@ -30,7 +30,7 @@ verifyRekeyToAbstractedAccount:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:29
+	// contracts/abstracted_account.algo.ts:23
 	// lastTxn = this.txnGroup[this.txnGroup.length - 1]
 	global GroupSize
 	int 1
@@ -38,8 +38,8 @@ verifyRekeyToAbstractedAccount:
 	frame_bury 0 // lastTxn: txn
 
 	// if0_condition
-	// contracts/abstracted_account.algo.ts:32
-	// lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.authAddr.value
+	// contracts/abstracted_account.algo.ts:26
+	// lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.getAuthAddr()
 	frame_dig 0 // lastTxn: txn
 	gtxns Sender
 	byte 0x61646472657373 // "address"
@@ -49,8 +49,7 @@ verifyRekeyToAbstractedAccount:
 	bnz skip_or0
 	frame_dig 0 // lastTxn: txn
 	gtxns RekeyTo
-	byte 0x6175746841646472 // "authAddr"
-	app_global_get
+	callsub getAuthAddr
 	!=
 	||
 
@@ -58,7 +57,7 @@ skip_or0:
 	bz if0_end
 
 	// if0_consequent
-	// contracts/abstracted_account.algo.ts:33
+	// contracts/abstracted_account.algo.ts:27
 	// verifyAppCallTxn(lastTxn, {
 	//         applicationID: this.app,
 	//       })
@@ -76,7 +75,7 @@ skip_or0:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:36
+	// contracts/abstracted_account.algo.ts:30
 	// assert(lastTxn.applicationArgs[0] === method('verifyAppAuthAddr()void'))
 	frame_dig 0 // lastTxn: txn
 	gtxns ApplicationArgs 0
@@ -85,6 +84,29 @@ skip_or0:
 	assert
 
 if0_end:
+	retsub
+
+// getAuthAddr()address
+//
+// What the value of this.address.value.authAddr should be when this.address
+// is able to be controlled by this app. It will either be this.app.address or zeroAddress
+getAuthAddr:
+	proto 0 1
+
+	// contracts/abstracted_account.algo.ts:39
+	// return this.address.value === this.app.address ? Address.zeroAddress : this.app.address;
+	byte 0x61646472657373 // "address"
+	app_global_get
+	global CurrentApplicationAddress
+	==
+	bz ternary0_false
+	global ZeroAddress
+	b ternary0_end
+
+ternary0_false:
+	global CurrentApplicationAddress
+
+ternary0_end:
 	retsub
 
 abi_route_createApplication:
@@ -118,7 +140,7 @@ abi_route_createApplication:
 createApplication:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:47
+	// contracts/abstracted_account.algo.ts:49
 	// verifyAppCallTxn(this.txn, {
 	//       sender: { includedIn: [address, admin] },
 	//     })
@@ -132,48 +154,31 @@ createApplication:
 	||
 	assert
 
-	// contracts/abstracted_account.algo.ts:51
+	// contracts/abstracted_account.algo.ts:53
 	// assert(admin !== address)
 	frame_dig -2 // admin: Address
 	frame_dig -1 // address: Address
 	!=
 	assert
 
-	// contracts/abstracted_account.algo.ts:53
+	// contracts/abstracted_account.algo.ts:55
 	// this.admin.value = admin
 	byte 0x61646d696e // "admin"
 	frame_dig -2 // admin: Address
 	app_global_put
 
-	// contracts/abstracted_account.algo.ts:54
+	// contracts/abstracted_account.algo.ts:56
 	// this.address.value = address === Address.zeroAddress ? this.app.address : address
 	byte 0x61646472657373 // "address"
 	frame_dig -1 // address: Address
 	global ZeroAddress
 	==
-	bz ternary0_false
-	global CurrentApplicationAddress
-	b ternary0_end
-
-ternary0_false:
-	frame_dig -1 // address: Address
-
-ternary0_end:
-	app_global_put
-
-	// contracts/abstracted_account.algo.ts:55
-	// this.authAddr.value = this.address.value === this.app.address ? Address.zeroAddress : this.app.address
-	byte 0x6175746841646472 // "authAddr"
-	byte 0x61646472657373 // "address"
-	app_global_get
-	global CurrentApplicationAddress
-	==
 	bz ternary1_false
-	global ZeroAddress
+	global CurrentApplicationAddress
 	b ternary1_end
 
 ternary1_false:
-	global CurrentApplicationAddress
+	frame_dig -1 // address: Address
 
 ternary1_end:
 	app_global_put
@@ -191,14 +196,13 @@ abi_route_verifyAppAuthAddr:
 verifyAppAuthAddr:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:62
-	// assert(this.address.value.authAddr === this.authAddr.value)
+	// contracts/abstracted_account.algo.ts:63
+	// assert(this.address.value.authAddr === this.getAuthAddr())
 	byte 0x61646472657373 // "address"
 	app_global_get
 	acct_params_get AcctAuthAddr
 	assert
-	byte 0x6175746841646472 // "authAddr"
-	app_global_get
+	callsub getAuthAddr
 	==
 	assert
 	retsub
@@ -236,7 +240,7 @@ abi_route_rekeyTo:
 rekeyTo:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:72
+	// contracts/abstracted_account.algo.ts:73
 	// verifyAppCallTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -245,7 +249,7 @@ rekeyTo:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:74
+	// contracts/abstracted_account.algo.ts:75
 	// sendPayment({
 	//       sender: this.address.value,
 	//       receiver: addr,
@@ -256,23 +260,23 @@ rekeyTo:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:75
+	// contracts/abstracted_account.algo.ts:76
 	// sender: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Sender
 
-	// contracts/abstracted_account.algo.ts:76
+	// contracts/abstracted_account.algo.ts:77
 	// receiver: addr
 	frame_dig -1 // addr: Address
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:77
+	// contracts/abstracted_account.algo.ts:78
 	// rekeyTo: addr
 	frame_dig -1 // addr: Address
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:78
+	// contracts/abstracted_account.algo.ts:79
 	// note: 'rekeying abstracted account'
 	byte 0x72656b6579696e672061627374726163746564206163636f756e74 // "rekeying abstracted account"
 	itxn_field Note
@@ -285,13 +289,13 @@ rekeyTo:
 	itxn_submit
 
 	// if1_condition
-	// contracts/abstracted_account.algo.ts:81
+	// contracts/abstracted_account.algo.ts:82
 	// flash
 	frame_dig -2 // flash: boolean
 	bz if1_end
 
 	// if1_consequent
-	// contracts/abstracted_account.algo.ts:81
+	// contracts/abstracted_account.algo.ts:82
 	// this.verifyRekeyToAbstractedAccount()
 	callsub verifyRekeyToAbstractedAccount
 
@@ -317,7 +321,7 @@ abi_route_rekeyToPlugin:
 rekeyToPlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:90
+	// contracts/abstracted_account.algo.ts:91
 	// assert(this.plugins(plugin).exists)
 	frame_dig -1 // plugin: Application
 	itob
@@ -326,7 +330,7 @@ rekeyToPlugin:
 	pop
 	assert
 
-	// contracts/abstracted_account.algo.ts:92
+	// contracts/abstracted_account.algo.ts:93
 	// sendPayment({
 	//       sender: this.address.value,
 	//       receiver: this.address.value,
@@ -337,26 +341,26 @@ rekeyToPlugin:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:93
+	// contracts/abstracted_account.algo.ts:94
 	// sender: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Sender
 
-	// contracts/abstracted_account.algo.ts:94
+	// contracts/abstracted_account.algo.ts:95
 	// receiver: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:95
+	// contracts/abstracted_account.algo.ts:96
 	// rekeyTo: plugin.address
 	frame_dig -1 // plugin: Application
 	app_params_get AppAddress
 	assert
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:96
+	// contracts/abstracted_account.algo.ts:97
 	// note: 'rekeying to plugin app'
 	byte 0x72656b6579696e6720746f20706c7567696e20617070 // "rekeying to plugin app"
 	itxn_field Note
@@ -368,7 +372,7 @@ rekeyToPlugin:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/abstracted_account.algo.ts:99
+	// contracts/abstracted_account.algo.ts:100
 	// this.verifyRekeyToAbstractedAccount()
 	callsub verifyRekeyToAbstractedAccount
 	retsub
@@ -392,7 +396,7 @@ abi_route_changeAdmin:
 changeAdmin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:108
+	// contracts/abstracted_account.algo.ts:109
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -401,7 +405,7 @@ changeAdmin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:109
+	// contracts/abstracted_account.algo.ts:110
 	// this.admin.value = newAdmin
 	byte 0x61646d696e // "admin"
 	frame_dig -1 // newAdmin: Account
@@ -427,7 +431,7 @@ abi_route_addPlugin:
 addPlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:118
+	// contracts/abstracted_account.algo.ts:119
 	// assert(this.txn.sender === this.admin.value)
 	txn Sender
 	byte 0x61646d696e // "admin"
@@ -435,7 +439,7 @@ addPlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:120
+	// contracts/abstracted_account.algo.ts:121
 	// this.plugins(app).create(0)
 	frame_dig -1 // app: Application
 	itob
@@ -462,7 +466,7 @@ abi_route_removePlugin:
 removePlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:129
+	// contracts/abstracted_account.algo.ts:130
 	// assert(this.txn.sender === this.admin.value)
 	txn Sender
 	byte 0x61646d696e // "admin"
@@ -470,7 +474,7 @@ removePlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:131
+	// contracts/abstracted_account.algo.ts:132
 	// this.plugins(app).delete()
 	frame_dig -1 // app: Application
 	itob

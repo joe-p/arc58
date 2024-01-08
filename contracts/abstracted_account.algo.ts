@@ -17,24 +17,26 @@ export class AbstractedAccount extends Contract {
   address = GlobalStateKey<Address>();
 
   /**
-   * The value of this.address.value.authAddr when this.address is able to be controlled by this app
-   * It will either be this.app.address or zeroAddress
-   */
-  authAddr = GlobalStateKey<Address>();
-
-  /**
    * Ensure that by the end of the group the abstracted account has control of its address
    */
   private verifyRekeyToAbstractedAccount(): void {
     const lastTxn = this.txnGroup[this.txnGroup.length - 1];
 
     // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAppAuthAddr
-    if (lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.authAddr.value) {
+    if (lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.getAuthAddr()) {
       verifyAppCallTxn(lastTxn, {
         applicationID: this.app,
       });
       assert(lastTxn.applicationArgs[0] === method('verifyAppAuthAddr()void'));
     }
+  }
+
+  /**
+   * What the value of this.address.value.authAddr should be when this.address
+   * is able to be controlled by this app. It will either be this.app.address or zeroAddress
+   */
+  private getAuthAddr(): Address {
+    return this.address.value === this.app.address ? Address.zeroAddress : this.app.address;
   }
 
   /**
@@ -52,14 +54,13 @@ export class AbstractedAccount extends Contract {
 
     this.admin.value = admin;
     this.address.value = address === Address.zeroAddress ? this.app.address : address;
-    this.authAddr.value = this.address.value === this.app.address ? Address.zeroAddress : this.app.address;
   }
 
   /**
    * Verify the abstracted account address is rekeyed to this app
    */
   verifyAppAuthAddr(): void {
-    assert(this.address.value.authAddr === this.authAddr.value);
+    assert(this.address.value.authAddr === this.getAuthAddr());
   }
 
   /**
