@@ -8,12 +8,6 @@ export class AbstractedAccount extends Contract {
   eoa = GlobalStateKey<Address>();
 
   /**
-   * Whether or not this abstracted account must always use a "flash" rekey
-   * A "flash" rekey ensures that the rekey back is done atomically in the same group
-   */
-  forceFlash = GlobalStateKey<boolean>();
-
-  /**
    * The apps that are authorized to send itxns from this account
    * The box map values aren't actually used and are always empty
    */
@@ -54,6 +48,7 @@ export class AbstractedAccount extends Contract {
    * @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
    */
   rekeyToEOA(flash: boolean): void {
+    verifyAppCallTxn(this.txn, { sender: this.eoa.value });
     const authAddr = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr;
 
     sendPayment({
@@ -62,9 +57,7 @@ export class AbstractedAccount extends Contract {
       note: 'rekeying to EOA',
     });
 
-    if (flash || this.forceFlash.value) {
-      this.verifyRekeyToAbstractedAccount();
-    }
+    if (flash) this.verifyRekeyToAbstractedAccount();
   }
 
   /**
