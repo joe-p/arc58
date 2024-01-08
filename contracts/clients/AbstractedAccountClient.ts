@@ -27,7 +27,7 @@ import type { ABIResult, TransactionWithSigner, modelsv2 } from 'algosdk'
 import { Algodv2, OnApplicationComplete, Transaction, AtomicTransactionComposer } from 'algosdk'
 export const APP_SPEC: AppSpec = {
   "hints": {
-    "createApplication()void": {
+    "createApplication(address,address)void": {
       "call_config": {
         "no_op": "CREATE"
       }
@@ -37,7 +37,7 @@ export const APP_SPEC: AppSpec = {
         "no_op": "CALL"
       }
     },
-    "rekeyToEOA(bool)void": {
+    "rekeyTo(address,bool)void": {
       "call_config": {
         "no_op": "CALL"
       }
@@ -47,7 +47,7 @@ export const APP_SPEC: AppSpec = {
         "no_op": "CALL"
       }
     },
-    "transferEOA(account)void": {
+    "changeAdmin(account)void": {
       "call_config": {
         "no_op": "CALL"
       }
@@ -77,13 +77,17 @@ export const APP_SPEC: AppSpec = {
     },
     "global": {
       "declared": {
-        "eoa": {
+        "admin": {
           "type": "bytes",
-          "key": "eoa"
+          "key": "admin"
         },
-        "forceFlash": {
+        "address": {
           "type": "bytes",
-          "key": "forceFlash"
+          "key": "address"
+        },
+        "authAddr": {
+          "type": "bytes",
+          "key": "authAddr"
         }
       },
       "reserved": {}
@@ -91,7 +95,7 @@ export const APP_SPEC: AppSpec = {
   },
   "state": {
     "global": {
-      "num_byte_slices": 2,
+      "num_byte_slices": 3,
       "num_uints": 0
     },
     "local": {
@@ -100,7 +104,7 @@ export const APP_SPEC: AppSpec = {
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgovLyBhc3NlcnRWZXJpZnlBcHBBdXRoQWRkcklzQ2FsbGVkKCl2b2lkCi8vCi8vIE1ha2Ugc3VyZSB0aGF0IHZlcmlmeUFwcEF1dGhBZGRyIGlzIGNhbGxlZCBieSB0aGUgZW5kIG9mIHRoZSB0eG4gZ3JvdXAKYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZDoKCXByb3RvIDAgMAoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlIDB4CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjI3CgkvLyBhcHBsID0gdGhpcy50eG5Hcm91cFt0aGlzLnR4bkdyb3VwLmxlbmd0aCAtIDFdCglnbG9iYWwgR3JvdXBTaXplCglpbnQgMQoJLQoJZnJhbWVfYnVyeSAwIC8vIGFwcGw6IHR4bgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoyOAoJLy8gdmVyaWZ5QXBwQ2FsbFR4bihhcHBsLCB7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiB0aGlzLmFwcCwKCS8vICAgICB9KQoJLy8gdmVyaWZ5IGFwcGwKCWZyYW1lX2RpZyAwIC8vIGFwcGw6IHR4bgoJZ3R4bnMgVHlwZUVudW0KCWludCBhcHBsCgk9PQoJYXNzZXJ0CgoJLy8gdmVyaWZ5IGFwcGxpY2F0aW9uSUQKCWZyYW1lX2RpZyAwIC8vIGFwcGw6IHR4bgoJZ3R4bnMgQXBwbGljYXRpb25JRAoJdHhuYSBBcHBsaWNhdGlvbnMgMAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czozMQoJLy8gYXNzZXJ0KGFwcGwuYXBwbGljYXRpb25BcmdzWzBdID09PSBtZXRob2QoJ3ZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkJykpCglmcmFtZV9kaWcgMCAvLyBhcHBsOiB0eG4KCWd0eG5zIEFwcGxpY2F0aW9uQXJncyAwCgltZXRob2QgInZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkIgoJPT0KCWFzc2VydAoJcmV0c3ViCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAovLwovLyBDcmVhdGUgYW4gYWJzdHJhY3RlZCBhY2NvdW50IGZvciBhbiBFT0EKY3JlYXRlQXBwbGljYXRpb246Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MzgKCS8vIHRoaXMuZW9hLnZhbHVlID0gdGhpcy50eG4uc2VuZGVyCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCgl0eG4gU2VuZGVyCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfdmVyaWZ5QXBwQXV0aEFkZHI6CgkvLyBleGVjdXRlIHZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkCgljYWxsc3ViIHZlcmlmeUFwcEF1dGhBZGRyCglpbnQgMQoJcmV0dXJuCgovLyB2ZXJpZnlBcHBBdXRoQWRkcigpdm9pZAovLwovLyBWZXJpZnkgdGhlIGNvbnRyYWN0IGFjY291bnQgaXMgbm90IHJla2V5ZWQKdmVyaWZ5QXBwQXV0aEFkZHI6Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NDUKCS8vIGFzc2VydCh0aGlzLmFwcC5hZGRyZXNzLmF1dGhBZGRyID09PSBnbG9iYWxzLnplcm9BZGRyZXNzKQoJZ2xvYmFsIEN1cnJlbnRBcHBsaWNhdGlvbkFkZHJlc3MKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYXNzZXJ0CglyZXRzdWIKCmFiaV9yb3V0ZV9yZWtleVRvRU9BOgoJLy8gZmxhc2g6IGJvb2wKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWR1cAoJbGVuCglpbnQgMQoJPT0KCWFzc2VydAoJaW50IDAKCWdldGJpdAoKCS8vIGV4ZWN1dGUgcmVrZXlUb0VPQShib29sKXZvaWQKCWNhbGxzdWIgcmVrZXlUb0VPQQoJaW50IDEKCXJldHVybgoKLy8gcmVrZXlUb0VPQShib29sKXZvaWQKLy8KLy8gUmVrZXkgdGhpcyBjb250cmFjdCBhY2NvdW50IHRvIHRoZSBFT0EKLy8KLy8gQHBhcmFtIGZsYXNoIFdoZXRoZXIgb3Igbm90IHRoaXMgc2hvdWxkIGJlIGEgZmxhc2ggcmVrZXkuIElmIHRydWUsIHRoZSByZWtleSBiYWNrIHRvIHRoaXMgY29udHJhY3QgbXVzdCBkb25lIGluIHRoZSBzYW1lIHR4biBncm91cCBhcyB0aGlzIGNhbGwKcmVrZXlUb0VPQToKCXByb3RvIDEgMAoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlIDB4CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjU0CgkvLyBhdXRoQWRkciA9IHRoaXMuZW9hLnZhbHVlLmF1dGhBZGRyID09PSBBZGRyZXNzLnplcm9BZGRyZXNzID8gdGhpcy5lb2EudmFsdWUgOiB0aGlzLmVvYS52YWx1ZS5hdXRoQWRkcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWFjY3RfcGFyYW1zX2dldCBBY2N0QXV0aEFkZHIKCWFzc2VydAoJZ2xvYmFsIFplcm9BZGRyZXNzCgk9PQoJYnogdGVybmFyeTFfZmFsc2UKCWJ5dGUgMHg2NTZmNjEgLy8gImVvYSIKCWFwcF9nbG9iYWxfZ2V0CgliIHRlcm5hcnkxX2VuZAoKdGVybmFyeTFfZmFsc2U6CglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJYWNjdF9wYXJhbXNfZ2V0IEFjY3RBdXRoQWRkcgoJYXNzZXJ0Cgp0ZXJuYXJ5MV9lbmQ6CglmcmFtZV9idXJ5IDAgLy8gYXV0aEFkZHI6IGFkZHJlc3MKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTYKCS8vIHNlbmRQYXltZW50KHsKCS8vICAgICAgIHJlY2VpdmVyOiB0aGlzLmVvYS52YWx1ZSwKCS8vICAgICAgIHJla2V5VG86IGF1dGhBZGRyLAoJLy8gICAgICAgbm90ZTogJ3Jla2V5aW5nIHRvIEVPQScsCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludCBwYXkKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTcKCS8vIHJlY2VpdmVyOiB0aGlzLmVvYS52YWx1ZQoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCWl0eG5fZmllbGQgUmVjZWl2ZXIKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTgKCS8vIHJla2V5VG86IGF1dGhBZGRyCglmcmFtZV9kaWcgMCAvLyBhdXRoQWRkcjogYWRkcmVzcwoJaXR4bl9maWVsZCBSZWtleVRvCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjU5CgkvLyBub3RlOiAncmVrZXlpbmcgdG8gRU9BJwoJYnl0ZSAweDcyNjU2YjY1Nzk2OTZlNjcyMDc0NmYyMDQ1NGY0MSAvLyAicmVrZXlpbmcgdG8gRU9BIgoJaXR4bl9maWVsZCBOb3RlCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50IDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoKCS8vIGlmMF9jb25kaXRpb24KCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo2MgoJLy8gZmxhc2ggfHwgdGhpcy5mb3JjZUZsYXNoLnZhbHVlCglmcmFtZV9kaWcgLTEgLy8gZmxhc2g6IGJvb2xlYW4KCWR1cAoJYm56IHNraXBfb3IwCglieXRlIDB4NjY2ZjcyNjM2NTQ2NmM2MTczNjggLy8gImZvcmNlRmxhc2giCglhcHBfZ2xvYmFsX2dldAoJaW50IDAKCWdldGJpdAoJfHwKCnNraXBfb3IwOgoJYnogaWYwX2VuZAoKCS8vIGlmMF9jb25zZXF1ZW50CgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NjMKCS8vIHRoaXMuYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZCgpCgljYWxsc3ViIGFzc2VydFZlcmlmeUFwcEF1dGhBZGRySXNDYWxsZWQKCmlmMF9lbmQ6CglyZXRzdWIKCmFiaV9yb3V0ZV9yZWtleVRvUGx1Z2luOgoJLy8gcGx1Z2luOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSByZWtleVRvUGx1Z2luKGFwcGxpY2F0aW9uKXZvaWQKCWNhbGxzdWIgcmVrZXlUb1BsdWdpbgoJaW50IDEKCXJldHVybgoKLy8gcmVrZXlUb1BsdWdpbihhcHBsaWNhdGlvbil2b2lkCi8vCi8vIFRlbXBvcmFyaWx5IHJla2V5IHRvIGFuIGFwcHJvdmVkIHBsdWdpbiBhcHAgYWRkcmVzcwovLwovLyBAcGFyYW0gcGx1Z2luIFRoZSBhcHAgdG8gcmVrZXkgdG8KcmVrZXlUb1BsdWdpbjoKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3MwoJLy8gYXNzZXJ0KHRoaXMucGx1Z2lucyhwbHVnaW4pLmV4aXN0cykKCWZyYW1lX2RpZyAtMSAvLyBwbHVnaW46IEFwcGxpY2F0aW9uCglpdG9iCglib3hfbGVuCglzd2FwCglwb3AKCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NQoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlLAoJLy8gICAgICAgcmVrZXlUbzogcGx1Z2luLmFkZHJlc3MsCgkvLyAgICAgICBub3RlOiAncmVrZXlpbmcgdG8gcGx1Z2luJywKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NgoJLy8gcmVjZWl2ZXI6IHRoaXMuZW9hLnZhbHVlCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NwoJLy8gcmVrZXlUbzogcGx1Z2luLmFkZHJlc3MKCWZyYW1lX2RpZyAtMSAvLyBwbHVnaW46IEFwcGxpY2F0aW9uCglhcHBfcGFyYW1zX2dldCBBcHBBZGRyZXNzCglhc3NlcnQKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3OAoJLy8gbm90ZTogJ3Jla2V5aW5nIHRvIHBsdWdpbicKCWJ5dGUgMHg3MjY1NmI2NTc5Njk2ZTY3MjA3NDZmMjA3MDZjNzU2NzY5NmUgLy8gInJla2V5aW5nIHRvIHBsdWdpbiIKCWl0eG5fZmllbGQgTm90ZQoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6ODEKCS8vIHRoaXMuYXNzZXJ0VmVyaWZ5QXBwQXV0aEFkZHJJc0NhbGxlZCgpCgljYWxsc3ViIGFzc2VydFZlcmlmeUFwcEF1dGhBZGRySXNDYWxsZWQKCXJldHN1YgoKYWJpX3JvdXRlX3RyYW5zZmVyRU9BOgoJLy8gbmV3RU9BOiBhY2NvdW50Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgl0eG5hcyBBY2NvdW50cwoKCS8vIGV4ZWN1dGUgdHJhbnNmZXJFT0EoYWNjb3VudCl2b2lkCgljYWxsc3ViIHRyYW5zZmVyRU9BCglpbnQgMQoJcmV0dXJuCgovLyB0cmFuc2ZlckVPQShhY2NvdW50KXZvaWQKLy8KLy8gVHJhbnNmZXIgdGhlIGFic3RyYWN0ZWQgYWNjb3VudCB0byBhIG5ldyBFT0EuCi8vCi8vIEBwYXJhbSBuZXdFT0EgVGhlIG5ldyBFT0EKdHJhbnNmZXJFT0E6Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTAKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMuZW9hLnZhbHVlKQoJdHhuIFNlbmRlcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTEKCS8vIHRoaXMuZW9hLnZhbHVlID0gbmV3RU9BCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglmcmFtZV9kaWcgLTEgLy8gbmV3RU9BOiBBY2NvdW50CglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfYWRkUGx1Z2luOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSBhZGRQbHVnaW4oYXBwbGljYXRpb24pdm9pZAoJY2FsbHN1YiBhZGRQbHVnaW4KCWludCAxCglyZXR1cm4KCi8vIGFkZFBsdWdpbihhcHBsaWNhdGlvbil2b2lkCi8vCi8vIEFkZCBhbiBhcHAgdG8gdGhlIGxpc3Qgb2YgYXBwcm92ZWQgcGx1Z2lucwovLwovLyBAcGFyYW0gYXBwIFRoZSBhcHAgdG8gYWRkCmFkZFBsdWdpbjoKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMDAKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMuZW9hLnZhbHVlKQoJdHhuIFNlbmRlcgoJYnl0ZSAweDY1NmY2MSAvLyAiZW9hIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MTAyCgkvLyB0aGlzLnBsdWdpbnMoYXBwKS5jcmVhdGUoMCkKCWZyYW1lX2RpZyAtMSAvLyBhcHA6IEFwcGxpY2F0aW9uCglpdG9iCglpbnQgMAoJYm94X2NyZWF0ZQoJcmV0c3ViCgphYmlfcm91dGVfcmVtb3ZlUGx1Z2luOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSByZW1vdmVQbHVnaW4oYXBwbGljYXRpb24pdm9pZAoJY2FsbHN1YiByZW1vdmVQbHVnaW4KCWludCAxCglyZXR1cm4KCi8vIHJlbW92ZVBsdWdpbihhcHBsaWNhdGlvbil2b2lkCi8vCi8vIFJlbW92ZSBhbiBhcHAgZnJvbSB0aGUgbGlzdCBvZiBhcHByb3ZlZCBwbHVnaW5zCi8vCi8vIEBwYXJhbSBhcHAgVGhlIGFwcCB0byByZW1vdmUKcmVtb3ZlUGx1Z2luOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjExMQoJLy8gYXNzZXJ0KHRoaXMudHhuLnNlbmRlciA9PT0gdGhpcy5lb2EudmFsdWUpCgl0eG4gU2VuZGVyCglieXRlIDB4NjU2ZjYxIC8vICJlb2EiCglhcHBfZ2xvYmFsX2dldAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoxMTMKCS8vIHRoaXMucGx1Z2lucyhhcHApLmRlbGV0ZSgpCglmcmFtZV9kaWcgLTEgLy8gYXBwOiBBcHBsaWNhdGlvbgoJaXRvYgoJYm94X2RlbAoJcmV0c3ViCgpjcmVhdGVfTm9PcDoKCW1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWVycgoKY2FsbF9Ob09wOgoJbWV0aG9kICJ2ZXJpZnlBcHBBdXRoQWRkcigpdm9pZCIKCW1ldGhvZCAicmVrZXlUb0VPQShib29sKXZvaWQiCgltZXRob2QgInJla2V5VG9QbHVnaW4oYXBwbGljYXRpb24pdm9pZCIKCW1ldGhvZCAidHJhbnNmZXJFT0EoYWNjb3VudCl2b2lkIgoJbWV0aG9kICJhZGRQbHVnaW4oYXBwbGljYXRpb24pdm9pZCIKCW1ldGhvZCAicmVtb3ZlUGx1Z2luKGFwcGxpY2F0aW9uKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfdmVyaWZ5QXBwQXV0aEFkZHIgYWJpX3JvdXRlX3Jla2V5VG9FT0EgYWJpX3JvdXRlX3Jla2V5VG9QbHVnaW4gYWJpX3JvdXRlX3RyYW5zZmVyRU9BIGFiaV9yb3V0ZV9hZGRQbHVnaW4gYWJpX3JvdXRlX3JlbW92ZVBsdWdpbgoJZXJy",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjY4LjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgovLyB2ZXJpZnlSZWtleVRvQWJzdHJhY3RlZEFjY291bnQoKXZvaWQKLy8KLy8gRW5zdXJlIHRoYXQgYnkgdGhlIGVuZCBvZiB0aGUgZ3JvdXAgdGhlIGFic3RyYWN0ZWQgYWNjb3VudCBoYXMgY29udHJvbCBvZiBpdHMgYWRkcmVzcwp2ZXJpZnlSZWtleVRvQWJzdHJhY3RlZEFjY291bnQ6Cglwcm90byAwIDAKCgkvLyBQdXNoIGVtcHR5IGJ5dGVzIGFmdGVyIHRoZSBmcmFtZSBwb2ludGVyIHRvIHJlc2VydmUgc3BhY2UgZm9yIGxvY2FsIHZhcmlhYmxlcwoJYnl0ZSAweAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czoyOQoJLy8gbGFzdFR4biA9IHRoaXMudHhuR3JvdXBbdGhpcy50eG5Hcm91cC5sZW5ndGggLSAxXQoJZ2xvYmFsIEdyb3VwU2l6ZQoJaW50IDEKCS0KCWZyYW1lX2J1cnkgMCAvLyBsYXN0VHhuOiB0eG4KCgkvLyBpZjBfY29uZGl0aW9uCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MzIKCS8vIGxhc3RUeG4uc2VuZGVyICE9PSB0aGlzLmFkZHJlc3MudmFsdWUgfHwgbGFzdFR4bi5yZWtleVRvICE9PSB0aGlzLmF1dGhBZGRyLnZhbHVlCglmcmFtZV9kaWcgMCAvLyBsYXN0VHhuOiB0eG4KCWd0eG5zIFNlbmRlcgoJYnl0ZSAweDYxNjQ2NDcyNjU3MzczIC8vICJhZGRyZXNzIgoJYXBwX2dsb2JhbF9nZXQKCSE9CglkdXAKCWJueiBza2lwX29yMAoJZnJhbWVfZGlnIDAgLy8gbGFzdFR4bjogdHhuCglndHhucyBSZWtleVRvCglieXRlIDB4NjE3NTc0Njg0MTY0NjQ3MiAvLyAiYXV0aEFkZHIiCglhcHBfZ2xvYmFsX2dldAoJIT0KCXx8Cgpza2lwX29yMDoKCWJ6IGlmMF9lbmQKCgkvLyBpZjBfY29uc2VxdWVudAoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjMzCgkvLyB2ZXJpZnlBcHBDYWxsVHhuKGxhc3RUeG4sIHsKCS8vICAgICAgICAgYXBwbGljYXRpb25JRDogdGhpcy5hcHAsCgkvLyAgICAgICB9KQoJLy8gdmVyaWZ5IGFwcGwKCWZyYW1lX2RpZyAwIC8vIGxhc3RUeG46IHR4bgoJZ3R4bnMgVHlwZUVudW0KCWludCBhcHBsCgk9PQoJYXNzZXJ0CgoJLy8gdmVyaWZ5IGFwcGxpY2F0aW9uSUQKCWZyYW1lX2RpZyAwIC8vIGxhc3RUeG46IHR4bgoJZ3R4bnMgQXBwbGljYXRpb25JRAoJdHhuYSBBcHBsaWNhdGlvbnMgMAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czozNgoJLy8gYXNzZXJ0KGxhc3RUeG4uYXBwbGljYXRpb25BcmdzWzBdID09PSBtZXRob2QoJ3ZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkJykpCglmcmFtZV9kaWcgMCAvLyBsYXN0VHhuOiB0eG4KCWd0eG5zIEFwcGxpY2F0aW9uQXJncyAwCgltZXRob2QgInZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkIgoJPT0KCWFzc2VydAoKaWYwX2VuZDoKCXJldHN1YgoKYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJLy8gYWRtaW46IGFkZHJlc3MKCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWR1cAoJbGVuCglpbnQgMzIKCT09Cglhc3NlcnQKCgkvLyBhZGRyZXNzOiBhZGRyZXNzCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglkdXAKCWxlbgoJaW50IDMyCgk9PQoJYXNzZXJ0CgoJLy8gZXhlY3V0ZSBjcmVhdGVBcHBsaWNhdGlvbihhZGRyZXNzLGFkZHJlc3Mpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50IDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oYWRkcmVzcyxhZGRyZXNzKXZvaWQKLy8KLy8gQ3JlYXRlIGFuIGFic3RyYWN0ZWQgYWNjb3VudAovLwovLyBAcGFyYW0gYWRkcmVzcyBUaGUgYWRkcmVzcyB0byB1c2UgZm9yIHRoZSBhYnN0cmFjdGVkIGFjY291bnQuIElmIHplcm9BZGRyZXNzLCB0aGVuIHRoZSBhZGRyZXNzIG9mIHRoZSBjb250cmFjdCBhY2NvdW50IHdpbGwgYmUgdXNlZAovLyBAcGFyYW0gYWRtaW4gVGhlIGFkbWluIGZvciB0aGlzIGFwcApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDIgMAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo0NwoJLy8gdmVyaWZ5QXBwQ2FsbFR4bih0aGlzLnR4biwgewoJLy8gICAgICAgc2VuZGVyOiB7IGluY2x1ZGVkSW46IFthZGRyZXNzLCBhZG1pbl0gfSwKCS8vICAgICB9KQoJLy8gdmVyaWZ5IHNlbmRlcgoJdHhuIFNlbmRlcgoJZnJhbWVfZGlnIC0xIC8vIGFkZHJlc3M6IEFkZHJlc3MKCT09Cgl0eG4gU2VuZGVyCglmcmFtZV9kaWcgLTIgLy8gYWRtaW46IEFkZHJlc3MKCT09Cgl8fAoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjUxCgkvLyBhc3NlcnQoYWRtaW4gIT09IGFkZHJlc3MpCglmcmFtZV9kaWcgLTIgLy8gYWRtaW46IEFkZHJlc3MKCWZyYW1lX2RpZyAtMSAvLyBhZGRyZXNzOiBBZGRyZXNzCgkhPQoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjUzCgkvLyB0aGlzLmFkbWluLnZhbHVlID0gYWRtaW4KCWJ5dGUgMHg2MTY0NmQ2OTZlIC8vICJhZG1pbiIKCWZyYW1lX2RpZyAtMiAvLyBhZG1pbjogQWRkcmVzcwoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NTQKCS8vIHRoaXMuYWRkcmVzcy52YWx1ZSA9IGFkZHJlc3MgPT09IEFkZHJlc3MuemVyb0FkZHJlc3MgPyB0aGlzLmFwcC5hZGRyZXNzIDogYWRkcmVzcwoJYnl0ZSAweDYxNjQ2NDcyNjU3MzczIC8vICJhZGRyZXNzIgoJZnJhbWVfZGlnIC0xIC8vIGFkZHJlc3M6IEFkZHJlc3MKCWdsb2JhbCBaZXJvQWRkcmVzcwoJPT0KCWJ6IHRlcm5hcnkwX2ZhbHNlCglnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uQWRkcmVzcwoJYiB0ZXJuYXJ5MF9lbmQKCnRlcm5hcnkwX2ZhbHNlOgoJZnJhbWVfZGlnIC0xIC8vIGFkZHJlc3M6IEFkZHJlc3MKCnRlcm5hcnkwX2VuZDoKCWFwcF9nbG9iYWxfcHV0CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjU1CgkvLyB0aGlzLmF1dGhBZGRyLnZhbHVlID0gdGhpcy5hZGRyZXNzLnZhbHVlID09PSB0aGlzLmFwcC5hZGRyZXNzID8gQWRkcmVzcy56ZXJvQWRkcmVzcyA6IHRoaXMuYXBwLmFkZHJlc3MKCWJ5dGUgMHg2MTc1NzQ2ODQxNjQ2NDcyIC8vICJhdXRoQWRkciIKCWJ5dGUgMHg2MTY0NjQ3MjY1NzM3MyAvLyAiYWRkcmVzcyIKCWFwcF9nbG9iYWxfZ2V0CglnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uQWRkcmVzcwoJPT0KCWJ6IHRlcm5hcnkxX2ZhbHNlCglnbG9iYWwgWmVyb0FkZHJlc3MKCWIgdGVybmFyeTFfZW5kCgp0ZXJuYXJ5MV9mYWxzZToKCWdsb2JhbCBDdXJyZW50QXBwbGljYXRpb25BZGRyZXNzCgp0ZXJuYXJ5MV9lbmQ6CglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfdmVyaWZ5QXBwQXV0aEFkZHI6CgkvLyBleGVjdXRlIHZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkCgljYWxsc3ViIHZlcmlmeUFwcEF1dGhBZGRyCglpbnQgMQoJcmV0dXJuCgovLyB2ZXJpZnlBcHBBdXRoQWRkcigpdm9pZAovLwovLyBWZXJpZnkgdGhlIGFic3RyYWN0ZWQgYWNjb3VudCBhZGRyZXNzIGlzIHJla2V5ZWQgdG8gdGhpcyBhcHAKdmVyaWZ5QXBwQXV0aEFkZHI6Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NjIKCS8vIGFzc2VydCh0aGlzLmFkZHJlc3MudmFsdWUuYXV0aEFkZHIgPT09IHRoaXMuYXV0aEFkZHIudmFsdWUpCglieXRlIDB4NjE2NDY0NzI2NTczNzMgLy8gImFkZHJlc3MiCglhcHBfZ2xvYmFsX2dldAoJYWNjdF9wYXJhbXNfZ2V0IEFjY3RBdXRoQWRkcgoJYXNzZXJ0CglieXRlIDB4NjE3NTc0Njg0MTY0NjQ3MiAvLyAiYXV0aEFkZHIiCglhcHBfZ2xvYmFsX2dldAoJPT0KCWFzc2VydAoJcmV0c3ViCgphYmlfcm91dGVfcmVrZXlUbzoKCS8vIGZsYXNoOiBib29sCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglkdXAKCWxlbgoJaW50IDEKCT09Cglhc3NlcnQKCWludCAwCglnZXRiaXQKCgkvLyBhZGRyOiBhZGRyZXNzCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglkdXAKCWxlbgoJaW50IDMyCgk9PQoJYXNzZXJ0CgoJLy8gZXhlY3V0ZSByZWtleVRvKGJvb2wsYWRkcmVzcyl2b2lkCgljYWxsc3ViIHJla2V5VG8KCWludCAxCglyZXR1cm4KCi8vIHJla2V5VG8oYm9vbCxhZGRyZXNzKXZvaWQKLy8KLy8gUmVrZXkgdGhlIGFkZHJlc3MgdG8gYW5vdGhlciBhY2NvdW50LiBQcmltYXJpbHkgdXNlZnVsIGZvciByZWtleWluZyB0byBhbiBFT0EKLy8KLy8gQHBhcmFtIGFkZHIgVGhlIGFkZHJlc3MgdG8gcmVrZXkgdG8KLy8gQHBhcmFtIGZsYXNoIFdoZXRoZXIgb3Igbm90IHRoaXMgc2hvdWxkIGJlIGEgZmxhc2ggcmVrZXkuIElmIHRydWUsIHRoZSByZWtleSBiYWNrIHRvIHRoZSBhZGRyZXNzIG11c3QgZG9uZSBpbiB0aGUgc2FtZSB0eG4gZ3JvdXAgYXMgdGhpcyBjYWxsCnJla2V5VG86Cglwcm90byAyIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6NzIKCS8vIHZlcmlmeUFwcENhbGxUeG4odGhpcy50eG4sIHsgc2VuZGVyOiB0aGlzLmFkbWluLnZhbHVlIH0pCgkvLyB2ZXJpZnkgc2VuZGVyCgl0eG4gU2VuZGVyCglieXRlIDB4NjE2NDZkNjk2ZSAvLyAiYWRtaW4iCglhcHBfZ2xvYmFsX2dldAoJPT0KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NAoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgc2VuZGVyOiB0aGlzLmFkZHJlc3MudmFsdWUsCgkvLyAgICAgICByZWNlaXZlcjogYWRkciwKCS8vICAgICAgIHJla2V5VG86IGFkZHIsCgkvLyAgICAgICBub3RlOiAncmVrZXlpbmcgYWJzdHJhY3RlZCBhY2NvdW50JywKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50IHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NQoJLy8gc2VuZGVyOiB0aGlzLmFkZHJlc3MudmFsdWUKCWJ5dGUgMHg2MTY0NjQ3MjY1NzM3MyAvLyAiYWRkcmVzcyIKCWFwcF9nbG9iYWxfZ2V0CglpdHhuX2ZpZWxkIFNlbmRlcgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo3NgoJLy8gcmVjZWl2ZXI6IGFkZHIKCWZyYW1lX2RpZyAtMSAvLyBhZGRyOiBBZGRyZXNzCglpdHhuX2ZpZWxkIFJlY2VpdmVyCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjc3CgkvLyByZWtleVRvOiBhZGRyCglmcmFtZV9kaWcgLTEgLy8gYWRkcjogQWRkcmVzcwoJaXR4bl9maWVsZCBSZWtleVRvCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjc4CgkvLyBub3RlOiAncmVrZXlpbmcgYWJzdHJhY3RlZCBhY2NvdW50JwoJYnl0ZSAweDcyNjU2YjY1Nzk2OTZlNjcyMDYxNjI3Mzc0NzI2MTYzNzQ2NTY0MjA2MTYzNjM2Zjc1NmU3NCAvLyAicmVrZXlpbmcgYWJzdHJhY3RlZCBhY2NvdW50IgoJaXR4bl9maWVsZCBOb3RlCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50IDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoKCS8vIGlmMV9jb25kaXRpb24KCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo4MQoJLy8gZmxhc2gKCWZyYW1lX2RpZyAtMiAvLyBmbGFzaDogYm9vbGVhbgoJYnogaWYxX2VuZAoKCS8vIGlmMV9jb25zZXF1ZW50CgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6ODEKCS8vIHRoaXMudmVyaWZ5UmVrZXlUb0Fic3RyYWN0ZWRBY2NvdW50KCkKCWNhbGxzdWIgdmVyaWZ5UmVrZXlUb0Fic3RyYWN0ZWRBY2NvdW50CgppZjFfZW5kOgoJcmV0c3ViCgphYmlfcm91dGVfcmVrZXlUb1BsdWdpbjoKCS8vIHBsdWdpbjogYXBwbGljYXRpb24KCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCXR4bmFzIEFwcGxpY2F0aW9ucwoKCS8vIGV4ZWN1dGUgcmVrZXlUb1BsdWdpbihhcHBsaWNhdGlvbil2b2lkCgljYWxsc3ViIHJla2V5VG9QbHVnaW4KCWludCAxCglyZXR1cm4KCi8vIHJla2V5VG9QbHVnaW4oYXBwbGljYXRpb24pdm9pZAovLwovLyBUZW1wb3JhcmlseSByZWtleSB0byBhbiBhcHByb3ZlZCBwbHVnaW4gYXBwIGFkZHJlc3MKLy8KLy8gQHBhcmFtIHBsdWdpbiBUaGUgYXBwIHRvIHJla2V5IHRvCnJla2V5VG9QbHVnaW46Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTAKCS8vIGFzc2VydCh0aGlzLnBsdWdpbnMocGx1Z2luKS5leGlzdHMpCglmcmFtZV9kaWcgLTEgLy8gcGx1Z2luOiBBcHBsaWNhdGlvbgoJaXRvYgoJYm94X2xlbgoJc3dhcAoJcG9wCglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6OTIKCS8vIHNlbmRQYXltZW50KHsKCS8vICAgICAgIHNlbmRlcjogdGhpcy5hZGRyZXNzLnZhbHVlLAoJLy8gICAgICAgcmVjZWl2ZXI6IHRoaXMuYWRkcmVzcy52YWx1ZSwKCS8vICAgICAgIHJla2V5VG86IHBsdWdpbi5hZGRyZXNzLAoJLy8gICAgICAgbm90ZTogJ3Jla2V5aW5nIHRvIHBsdWdpbiBhcHAnLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnQgcGF5CglpdHhuX2ZpZWxkIFR5cGVFbnVtCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjkzCgkvLyBzZW5kZXI6IHRoaXMuYWRkcmVzcy52YWx1ZQoJYnl0ZSAweDYxNjQ2NDcyNjU3MzczIC8vICJhZGRyZXNzIgoJYXBwX2dsb2JhbF9nZXQKCWl0eG5fZmllbGQgU2VuZGVyCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjk0CgkvLyByZWNlaXZlcjogdGhpcy5hZGRyZXNzLnZhbHVlCglieXRlIDB4NjE2NDY0NzI2NTczNzMgLy8gImFkZHJlc3MiCglhcHBfZ2xvYmFsX2dldAoJaXR4bl9maWVsZCBSZWNlaXZlcgoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo5NQoJLy8gcmVrZXlUbzogcGx1Z2luLmFkZHJlc3MKCWZyYW1lX2RpZyAtMSAvLyBwbHVnaW46IEFwcGxpY2F0aW9uCglhcHBfcGFyYW1zX2dldCBBcHBBZGRyZXNzCglhc3NlcnQKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIGNvbnRyYWN0cy9hYnN0cmFjdGVkX2FjY291bnQuYWxnby50czo5NgoJLy8gbm90ZTogJ3Jla2V5aW5nIHRvIHBsdWdpbiBhcHAnCglieXRlIDB4NzI2NTZiNjU3OTY5NmU2NzIwNzQ2ZjIwNzA2Yzc1Njc2OTZlMjA2MTcwNzAgLy8gInJla2V5aW5nIHRvIHBsdWdpbiBhcHAiCglpdHhuX2ZpZWxkIE5vdGUKCgkvLyBGZWUgZmllbGQgbm90IHNldCwgZGVmYXVsdGluZyB0byAwCglpbnQgMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjk5CgkvLyB0aGlzLnZlcmlmeVJla2V5VG9BYnN0cmFjdGVkQWNjb3VudCgpCgljYWxsc3ViIHZlcmlmeVJla2V5VG9BYnN0cmFjdGVkQWNjb3VudAoJcmV0c3ViCgphYmlfcm91dGVfY2hhbmdlQWRtaW46CgkvLyBuZXdBZG1pbjogYWNjb3VudAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQWNjb3VudHMKCgkvLyBleGVjdXRlIGNoYW5nZUFkbWluKGFjY291bnQpdm9pZAoJY2FsbHN1YiBjaGFuZ2VBZG1pbgoJaW50IDEKCXJldHVybgoKLy8gY2hhbmdlQWRtaW4oYWNjb3VudCl2b2lkCi8vCi8vIENoYW5nZSB0aGUgYWRtaW4gZm9yIHRoaXMgYXBwCi8vCi8vIEBwYXJhbSBuZXdBZG1pbiBUaGUgbmV3IGFkbWluCmNoYW5nZUFkbWluOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjEwOAoJLy8gdmVyaWZ5VHhuKHRoaXMudHhuLCB7IHNlbmRlcjogdGhpcy5hZG1pbi52YWx1ZSB9KQoJLy8gdmVyaWZ5IHNlbmRlcgoJdHhuIFNlbmRlcgoJYnl0ZSAweDYxNjQ2ZDY5NmUgLy8gImFkbWluIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MTA5CgkvLyB0aGlzLmFkbWluLnZhbHVlID0gbmV3QWRtaW4KCWJ5dGUgMHg2MTY0NmQ2OTZlIC8vICJhZG1pbiIKCWZyYW1lX2RpZyAtMSAvLyBuZXdBZG1pbjogQWNjb3VudAoJYXBwX2dsb2JhbF9wdXQKCXJldHN1YgoKYWJpX3JvdXRlX2FkZFBsdWdpbjoKCS8vIGFwcDogYXBwbGljYXRpb24KCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCXR4bmFzIEFwcGxpY2F0aW9ucwoKCS8vIGV4ZWN1dGUgYWRkUGx1Z2luKGFwcGxpY2F0aW9uKXZvaWQKCWNhbGxzdWIgYWRkUGx1Z2luCglpbnQgMQoJcmV0dXJuCgovLyBhZGRQbHVnaW4oYXBwbGljYXRpb24pdm9pZAovLwovLyBBZGQgYW4gYXBwIHRvIHRoZSBsaXN0IG9mIGFwcHJvdmVkIHBsdWdpbnMKLy8KLy8gQHBhcmFtIGFwcCBUaGUgYXBwIHRvIGFkZAphZGRQbHVnaW46Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MTE4CgkvLyBhc3NlcnQodGhpcy50eG4uc2VuZGVyID09PSB0aGlzLmFkbWluLnZhbHVlKQoJdHhuIFNlbmRlcgoJYnl0ZSAweDYxNjQ2ZDY5NmUgLy8gImFkbWluIgoJYXBwX2dsb2JhbF9nZXQKCT09Cglhc3NlcnQKCgkvLyBjb250cmFjdHMvYWJzdHJhY3RlZF9hY2NvdW50LmFsZ28udHM6MTIwCgkvLyB0aGlzLnBsdWdpbnMoYXBwKS5jcmVhdGUoMCkKCWZyYW1lX2RpZyAtMSAvLyBhcHA6IEFwcGxpY2F0aW9uCglpdG9iCglpbnQgMAoJYm94X2NyZWF0ZQoJcmV0c3ViCgphYmlfcm91dGVfcmVtb3ZlUGx1Z2luOgoJLy8gYXBwOiBhcHBsaWNhdGlvbgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoJdHhuYXMgQXBwbGljYXRpb25zCgoJLy8gZXhlY3V0ZSByZW1vdmVQbHVnaW4oYXBwbGljYXRpb24pdm9pZAoJY2FsbHN1YiByZW1vdmVQbHVnaW4KCWludCAxCglyZXR1cm4KCi8vIHJlbW92ZVBsdWdpbihhcHBsaWNhdGlvbil2b2lkCi8vCi8vIFJlbW92ZSBhbiBhcHAgZnJvbSB0aGUgbGlzdCBvZiBhcHByb3ZlZCBwbHVnaW5zCi8vCi8vIEBwYXJhbSBhcHAgVGhlIGFwcCB0byByZW1vdmUKcmVtb3ZlUGx1Z2luOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjEyOQoJLy8gYXNzZXJ0KHRoaXMudHhuLnNlbmRlciA9PT0gdGhpcy5hZG1pbi52YWx1ZSkKCXR4biBTZW5kZXIKCWJ5dGUgMHg2MTY0NmQ2OTZlIC8vICJhZG1pbiIKCWFwcF9nbG9iYWxfZ2V0Cgk9PQoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL2Fic3RyYWN0ZWRfYWNjb3VudC5hbGdvLnRzOjEzMQoJLy8gdGhpcy5wbHVnaW5zKGFwcCkuZGVsZXRlKCkKCWZyYW1lX2RpZyAtMSAvLyBhcHA6IEFwcGxpY2F0aW9uCglpdG9iCglib3hfZGVsCglyZXRzdWIKCmNyZWF0ZV9Ob09wOgoJbWV0aG9kICJjcmVhdGVBcHBsaWNhdGlvbihhZGRyZXNzLGFkZHJlc3Mpdm9pZCIKCXR4bmEgQXBwbGljYXRpb25BcmdzIDAKCW1hdGNoIGFiaV9yb3V0ZV9jcmVhdGVBcHBsaWNhdGlvbgoJZXJyCgpjYWxsX05vT3A6CgltZXRob2QgInZlcmlmeUFwcEF1dGhBZGRyKCl2b2lkIgoJbWV0aG9kICJyZWtleVRvKGFkZHJlc3MsYm9vbCl2b2lkIgoJbWV0aG9kICJyZWtleVRvUGx1Z2luKGFwcGxpY2F0aW9uKXZvaWQiCgltZXRob2QgImNoYW5nZUFkbWluKGFjY291bnQpdm9pZCIKCW1ldGhvZCAiYWRkUGx1Z2luKGFwcGxpY2F0aW9uKXZvaWQiCgltZXRob2QgInJlbW92ZVBsdWdpbihhcHBsaWNhdGlvbil2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX3ZlcmlmeUFwcEF1dGhBZGRyIGFiaV9yb3V0ZV9yZWtleVRvIGFiaV9yb3V0ZV9yZWtleVRvUGx1Z2luIGFiaV9yb3V0ZV9jaGFuZ2VBZG1pbiBhYmlfcm91dGVfYWRkUGx1Z2luIGFiaV9yb3V0ZV9yZW1vdmVQbHVnaW4KCWVycg==",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "contract": {
@@ -109,28 +113,44 @@ export const APP_SPEC: AppSpec = {
     "methods": [
       {
         "name": "createApplication",
-        "desc": "Create an abstracted account for an EOA",
-        "args": [],
+        "desc": "Create an abstracted account",
+        "args": [
+          {
+            "name": "address",
+            "type": "address",
+            "desc": "The address to use for the abstracted account. If zeroAddress, then the address of the contract account will be used"
+          },
+          {
+            "name": "admin",
+            "type": "address",
+            "desc": "The admin for this app"
+          }
+        ],
         "returns": {
           "type": "void"
         }
       },
       {
         "name": "verifyAppAuthAddr",
-        "desc": "Verify the contract account is not rekeyed",
+        "desc": "Verify the abstracted account address is rekeyed to this app",
         "args": [],
         "returns": {
           "type": "void"
         }
       },
       {
-        "name": "rekeyToEOA",
-        "desc": "Rekey this contract account to the EOA",
+        "name": "rekeyTo",
+        "desc": "Rekey the address to another account. Primarily useful for rekeying to an EOA",
         "args": [
+          {
+            "name": "addr",
+            "type": "address",
+            "desc": "The address to rekey to"
+          },
           {
             "name": "flash",
             "type": "bool",
-            "desc": "Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call"
+            "desc": "Whether or not this should be a flash rekey. If true, the rekey back to the address must done in the same txn group as this call"
           }
         ],
         "returns": {
@@ -152,13 +172,13 @@ export const APP_SPEC: AppSpec = {
         }
       },
       {
-        "name": "transferEOA",
-        "desc": "Transfer the abstracted account to a new EOA.",
+        "name": "changeAdmin",
+        "desc": "Change the admin for this app",
         "args": [
           {
-            "name": "newEOA",
+            "name": "newAdmin",
             "type": "account",
-            "desc": "The new EOA"
+            "desc": "The new admin"
           }
         ],
         "returns": {
@@ -252,10 +272,18 @@ export type AbstractedAccount = {
    * Maps method signatures / names to their argument and return types.
    */
   methods:
-    & Record<'createApplication()void' | 'createApplication', {
+    & Record<'createApplication(address,address)void' | 'createApplication', {
       argsObj: {
+        /**
+         * The address to use for the abstracted account. If zeroAddress, then the address of the contract account will be used
+         */
+        address: string
+        /**
+         * The admin for this app
+         */
+        admin: string
       }
-      argsTuple: []
+      argsTuple: [address: string, admin: string]
       returns: void
     }>
     & Record<'verifyAppAuthAddr()void' | 'verifyAppAuthAddr', {
@@ -264,14 +292,18 @@ export type AbstractedAccount = {
       argsTuple: []
       returns: void
     }>
-    & Record<'rekeyToEOA(bool)void' | 'rekeyToEOA', {
+    & Record<'rekeyTo(address,bool)void' | 'rekeyTo', {
       argsObj: {
         /**
-         * Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
+         * The address to rekey to
+         */
+        addr: string
+        /**
+         * Whether or not this should be a flash rekey. If true, the rekey back to the address must done in the same txn group as this call
          */
         flash: boolean
       }
-      argsTuple: [flash: boolean]
+      argsTuple: [addr: string, flash: boolean]
       returns: void
     }>
     & Record<'rekeyToPlugin(application)void' | 'rekeyToPlugin', {
@@ -284,14 +316,14 @@ export type AbstractedAccount = {
       argsTuple: [plugin: number | bigint]
       returns: void
     }>
-    & Record<'transferEOA(account)void' | 'transferEOA', {
+    & Record<'changeAdmin(account)void' | 'changeAdmin', {
       argsObj: {
         /**
-         * The new EOA
+         * The new admin
          */
-        newEOA: string | Uint8Array
+        newAdmin: string | Uint8Array
       }
-      argsTuple: [newEOA: string | Uint8Array]
+      argsTuple: [newAdmin: string | Uint8Array]
       returns: void
     }>
     & Record<'addPlugin(application)void' | 'addPlugin', {
@@ -319,8 +351,9 @@ export type AbstractedAccount = {
    */
   state: {
     global: {
-      'eoa'?: BinaryState
-      'forceFlash'?: BinaryState
+      'admin'?: BinaryState
+      'address'?: BinaryState
+      'authAddr'?: BinaryState
     }
   }
 }
@@ -356,7 +389,7 @@ export type AbstractedAccountCreateCalls = (typeof AbstractedAccountCallFactory)
  * Defines supported create methods for this smart contract
  */
 export type AbstractedAccountCreateCallParams =
-  | (TypedCallParams<'createApplication()void'> & (OnCompleteNoOp))
+  | (TypedCallParams<'createApplication(address,address)void'> & (OnCompleteNoOp))
 /**
  * Defines arguments required for the deploy method.
  */
@@ -379,16 +412,16 @@ export abstract class AbstractedAccountCallFactory {
   static get create() {
     return {
       /**
-       * Constructs a create call for the AbstractedAccount smart contract using the createApplication()void ABI method
+       * Constructs a create call for the AbstractedAccount smart contract using the createApplication(address,address)void ABI method
        *
        * @param args Any args for the contract call
        * @param params Any additional parameters for the call
        * @returns A TypedCallParams object for the call
        */
-      createApplication(args: MethodArgs<'createApplication()void'>, params: AppClientCallCoreParams & CoreAppCallArgs & AppClientCompilationParams & (OnCompleteNoOp) = {}) {
+      createApplication(args: MethodArgs<'createApplication(address,address)void'>, params: AppClientCallCoreParams & CoreAppCallArgs & AppClientCompilationParams & (OnCompleteNoOp) = {}) {
         return {
-          method: 'createApplication()void' as const,
-          methodArgs: Array.isArray(args) ? args : [],
+          method: 'createApplication(address,address)void' as const,
+          methodArgs: Array.isArray(args) ? args : [args.address, args.admin],
           ...params,
         }
       },
@@ -398,7 +431,7 @@ export abstract class AbstractedAccountCallFactory {
   /**
    * Constructs a no op call for the verifyAppAuthAddr()void ABI method
    *
-   * Verify the contract account is not rekeyed
+   * Verify the abstracted account address is rekeyed to this app
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
@@ -412,18 +445,18 @@ export abstract class AbstractedAccountCallFactory {
     }
   }
   /**
-   * Constructs a no op call for the rekeyToEOA(bool)void ABI method
+   * Constructs a no op call for the rekeyTo(address,bool)void ABI method
    *
-   * Rekey this contract account to the EOA
+   * Rekey the address to another account. Primarily useful for rekeying to an EOA
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static rekeyToEoa(args: MethodArgs<'rekeyToEOA(bool)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static rekeyTo(args: MethodArgs<'rekeyTo(address,bool)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'rekeyToEOA(bool)void' as const,
-      methodArgs: Array.isArray(args) ? args : [args.flash],
+      method: 'rekeyTo(address,bool)void' as const,
+      methodArgs: Array.isArray(args) ? args : [args.addr, args.flash],
       ...params,
     }
   }
@@ -444,18 +477,18 @@ export abstract class AbstractedAccountCallFactory {
     }
   }
   /**
-   * Constructs a no op call for the transferEOA(account)void ABI method
+   * Constructs a no op call for the changeAdmin(account)void ABI method
    *
-   * Transfer the abstracted account to a new EOA.
+   * Change the admin for this app
    *
    * @param args Any args for the contract call
    * @param params Any additional parameters for the call
    * @returns A TypedCallParams object for the call
    */
-  static transferEoa(args: MethodArgs<'transferEOA(account)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
+  static changeAdmin(args: MethodArgs<'changeAdmin(account)void'>, params: AppClientCallCoreParams & CoreAppCallArgs) {
     return {
-      method: 'transferEOA(account)void' as const,
-      methodArgs: Array.isArray(args) ? args : [args.newEOA],
+      method: 'changeAdmin(account)void' as const,
+      methodArgs: Array.isArray(args) ? args : [args.newAdmin],
       ...params,
     }
   }
@@ -568,13 +601,13 @@ export class AbstractedAccountClient {
     const $this = this
     return {
       /**
-       * Creates a new instance of the AbstractedAccount smart contract using the createApplication()void ABI method.
+       * Creates a new instance of the AbstractedAccount smart contract using the createApplication(address,address)void ABI method.
        *
        * @param args The arguments for the smart contract call
        * @param params Any additional parameters for the call
        * @returns The create result
        */
-      async createApplication(args: MethodArgs<'createApplication()void'>, params: AppClientCallCoreParams & AppClientCompilationParams & (OnCompleteNoOp) = {}): Promise<AppCallTransactionResultOfType<MethodReturn<'createApplication()void'>>> {
+      async createApplication(args: MethodArgs<'createApplication(address,address)void'>, params: AppClientCallCoreParams & AppClientCompilationParams & (OnCompleteNoOp) = {}): Promise<AppCallTransactionResultOfType<MethodReturn<'createApplication(address,address)void'>>> {
         return $this.mapReturnValue(await $this.appClient.create(AbstractedAccountCallFactory.create.createApplication(args, params)))
       },
     }
@@ -593,7 +626,7 @@ export class AbstractedAccountClient {
   /**
    * Calls the verifyAppAuthAddr()void ABI method.
    *
-   * Verify the contract account is not rekeyed
+   * Verify the abstracted account address is rekeyed to this app
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
@@ -604,16 +637,16 @@ export class AbstractedAccountClient {
   }
 
   /**
-   * Calls the rekeyToEOA(bool)void ABI method.
+   * Calls the rekeyTo(address,bool)void ABI method.
    *
-   * Rekey this contract account to the EOA
+   * Rekey the address to another account. Primarily useful for rekeying to an EOA
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public rekeyToEoa(args: MethodArgs<'rekeyToEOA(bool)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(AbstractedAccountCallFactory.rekeyToEoa(args, params))
+  public rekeyTo(args: MethodArgs<'rekeyTo(address,bool)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+    return this.call(AbstractedAccountCallFactory.rekeyTo(args, params))
   }
 
   /**
@@ -630,16 +663,16 @@ export class AbstractedAccountClient {
   }
 
   /**
-   * Calls the transferEOA(account)void ABI method.
+   * Calls the changeAdmin(account)void ABI method.
    *
-   * Transfer the abstracted account to a new EOA.
+   * Change the admin for this app
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The result of the call
    */
-  public transferEoa(args: MethodArgs<'transferEOA(account)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
-    return this.call(AbstractedAccountCallFactory.transferEoa(args, params))
+  public changeAdmin(args: MethodArgs<'changeAdmin(account)void'>, params: AppClientCallCoreParams & CoreAppCallArgs = {}) {
+    return this.call(AbstractedAccountCallFactory.changeAdmin(args, params))
   }
 
   /**
@@ -718,11 +751,14 @@ export class AbstractedAccountClient {
   public async getGlobalState(): Promise<AbstractedAccount['state']['global']> {
     const state = await this.appClient.getGlobalState()
     return {
-      get eoa() {
-        return AbstractedAccountClient.getBinaryState(state, 'eoa')
+      get admin() {
+        return AbstractedAccountClient.getBinaryState(state, 'admin')
       },
-      get forceFlash() {
-        return AbstractedAccountClient.getBinaryState(state, 'forceFlash')
+      get address() {
+        return AbstractedAccountClient.getBinaryState(state, 'address')
+      },
+      get authAddr() {
+        return AbstractedAccountClient.getBinaryState(state, 'authAddr')
       },
     }
   }
@@ -738,8 +774,8 @@ export class AbstractedAccountClient {
         resultMappers.push(undefined)
         return this
       },
-      rekeyToEoa(args: MethodArgs<'rekeyToEOA(bool)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
-        promiseChain = promiseChain.then(() => client.rekeyToEoa(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
+      rekeyTo(args: MethodArgs<'rekeyTo(address,bool)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+        promiseChain = promiseChain.then(() => client.rekeyTo(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
@@ -748,8 +784,8 @@ export class AbstractedAccountClient {
         resultMappers.push(undefined)
         return this
       },
-      transferEoa(args: MethodArgs<'transferEOA(account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
-        promiseChain = promiseChain.then(() => client.transferEoa(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
+      changeAdmin(args: MethodArgs<'changeAdmin(account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+        promiseChain = promiseChain.then(() => client.changeAdmin(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
@@ -796,7 +832,7 @@ export type AbstractedAccountComposer<TReturns extends [...any[]] = []> = {
   /**
    * Calls the verifyAppAuthAddr()void ABI method.
    *
-   * Verify the contract account is not rekeyed
+   * Verify the abstracted account address is rekeyed to this app
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
@@ -805,15 +841,15 @@ export type AbstractedAccountComposer<TReturns extends [...any[]] = []> = {
   verifyAppAuthAddr(args: MethodArgs<'verifyAppAuthAddr()void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'verifyAppAuthAddr()void'>]>
 
   /**
-   * Calls the rekeyToEOA(bool)void ABI method.
+   * Calls the rekeyTo(address,bool)void ABI method.
    *
-   * Rekey this contract account to the EOA
+   * Rekey the address to another account. Primarily useful for rekeying to an EOA
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  rekeyToEoa(args: MethodArgs<'rekeyToEOA(bool)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekeyToEOA(bool)void'>]>
+  rekeyTo(args: MethodArgs<'rekeyTo(address,bool)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekeyTo(address,bool)void'>]>
 
   /**
    * Calls the rekeyToPlugin(application)void ABI method.
@@ -827,15 +863,15 @@ export type AbstractedAccountComposer<TReturns extends [...any[]] = []> = {
   rekeyToPlugin(args: MethodArgs<'rekeyToPlugin(application)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'rekeyToPlugin(application)void'>]>
 
   /**
-   * Calls the transferEOA(account)void ABI method.
+   * Calls the changeAdmin(account)void ABI method.
    *
-   * Transfer the abstracted account to a new EOA.
+   * Change the admin for this app
    *
    * @param args The arguments for the contract call
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  transferEoa(args: MethodArgs<'transferEOA(account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'transferEOA(account)void'>]>
+  changeAdmin(args: MethodArgs<'changeAdmin(account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): AbstractedAccountComposer<[...TReturns, MethodReturn<'changeAdmin(account)void'>]>
 
   /**
    * Calls the addPlugin(application)void ABI method.

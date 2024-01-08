@@ -4,28 +4,44 @@
   "methods": [
     {
       "name": "createApplication",
-      "desc": "Create an abstracted account for an EOA",
-      "args": [],
+      "desc": "Create an abstracted account",
+      "args": [
+        {
+          "name": "address",
+          "type": "address",
+          "desc": "The address to use for the abstracted account. If zeroAddress, then the address of the contract account will be used"
+        },
+        {
+          "name": "admin",
+          "type": "address",
+          "desc": "The admin for this app"
+        }
+      ],
       "returns": {
         "type": "void"
       }
     },
     {
       "name": "verifyAppAuthAddr",
-      "desc": "Verify the contract account is not rekeyed",
+      "desc": "Verify the abstracted account address is rekeyed to this app",
       "args": [],
       "returns": {
         "type": "void"
       }
     },
     {
-      "name": "rekeyToEOA",
-      "desc": "Rekey this contract account to the EOA",
+      "name": "rekeyTo",
+      "desc": "Rekey the address to another account. Primarily useful for rekeying to an EOA",
       "args": [
+        {
+          "name": "addr",
+          "type": "address",
+          "desc": "The address to rekey to"
+        },
         {
           "name": "flash",
           "type": "bool",
-          "desc": "Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call"
+          "desc": "Whether or not this should be a flash rekey. If true, the rekey back to the address must done in the same txn group as this call"
         }
       ],
       "returns": {
@@ -47,13 +63,13 @@
       }
     },
     {
-      "name": "transferEOA",
-      "desc": "Transfer the abstracted account to a new EOA.",
+      "name": "changeAdmin",
+      "desc": "Change the admin for this app",
       "args": [
         {
-          "name": "newEOA",
+          "name": "newAdmin",
           "type": "account",
-          "desc": "The new EOA"
+          "desc": "The new admin"
         }
       ],
       "returns": {

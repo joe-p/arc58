@@ -35,7 +35,10 @@ describe('Abstracted Subscription Program', () => {
       algod
     );
 
-    await abstractedAccountClient.create.createApplication({});
+    await abstractedAccountClient.create.createApplication({
+      address: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ',
+      admin: aliceEOA.addr,
+    });
 
     aliceAbstractedAccount = (await abstractedAccountClient.appClient.getAppReference()).appAddress;
 
