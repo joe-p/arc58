@@ -82,7 +82,7 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Temporarily rekey to an approved plugin app address including factory plugins
+   * Temporarily rekey to an approved plugin app address
    *
    * @param plugin The app to rekey to
    */
