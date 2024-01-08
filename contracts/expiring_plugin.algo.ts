@@ -10,18 +10,33 @@ export class ExpiringPluginFactory extends Contract {
 
     /**
      * Mint a new expiring plugin with a specific set of rules
+     * 
+     * @param delegatedApp
      * @param duration 
      * @param authAddr 
      * @param allowedApp 
      * @param method 
      */
-    newExpiringPlugin(duration: uint64, authAddr: Address, allowedApp: Application, method: bytes): void {
+    newExpiringPlugin(delegatedApp: Application, duration: uint64, authAddr: Address, allowedApp: Application, method: bytes): void {
+        // mint the expiring plugin contract
         sendMethodCall<[uint64, Address, Application, bytes], void>({
+            name: 'createApplication',
             approvalProgram: ExpiringPlugin.approvalProgram(),
             clearStateProgram: ExpiringPlugin.clearProgram(),
-            name: 'createApplication',
-            methodArgs: [duration, authAddr, allowedApp, method], 
+            globalNumUint: 3,
+			globalNumByteSlice: 2,
+            methodArgs: [duration, authAddr, allowedApp, method],
+            fee: 0,
         });
+
+        const child = this.itxn.createdApplicationID;
+        
+        sendMethodCall<[Application, Application], void>({
+            name: 'addFactoryPlugin',
+            applicationID: delegatedApp,
+            methodArgs: [this.app, child],
+            rekeyTo: delegatedApp.address,
+        })
     }
 }
 
