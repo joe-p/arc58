@@ -10,6 +10,11 @@ This repo contains proof-of-concept contracts for plugin-based account abstracti
 
 [The OptIn plugin](./contracts/optin_plugin.algo.ts) is a plugin that allows anyone to opt the abstracted account into an asset, provided they pay for the MBR.
 
+### Plugin Factories
+These are factory contracts that will produce plugins. They allow you to produce safe plugins with dynamic variables controlling the plugin's behavior.
+
+[The expiration plugin factory](./contracts/expiring_plugin.algo.ts) is a factory for dynamic general purpose expiring plugins They allow you to delegate a specific address the ability to call a single method on a specific other contract for a limited time.
+
 ## Tests
 
 Testing of both plugins can be found at [./\_\_test\_\_/abstract_account_plugins.test.ts](./__test__/abstract_account_plugins.test.ts)
