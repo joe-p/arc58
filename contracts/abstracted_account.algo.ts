@@ -20,7 +20,7 @@ export class AbstractedAccount extends Contract {
     const lastTxn = this.txnGroup[this.txnGroup.length - 1];
 
     // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAppAuthAddr
-    if (lastTxn.sender !== this.txn.sender || lastTxn.rekeyTo !== this.app.address) {
+    if (lastTxn.sender !== this.app.address || lastTxn.rekeyTo !== this.app.address) {
       verifyAppCallTxn(lastTxn, {
         applicationID: this.app,
       });
