@@ -22,13 +22,6 @@ export class AbstractedAccount extends Contract {
    */
   authAddr = GlobalStateKey<Address>();
 
-
-  /**
-   * The apps that are authorized to add plugins to this account
-   * factories are also plugins, just ones that modify the plugins box map
-   */
-  factories = BoxMap<Application, StaticArray<byte, 0>>();
-
   /**
    * Ensure that by the end of the group the abstracted account has control of its address
    */
@@ -94,7 +87,7 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   rekeyToPlugin(plugin: Application): void {
-    assert(this.plugins(plugin).exists || this.factories(plugin).exists);
+    assert(this.plugins(plugin).exists);
 
     sendPayment({
       sender: this.address.value,
@@ -136,45 +129,5 @@ export class AbstractedAccount extends Contract {
     assert(this.txn.sender === this.admin.value);
 
     this.plugins(app).delete();
-  }
-
-  /**
-   * Add an app to the list of approved factories
-   *
-   * @param app The app to add
-   */
-  addFactory(app: Application): void {
-    assert(this.txn.sender === this.eoa.value);
-
-    this.factories(app).create(0);
-  }
-  
-  /**
-   * Remove an app from the list of approved factories
-   *
-   * @param app The app to remove
-   */
-  removeFactory(app: Application): void {
-    assert(this.txn.sender === this.eoa.value);
-
-    this.factories(app).delete();
-  }
-
-  /**
-   * Add an app to the list of approved plugins from a factory app
-   *
-   * @param app The app to add
-   */
-  addFactoryPlugin(factory: Application, app: Application): void {
-    assert(
-      // ensure its an allowed factory
-      this.factories(factory).exists,
-      // ensure the factory is the creator of the app to be added
-      app.creator === factory.address,
-      // ensure the factory is the sender
-      this.txn.sender === factory.address
-    );
-
-    this.plugins(app).create(0);
   }
 }

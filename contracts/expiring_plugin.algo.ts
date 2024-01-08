@@ -31,11 +31,11 @@ export class ExpiringPluginFactory extends Contract {
 
         const child = this.itxn.createdApplicationID;
         
-        sendMethodCall<[Application, Application], void>({
-            name: 'addFactoryPlugin',
+        sendMethodCall<[Application], void>({
+            sender: delegatedApp.address,
+            name: 'addPlugin',
             applicationID: delegatedApp,
-            methodArgs: [this.app, child],
-            rekeyTo: delegatedApp.address,
+            methodArgs: [child],
         })
     }
 }
