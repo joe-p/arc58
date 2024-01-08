@@ -82,7 +82,7 @@ export class ExpiringPlugin extends Contract {
         // ensure this app call is still valid in regards to the timeout
         const expiresAt = this.createdAt.value + this.duration.value;
         assert(
-            globals.latestTimestamp > expiresAt,
+            !(globals.latestTimestamp > expiresAt),
             // ensure the sender is the authAddr
             this.txn.sender === this.authAddr.value,
             // ensure the method being called is the correct method
@@ -101,6 +101,6 @@ export class ExpiringPlugin extends Contract {
      */
     deleteApplication(): void {
         const expiresAt = this.createdAt.value + this.duration.value;
-        assert(!(globals.latestTimestamp > expiresAt))
+        assert(globals.latestTimestamp > expiresAt)
     }
 }
