@@ -40,9 +40,9 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Create an abstracted account
+   * Create an abstracted account application
    *
-   * @param address The address to use for the abstracted account. If zeroAddress, then the address of the contract account will be used
+   * @param address The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
    * @param admin The admin for this app
    */
   createApplication(address: Address, admin: Address): void {
@@ -57,17 +57,17 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Verify the abstracted account address is rekeyed to this app
+   * Verify the abstracted account is rekeyed to this app
    */
   verifyAppAuthAddr(): void {
     assert(this.address.value.authAddr === this.getAuthAddr());
   }
 
   /**
-   * Rekey the address to another account. Primarily useful for rekeying to an EOA
+   * Rekey the abstracted account to another address. Primarily useful for rekeying to an EOA.
    *
    * @param addr The address to rekey to
-   * @param flash Whether or not this should be a flash rekey. If true, the rekey back to the address must done in the same txn group as this call
+   * @param flash Whether or not this should be a flash rekey. If true, the rekey back to the app address must done in the same txn group as this call
    */
   rekeyTo(addr: Address, flash: boolean): void {
     verifyAppCallTxn(this.txn, { sender: this.admin.value });
