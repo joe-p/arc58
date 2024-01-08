@@ -4,23 +4,32 @@ export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
   programVersion = 10;
 
-  /** The EOA (Externally Owned Account) */
-  eoa = GlobalStateKey<Address>();
+  /** The admin of the abstracted account */
+  admin = GlobalStateKey<Address>();
 
   /**
-   * The apps that are authorized to send itxns from this account
+   * The apps that are authorized to send itxns from the abstracted account
    * The box map values aren't actually used and are always empty
    */
   plugins = BoxMap<Application, StaticArray<byte, 0>>();
 
+  /** The address of the abstracted account */
+  address = GlobalStateKey<Address>();
+
   /**
-   * Ensure that by the end of the group the abstracted account has control of its own address
+   * The value of this.address.value.authAddr when this.address is able to be controlled by this app
+   * It will either be this.app.address or zeroAddress
+   */
+  authAddr = GlobalStateKey<Address>();
+
+  /**
+   * Ensure that by the end of the group the abstracted account has control of its address
    */
   private verifyRekeyToAbstractedAccount(): void {
     const lastTxn = this.txnGroup[this.txnGroup.length - 1];
 
     // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAppAuthAddr
-    if (lastTxn.sender !== this.app.address || lastTxn.rekeyTo !== this.app.address) {
+    if (lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.authAddr.value) {
       verifyAppCallTxn(lastTxn, {
         applicationID: this.app,
       });
@@ -29,32 +38,44 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Create an abstracted account for an EOA
+   * Create an abstracted account
+   *
+   * @param address The address to use for the abstracted account. If zeroAddress, then the address of the contract account will be used
+   * @param admin The admin for this app
    */
-  createApplication(): void {
-    this.eoa.value = this.txn.sender;
+  createApplication(address: Address, admin: Address): void {
+    verifyAppCallTxn(this.txn, {
+      sender: { includedIn: [address, admin] },
+    });
+
+    assert(admin !== address);
+
+    this.admin.value = admin;
+    this.address.value = address === Address.zeroAddress ? this.app.address : address;
+    this.authAddr.value = this.address.value === this.app.address ? Address.zeroAddress : this.app.address;
   }
 
   /**
-   * Verify the contract account is not rekeyed
+   * Verify the abstracted account address is rekeyed to this app
    */
   verifyAppAuthAddr(): void {
-    assert(this.app.address.authAddr === globals.zeroAddress);
+    assert(this.address.value.authAddr === this.authAddr.value);
   }
 
   /**
-   * Rekey this contract account to the EOA
+   * Rekey the address to another account. Primarily useful for rekeying to an EOA
    *
-   * @param flash Whether or not this should be a flash rekey. If true, the rekey back to this contract must done in the same txn group as this call
+   * @param addr The address to rekey to
+   * @param flash Whether or not this should be a flash rekey. If true, the rekey back to the address must done in the same txn group as this call
    */
-  rekeyToEOA(flash: boolean): void {
-    verifyAppCallTxn(this.txn, { sender: this.eoa.value });
-    const authAddr = this.eoa.value.authAddr === Address.zeroAddress ? this.eoa.value : this.eoa.value.authAddr;
+  rekeyTo(addr: Address, flash: boolean): void {
+    verifyAppCallTxn(this.txn, { sender: this.admin.value });
 
     sendPayment({
-      receiver: this.eoa.value,
-      rekeyTo: authAddr,
-      note: 'rekeying to EOA',
+      sender: this.address.value,
+      receiver: addr,
+      rekeyTo: addr,
+      note: 'rekeying abstracted account',
     });
 
     if (flash) this.verifyRekeyToAbstractedAccount();
@@ -69,7 +90,8 @@ export class AbstractedAccount extends Contract {
     assert(this.plugins(plugin).exists);
 
     sendPayment({
-      receiver: this.eoa.value,
+      sender: this.address.value,
+      receiver: this.address.value,
       rekeyTo: plugin.address,
       note: 'rekeying to plugin app',
     });
@@ -78,13 +100,13 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Transfer the abstracted account to a new EOA.
+   * Change the admin for this app
    *
-   * @param newEOA The new EOA
+   * @param newAdmin The new admin
    */
-  transferEOA(newEOA: Account): void {
-    assert(this.txn.sender === this.eoa.value);
-    this.eoa.value = newEOA;
+  changeAdmin(newAdmin: Account): void {
+    verifyTxn(this.txn, { sender: this.admin.value });
+    this.admin.value = newAdmin;
   }
 
   /**
@@ -93,7 +115,7 @@ export class AbstractedAccount extends Contract {
    * @param app The app to add
    */
   addPlugin(app: Application): void {
-    assert(this.txn.sender === this.eoa.value);
+    assert(this.txn.sender === this.admin.value);
 
     this.plugins(app).create(0);
   }
@@ -104,7 +126,7 @@ export class AbstractedAccount extends Contract {
    * @param app The app to remove
    */
   removePlugin(app: Application): void {
-    assert(this.txn.sender === this.eoa.value);
+    assert(this.txn.sender === this.admin.value);
 
     this.plugins(app).delete();
   }
