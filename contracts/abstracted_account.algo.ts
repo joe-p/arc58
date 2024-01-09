@@ -22,12 +22,12 @@ export class AbstractedAccount extends Contract {
   private verifyRekeyToAbstractedAccount(): void {
     const lastTxn = this.txnGroup[this.txnGroup.length - 1];
 
-    // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAppAuthAddr
+    // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAuthAddr
     if (lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.getAuthAddr()) {
       verifyAppCallTxn(lastTxn, {
         applicationID: this.app,
       });
-      assert(lastTxn.applicationArgs[0] === method('verifyAppAuthAddr()void'));
+      assert(lastTxn.applicationArgs[0] === method('verifyAuthAddr()void'));
     }
   }
 
@@ -59,7 +59,7 @@ export class AbstractedAccount extends Contract {
   /**
    * Verify the abstracted account is rekeyed to this app
    */
-  verifyAppAuthAddr(): void {
+  verifyAuthAddr(): void {
     assert(this.address.value.authAddr === this.getAuthAddr());
   }
 

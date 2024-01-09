@@ -76,10 +76,10 @@ skip_or0:
 	assert
 
 	// contracts/abstracted_account.algo.ts:30
-	// assert(lastTxn.applicationArgs[0] === method('verifyAppAuthAddr()void'))
+	// assert(lastTxn.applicationArgs[0] === method('verifyAuthAddr()void'))
 	frame_dig 0 // lastTxn: txn
 	gtxns ApplicationArgs 0
-	method "verifyAppAuthAddr()void"
+	method "verifyAuthAddr()void"
 	==
 	assert
 
@@ -184,16 +184,16 @@ ternary1_end:
 	app_global_put
 	retsub
 
-abi_route_verifyAppAuthAddr:
-	// execute verifyAppAuthAddr()void
-	callsub verifyAppAuthAddr
+abi_route_verifyAuthAddr:
+	// execute verifyAuthAddr()void
+	callsub verifyAuthAddr
 	int 1
 	return
 
-// verifyAppAuthAddr()void
+// verifyAuthAddr()void
 //
 // Verify the abstracted account is rekeyed to this app
-verifyAppAuthAddr:
+verifyAuthAddr:
 	proto 0 0
 
 	// contracts/abstracted_account.algo.ts:63
@@ -488,12 +488,12 @@ create_NoOp:
 	err
 
 call_NoOp:
-	method "verifyAppAuthAddr()void"
+	method "verifyAuthAddr()void"
 	method "rekeyTo(address,bool)void"
 	method "rekeyToPlugin(application)void"
 	method "changeAdmin(account)void"
 	method "addPlugin(application)void"
 	method "removePlugin(application)void"
 	txna ApplicationArgs 0
-	match abi_route_verifyAppAuthAddr abi_route_rekeyTo abi_route_rekeyToPlugin abi_route_changeAdmin abi_route_addPlugin abi_route_removePlugin
+	match abi_route_verifyAuthAddr abi_route_rekeyTo abi_route_rekeyToPlugin abi_route_changeAdmin abi_route_addPlugin abi_route_removePlugin
 	err

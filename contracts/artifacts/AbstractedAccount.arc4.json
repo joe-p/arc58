@@ -22,7 +22,7 @@
       }
     },
     {
-      "name": "verifyAppAuthAddr",
+      "name": "verifyAuthAddr",
       "desc": "Verify the abstracted account is rekeyed to this app",
       "args": [],
       "returns": {

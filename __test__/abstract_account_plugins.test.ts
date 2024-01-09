@@ -105,7 +105,7 @@ describe('Abstracted Subscription Program', () => {
           }
         )
         .addTransaction({ transaction: makePaymentTxn, signer: testAccount })
-        .verifyAppAuthAddr({})
+        .verifyAuthAddr({})
         .execute();
 
       const alicePostBalance = await algod.accountInformation(aliceAbstractedAccount).do();
@@ -172,7 +172,7 @@ describe('Abstracted Subscription Program', () => {
         )
         .addTransaction({ transaction: optInGroup[0].txn, signer: bob })
         .addTransaction({ transaction: optInGroup[1].txn, signer: bob })
-        .verifyAppAuthAddr({})
+        .verifyAuthAddr({})
         .execute();
     });
   });
