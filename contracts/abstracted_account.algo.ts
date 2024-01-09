@@ -26,8 +26,10 @@ export class AbstractedAccount extends Contract {
     if (lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.getAuthAddr()) {
       verifyAppCallTxn(lastTxn, {
         applicationID: this.app,
+        applicationArgs: {
+          0: method('verifyAuthAddr()void'),
+        },
       });
-      assert(lastTxn.applicationArgs[0] === method('verifyAuthAddr()void'));
     }
   }
 
