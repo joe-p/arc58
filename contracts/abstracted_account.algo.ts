@@ -116,7 +116,7 @@ export class AbstractedAccount extends Contract {
    * @param app The app to add
    */
   addPlugin(app: Application): void {
-    assert(this.txn.sender === this.admin.value);
+    verifyTxn(this.txn, { sender: this.admin.value });
 
     this.plugins(app).create(0);
   }
@@ -127,7 +127,7 @@ export class AbstractedAccount extends Contract {
    * @param app The app to remove
    */
   removePlugin(app: Application): void {
-    assert(this.txn.sender === this.admin.value);
+    verifyTxn(this.txn, { sender: this.admin.value });
 
     this.plugins(app).delete();
   }
