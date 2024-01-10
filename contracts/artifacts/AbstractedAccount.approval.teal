@@ -30,7 +30,7 @@ verifyRekeyToAbstractedAccount:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:23
+	// contracts/abstracted_account.algo.ts:28
 	// lastTxn = this.txnGroup[this.txnGroup.length - 1]
 	global GroupSize
 	int 1
@@ -38,7 +38,7 @@ verifyRekeyToAbstractedAccount:
 	frame_bury 0 // lastTxn: txn
 
 	// if0_condition
-	// contracts/abstracted_account.algo.ts:26
+	// contracts/abstracted_account.algo.ts:31
 	// lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.getAuthAddr()
 	frame_dig 0 // lastTxn: txn
 	gtxns Sender
@@ -57,7 +57,7 @@ skip_or0:
 	bz if0_end
 
 	// if0_consequent
-	// contracts/abstracted_account.algo.ts:27
+	// contracts/abstracted_account.algo.ts:32
 	// verifyAppCallTxn(lastTxn, {
 	//         applicationID: this.app,
 	//         applicationArgs: {
@@ -96,7 +96,7 @@ if0_end:
 getAuthAddr:
 	proto 0 1
 
-	// contracts/abstracted_account.algo.ts:41
+	// contracts/abstracted_account.algo.ts:46
 	// return this.address.value === this.app.address ? Address.zeroAddress : this.app.address;
 	byte 0x61646472657373 // "address"
 	app_global_get
@@ -143,7 +143,7 @@ abi_route_createApplication:
 createApplication:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:51
+	// contracts/abstracted_account.algo.ts:56
 	// verifyAppCallTxn(this.txn, {
 	//       sender: { includedIn: [address, admin] },
 	//     })
@@ -157,20 +157,20 @@ createApplication:
 	||
 	assert
 
-	// contracts/abstracted_account.algo.ts:55
+	// contracts/abstracted_account.algo.ts:60
 	// assert(admin !== address)
 	frame_dig -2 // admin: Address
 	frame_dig -1 // address: Address
 	!=
 	assert
 
-	// contracts/abstracted_account.algo.ts:57
+	// contracts/abstracted_account.algo.ts:62
 	// this.admin.value = admin
 	byte 0x61646d696e // "admin"
 	frame_dig -2 // admin: Address
 	app_global_put
 
-	// contracts/abstracted_account.algo.ts:58
+	// contracts/abstracted_account.algo.ts:63
 	// this.address.value = address === Address.zeroAddress ? this.app.address : address
 	byte 0x61646472657373 // "address"
 	frame_dig -1 // address: Address
@@ -199,7 +199,7 @@ abi_route_verifyAuthAddr:
 verifyAuthAddr:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:65
+	// contracts/abstracted_account.algo.ts:70
 	// assert(this.address.value.authAddr === this.getAuthAddr())
 	byte 0x61646472657373 // "address"
 	app_global_get
@@ -243,7 +243,7 @@ abi_route_rekeyTo:
 rekeyTo:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:75
+	// contracts/abstracted_account.algo.ts:80
 	// verifyAppCallTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -252,7 +252,7 @@ rekeyTo:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:77
+	// contracts/abstracted_account.algo.ts:82
 	// sendPayment({
 	//       sender: this.address.value,
 	//       receiver: addr,
@@ -263,23 +263,23 @@ rekeyTo:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:78
+	// contracts/abstracted_account.algo.ts:83
 	// sender: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Sender
 
-	// contracts/abstracted_account.algo.ts:79
+	// contracts/abstracted_account.algo.ts:84
 	// receiver: addr
 	frame_dig -1 // addr: Address
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:80
+	// contracts/abstracted_account.algo.ts:85
 	// rekeyTo: addr
 	frame_dig -1 // addr: Address
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:81
+	// contracts/abstracted_account.algo.ts:86
 	// note: 'rekeying abstracted account'
 	byte 0x72656b6579696e672061627374726163746564206163636f756e74 // "rekeying abstracted account"
 	itxn_field Note
@@ -292,13 +292,13 @@ rekeyTo:
 	itxn_submit
 
 	// if1_condition
-	// contracts/abstracted_account.algo.ts:84
+	// contracts/abstracted_account.algo.ts:89
 	// flash
 	frame_dig -2 // flash: boolean
 	bz if1_end
 
 	// if1_consequent
-	// contracts/abstracted_account.algo.ts:84
+	// contracts/abstracted_account.algo.ts:89
 	// this.verifyRekeyToAbstractedAccount()
 	callsub verifyRekeyToAbstractedAccount
 
@@ -324,16 +324,18 @@ abi_route_rekeyToPlugin:
 rekeyToPlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:93
+	// contracts/abstracted_account.algo.ts:98
 	// assert(this.plugins(plugin).exists)
+	byte 0x70 // "p"
 	frame_dig -1 // plugin: Application
 	itob
+	concat
 	box_len
 	swap
 	pop
 	assert
 
-	// contracts/abstracted_account.algo.ts:95
+	// contracts/abstracted_account.algo.ts:100
 	// sendPayment({
 	//       sender: this.address.value,
 	//       receiver: this.address.value,
@@ -344,26 +346,26 @@ rekeyToPlugin:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:96
+	// contracts/abstracted_account.algo.ts:101
 	// sender: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Sender
 
-	// contracts/abstracted_account.algo.ts:97
+	// contracts/abstracted_account.algo.ts:102
 	// receiver: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:98
+	// contracts/abstracted_account.algo.ts:103
 	// rekeyTo: plugin.address
 	frame_dig -1 // plugin: Application
 	app_params_get AppAddress
 	assert
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:99
+	// contracts/abstracted_account.algo.ts:104
 	// note: 'rekeying to plugin app'
 	byte 0x72656b6579696e6720746f20706c7567696e20617070 // "rekeying to plugin app"
 	itxn_field Note
@@ -375,9 +377,38 @@ rekeyToPlugin:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/abstracted_account.algo.ts:102
+	// contracts/abstracted_account.algo.ts:107
 	// this.verifyRekeyToAbstractedAccount()
 	callsub verifyRekeyToAbstractedAccount
+	retsub
+
+abi_route_rekeyToNamedPlugin:
+	// name: string
+	txna ApplicationArgs 1
+	extract 2 0
+
+	// execute rekeyToNamedPlugin(string)void
+	callsub rekeyToNamedPlugin
+	int 1
+	return
+
+// rekeyToNamedPlugin(string)void
+//
+// Temporarily rekey to a named plugin app address
+//
+// @param name The name of the plugin to rekey to
+rekeyToNamedPlugin:
+	proto 1 0
+
+	// contracts/abstracted_account.algo.ts:116
+	// this.rekeyToPlugin(this.namedPlugins(name).value)
+	byte 0x6e // "n"
+	frame_dig -1 // name: string
+	concat
+	box_get
+	assert
+	btoi
+	callsub rekeyToPlugin
 	retsub
 
 abi_route_changeAdmin:
@@ -399,7 +430,7 @@ abi_route_changeAdmin:
 changeAdmin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:111
+	// contracts/abstracted_account.algo.ts:125
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -408,7 +439,7 @@ changeAdmin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:112
+	// contracts/abstracted_account.algo.ts:126
 	// this.admin.value = newAdmin
 	byte 0x61646d696e // "admin"
 	frame_dig -1 // newAdmin: Account
@@ -434,7 +465,7 @@ abi_route_addPlugin:
 addPlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:121
+	// contracts/abstracted_account.algo.ts:135
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -443,10 +474,12 @@ addPlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:123
+	// contracts/abstracted_account.algo.ts:137
 	// this.plugins(app).create(0)
+	byte 0x70 // "p"
 	frame_dig -1 // app: Application
 	itob
+	concat
 	int 0
 	box_create
 	retsub
@@ -470,7 +503,7 @@ abi_route_removePlugin:
 removePlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:132
+	// contracts/abstracted_account.algo.ts:146
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -479,10 +512,131 @@ removePlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:134
+	// contracts/abstracted_account.algo.ts:148
 	// this.plugins(app).delete()
+	byte 0x70 // "p"
 	frame_dig -1 // app: Application
 	itob
+	concat
+	box_del
+	retsub
+
+abi_route_addNamedPlugin:
+	// name: string
+	txna ApplicationArgs 2
+	extract 2 0
+
+	// app: application
+	txna ApplicationArgs 1
+	btoi
+	txnas Applications
+
+	// execute addNamedPlugin(string,application)void
+	callsub addNamedPlugin
+	int 1
+	return
+
+// addNamedPlugin(string,application)void
+//
+// Add a named plugin
+//
+// @param app The plugin app
+// @param name The plugin name
+addNamedPlugin:
+	proto 2 0
+
+	// contracts/abstracted_account.algo.ts:158
+	// verifyTxn(this.txn, { sender: this.admin.value })
+	// verify sender
+	txn Sender
+	byte 0x61646d696e // "admin"
+	app_global_get
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:160
+	// assert(!this.namedPlugins(name).exists)
+	byte 0x6e // "n"
+	frame_dig -2 // name: string
+	concat
+	box_len
+	swap
+	pop
+	!
+	assert
+
+	// contracts/abstracted_account.algo.ts:161
+	// this.namedPlugins(name).value = app
+	byte 0x6e // "n"
+	frame_dig -2 // name: string
+	concat
+	frame_dig -1 // app: Application
+	itob
+	box_put
+
+	// contracts/abstracted_account.algo.ts:162
+	// this.plugins(app).create(0)
+	byte 0x70 // "p"
+	frame_dig -1 // app: Application
+	itob
+	concat
+	int 0
+	box_create
+	retsub
+
+abi_route_removeNamedPlugin:
+	// name: string
+	txna ApplicationArgs 1
+	extract 2 0
+
+	// execute removeNamedPlugin(string)void
+	callsub removeNamedPlugin
+	int 1
+	return
+
+// removeNamedPlugin(string)void
+//
+// Remove a named plugin
+//
+// @param name The plugin name
+removeNamedPlugin:
+	proto 1 0
+
+	// Push empty bytes after the frame pointer to reserve space for local variables
+	byte 0x
+
+	// contracts/abstracted_account.algo.ts:171
+	// verifyTxn(this.txn, { sender: this.admin.value })
+	// verify sender
+	txn Sender
+	byte 0x61646d696e // "admin"
+	app_global_get
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:173
+	// app = this.namedPlugins(name).value
+	byte 0x6e // "n"
+	frame_dig -1 // name: string
+	concat
+	box_get
+	assert
+	btoi
+	frame_bury 0 // app: application
+
+	// contracts/abstracted_account.algo.ts:174
+	// this.namedPlugins(name).delete()
+	byte 0x6e // "n"
+	frame_dig -1 // name: string
+	concat
+	box_del
+
+	// contracts/abstracted_account.algo.ts:175
+	// this.plugins(app).delete()
+	byte 0x70 // "p"
+	frame_dig 0 // app: application
+	itob
+	concat
 	box_del
 	retsub
 
@@ -496,9 +650,12 @@ call_NoOp:
 	method "verifyAuthAddr()void"
 	method "rekeyTo(address,bool)void"
 	method "rekeyToPlugin(application)void"
+	method "rekeyToNamedPlugin(string)void"
 	method "changeAdmin(account)void"
 	method "addPlugin(application)void"
 	method "removePlugin(application)void"
+	method "addNamedPlugin(application,string)void"
+	method "removeNamedPlugin(string)void"
 	txna ApplicationArgs 0
-	match abi_route_verifyAuthAddr abi_route_rekeyTo abi_route_rekeyToPlugin abi_route_changeAdmin abi_route_addPlugin abi_route_removePlugin
+	match abi_route_verifyAuthAddr abi_route_rekeyTo abi_route_rekeyToPlugin abi_route_rekeyToNamedPlugin abi_route_changeAdmin abi_route_addPlugin abi_route_removePlugin abi_route_addNamedPlugin abi_route_removeNamedPlugin
 	err

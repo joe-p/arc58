@@ -11,7 +11,12 @@ export class AbstractedAccount extends Contract {
    * The apps that are authorized to send itxns from the abstracted account
    * The box map values aren't actually used and are always empty
    */
-  plugins = BoxMap<Application, StaticArray<byte, 0>>();
+  plugins = BoxMap<Application, StaticArray<byte, 0>>({ prefix: 'p' });
+
+  /**
+   * Plugins that have been given a name for discoverability
+   */
+  namedPlugins = BoxMap<bytes, Application>({ prefix: 'n' });
 
   /** The address of the abstracted account */
   address = GlobalStateKey<Address>();
@@ -103,6 +108,15 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
+   * Temporarily rekey to a named plugin app address
+   *
+   * @param name The name of the plugin to rekey to
+   */
+  rekeyToNamedPlugin(name: string): void {
+    this.rekeyToPlugin(this.namedPlugins(name).value);
+  }
+
+  /**
    * Change the admin for this app
    *
    * @param newAdmin The new admin
@@ -131,6 +145,33 @@ export class AbstractedAccount extends Contract {
   removePlugin(app: Application): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
+    this.plugins(app).delete();
+  }
+
+  /**
+   * Add a named plugin
+   *
+   * @param app The plugin app
+   * @param name The plugin name
+   */
+  addNamedPlugin(app: Application, name: string): void {
+    verifyTxn(this.txn, { sender: this.admin.value });
+
+    assert(!this.namedPlugins(name).exists);
+    this.namedPlugins(name).value = app;
+    this.plugins(app).create(0);
+  }
+
+  /**
+   * Remove a named plugin
+   *
+   * @param name The plugin name
+   */
+  removeNamedPlugin(name: string): void {
+    verifyTxn(this.txn, { sender: this.admin.value });
+
+    const app = this.namedPlugins(name).value;
+    this.namedPlugins(name).delete();
     this.plugins(app).delete();
   }
 }
