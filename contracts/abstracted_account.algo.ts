@@ -99,14 +99,22 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   rekeyToPlugin(plugin: Application): void {
-    const globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress };
+    /**
+     * Ensure a valid key exists in either the global or address specific map
+     * The key is valid if it exists and the end timestamp is in the future or 0
+     * 0 indicates that the permission is valid until the admin removes the plugin
+     * or updates the end timestamp
+    */
     const key: PluginsKey = { application: plugin, address: this.txn.sender };
+    const validKey = this.plugins(key).exists
+      && (this.plugins(key).value > globals.latestTimestamp || this.plugins(key).value === 0)
+
+    const globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress };
+    const validGlobalKey = this.plugins(globalKey).exists
+      && (this.plugins(globalKey).value > globals.latestTimestamp || this.plugins(globalKey).value === 0)
 
 
-    assert(
-      (this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp)
-      || this.plugins(globalKey).exists,
-    );
+    assert(validKey || validGlobalKey);
 
     sendPayment({
       sender: this.address.value,
@@ -171,11 +179,10 @@ export class AbstractedAccount extends Contract {
    */
   addNamedPlugin(name: string, app: Application, address: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
-
     assert(!this.namedPlugins(name).exists);
+
     const key: PluginsKey = { application: app, address: address };
     this.namedPlugins(name).value = key;
-    
     this.plugins(key).value = end;
   }
 
