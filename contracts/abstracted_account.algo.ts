@@ -1,15 +1,5 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-/**
- * GateParams is a tuple of the parameters that are stored for each plugin,
- * they dictate the accessibility of the plugin on the network and the duration
- * of the plugin's access for a given address
- */
-export interface GateParams {
-  addedAt: uint64;
-  duration: uint64;
-}
-
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
   programVersion = 10;
@@ -18,24 +8,16 @@ export class AbstractedAccount extends Contract {
   admin = GlobalStateKey<Address>();
 
   /**
-   * The apps that are authorized to send itxns from the abstracted account
-   * The box map values aren't actually used and are always empty
+   * The apps and addresses that are authorized to send itxns from the abstracted account,
+   * The key is the appID + address, the value (referred to as `end`)
+   * is the timestamp when the permission expires for the address to call the app for your account.
    */
-  plugins = BoxMap<Application, StaticArray<byte, 0>>({ prefix: 'p' });
+  plugins = BoxMap<bytes, uint64>({ prefix: 'p' });
 
   /**
    * Plugins that have been given a name for discoverability
    */
-  namedPlugins = BoxMap<bytes, Application>({ prefix: 'n' });
-
-  /**
-   * Gates the ability to use plugins via a time lock
-   * & box key `appID` + `address
-   * GateParams is a tuple that contains the 
-   * duration of the gate and the time it was added
-   */
-  gates = BoxMap<bytes, GateParams>({ prefix: 'g' });
-
+  namedPlugins = BoxMap<bytes, bytes>({ prefix: 'n' });
 
   /** The address of the abstracted account */
   address = GlobalStateKey<Address>();
@@ -114,21 +96,13 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   rekeyToPlugin(plugin: Application): void {
-    // key existing indicates this plugin is approved for all addresses
-    const globalGateKey = itob(plugin) + globals.zeroAddress;
-    // key existing indicates this plugin may be valid to use for this address
-    const senderGateKey = itob(plugin) + this.txn.sender;
+    const globalKey = itob(plugin) + globals.zeroAddress;
+    const key = itob(plugin) + this.txn.sender;
 
     assert(
-      this.plugins(plugin).exists,
-      (this.gates(globalGateKey).exists || this.gates(senderGateKey).exists),
+      (this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp)
+      || this.plugins(globalKey).exists,
     );
-
-    // check our sender is still authorized to call this plugin for the user
-    if (!this.gates(globalGateKey).exists && this.gates(senderGateKey).exists) {
-      const gate = this.gates(senderGateKey).value;
-      assert(gate.addedAt + gate.duration > globals.latestTimestamp);
-    }
 
     sendPayment({
       sender: this.address.value,
@@ -146,7 +120,7 @@ export class AbstractedAccount extends Contract {
    * @param name The name of the plugin to rekey to
    */
   rekeyToNamedPlugin(name: string): void {
-    this.rekeyToPlugin(this.namedPlugins(name).value);
+    this.rekeyToPlugin(Application.fromID(extract_uint64(this.namedPlugins(name).value, 0)));
   }
 
   /**
@@ -163,17 +137,15 @@ export class AbstractedAccount extends Contract {
    * Add an app to the list of approved plugins
    *
    * @param app The app to add
-   * @param global Whether or not this plugin should be approved for all addresses
+   * @param address The address of that's allowed to call the app
+   * or the global zero address for all addresses
+   * @param end The timestamp when the permission expires
    */
-  addPlugin(app: Application, global: boolean): void {
+  addPlugin(app: Application, address: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
-    this.plugins(app).create(0);
-    
-    if (global) {
-      const key = itob(app) + globals.zeroAddress;
-      this.gates(key).value = { addedAt: globals.latestTimestamp, duration: 0 };
-    }
+    const key = itob(app) + address;
+    this.plugins(key).value = end;
   }
 
   /**
@@ -181,10 +153,11 @@ export class AbstractedAccount extends Contract {
    *
    * @param app The app to remove
    */
-  removePlugin(app: Application): void {
+  removePlugin(app: Application, address: Address): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
-    this.plugins(app).delete();
+    const key = itob(app) + address;
+    this.plugins(key).delete();
   }
 
   /**
@@ -193,12 +166,14 @@ export class AbstractedAccount extends Contract {
    * @param app The plugin app
    * @param name The plugin name
    */
-  addNamedPlugin(app: Application, name: string): void {
+  addNamedPlugin(name: string, app: Application, address: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
     assert(!this.namedPlugins(name).exists);
-    this.namedPlugins(name).value = app;
-    this.plugins(app).create(0);
+    const key = itob(app) + address;
+    this.namedPlugins(name).value = key;
+    
+    this.plugins(key).value = end;
   }
 
   /**
@@ -212,32 +187,5 @@ export class AbstractedAccount extends Contract {
     const app = this.namedPlugins(name).value;
     this.namedPlugins(name).delete();
     this.plugins(app).delete();
-  }
-
-  /**
-   * Add a gate for an app, it can also be used for renewals
-   *
-   * @param app The app to add the gate for
-   * @param address The duration of the gate
-   * @param duration The duration of the gate
-   */
-
-  addGate(app: Application, address: string, duration: uint64): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
-
-    const key = itob(app) + address;
-    this.gates(key).value = { addedAt: globals.latestTimestamp, duration };
-  }
-
-  /**
-   * Remove a gate for an app
-   *
-   * @param app The app to remove the gate for
-   */
-  removeGate(app: Application): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
-
-    const key = itob(app) + globals.zeroAddress;
-    this.gates(key).delete();
   }
 }
