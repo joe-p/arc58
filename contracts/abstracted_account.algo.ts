@@ -100,19 +100,13 @@ export class AbstractedAccount extends Contract {
    */
   rekeyToPlugin(plugin: Application): void {
     /**
-     * Ensure a valid key exists in either the global or address specific map
-     * The key is valid if it exists and the end timestamp is in the future or 0
-     * 0 indicates that the permission is valid until the admin removes the plugin
-     * or updates the end timestamp
+     * Ensure a valid key exists either for the sender or global zero address
     */
     const key: PluginsKey = { application: plugin, address: this.txn.sender };
-    const validKey = this.plugins(key).exists
-      && (this.plugins(key).value > globals.latestTimestamp || this.plugins(key).value === 0)
+    const validKey = this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp
 
     const globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress };
-    const validGlobalKey = this.plugins(globalKey).exists
-      && (this.plugins(globalKey).value > globals.latestTimestamp || this.plugins(globalKey).value === 0)
-
+    const validGlobalKey = this.plugins(globalKey).exists && this.plugins(globalKey).value > globals.latestTimestamp
 
     assert(validKey || validGlobalKey);
 
