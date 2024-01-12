@@ -5,9 +5,8 @@ import algosdk from 'algosdk';
 import { AbstractedAccountClient } from '../contracts/clients/AbstractedAccountClient';
 import { SubscriptionPluginClient } from '../contracts/clients/SubscriptionPluginClient';
 import { OptInPluginClient } from '../contracts/clients/OptInPluginClient';
-import { AppMetadata, AppReference } from '@algorandfoundation/algokit-utils/types/app';
 
-const ZERO_ADDRESS = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ";
+const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 const fixture = algorandFixture();
 
 describe('Abstracted Subscription Program', () => {
@@ -19,7 +18,7 @@ describe('Abstracted Subscription Program', () => {
   let optInPluginClient: OptInPluginClient;
   let optInPluginID: number;
   let suggestedParams: algosdk.SuggestedParams;
-  const maxUint64 = BigInt("18446744073709551615");
+  const maxUint64 = BigInt('18446744073709551615');
 
   beforeEach(fixture.beforeEach);
 
@@ -80,30 +79,34 @@ describe('Abstracted Subscription Program', () => {
     let boxes: Uint8Array[];
 
     beforeAll(() => {
-      pluginBox = new Uint8Array(Buffer.concat([
-        Buffer.from('p'),
-        Buffer.from(algosdk.encodeUint64(subPluginID)),
-        algosdk.decodeAddress(joe).publicKey
-      ]));
+      pluginBox = new Uint8Array(
+        Buffer.concat([
+          Buffer.from('p'),
+          Buffer.from(algosdk.encodeUint64(subPluginID)),
+          algosdk.decodeAddress(joe).publicKey,
+        ])
+      );
       boxes = [pluginBox];
     });
 
     test('Alice adds the app to the abstracted account', async () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(6_100) });
-      await abstractedAccountClient.addPlugin({ app: subPluginID, address: joe, end: maxUint64  }, { boxes });
+      await abstractedAccountClient.addPlugin({ app: subPluginID, address: joe, end: maxUint64 }, { boxes });
     });
 
     test('Someone calls the program to trigger payment', async () => {
       const { algod, testAccount } = fixture.context;
 
-      const globalBox = new Uint8Array(Buffer.concat([
-        Buffer.from('p'),
-        Buffer.from(algosdk.encodeUint64(subPluginID)),
-        algosdk.decodeAddress(ZERO_ADDRESS).publicKey
-      ]));
+      const globalBox = new Uint8Array(
+        Buffer.concat([
+          Buffer.from('p'),
+          Buffer.from(algosdk.encodeUint64(subPluginID)),
+          algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
+        ])
+      );
 
       boxes = boxes.includes(globalBox) ? boxes : [...boxes, globalBox];
-      
+
       const alicePreBalance = await algod.accountInformation(aliceAbstractedAccount).do();
       const joePreBalance = await algod.accountInformation(joe).do();
 
@@ -164,22 +167,26 @@ describe('Abstracted Subscription Program', () => {
 
       asset = Number(txn.confirmation!.assetIndex!);
 
-      pluginBox = new Uint8Array(Buffer.concat([
-        Buffer.from('p'),
-        Buffer.from(algosdk.encodeUint64(optInPluginID)),
-        algosdk.decodeAddress(ZERO_ADDRESS).publicKey
-      ]));
+      pluginBox = new Uint8Array(
+        Buffer.concat([
+          Buffer.from('p'),
+          Buffer.from(algosdk.encodeUint64(optInPluginID)),
+          algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
+        ])
+      );
 
       boxes.push(pluginBox);
     });
 
     test('Alice adds the app to the abstracted account', async () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(14_200) });
-      await abstractedAccountClient.addNamedPlugin({ name: 'optIn', app: optInPluginID, address: ZERO_ADDRESS, end: maxUint64 }, { boxes });
+      await abstractedAccountClient.addNamedPlugin(
+        { name: 'optIn', app: optInPluginID, address: ZERO_ADDRESS, end: maxUint64 },
+        { boxes }
+      );
     });
 
     test("Bob opts Alice's abstracted account into the asset", async () => {
-
       const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
         from: bob.addr,
         to: aliceAbstractedAccount,

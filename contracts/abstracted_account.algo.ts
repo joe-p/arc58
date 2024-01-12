@@ -1,6 +1,6 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-type PluginsKey = { application: Application, address: Address };
+type PluginsKey = { application: Application; address: Address };
 
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
@@ -14,7 +14,7 @@ export class AbstractedAccount extends Contract {
    * The key is the appID + address, the value (referred to as `end`)
    * is the timestamp when the permission expires for the address to call the app for your account.
    */
-  
+
   plugins = BoxMap<PluginsKey, uint64>({ prefix: 'p' });
 
   /**
@@ -101,12 +101,12 @@ export class AbstractedAccount extends Contract {
   rekeyToPlugin(plugin: Application): void {
     /**
      * Ensure a valid key exists either for the sender or global zero address
-    */
+     */
     const key: PluginsKey = { application: plugin, address: this.txn.sender };
-    const validKey = this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp
+    const validKey = this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp;
 
     const globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress };
-    const validGlobalKey = this.plugins(globalKey).exists && this.plugins(globalKey).value > globals.latestTimestamp
+    const validGlobalKey = this.plugins(globalKey).exists && this.plugins(globalKey).value > globals.latestTimestamp;
 
     assert(validKey || validGlobalKey);
 
