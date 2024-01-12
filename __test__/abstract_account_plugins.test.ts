@@ -38,7 +38,7 @@ describe('Abstracted Subscription Program', () => {
     );
 
     await abstractedAccountClient.create.createApplication({
-      address: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ',
+      address: ZERO_ADDRESS,
       admin: aliceEOA.addr,
     });
 
@@ -83,15 +83,15 @@ describe('Abstracted Subscription Program', () => {
         Buffer.concat([
           Buffer.from('p'),
           Buffer.from(algosdk.encodeUint64(subPluginID)),
-          algosdk.decodeAddress(joe).publicKey,
+          algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       );
       boxes = [pluginBox];
     });
 
     test('Alice adds the app to the abstracted account', async () => {
-      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(6_100) });
-      await abstractedAccountClient.addPlugin({ app: subPluginID, address: joe, end: maxUint64 }, { boxes });
+      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(22100) });
+      await abstractedAccountClient.addPlugin({ app: subPluginID, address: ZERO_ADDRESS, end: maxUint64 }, { boxes });
     });
 
     test('Someone calls the program to trigger payment', async () => {
@@ -179,7 +179,7 @@ describe('Abstracted Subscription Program', () => {
     });
 
     test('Alice adds the app to the abstracted account', async () => {
-      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(14_200) });
+      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(43000) });
       await abstractedAccountClient.addNamedPlugin(
         { name: 'optIn', app: optInPluginID, address: ZERO_ADDRESS, end: maxUint64 },
         { boxes }
