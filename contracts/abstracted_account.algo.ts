@@ -1,5 +1,7 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
+type PluginsKey = { application: Application; address: Address };
+
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
   programVersion = 10;
@@ -8,15 +10,17 @@ export class AbstractedAccount extends Contract {
   admin = GlobalStateKey<Address>();
 
   /**
-   * The apps that are authorized to send itxns from the abstracted account
-   * The box map values aren't actually used and are always empty
+   * The apps and addresses that are authorized to send itxns from the abstracted account,
+   * The key is the appID + address, the value (referred to as `end`)
+   * is the timestamp when the permission expires for the address to call the app for your account.
    */
-  plugins = BoxMap<Application, StaticArray<byte, 0>>({ prefix: 'p' });
+
+  plugins = BoxMap<PluginsKey, uint64>({ prefix: 'p' });
 
   /**
    * Plugins that have been given a name for discoverability
    */
-  namedPlugins = BoxMap<bytes, Application>({ prefix: 'n' });
+  namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
 
   /** The address of the abstracted account */
   address = GlobalStateKey<Address>();
@@ -95,7 +99,13 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   rekeyToPlugin(plugin: Application): void {
-    assert(this.plugins(plugin).exists);
+    const globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress };
+
+    // If this plugin is not approved globally, then it must be approved for this address
+    if (!this.plugins(globalKey).exists || this.plugins(globalKey).value < globals.latestTimestamp) {
+      const key: PluginsKey = { application: plugin, address: this.txn.sender };
+      assert(this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp);
+    }
 
     sendPayment({
       sender: this.address.value,
@@ -113,7 +123,7 @@ export class AbstractedAccount extends Contract {
    * @param name The name of the plugin to rekey to
    */
   rekeyToNamedPlugin(name: string): void {
-    this.rekeyToPlugin(this.namedPlugins(name).value);
+    this.rekeyToPlugin(this.namedPlugins(name).value.application);
   }
 
   /**
@@ -130,11 +140,14 @@ export class AbstractedAccount extends Contract {
    * Add an app to the list of approved plugins
    *
    * @param app The app to add
+   * @param address The address of that's allowed to call the app
+   * or the global zero address for all addresses
+   * @param end The timestamp when the permission expires
    */
-  addPlugin(app: Application): void {
+  addPlugin(app: Application, address: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
-
-    this.plugins(app).create(0);
+    const key: PluginsKey = { application: app, address: address };
+    this.plugins(key).value = end;
   }
 
   /**
@@ -142,10 +155,11 @@ export class AbstractedAccount extends Contract {
    *
    * @param app The app to remove
    */
-  removePlugin(app: Application): void {
+  removePlugin(app: Application, address: Address): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
-    this.plugins(app).delete();
+    const key: PluginsKey = { application: app, address: address };
+    this.plugins(key).delete();
   }
 
   /**
@@ -154,12 +168,13 @@ export class AbstractedAccount extends Contract {
    * @param app The plugin app
    * @param name The plugin name
    */
-  addNamedPlugin(app: Application, name: string): void {
+  addNamedPlugin(name: string, app: Application, address: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
-
     assert(!this.namedPlugins(name).exists);
-    this.namedPlugins(name).value = app;
-    this.plugins(app).create(0);
+
+    const key: PluginsKey = { application: app, address: address };
+    this.namedPlugins(name).value = key;
+    this.plugins(key).value = end;
   }
 
   /**

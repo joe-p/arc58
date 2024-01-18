@@ -98,6 +98,16 @@
           "name": "app",
           "type": "application",
           "desc": "The app to add"
+        },
+        {
+          "name": "address",
+          "type": "address",
+          "desc": "The address of that's allowed to call the appor the global zero address for all addresses"
+        },
+        {
+          "name": "end",
+          "type": "uint64",
+          "desc": "The timestamp when the permission expires"
         }
       ],
       "returns": {
@@ -112,6 +122,10 @@
           "name": "app",
           "type": "application",
           "desc": "The app to remove"
+        },
+        {
+          "name": "address",
+          "type": "address"
         }
       ],
       "returns": {
@@ -123,14 +137,22 @@
       "desc": "Add a named plugin",
       "args": [
         {
+          "name": "name",
+          "type": "string",
+          "desc": "The plugin name"
+        },
+        {
           "name": "app",
           "type": "application",
           "desc": "The plugin app"
         },
         {
-          "name": "name",
-          "type": "string",
-          "desc": "The plugin name"
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "end",
+          "type": "uint64"
         }
       ],
       "returns": {
