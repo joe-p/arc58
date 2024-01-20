@@ -107,7 +107,7 @@ describe('Abstracted Subscription Program', () => {
 
     test('Alice adds the app to the abstracted account', async () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(22100) });
-      await abstractedAccountClient.addPlugin(
+      await abstractedAccountClient.arc58AddPlugin(
         {
           // Add the subscription plugin
           app: subPluginID,
@@ -153,7 +153,7 @@ describe('Abstracted Subscription Program', () => {
       await abstractedAccountClient
         .compose()
         // Step one: rekey to the plugin
-        .rekeyToPlugin(
+        .arc58RekeyToPlugin(
           { plugin: subPluginID },
           {
             sender: testAccount,
@@ -164,7 +164,7 @@ describe('Abstracted Subscription Program', () => {
         // Step two: Call the plugin
         .addTransaction({ transaction: makePaymentTxn, signer: testAccount })
         // Step three: Call verify auth addr to rekey back to the abstracted account
-        .verifyAuthAddr({})
+        .arc58VerifyAuthAddr({})
         .execute();
 
       // Verify the payment was made
@@ -215,7 +215,7 @@ describe('Abstracted Subscription Program', () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(43000) });
 
       // Add opt-in plugin
-      await abstractedAccountClient.addNamedPlugin(
+      await abstractedAccountClient.arc58AddNamedPlugin(
         { name: 'optIn', app: optInPluginID, address: ZERO_ADDRESS, end: maxUint64 },
         { boxes }
       );
@@ -249,7 +249,7 @@ describe('Abstracted Subscription Program', () => {
       await abstractedAccountClient
         .compose()
         // Rekey to the opt-in plugin
-        .rekeyToNamedPlugin(
+        .arc58RekeyToNamedPlugin(
           { name: 'optIn' },
           {
             boxes,
@@ -261,7 +261,7 @@ describe('Abstracted Subscription Program', () => {
         // Add the opt-in plugin call
         .addTransaction({ transaction: optInGroup[1].txn, signer: bob }) // optInToAsset
         // Call verify auth addr to verify the abstracted account is rekeyed back to itself
-        .verifyAuthAddr({})
+        .arc58VerifyAuthAddr({})
         .execute();
     });
   });

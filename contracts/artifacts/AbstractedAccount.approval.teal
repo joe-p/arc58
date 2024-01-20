@@ -61,7 +61,7 @@ skip_or0:
 	// verifyAppCallTxn(lastTxn, {
 	//         applicationID: this.app,
 	//         applicationArgs: {
-	//           0: method('verifyAuthAddr()void'),
+	//           0: method('arc58_verifyAuthAddr()void'),
 	//         },
 	//       })
 	// verify appl
@@ -82,7 +82,7 @@ skip_or0:
 	// verify applicationArgs 0
 	frame_dig 0 // lastTxn: txn
 	gtxns ApplicationArgs 0
-	method "verifyAuthAddr()void"
+	method "arc58_verifyAuthAddr()void"
 	==
 	assert
 
@@ -187,16 +187,16 @@ ternary1_end:
 	app_global_put
 	retsub
 
-abi_route_verifyAuthAddr:
-	// execute verifyAuthAddr()void
-	callsub verifyAuthAddr
+abi_route_arc58_verifyAuthAddr:
+	// execute arc58_verifyAuthAddr()void
+	callsub arc58_verifyAuthAddr
 	int 1
 	return
 
-// verifyAuthAddr()void
+// arc58_verifyAuthAddr()void
 //
 // Verify the abstracted account is rekeyed to this app
-verifyAuthAddr:
+arc58_verifyAuthAddr:
 	proto 0 0
 
 	// contracts/abstracted_account.algo.ts:74
@@ -210,7 +210,7 @@ verifyAuthAddr:
 	assert
 	retsub
 
-abi_route_rekeyTo:
+abi_route_arc58_rekeyTo:
 	// flash: bool
 	txna ApplicationArgs 2
 	dup
@@ -229,18 +229,18 @@ abi_route_rekeyTo:
 	==
 	assert
 
-	// execute rekeyTo(bool,address)void
-	callsub rekeyTo
+	// execute arc58_rekeyTo(bool,address)void
+	callsub arc58_rekeyTo
 	int 1
 	return
 
-// rekeyTo(bool,address)void
+// arc58_rekeyTo(bool,address)void
 //
 // Rekey the abstracted account to another address. Primarily useful for rekeying to an EOA.
 //
 // @param addr The address to rekey to
 // @param flash Whether or not this should be a flash rekey. If true, the rekey back to the app address must done in the same txn group as this call
-rekeyTo:
+arc58_rekeyTo:
 	proto 2 0
 
 	// contracts/abstracted_account.algo.ts:84
@@ -305,23 +305,23 @@ rekeyTo:
 if1_end:
 	retsub
 
-abi_route_rekeyToPlugin:
+abi_route_arc58_rekeyToPlugin:
 	// plugin: application
 	txna ApplicationArgs 1
 	btoi
 	txnas Applications
 
-	// execute rekeyToPlugin(application)void
-	callsub rekeyToPlugin
+	// execute arc58_rekeyToPlugin(application)void
+	callsub arc58_rekeyToPlugin
 	int 1
 	return
 
-// rekeyToPlugin(application)void
+// arc58_rekeyToPlugin(application)void
 //
 // Temporarily rekey to an approved plugin app address
 //
 // @param plugin The app to rekey to
-rekeyToPlugin:
+arc58_rekeyToPlugin:
 	proto 1 0
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
@@ -441,26 +441,26 @@ if2_end:
 	callsub verifyRekeyToAbstractedAccount
 	retsub
 
-abi_route_rekeyToNamedPlugin:
+abi_route_arc58_rekeyToNamedPlugin:
 	// name: string
 	txna ApplicationArgs 1
 	extract 2 0
 
-	// execute rekeyToNamedPlugin(string)void
-	callsub rekeyToNamedPlugin
+	// execute arc58_rekeyToNamedPlugin(string)void
+	callsub arc58_rekeyToNamedPlugin
 	int 1
 	return
 
-// rekeyToNamedPlugin(string)void
+// arc58_rekeyToNamedPlugin(string)void
 //
 // Temporarily rekey to a named plugin app address
 //
 // @param name The name of the plugin to rekey to
-rekeyToNamedPlugin:
+arc58_rekeyToNamedPlugin:
 	proto 1 0
 
 	// contracts/abstracted_account.algo.ts:126
-	// this.rekeyToPlugin(this.namedPlugins(name).value.application)
+	// this.arc58_rekeyToPlugin(this.namedPlugins(name).value.application)
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
 	concat
@@ -468,26 +468,26 @@ rekeyToNamedPlugin:
 	assert
 	extract 0 8
 	btoi
-	callsub rekeyToPlugin
+	callsub arc58_rekeyToPlugin
 	retsub
 
-abi_route_changeAdmin:
+abi_route_arc58_changeAdmin:
 	// newAdmin: account
 	txna ApplicationArgs 1
 	btoi
 	txnas Accounts
 
-	// execute changeAdmin(account)void
-	callsub changeAdmin
+	// execute arc58_changeAdmin(account)void
+	callsub arc58_changeAdmin
 	int 1
 	return
 
-// changeAdmin(account)void
+// arc58_changeAdmin(account)void
 //
 // Change the admin for this app
 //
 // @param newAdmin The new admin
-changeAdmin:
+arc58_changeAdmin:
 	proto 1 0
 
 	// contracts/abstracted_account.algo.ts:135
@@ -506,7 +506,7 @@ changeAdmin:
 	app_global_put
 	retsub
 
-abi_route_addPlugin:
+abi_route_arc58_addPlugin:
 	// end: uint64
 	txna ApplicationArgs 3
 	btoi
@@ -524,12 +524,12 @@ abi_route_addPlugin:
 	btoi
 	txnas Applications
 
-	// execute addPlugin(uint64,address,application)void
-	callsub addPlugin
+	// execute arc58_addPlugin(uint64,address,application)void
+	callsub arc58_addPlugin
 	int 1
 	return
 
-// addPlugin(uint64,address,application)void
+// arc58_addPlugin(uint64,address,application)void
 //
 // Add an app to the list of approved plugins
 //
@@ -537,7 +537,7 @@ abi_route_addPlugin:
 // @param address The address of that's allowed to call the app
 // or the global zero address for all addresses
 // @param end The timestamp when the permission expires
-addPlugin:
+arc58_addPlugin:
 	proto 3 0
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
@@ -570,7 +570,7 @@ addPlugin:
 	box_put
 	retsub
 
-abi_route_removePlugin:
+abi_route_arc58_removePlugin:
 	// address: address
 	txna ApplicationArgs 2
 	dup
@@ -584,17 +584,17 @@ abi_route_removePlugin:
 	btoi
 	txnas Applications
 
-	// execute removePlugin(address,application)void
-	callsub removePlugin
+	// execute arc58_removePlugin(address,application)void
+	callsub arc58_removePlugin
 	int 1
 	return
 
-// removePlugin(address,application)void
+// arc58_removePlugin(address,application)void
 //
 // Remove an app from the list of approved plugins
 //
 // @param app The app to remove
-removePlugin:
+arc58_removePlugin:
 	proto 2 0
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
@@ -625,7 +625,7 @@ removePlugin:
 	box_del
 	retsub
 
-abi_route_addNamedPlugin:
+abi_route_arc58_addNamedPlugin:
 	// end: uint64
 	txna ApplicationArgs 4
 	btoi
@@ -647,18 +647,18 @@ abi_route_addNamedPlugin:
 	txna ApplicationArgs 1
 	extract 2 0
 
-	// execute addNamedPlugin(uint64,address,application,string)void
-	callsub addNamedPlugin
+	// execute arc58_addNamedPlugin(uint64,address,application,string)void
+	callsub arc58_addNamedPlugin
 	int 1
 	return
 
-// addNamedPlugin(uint64,address,application,string)void
+// arc58_addNamedPlugin(uint64,address,application,string)void
 //
 // Add a named plugin
 //
 // @param app The plugin app
 // @param name The plugin name
-addNamedPlugin:
+arc58_addNamedPlugin:
 	proto 4 0
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
@@ -710,22 +710,22 @@ addNamedPlugin:
 	box_put
 	retsub
 
-abi_route_removeNamedPlugin:
+abi_route_arc58_removeNamedPlugin:
 	// name: string
 	txna ApplicationArgs 1
 	extract 2 0
 
-	// execute removeNamedPlugin(string)void
-	callsub removeNamedPlugin
+	// execute arc58_removeNamedPlugin(string)void
+	callsub arc58_removeNamedPlugin
 	int 1
 	return
 
-// removeNamedPlugin(string)void
+// arc58_removeNamedPlugin(string)void
 //
 // Remove a named plugin
 //
 // @param name The plugin name
-removeNamedPlugin:
+arc58_removeNamedPlugin:
 	proto 1 0
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
@@ -771,15 +771,15 @@ create_NoOp:
 	err
 
 call_NoOp:
-	method "verifyAuthAddr()void"
-	method "rekeyTo(address,bool)void"
-	method "rekeyToPlugin(application)void"
-	method "rekeyToNamedPlugin(string)void"
-	method "changeAdmin(account)void"
-	method "addPlugin(application,address,uint64)void"
-	method "removePlugin(application,address)void"
-	method "addNamedPlugin(string,application,address,uint64)void"
-	method "removeNamedPlugin(string)void"
+	method "arc58_verifyAuthAddr()void"
+	method "arc58_rekeyTo(address,bool)void"
+	method "arc58_rekeyToPlugin(application)void"
+	method "arc58_rekeyToNamedPlugin(string)void"
+	method "arc58_changeAdmin(account)void"
+	method "arc58_addPlugin(application,address,uint64)void"
+	method "arc58_removePlugin(application,address)void"
+	method "arc58_addNamedPlugin(string,application,address,uint64)void"
+	method "arc58_removeNamedPlugin(string)void"
 	txna ApplicationArgs 0
-	match abi_route_verifyAuthAddr abi_route_rekeyTo abi_route_rekeyToPlugin abi_route_rekeyToNamedPlugin abi_route_changeAdmin abi_route_addPlugin abi_route_removePlugin abi_route_addNamedPlugin abi_route_removeNamedPlugin
+	match abi_route_arc58_verifyAuthAddr abi_route_arc58_rekeyTo abi_route_arc58_rekeyToPlugin abi_route_arc58_rekeyToNamedPlugin abi_route_arc58_changeAdmin abi_route_arc58_addPlugin abi_route_arc58_removePlugin abi_route_arc58_addNamedPlugin abi_route_arc58_removeNamedPlugin
 	err

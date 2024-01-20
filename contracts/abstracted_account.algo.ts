@@ -36,7 +36,7 @@ export class AbstractedAccount extends Contract {
       verifyAppCallTxn(lastTxn, {
         applicationID: this.app,
         applicationArgs: {
-          0: method('verifyAuthAddr()void'),
+          0: method('arc58_verifyAuthAddr()void'),
         },
       });
     }
@@ -70,7 +70,7 @@ export class AbstractedAccount extends Contract {
   /**
    * Verify the abstracted account is rekeyed to this app
    */
-  verifyAuthAddr(): void {
+  arc58_verifyAuthAddr(): void {
     assert(this.address.value.authAddr === this.getAuthAddr());
   }
 
@@ -80,7 +80,7 @@ export class AbstractedAccount extends Contract {
    * @param addr The address to rekey to
    * @param flash Whether or not this should be a flash rekey. If true, the rekey back to the app address must done in the same txn group as this call
    */
-  rekeyTo(addr: Address, flash: boolean): void {
+  arc58_rekeyTo(addr: Address, flash: boolean): void {
     verifyAppCallTxn(this.txn, { sender: this.admin.value });
 
     sendPayment({
@@ -98,7 +98,7 @@ export class AbstractedAccount extends Contract {
    *
    * @param plugin The app to rekey to
    */
-  rekeyToPlugin(plugin: Application): void {
+  arc58_rekeyToPlugin(plugin: Application): void {
     const globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress };
 
     // If this plugin is not approved globally, then it must be approved for this address
@@ -122,8 +122,8 @@ export class AbstractedAccount extends Contract {
    *
    * @param name The name of the plugin to rekey to
    */
-  rekeyToNamedPlugin(name: string): void {
-    this.rekeyToPlugin(this.namedPlugins(name).value.application);
+  arc58_rekeyToNamedPlugin(name: string): void {
+    this.arc58_rekeyToPlugin(this.namedPlugins(name).value.application);
   }
 
   /**
@@ -131,7 +131,7 @@ export class AbstractedAccount extends Contract {
    *
    * @param newAdmin The new admin
    */
-  changeAdmin(newAdmin: Account): void {
+  arc58_changeAdmin(newAdmin: Account): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     this.admin.value = newAdmin;
   }
@@ -144,7 +144,7 @@ export class AbstractedAccount extends Contract {
    * or the global zero address for all addresses
    * @param end The timestamp when the permission expires
    */
-  addPlugin(app: Application, address: Address, end: uint64): void {
+  arc58_addPlugin(app: Application, address: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     const key: PluginsKey = { application: app, address: address };
     this.plugins(key).value = end;
@@ -155,7 +155,7 @@ export class AbstractedAccount extends Contract {
    *
    * @param app The app to remove
    */
-  removePlugin(app: Application, address: Address): void {
+  arc58_removePlugin(app: Application, address: Address): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
     const key: PluginsKey = { application: app, address: address };
@@ -168,7 +168,7 @@ export class AbstractedAccount extends Contract {
    * @param app The plugin app
    * @param name The plugin name
    */
-  addNamedPlugin(name: string, app: Application, address: Address, end: uint64): void {
+  arc58_addNamedPlugin(name: string, app: Application, address: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     assert(!this.namedPlugins(name).exists);
 
@@ -182,7 +182,7 @@ export class AbstractedAccount extends Contract {
    *
    * @param name The plugin name
    */
-  removeNamedPlugin(name: string): void {
+  arc58_removeNamedPlugin(name: string): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
     const app = this.namedPlugins(name).value;
