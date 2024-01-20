@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "generate-clients": "algokit generate client contracts/artifacts/ --language typescript  --output contracts/clients/{contract_name}Client.ts",
-    "compile-contracts": "tealscript contracts/*.algo.ts contracts/artifacts",
+    "compile-contracts": "tealscript contracts/**/*.algo.ts contracts/artifacts",
     "generate-components": "algokit-generate-component contracts/artifacts/*.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contract && npm run generate-client",
     "test": "npm run build && jest",

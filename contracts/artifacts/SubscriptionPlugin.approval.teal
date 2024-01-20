@@ -31,7 +31,7 @@ abi_route_createApplication:
 createApplication:
 	proto 0 0
 
-	// contracts/subscription_plugin.algo.ts:19
+	// contracts/plugins/subscription_plugin.algo.ts:19
 	// this.lastPayment.value = 0
 	byte 0x6c6173745061796d656e74 // "lastPayment"
 	int 0
@@ -61,7 +61,7 @@ abi_route_makePayment:
 makePayment:
 	proto 2 0
 
-	// contracts/subscription_plugin.algo.ts:27
+	// contracts/plugins/subscription_plugin.algo.ts:27
 	// assert(globals.round - this.lastPayment.value > FREQUENCY)
 	global Round
 	byte 0x6c6173745061796d656e74 // "lastPayment"
@@ -71,13 +71,13 @@ makePayment:
 	>
 	assert
 
-	// contracts/subscription_plugin.algo.ts:28
+	// contracts/plugins/subscription_plugin.algo.ts:28
 	// this.lastPayment.value = globals.round
 	byte 0x6c6173745061796d656e74 // "lastPayment"
 	global Round
 	app_global_put
 
-	// contracts/subscription_plugin.algo.ts:30
+	// contracts/plugins/subscription_plugin.algo.ts:30
 	// sendPayment({
 	//       sender: sender,
 	//       amount: AMOUNT,
@@ -88,24 +88,24 @@ makePayment:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/subscription_plugin.algo.ts:31
+	// contracts/plugins/subscription_plugin.algo.ts:31
 	// sender: sender
 	frame_dig -1 // sender: Address
 	itxn_field Sender
 
-	// contracts/subscription_plugin.algo.ts:32
+	// contracts/plugins/subscription_plugin.algo.ts:32
 	// amount: AMOUNT
 	int 100_000
 	itxn_field Amount
 
-	// contracts/subscription_plugin.algo.ts:33
+	// contracts/plugins/subscription_plugin.algo.ts:33
 	// receiver: RECEIVER
-	// contracts/subscription_plugin.algo.ts:10
+	// contracts/plugins/subscription_plugin.algo.ts:10
 	// addr('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M')
 	addr 46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M
 	itxn_field Receiver
 
-	// contracts/subscription_plugin.algo.ts:34
+	// contracts/plugins/subscription_plugin.algo.ts:34
 	// rekeyTo: sender
 	frame_dig -1 // sender: Address
 	itxn_field RekeyTo
