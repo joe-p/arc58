@@ -97,15 +97,13 @@ describe('Abstracted Subscription Program', () => {
     test('Someone calls the program to trigger payment', async () => {
       const { algod, testAccount } = fixture.context;
 
-      const globalBox = new Uint8Array(
+      boxes = [new Uint8Array(
         Buffer.concat([
           Buffer.from('p'),
           Buffer.from(algosdk.encodeUint64(subPluginID)),
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
-      );
-
-      boxes = boxes.includes(globalBox) ? boxes : [...boxes, globalBox];
+      )];
 
       const alicePreBalance = await algod.accountInformation(aliceAbstractedAccount).do();
       const joePreBalance = await algod.accountInformation(joe).do();
@@ -199,7 +197,7 @@ describe('Abstracted Subscription Program', () => {
           .compose()
           .optInToAsset(
             { sender: aliceAbstractedAccount, asset, mbrPayment },
-            { sendParams: { fee: algokit.microAlgos(2000) } }
+            { sender: bob, sendParams: { fee: algokit.microAlgos(2000) } }
           )
           .atc()
       ).buildGroup();
@@ -218,8 +216,8 @@ describe('Abstracted Subscription Program', () => {
             sendParams: { fee: algokit.microAlgos(2000) },
           }
         )
-        .addTransaction({ transaction: optInGroup[0].txn, signer: bob })
-        .addTransaction({ transaction: optInGroup[1].txn, signer: bob })
+        .addTransaction({ transaction: optInGroup[0].txn, signer: bob }) // mbrPayment
+        .addTransaction({ transaction: optInGroup[1].txn, signer: bob }) // optInToAsset
         .verifyAuthAddr({})
         .execute();
     });
