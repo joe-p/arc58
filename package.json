@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "generate-clients": "algokit generate client contracts/artifacts/ --language typescript  --output contracts/clients/{contract_name}Client.ts",
-    "compile-contracts": "tealscript contracts/**/*.algo.ts contracts/artifacts",
+    "compile-contracts": "tealscript **/*.algo.ts contracts/artifacts",
     "generate-components": "algokit-generate-component contracts/artifacts/*.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contract && npm run generate-client",
     "test": "npm run build && jest",
@@ -13,13 +13,13 @@
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^2.2.0",
+    "@algorandfoundation/tealscript": "^0.81.0",
     "algosdk": "^2.4.0",
     "cross-fetch": "^4.0.0",
     "js-sha256": "^0.10.1"
   },
   "devDependencies": {
     "@algorandfoundation/algokit-client-generator": "^2.2.1",
-    "@algorandfoundation/tealscript": "0.70.0",
     "@jest/globals": "^29.5.0",
     "@joe-p/algokit-generate-component": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",

@@ -50,7 +50,7 @@ describe('Abstracted Subscription Program', () => {
     // Create an abstracted account app
     await abstractedAccountClient.create.createApplication({
       // Set address to ZERO_ADDRESS so the app address is used
-      address: ZERO_ADDRESS,
+      controlledAddress: ZERO_ADDRESS,
       // aliceEOA will be the admin
       admin: aliceEOA.addr,
     });
@@ -112,7 +112,7 @@ describe('Abstracted Subscription Program', () => {
           // Add the subscription plugin
           app: subPluginID,
           // Set address to ZERO_ADDRESS so anyone can call it
-          address: ZERO_ADDRESS,
+          allowedCaller: ZERO_ADDRESS,
           // Set end to maxUint64 so it never expires
           end: maxUint64,
         },
@@ -216,7 +216,7 @@ describe('Abstracted Subscription Program', () => {
 
       // Add opt-in plugin
       await abstractedAccountClient.arc58AddNamedPlugin(
-        { name: 'optIn', app: optInPluginID, address: ZERO_ADDRESS, end: maxUint64 },
+        { name: 'optIn', app: optInPluginID, allowedCaller: ZERO_ADDRESS, end: maxUint64 },
         { boxes }
       );
     });

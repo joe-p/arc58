@@ -7,7 +7,6 @@ export class OptInPlugin extends Contract {
     verifyPayTxn(mbrPayment, {
       receiver: sender,
       amount: {
-        // @ts-expect-error TODO: add assetOptInMinBalance to the TEALScript types
         greaterThan: globals.assetOptInMinBalance,
       },
     });

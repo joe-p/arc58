@@ -1,6 +1,6 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-type PluginsKey = { application: Application; address: Address };
+type PluginsKey = { application: Application; allowedCaller: Address };
 
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
@@ -22,8 +22,8 @@ export class AbstractedAccount extends Contract {
    */
   namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
 
-  /** The address of the abstracted account */
-  address = GlobalStateKey<Address>();
+  /** The address this app controls */
+  controlledAddress = GlobalStateKey<Address>();
 
   /**
    * Ensure that by the end of the group the abstracted account has control of its address
@@ -32,7 +32,7 @@ export class AbstractedAccount extends Contract {
     const lastTxn = this.txnGroup[this.txnGroup.length - 1];
 
     // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAuthAddr
-    if (lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.getAuthAddr()) {
+    if (lastTxn.sender !== this.controlledAddress.value || lastTxn.rekeyTo !== this.getAuthAddr()) {
       verifyAppCallTxn(lastTxn, {
         applicationID: this.app,
         applicationArgs: {
@@ -47,31 +47,31 @@ export class AbstractedAccount extends Contract {
    * is able to be controlled by this app. It will either be this.app.address or zeroAddress
    */
   private getAuthAddr(): Address {
-    return this.address.value === this.app.address ? Address.zeroAddress : this.app.address;
+    return this.controlledAddress.value === this.app.address ? Address.zeroAddress : this.app.address;
   }
 
   /**
    * Create an abstracted account application
    *
-   * @param address The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
+   * @param controlledAddress The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
    * @param admin The admin for this app
    */
-  createApplication(address: Address, admin: Address): void {
+  createApplication(controlledAddress: Address, admin: Address): void {
     verifyAppCallTxn(this.txn, {
-      sender: { includedIn: [address, admin] },
+      sender: { includedIn: [controlledAddress, admin] },
     });
 
-    assert(admin !== address);
+    assert(admin !== controlledAddress);
 
     this.admin.value = admin;
-    this.address.value = address === Address.zeroAddress ? this.app.address : address;
+    this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress;
   }
 
   /**
    * Verify the abstracted account is rekeyed to this app
    */
   arc58_verifyAuthAddr(): void {
-    assert(this.address.value.authAddr === this.getAuthAddr());
+    assert(this.controlledAddress.value.authAddr === this.getAuthAddr());
   }
 
   /**
@@ -84,7 +84,7 @@ export class AbstractedAccount extends Contract {
     verifyAppCallTxn(this.txn, { sender: this.admin.value });
 
     sendPayment({
-      sender: this.address.value,
+      sender: this.controlledAddress.value,
       receiver: addr,
       rekeyTo: addr,
       note: 'rekeying abstracted account',
@@ -99,17 +99,17 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   arc58_rekeyToPlugin(plugin: Application): void {
-    const globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress };
+    const globalKey: PluginsKey = { application: plugin, allowedCaller: globals.zeroAddress };
 
     // If this plugin is not approved globally, then it must be approved for this address
     if (!this.plugins(globalKey).exists || this.plugins(globalKey).value < globals.latestTimestamp) {
-      const key: PluginsKey = { application: plugin, address: this.txn.sender };
+      const key: PluginsKey = { application: plugin, allowedCaller: this.txn.sender };
       assert(this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp);
     }
 
     sendPayment({
-      sender: this.address.value,
-      receiver: this.address.value,
+      sender: this.controlledAddress.value,
+      receiver: this.controlledAddress.value,
       rekeyTo: plugin.address,
       note: 'rekeying to plugin app',
     });
@@ -133,6 +133,7 @@ export class AbstractedAccount extends Contract {
    */
   arc58_changeAdmin(newAdmin: Account): void {
     verifyTxn(this.txn, { sender: this.admin.value });
+    assert(newAdmin !== this.controlledAddress.value);
     this.admin.value = newAdmin;
   }
 
@@ -140,13 +141,13 @@ export class AbstractedAccount extends Contract {
    * Add an app to the list of approved plugins
    *
    * @param app The app to add
-   * @param address The address of that's allowed to call the app
+   * @param allowedCaller The address of that's allowed to call the app
    * or the global zero address for all addresses
    * @param end The timestamp when the permission expires
    */
-  arc58_addPlugin(app: Application, address: Address, end: uint64): void {
+  arc58_addPlugin(app: Application, allowedCaller: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
-    const key: PluginsKey = { application: app, address: address };
+    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
     this.plugins(key).value = end;
   }
 
@@ -155,10 +156,10 @@ export class AbstractedAccount extends Contract {
    *
    * @param app The app to remove
    */
-  arc58_removePlugin(app: Application, address: Address): void {
+  arc58_removePlugin(app: Application, allowedCaller: Address): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
-    const key: PluginsKey = { application: app, address: address };
+    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
     this.plugins(key).delete();
   }
 
@@ -168,11 +169,11 @@ export class AbstractedAccount extends Contract {
    * @param app The plugin app
    * @param name The plugin name
    */
-  arc58_addNamedPlugin(name: string, app: Application, address: Address, end: uint64): void {
+  arc58_addNamedPlugin(name: string, app: Application, allowedCaller: Address, end: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     assert(!this.namedPlugins(name).exists);
 
-    const key: PluginsKey = { application: app, address: address };
+    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
     this.namedPlugins(name).value = key;
     this.plugins(key).value = end;
   }
