@@ -7,7 +7,10 @@ export class AbstractedAccount extends Contract {
   programVersion = 10;
 
   /** The admin of the abstracted account */
-  admin = GlobalStateKey<Address>();
+  admin = GlobalStateKey<Address>({ key: 'a' });
+
+  /** The address this app controls */
+  controlledAddress = GlobalStateKey<Address>({ key: 'c' });
 
   /**
    * The apps and addresses that are authorized to send itxns from the abstracted account,
@@ -20,9 +23,6 @@ export class AbstractedAccount extends Contract {
    * Plugins that have been given a name for discoverability
    */
   namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
-
-  /** The address this app controls */
-  controlledAddress = GlobalStateKey<Address>();
 
   /**
    * Ensure that by the end of the group the abstracted account has control of its address

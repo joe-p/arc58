@@ -59,7 +59,7 @@ for_0:
 	// txn.sender === this.controlledAddress.value && txn.rekeyTo === this.getAuthAddr()
 	frame_dig 2 // txn: txn
 	gtxns Sender
-	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	byte 0x63 // "c"
 	app_global_get
 	==
 	dup
@@ -152,7 +152,7 @@ getAuthAddr:
 
 	// contracts/abstracted_account.algo.ts:62
 	// return this.controlledAddress.value === this.app.address ? Address.zeroAddress : this.app.address;
-	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	byte 0x63 // "c"
 	app_global_get
 	global CurrentApplicationAddress
 	==
@@ -222,13 +222,13 @@ createApplication:
 
 	// contracts/abstracted_account.algo.ts:79
 	// this.admin.value = admin
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	frame_dig -2 // admin: Address
 	app_global_put
 
 	// contracts/abstracted_account.algo.ts:80
 	// this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress
-	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	byte 0x63 // "c"
 	frame_dig -1 // controlledAddress: Address
 	global ZeroAddress
 	==
@@ -267,14 +267,14 @@ arc58_changeAdmin:
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	app_global_get
 	==
 	assert
 
 	// contracts/abstracted_account.algo.ts:90
 	// this.admin.value = newAdmin
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	frame_dig -1 // newAdmin: Account
 	app_global_put
 	retsub
@@ -300,7 +300,7 @@ arc58_getAdmin:
 
 	// contracts/abstracted_account.algo.ts:98
 	// return this.admin.value;
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	app_global_get
 	retsub
 
@@ -319,7 +319,7 @@ arc58_verifyAuthAddr:
 
 	// contracts/abstracted_account.algo.ts:105
 	// assert(this.controlledAddress.value.authAddr === this.getAuthAddr())
-	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	byte 0x63 // "c"
 	app_global_get
 	acct_params_get AcctAuthAddr
 	pop
@@ -366,7 +366,7 @@ arc58_rekeyTo:
 	// verifyAppCallTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	app_global_get
 	==
 	assert
@@ -384,7 +384,7 @@ arc58_rekeyTo:
 
 	// contracts/abstracted_account.algo.ts:118
 	// sender: this.controlledAddress.value
-	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	byte 0x63 // "c"
 	app_global_get
 	itxn_field Sender
 
@@ -527,13 +527,13 @@ if3_end:
 
 	// contracts/abstracted_account.algo.ts:142
 	// sender: this.controlledAddress.value
-	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	byte 0x63 // "c"
 	app_global_get
 	itxn_field Sender
 
 	// contracts/abstracted_account.algo.ts:143
 	// receiver: this.controlledAddress.value
-	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	byte 0x63 // "c"
 	app_global_get
 	itxn_field Receiver
 
@@ -635,7 +635,7 @@ arc58_addPlugin:
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	app_global_get
 	==
 	assert
@@ -693,7 +693,7 @@ arc58_removePlugin:
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	app_global_get
 	==
 	assert
@@ -758,7 +758,7 @@ arc58_addNamedPlugin:
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	app_global_get
 	==
 	assert
@@ -826,7 +826,7 @@ arc58_removeNamedPlugin:
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
-	byte 0x61646d696e // "admin"
+	byte 0x61 // "a"
 	app_global_get
 	==
 	assert
