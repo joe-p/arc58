@@ -243,28 +243,27 @@ ternary1_end:
 	app_global_put
 	retsub
 
-// changeAdmin(account)void
-abi_route_changeAdmin:
+// arc58_changeAdmin(account)void
+abi_route_arc58_changeAdmin:
 	// newAdmin: account
 	txna ApplicationArgs 1
 	btoi
 	txnas Accounts
 
-	// execute changeAdmin(account)void
-	callsub changeAdmin
+	// execute arc58_changeAdmin(account)void
+	callsub arc58_changeAdmin
 	int 1
 	return
 
-// changeAdmin(newAdmin: Account): void
+// arc58_changeAdmin(newAdmin: Account): void
 //
-// Change the admin for this app.
-// This is not part of ARC58 and implementation specific.
+// Attempt to change the admin for this app. Some implementations MAY not support this.
 //
 // @param newAdmin The new admin
-changeAdmin:
+arc58_changeAdmin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:90
+	// contracts/abstracted_account.algo.ts:89
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -273,7 +272,7 @@ changeAdmin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:91
+	// contracts/abstracted_account.algo.ts:90
 	// this.admin.value = newAdmin
 	byte 0x61646d696e // "admin"
 	frame_dig -1 // newAdmin: Account
@@ -294,7 +293,8 @@ abi_route_arc58_getAdmin:
 
 // arc58_getAdmin(): Address
 //
-// Get the admin of this app
+// Get the admin of this app. This method SHOULD always be used rather than reading directly from state
+// because different implementations may have different ways of determining the admin.
 arc58_getAdmin:
 	proto 0 1
 
@@ -862,7 +862,7 @@ create_NoOp:
 	err
 
 call_NoOp:
-	method "changeAdmin(account)void"
+	method "arc58_changeAdmin(account)void"
 	method "arc58_getAdmin()address"
 	method "arc58_verifyAuthAddr()void"
 	method "arc58_rekeyTo(address,bool)void"
@@ -873,5 +873,5 @@ call_NoOp:
 	method "arc58_addNamedPlugin(string,application,address,uint64)void"
 	method "arc58_removeNamedPlugin(string)void"
 	txna ApplicationArgs 0
-	match abi_route_changeAdmin abi_route_arc58_getAdmin abi_route_arc58_verifyAuthAddr abi_route_arc58_rekeyTo abi_route_arc58_rekeyToPlugin abi_route_arc58_rekeyToNamedPlugin abi_route_arc58_addPlugin abi_route_arc58_removePlugin abi_route_arc58_addNamedPlugin abi_route_arc58_removeNamedPlugin
+	match abi_route_arc58_changeAdmin abi_route_arc58_getAdmin abi_route_arc58_verifyAuthAddr abi_route_arc58_rekeyTo abi_route_arc58_rekeyToPlugin abi_route_arc58_rekeyToNamedPlugin abi_route_arc58_addPlugin abi_route_arc58_removePlugin abi_route_arc58_addNamedPlugin abi_route_arc58_removeNamedPlugin
 	err

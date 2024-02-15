@@ -22,8 +22,8 @@
       }
     },
     {
-      "name": "changeAdmin",
-      "desc": "Change the admin for this app.This is not part of ARC58 and implementation specific.",
+      "name": "arc58_changeAdmin",
+      "desc": "Attempt to change the admin for this app. Some implementations MAY not support this.",
       "args": [
         {
           "name": "newAdmin",
@@ -37,7 +37,7 @@
     },
     {
       "name": "arc58_getAdmin",
-      "desc": "Get the admin of this app",
+      "desc": "Get the admin of this app. This method SHOULD always be used rather than reading directly from statebecause different implementations may have different ways of determining the admin.",
       "args": [],
       "returns": {
         "type": "address"

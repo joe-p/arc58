@@ -81,18 +81,18 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Change the admin for this app.
-   * This is not part of ARC58 and implementation specific.
+   * Attempt to change the admin for this app. Some implementations MAY not support this.
    *
    * @param newAdmin The new admin
    */
-  changeAdmin(newAdmin: Account): void {
+  arc58_changeAdmin(newAdmin: Account): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     this.admin.value = newAdmin;
   }
 
   /**
-   * Get the admin of this app
+   * Get the admin of this app. This method SHOULD always be used rather than reading directly from state
+   * because different implementations may have different ways of determining the admin.
    */
   arc58_getAdmin(): Address {
     return this.admin.value;
