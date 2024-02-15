@@ -4,7 +4,7 @@
   "methods": [
     {
       "name": "createApplication",
-      "desc": "Create an abstracted account application",
+      "desc": "Create an abstracted account application.This is not part of ARC58 and implementation specific.",
       "args": [
         {
           "name": "address",
@@ -19,6 +19,28 @@
       ],
       "returns": {
         "type": "void"
+      }
+    },
+    {
+      "name": "changeAdmin",
+      "desc": "Change the admin for this app.This is not part of ARC58 and implementation specific.",
+      "args": [
+        {
+          "name": "newAdmin",
+          "type": "account",
+          "desc": "The new admin"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "arc58_getAdmin",
+      "desc": "Get the admin of this app",
+      "args": [],
+      "returns": {
+        "type": "address"
       }
     },
     {
@@ -70,20 +92,6 @@
           "name": "name",
           "type": "string",
           "desc": "The name of the plugin to rekey to"
-        }
-      ],
-      "returns": {
-        "type": "void"
-      }
-    },
-    {
-      "name": "arc58_changeAdmin",
-      "desc": "Change the admin for this app",
-      "args": [
-        {
-          "name": "newAdmin",
-          "type": "account",
-          "desc": "The new admin"
         }
       ],
       "returns": {

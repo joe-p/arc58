@@ -63,7 +63,8 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * Create an abstracted account application
+   * Create an abstracted account application.
+   * This is not part of ARC58 and implementation specific.
    *
    * @param address The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
    * @param admin The admin for this app
@@ -77,6 +78,24 @@ export class AbstractedAccount extends Contract {
 
     this.admin.value = admin;
     this.address.value = address === Address.zeroAddress ? this.app.address : address;
+  }
+
+  /**
+   * Change the admin for this app.
+   * This is not part of ARC58 and implementation specific.
+   *
+   * @param newAdmin The new admin
+   */
+  changeAdmin(newAdmin: Account): void {
+    verifyTxn(this.txn, { sender: this.admin.value });
+    this.admin.value = newAdmin;
+  }
+
+  /**
+   * Get the admin of this app
+   */
+  arc58_getAdmin(): Address {
+    return this.admin.value;
   }
 
   /**
@@ -136,16 +155,6 @@ export class AbstractedAccount extends Contract {
    */
   arc58_rekeyToNamedPlugin(name: string): void {
     this.arc58_rekeyToPlugin(this.namedPlugins(name).value.application);
-  }
-
-  /**
-   * Change the admin for this app
-   *
-   * @param newAdmin The new admin
-   */
-  arc58_changeAdmin(newAdmin: Account): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
-    this.admin.value = newAdmin;
   }
 
   /**

@@ -191,14 +191,15 @@ abi_route_createApplication:
 
 // createApplication(address: Address, admin: Address): void
 //
-// Create an abstracted account application
+// Create an abstracted account application.
+// This is not part of ARC58 and implementation specific.
 //
 // @param address The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
 // @param admin The admin for this app
 createApplication:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:72
+	// contracts/abstracted_account.algo.ts:73
 	// verifyAppCallTxn(this.txn, {
 	//       sender: { includedIn: [address, admin] },
 	//     })
@@ -212,20 +213,20 @@ createApplication:
 	||
 	assert
 
-	// contracts/abstracted_account.algo.ts:76
+	// contracts/abstracted_account.algo.ts:77
 	// assert(admin !== address)
 	frame_dig -2 // admin: Address
 	frame_dig -1 // address: Address
 	!=
 	assert
 
-	// contracts/abstracted_account.algo.ts:78
+	// contracts/abstracted_account.algo.ts:79
 	// this.admin.value = admin
 	byte 0x61646d696e // "admin"
 	frame_dig -2 // admin: Address
 	app_global_put
 
-	// contracts/abstracted_account.algo.ts:79
+	// contracts/abstracted_account.algo.ts:80
 	// this.address.value = address === Address.zeroAddress ? this.app.address : address
 	byte 0x61646472657373 // "address"
 	frame_dig -1 // address: Address
@@ -242,6 +243,67 @@ ternary1_end:
 	app_global_put
 	retsub
 
+// changeAdmin(account)void
+abi_route_changeAdmin:
+	// newAdmin: account
+	txna ApplicationArgs 1
+	btoi
+	txnas Accounts
+
+	// execute changeAdmin(account)void
+	callsub changeAdmin
+	int 1
+	return
+
+// changeAdmin(newAdmin: Account): void
+//
+// Change the admin for this app.
+// This is not part of ARC58 and implementation specific.
+//
+// @param newAdmin The new admin
+changeAdmin:
+	proto 1 0
+
+	// contracts/abstracted_account.algo.ts:90
+	// verifyTxn(this.txn, { sender: this.admin.value })
+	// verify sender
+	txn Sender
+	byte 0x61646d696e // "admin"
+	app_global_get
+	==
+	assert
+
+	// contracts/abstracted_account.algo.ts:91
+	// this.admin.value = newAdmin
+	byte 0x61646d696e // "admin"
+	frame_dig -1 // newAdmin: Account
+	app_global_put
+	retsub
+
+// arc58_getAdmin()address
+abi_route_arc58_getAdmin:
+	// The ABI return prefix
+	byte 0x151f7c75
+
+	// execute arc58_getAdmin()address
+	callsub arc58_getAdmin
+	concat
+	log
+	int 1
+	return
+
+// arc58_getAdmin(): Address
+//
+// Get the admin of this app
+arc58_getAdmin:
+	proto 0 1
+
+	// contracts/abstracted_account.algo.ts:98
+	// return this.admin.value;
+	byte 0x61646d696e // "admin"
+	app_global_get
+	retsub
+
 // arc58_verifyAuthAddr()void
 abi_route_arc58_verifyAuthAddr:
 	// execute arc58_verifyAuthAddr()void
@@ -255,7 +317,7 @@ abi_route_arc58_verifyAuthAddr:
 arc58_verifyAuthAddr:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:86
+	// contracts/abstracted_account.algo.ts:105
 	// assert(this.address.value.authAddr === this.getAuthAddr())
 	byte 0x61646472657373 // "address"
 	app_global_get
@@ -300,7 +362,7 @@ abi_route_arc58_rekeyTo:
 arc58_rekeyTo:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:96
+	// contracts/abstracted_account.algo.ts:115
 	// verifyAppCallTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -309,7 +371,7 @@ arc58_rekeyTo:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:98
+	// contracts/abstracted_account.algo.ts:117
 	// sendPayment({
 	//       sender: this.address.value,
 	//       receiver: addr,
@@ -320,23 +382,23 @@ arc58_rekeyTo:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:99
+	// contracts/abstracted_account.algo.ts:118
 	// sender: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Sender
 
-	// contracts/abstracted_account.algo.ts:100
+	// contracts/abstracted_account.algo.ts:119
 	// receiver: addr
 	frame_dig -1 // addr: Address
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:101
+	// contracts/abstracted_account.algo.ts:120
 	// rekeyTo: addr
 	frame_dig -1 // addr: Address
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:102
+	// contracts/abstracted_account.algo.ts:121
 	// note: 'rekeying abstracted account'
 	byte 0x72656b6579696e672061627374726163746564206163636f756e74 // "rekeying abstracted account"
 	itxn_field Note
@@ -349,13 +411,13 @@ arc58_rekeyTo:
 	itxn_submit
 
 	// if2_condition
-	// contracts/abstracted_account.algo.ts:105
+	// contracts/abstracted_account.algo.ts:124
 	// flash
 	frame_dig -2 // flash: boolean
 	bz if2_end
 
 	// if2_consequent
-	// contracts/abstracted_account.algo.ts:105
+	// contracts/abstracted_account.algo.ts:124
 	// this.verifyRekeyToAbstractedAccount()
 	callsub verifyRekeyToAbstractedAccount
 
@@ -386,7 +448,7 @@ arc58_rekeyToPlugin:
 	byte 0x
 	dup
 
-	// contracts/abstracted_account.algo.ts:114
+	// contracts/abstracted_account.algo.ts:133
 	// globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress }
 	frame_dig -1 // plugin: Application
 	itob
@@ -395,7 +457,7 @@ arc58_rekeyToPlugin:
 	frame_bury 0 // globalKey: PluginsKey
 
 	// if3_condition
-	// contracts/abstracted_account.algo.ts:117
+	// contracts/abstracted_account.algo.ts:136
 	// !this.plugins(globalKey).exists || this.plugins(globalKey).value < globals.latestTimestamp
 	byte 0x70 // "p"
 	frame_dig 0 // globalKey: PluginsKey
@@ -420,7 +482,7 @@ skip_or0:
 	bz if3_end
 
 	// if3_consequent
-	// contracts/abstracted_account.algo.ts:118
+	// contracts/abstracted_account.algo.ts:137
 	// key: PluginsKey = { application: plugin, address: this.txn.sender }
 	frame_dig -1 // plugin: Application
 	itob
@@ -428,7 +490,7 @@ skip_or0:
 	concat
 	frame_bury 1 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:119
+	// contracts/abstracted_account.algo.ts:138
 	// assert(this.plugins(key).exists && this.plugins(key).value > globals.latestTimestamp)
 	byte 0x70 // "p"
 	frame_dig 1 // key: PluginsKey
@@ -452,7 +514,7 @@ skip_and4:
 	assert
 
 if3_end:
-	// contracts/abstracted_account.algo.ts:122
+	// contracts/abstracted_account.algo.ts:141
 	// sendPayment({
 	//       sender: this.address.value,
 	//       receiver: this.address.value,
@@ -463,26 +525,26 @@ if3_end:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:123
+	// contracts/abstracted_account.algo.ts:142
 	// sender: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Sender
 
-	// contracts/abstracted_account.algo.ts:124
+	// contracts/abstracted_account.algo.ts:143
 	// receiver: this.address.value
 	byte 0x61646472657373 // "address"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:125
+	// contracts/abstracted_account.algo.ts:144
 	// rekeyTo: plugin.address
 	frame_dig -1 // plugin: Application
 	app_params_get AppAddress
 	pop
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:126
+	// contracts/abstracted_account.algo.ts:145
 	// note: 'rekeying to plugin app'
 	byte 0x72656b6579696e6720746f20706c7567696e20617070 // "rekeying to plugin app"
 	itxn_field Note
@@ -494,7 +556,7 @@ if3_end:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/abstracted_account.algo.ts:129
+	// contracts/abstracted_account.algo.ts:148
 	// this.verifyRekeyToAbstractedAccount()
 	callsub verifyRekeyToAbstractedAccount
 	retsub
@@ -518,7 +580,7 @@ abi_route_arc58_rekeyToNamedPlugin:
 arc58_rekeyToNamedPlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:138
+	// contracts/abstracted_account.algo.ts:157
 	// this.arc58_rekeyToPlugin(this.namedPlugins(name).value.application)
 	int 0
 	int 8
@@ -529,42 +591,6 @@ arc58_rekeyToNamedPlugin:
 	box_extract
 	btoi
 	callsub arc58_rekeyToPlugin
-	retsub
-
-// arc58_changeAdmin(account)void
-abi_route_arc58_changeAdmin:
-	// newAdmin: account
-	txna ApplicationArgs 1
-	btoi
-	txnas Accounts
-
-	// execute arc58_changeAdmin(account)void
-	callsub arc58_changeAdmin
-	int 1
-	return
-
-// arc58_changeAdmin(newAdmin: Account): void
-//
-// Change the admin for this app
-//
-// @param newAdmin The new admin
-arc58_changeAdmin:
-	proto 1 0
-
-	// contracts/abstracted_account.algo.ts:147
-	// verifyTxn(this.txn, { sender: this.admin.value })
-	// verify sender
-	txn Sender
-	byte 0x61646d696e // "admin"
-	app_global_get
-	==
-	assert
-
-	// contracts/abstracted_account.algo.ts:148
-	// this.admin.value = newAdmin
-	byte 0x61646d696e // "admin"
-	frame_dig -1 // newAdmin: Account
-	app_global_put
 	retsub
 
 // arc58_addPlugin(application,address,uint64)void
@@ -605,7 +631,7 @@ arc58_addPlugin:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:160
+	// contracts/abstracted_account.algo.ts:169
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -614,7 +640,7 @@ arc58_addPlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:161
+	// contracts/abstracted_account.algo.ts:170
 	// key: PluginsKey = { application: app, address: address }
 	frame_dig -1 // app: Application
 	itob
@@ -622,7 +648,7 @@ arc58_addPlugin:
 	concat
 	frame_bury 0 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:162
+	// contracts/abstracted_account.algo.ts:171
 	// this.plugins(key).value = end
 	byte 0x70 // "p"
 	frame_dig 0 // key: PluginsKey
@@ -663,7 +689,7 @@ arc58_removePlugin:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:171
+	// contracts/abstracted_account.algo.ts:180
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -672,7 +698,7 @@ arc58_removePlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:173
+	// contracts/abstracted_account.algo.ts:182
 	// key: PluginsKey = { application: app, address: address }
 	frame_dig -1 // app: Application
 	itob
@@ -680,7 +706,7 @@ arc58_removePlugin:
 	concat
 	frame_bury 0 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:174
+	// contracts/abstracted_account.algo.ts:183
 	// this.plugins(key).delete()
 	byte 0x70 // "p"
 	frame_dig 0 // key: PluginsKey
@@ -728,7 +754,7 @@ arc58_addNamedPlugin:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:184
+	// contracts/abstracted_account.algo.ts:193
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -737,7 +763,7 @@ arc58_addNamedPlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:185
+	// contracts/abstracted_account.algo.ts:194
 	// assert(!this.namedPlugins(name).exists)
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
@@ -748,7 +774,7 @@ arc58_addNamedPlugin:
 	!
 	assert
 
-	// contracts/abstracted_account.algo.ts:187
+	// contracts/abstracted_account.algo.ts:196
 	// key: PluginsKey = { application: app, address: address }
 	frame_dig -2 // app: Application
 	itob
@@ -756,7 +782,7 @@ arc58_addNamedPlugin:
 	concat
 	frame_bury 0 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:188
+	// contracts/abstracted_account.algo.ts:197
 	// this.namedPlugins(name).value = key
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
@@ -764,7 +790,7 @@ arc58_addNamedPlugin:
 	frame_dig 0 // key: PluginsKey
 	box_put
 
-	// contracts/abstracted_account.algo.ts:189
+	// contracts/abstracted_account.algo.ts:198
 	// this.plugins(key).value = end
 	byte 0x70 // "p"
 	frame_dig 0 // key: PluginsKey
@@ -796,7 +822,7 @@ arc58_removeNamedPlugin:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:198
+	// contracts/abstracted_account.algo.ts:207
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -805,21 +831,21 @@ arc58_removeNamedPlugin:
 	==
 	assert
 
-	// contracts/abstracted_account.algo.ts:200
+	// contracts/abstracted_account.algo.ts:209
 	// app = this.namedPlugins(name).value
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
 	concat
 	frame_bury 0 // storage key//app
 
-	// contracts/abstracted_account.algo.ts:201
+	// contracts/abstracted_account.algo.ts:210
 	// this.namedPlugins(name).delete()
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
 	concat
 	box_del
 
-	// contracts/abstracted_account.algo.ts:202
+	// contracts/abstracted_account.algo.ts:211
 	// this.plugins(app).delete()
 	byte 0x70 // "p"
 	frame_dig 0 // storage key//app
@@ -836,15 +862,16 @@ create_NoOp:
 	err
 
 call_NoOp:
+	method "changeAdmin(account)void"
+	method "arc58_getAdmin()address"
 	method "arc58_verifyAuthAddr()void"
 	method "arc58_rekeyTo(address,bool)void"
 	method "arc58_rekeyToPlugin(application)void"
 	method "arc58_rekeyToNamedPlugin(string)void"
-	method "arc58_changeAdmin(account)void"
 	method "arc58_addPlugin(application,address,uint64)void"
 	method "arc58_removePlugin(application,address)void"
 	method "arc58_addNamedPlugin(string,application,address,uint64)void"
 	method "arc58_removeNamedPlugin(string)void"
 	txna ApplicationArgs 0
-	match abi_route_arc58_verifyAuthAddr abi_route_arc58_rekeyTo abi_route_arc58_rekeyToPlugin abi_route_arc58_rekeyToNamedPlugin abi_route_arc58_changeAdmin abi_route_arc58_addPlugin abi_route_arc58_removePlugin abi_route_arc58_addNamedPlugin abi_route_arc58_removeNamedPlugin
+	match abi_route_changeAdmin abi_route_arc58_getAdmin abi_route_arc58_verifyAuthAddr abi_route_arc58_rekeyTo abi_route_arc58_rekeyToPlugin abi_route_arc58_rekeyToNamedPlugin abi_route_arc58_addPlugin abi_route_arc58_removePlugin abi_route_arc58_addNamedPlugin abi_route_arc58_removeNamedPlugin
 	err
