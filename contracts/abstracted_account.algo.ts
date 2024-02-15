@@ -29,17 +29,29 @@ export class AbstractedAccount extends Contract {
    * Ensure that by the end of the group the abstracted account has control of its address
    */
   private verifyRekeyToAbstractedAccount(): void {
-    const lastTxn = this.txnGroup[this.txnGroup.length - 1];
+    let rekeyedBack = false;
 
-    // If the last txn isn't a rekey, then assert that the last txn is a call to verifyAuthAddr
-    if (lastTxn.sender !== this.address.value || lastTxn.rekeyTo !== this.getAuthAddr()) {
-      verifyAppCallTxn(lastTxn, {
-        applicationID: this.app,
-        applicationArgs: {
-          0: method('arc58_verifyAuthAddr()void'),
-        },
-      });
+    for (let i = this.txn.groupIndex; i < this.txnGroup.length; i += 1) {
+      const txn = this.txnGroup[i];
+
+      // The transaction is an explicit rekey back
+      if (txn.sender === this.address.value || txn.rekeyTo === this.getAuthAddr()) {
+        rekeyedBack = true;
+        break;
+      }
+
+      // The transaction is an application call to this app's arc58_verifyAuthAddr method
+      if (
+        txn.typeEnum === TransactionType.ApplicationCall &&
+        txn.applicationID === this.app &&
+        txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
+      ) {
+        rekeyedBack = true;
+        break;
+      }
     }
+
+    assert(rekeyedBack);
   }
 
   /**

@@ -3,11 +3,11 @@ import { Contract } from '@algorandfoundation/tealscript';
 // These constants should be template variables, but I made them constants because I'm lazy
 
 /** How frequent this payment can be made */
-const FREQUENCY = 1000;
+const FREQUENCY = 1;
 /** Amount of the payment */
 const AMOUNT = 100_000;
 /** Payment receiver */
-const RECEIVER = addr('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M');
+const RECEIVER = '46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M';
 
 export class SubscriptionPlugin extends Contract {
   programVersion = 10;
@@ -30,7 +30,7 @@ export class SubscriptionPlugin extends Contract {
     sendPayment({
       sender: sender,
       amount: AMOUNT,
-      receiver: RECEIVER,
+      receiver: addr('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M'),
       rekeyTo: sender,
     });
   }

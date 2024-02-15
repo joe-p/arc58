@@ -6,13 +6,15 @@
  */
 import * as algokit from '@algorandfoundation/algokit-utils'
 import type {
+  ABIAppCallArg,
   AppCallTransactionResult,
   AppCallTransactionResultOfType,
+  AppCompilationResult,
+  AppReference,
+  AppState,
   CoreAppCallArgs,
   RawAppCallArgs,
-  AppState,
   TealTemplateParams,
-  ABIAppCallArg,
 } from '@algorandfoundation/algokit-utils/types/app'
 import type {
   AppClientCallCoreParams,
@@ -22,9 +24,9 @@ import type {
   ApplicationClient,
 } from '@algorandfoundation/algokit-utils/types/app-client'
 import type { AppSpec } from '@algorandfoundation/algokit-utils/types/app-spec'
-import type { SendTransactionResult, TransactionToSign, SendTransactionFrom } from '@algorandfoundation/algokit-utils/types/transaction'
-import type { ABIResult, TransactionWithSigner, modelsv2 } from 'algosdk'
-import { Algodv2, OnApplicationComplete, Transaction, AtomicTransactionComposer } from 'algosdk'
+import type { SendTransactionResult, TransactionToSign, SendTransactionFrom, SendTransactionParams } from '@algorandfoundation/algokit-utils/types/transaction'
+import type { ABIResult, TransactionWithSigner } from 'algosdk'
+import { Algodv2, OnApplicationComplete, Transaction, AtomicTransactionComposer, modelsv2 } from 'algosdk'
 export const APP_SPEC: AppSpec = {
   "hints": {
     "createApplication()void": {
@@ -71,7 +73,7 @@ export const APP_SPEC: AppSpec = {
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjcwLjAKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoxOQoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IDAKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWludCAwCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgphYmlfcm91dGVfbWFrZVBheW1lbnQ6CgkvLyBfYWNjdFJlZjogYWNjb3VudAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMgoJYnRvaQoJdHhuYXMgQWNjb3VudHMKCgkvLyBzZW5kZXI6IGFkZHJlc3MKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWR1cAoJbGVuCglpbnQgMzIKCT09Cglhc3NlcnQKCgkvLyBleGVjdXRlIG1ha2VQYXltZW50KGFjY291bnQsYWRkcmVzcyl2b2lkCgljYWxsc3ViIG1ha2VQYXltZW50CglpbnQgMQoJcmV0dXJuCgovLyBtYWtlUGF5bWVudChhY2NvdW50LGFkZHJlc3Mpdm9pZAptYWtlUGF5bWVudDoKCXByb3RvIDIgMAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyNwoJLy8gYXNzZXJ0KGdsb2JhbHMucm91bmQgLSB0aGlzLmxhc3RQYXltZW50LnZhbHVlID4gRlJFUVVFTkNZKQoJZ2xvYmFsIFJvdW5kCglieXRlIDB4NmM2MTczNzQ1MDYxNzk2ZDY1NmU3NCAvLyAibGFzdFBheW1lbnQiCglhcHBfZ2xvYmFsX2dldAoJLQoJaW50IDEwMDAKCT4KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyOAoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IGdsb2JhbHMucm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWdsb2JhbCBSb3VuZAoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MzAKCS8vIHNlbmRQYXltZW50KHsKCS8vICAgICAgIHNlbmRlcjogc2VuZGVyLAoJLy8gICAgICAgYW1vdW50OiBBTU9VTlQsCgkvLyAgICAgICByZWNlaXZlcjogUkVDRUlWRVIsCgkvLyAgICAgICByZWtleVRvOiBzZW5kZXIsCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludCBwYXkKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MzEKCS8vIHNlbmRlcjogc2VuZGVyCglmcmFtZV9kaWcgLTEgLy8gc2VuZGVyOiBBZGRyZXNzCglpdHhuX2ZpZWxkIFNlbmRlcgoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czozMgoJLy8gYW1vdW50OiBBTU9VTlQKCWludCAxMDBfMDAwCglpdHhuX2ZpZWxkIEFtb3VudAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czozMwoJLy8gcmVjZWl2ZXI6IFJFQ0VJVkVSCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MTAKCS8vIGFkZHIoJzQ2WFlSN09UUlpYSVNJMlRSU0JEV1BVVlFUNEVDQldOSTdURldQUFM2RUtBUEo3VzVPQlhTTkc2Nk0nKQoJYWRkciA0NlhZUjdPVFJaWElTSTJUUlNCRFdQVVZRVDRFQ0JXTkk3VEZXUFBTNkVLQVBKN1c1T0JYU05HNjZNCglpdHhuX2ZpZWxkIFJlY2VpdmVyCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjM0CgkvLyByZWtleVRvOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKY3JlYXRlX05vT3A6Cgl0eG4gTnVtQXBwQXJncwoJYnogYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgltZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgllcnIKCmNhbGxfTm9PcDoKCW1ldGhvZCAibWFrZVBheW1lbnQoYWRkcmVzcyxhY2NvdW50KXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfbWFrZVBheW1lbnQKCWVycg==",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjgyLjIKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbG1lbnRlZCBpbiB0aGUgY29udHJhY3QsIGl0cyByZXNwZWN0aXZlIGJyYW5jaCB3aWxsIGJlICJOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggY2FsbF9Ob09wIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgY3JlYXRlX05vT3AgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRCBOT1RfSU1QTEVNRU5URUQgTk9UX0lNUExFTUVOVEVEIE5PVF9JTVBMRU1FTlRFRAoKTk9UX0lNUExFTUVOVEVEOgoJZXJyCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnQgMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpOiB2b2lkCmNyZWF0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjE5CgkvLyB0aGlzLmxhc3RQYXltZW50LnZhbHVlID0gMAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJaW50IDAKCWFwcF9nbG9iYWxfcHV0CglyZXRzdWIKCi8vIG1ha2VQYXltZW50KGFkZHJlc3MsYWNjb3VudCl2b2lkCmFiaV9yb3V0ZV9tYWtlUGF5bWVudDoKCS8vIF9hY2N0UmVmOiBhY2NvdW50Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglidG9pCgl0eG5hcyBBY2NvdW50cwoKCS8vIHNlbmRlcjogYWRkcmVzcwoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJZHVwCglsZW4KCWludCAzMgoJPT0KCWFzc2VydAoKCS8vIGV4ZWN1dGUgbWFrZVBheW1lbnQoYWRkcmVzcyxhY2NvdW50KXZvaWQKCWNhbGxzdWIgbWFrZVBheW1lbnQKCWludCAxCglyZXR1cm4KCi8vIG1ha2VQYXltZW50KHNlbmRlcjogQWRkcmVzcywgX2FjY3RSZWY6IEFjY291bnQpOiB2b2lkCm1ha2VQYXltZW50OgoJcHJvdG8gMiAwCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjI3CgkvLyBhc3NlcnQoZ2xvYmFscy5yb3VuZCAtIHRoaXMubGFzdFBheW1lbnQudmFsdWUgPiBGUkVRVUVOQ1kpCglnbG9iYWwgUm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWFwcF9nbG9iYWxfZ2V0CgktCglpbnQgMQoJPgoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjI4CgkvLyB0aGlzLmxhc3RQYXltZW50LnZhbHVlID0gZ2xvYmFscy5yb3VuZAoJYnl0ZSAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQgLy8gImxhc3RQYXltZW50IgoJZ2xvYmFsIFJvdW5kCglhcHBfZ2xvYmFsX3B1dAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czozMAoJLy8gc2VuZFBheW1lbnQoewoJLy8gICAgICAgc2VuZGVyOiBzZW5kZXIsCgkvLyAgICAgICBhbW91bnQ6IEFNT1VOVCwKCS8vICAgICAgIHJlY2VpdmVyOiBhZGRyKCc0NlhZUjdPVFJaWElTSTJUUlNCRFdQVVZRVDRFQ0JXTkk3VEZXUFBTNkVLQVBKN1c1T0JYU05HNjZNJyksCgkvLyAgICAgICByZWtleVRvOiBzZW5kZXIsCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludCBwYXkKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MzEKCS8vIHNlbmRlcjogc2VuZGVyCglmcmFtZV9kaWcgLTEgLy8gc2VuZGVyOiBBZGRyZXNzCglpdHhuX2ZpZWxkIFNlbmRlcgoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czozMgoJLy8gYW1vdW50OiBBTU9VTlQKCWludCAxMDAwMDAKCWl0eG5fZmllbGQgQW1vdW50CgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjMzCgkvLyByZWNlaXZlcjogYWRkcignNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TScpCglhZGRyIDQ2WFlSN09UUlpYSVNJMlRSU0JEV1BVVlFUNEVDQldOSTdURldQUFM2RUtBUEo3VzVPQlhTTkc2Nk0KCWl0eG5fZmllbGQgUmVjZWl2ZXIKCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MzQKCS8vIHJla2V5VG86IHNlbmRlcgoJZnJhbWVfZGlnIC0xIC8vIHNlbmRlcjogQWRkcmVzcwoJaXR4bl9maWVsZCBSZWtleVRvCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50IDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoJcmV0c3ViCgpjcmVhdGVfTm9PcDoKCXR4biBOdW1BcHBBcmdzCglieiBhYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCW1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCBhYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWVycgoKY2FsbF9Ob09wOgoJbWV0aG9kICJtYWtlUGF5bWVudChhZGRyZXNzLGFjY291bnQpdm9pZCIKCXR4bmEgQXBwbGljYXRpb25BcmdzIDAKCW1hdGNoIGFiaV9yb3V0ZV9tYWtlUGF5bWVudAoJZXJy",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "contract": {
@@ -130,7 +132,7 @@ export type OnCompleteUpdApp =  { onCompleteAction: 'update_application' | OnApp
  */
 export type IntegerState = {
   /**
-   * Gets the state value as a BigInt 
+   * Gets the state value as a BigInt.
    */
   asBigInt(): bigint
   /**
@@ -151,6 +153,14 @@ export type BinaryState = {
    */
   asString(): string
 }
+
+export type AppCreateCallTransactionResult = AppCallTransactionResult & Partial<AppCompilationResult> & AppReference
+export type AppUpdateCallTransactionResult = AppCallTransactionResult & Partial<AppCompilationResult>
+
+export type AppClientComposeCallCoreParams = Omit<AppClientCallCoreParams, 'sendParams'> & {
+  sendParams?: Omit<SendTransactionParams, 'skipSending' | 'atc' | 'skipWaiting' | 'maxRoundsToWaitForConfirmation' | 'populateAppCallResources'>
+}
+export type AppClientComposeExecuteParams = Pick<SendTransactionParams, 'skipWaiting' | 'maxRoundsToWaitForConfirmation' | 'populateAppCallResources' | 'suppressLog'>
 
 /**
  * Defines the types of available calls and state of the SubscriptionPlugin smart contract.
@@ -316,14 +326,14 @@ export class SubscriptionPluginClient {
    * @param returnValueFormatter An optional delegate to format the return value if required
    * @returns The smart contract response with an updated return value
    */
-  protected mapReturnValue<TReturn>(result: AppCallTransactionResult, returnValueFormatter?: (value: any) => TReturn): AppCallTransactionResultOfType<TReturn> {
+  protected mapReturnValue<TReturn, TResult extends AppCallTransactionResult = AppCallTransactionResult>(result: AppCallTransactionResult, returnValueFormatter?: (value: any) => TReturn): AppCallTransactionResultOfType<TReturn> & TResult {
     if(result.return?.decodeError) {
       throw result.return.decodeError
     }
     const returnValue = result.return?.returnValue !== undefined && returnValueFormatter !== undefined
       ? returnValueFormatter(result.return.returnValue)
       : result.return?.returnValue as TReturn | undefined
-      return { ...result, return: returnValue }
+      return { ...result, return: returnValue } as AppCallTransactionResultOfType<TReturn> & TResult
   }
 
   /**
@@ -364,8 +374,8 @@ export class SubscriptionPluginClient {
        * @param args The arguments for the bare call
        * @returns The create result
        */
-      bare(args: BareCallArgs & AppClientCallCoreParams & AppClientCompilationParams & CoreAppCallArgs & (OnCompleteNoOp) = {}): Promise<AppCallTransactionResultOfType<undefined>> {
-        return $this.appClient.create(args) as unknown as Promise<AppCallTransactionResultOfType<undefined>>
+      async bare(args: BareCallArgs & AppClientCallCoreParams & AppClientCompilationParams & CoreAppCallArgs & (OnCompleteNoOp) = {}) {
+        return $this.mapReturnValue<undefined, AppCreateCallTransactionResult>(await $this.appClient.create(args))
       },
       /**
        * Creates a new instance of the SubscriptionPlugin smart contract using the createApplication()void ABI method.
@@ -374,8 +384,8 @@ export class SubscriptionPluginClient {
        * @param params Any additional parameters for the call
        * @returns The create result
        */
-      async createApplication(args: MethodArgs<'createApplication()void'>, params: AppClientCallCoreParams & AppClientCompilationParams & (OnCompleteNoOp) = {}): Promise<AppCallTransactionResultOfType<MethodReturn<'createApplication()void'>>> {
-        return $this.mapReturnValue(await $this.appClient.create(SubscriptionPluginCallFactory.create.createApplication(args, params)))
+      async createApplication(args: MethodArgs<'createApplication()void'>, params: AppClientCallCoreParams & AppClientCompilationParams & (OnCompleteNoOp) = {}) {
+        return $this.mapReturnValue<MethodReturn<'createApplication()void'>, AppCreateCallTransactionResult>(await $this.appClient.create(SubscriptionPluginCallFactory.create.createApplication(args, params)))
       },
     }
   }
@@ -463,12 +473,12 @@ export class SubscriptionPluginClient {
     let promiseChain:Promise<unknown> = Promise.resolve()
     const resultMappers: Array<undefined | ((x: any) => any)> = []
     return {
-      makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs) {
+      makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientComposeCallCoreParams & CoreAppCallArgs) {
         promiseChain = promiseChain.then(() => client.makePayment(args, {...params, sendParams: {...params?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
       },
-      clearState(args?: BareCallArgs & AppClientCallCoreParams & CoreAppCallArgs) {
+      clearState(args?: BareCallArgs & AppClientComposeCallCoreParams & CoreAppCallArgs) {
         promiseChain = promiseChain.then(() => client.clearState({...args, sendParams: {...args?.sendParams, skipSending: true, atc}}))
         resultMappers.push(undefined)
         return this
@@ -481,14 +491,17 @@ export class SubscriptionPluginClient {
         await promiseChain
         return atc
       },
-      async simulate() {
+      async simulate(options?: SimulateOptions) {
         await promiseChain
-        const result = await atc.simulate(client.algod)
-        return result
+        const result = await atc.simulate(client.algod, new modelsv2.SimulateRequest({ txnGroups: [], ...options }))
+        return {
+          ...result,
+          returns: result.methodResults?.map((val, i) => resultMappers[i] !== undefined ? resultMappers[i]!(val.returnValue) : val.returnValue)
+        }
       },
-      async execute() {
+      async execute(sendParams?: AppClientComposeExecuteParams) {
         await promiseChain
-        const result = await algokit.sendAtomicTransactionComposer({ atc, sendParams: {} }, client.algod)
+        const result = await algokit.sendAtomicTransactionComposer({ atc, sendParams }, client.algod)
         return {
           ...result,
           returns: result.returns?.map((val, i) => resultMappers[i] !== undefined ? resultMappers[i]!(val.returnValue) : val.returnValue)
@@ -505,7 +518,7 @@ export type SubscriptionPluginComposer<TReturns extends [...any[]] = []> = {
    * @param params Any additional parameters for the call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientCallCoreParams & CoreAppCallArgs): SubscriptionPluginComposer<[...TReturns, MethodReturn<'makePayment(address,account)void'>]>
+  makePayment(args: MethodArgs<'makePayment(address,account)void'>, params?: AppClientComposeCallCoreParams & CoreAppCallArgs): SubscriptionPluginComposer<[...TReturns, MethodReturn<'makePayment(address,account)void'>]>
 
   /**
    * Makes a clear_state call to an existing instance of the SubscriptionPlugin smart contract.
@@ -513,7 +526,7 @@ export type SubscriptionPluginComposer<TReturns extends [...any[]] = []> = {
    * @param args The arguments for the bare call
    * @returns The typed transaction composer so you can fluently chain multiple calls or call execute to execute all queued up transactions
    */
-  clearState(args?: BareCallArgs & AppClientCallCoreParams & CoreAppCallArgs): SubscriptionPluginComposer<[...TReturns, undefined]>
+  clearState(args?: BareCallArgs & AppClientComposeCallCoreParams & CoreAppCallArgs): SubscriptionPluginComposer<[...TReturns, undefined]>
 
   /**
    * Adds a transaction to the composer
@@ -529,13 +542,15 @@ export type SubscriptionPluginComposer<TReturns extends [...any[]] = []> = {
   /**
    * Simulates the transaction group and returns the result
    */
-  simulate(): Promise<SubscriptionPluginComposerSimulateResult>
+  simulate(options?: SimulateOptions): Promise<SubscriptionPluginComposerSimulateResult<TReturns>>
   /**
    * Executes the transaction group and returns the results
    */
-  execute(): Promise<SubscriptionPluginComposerResults<TReturns>>
+  execute(sendParams?: AppClientComposeExecuteParams): Promise<SubscriptionPluginComposerResults<TReturns>>
 }
-export type SubscriptionPluginComposerSimulateResult = {
+export type SimulateOptions = Omit<ConstructorParameters<typeof modelsv2.SimulateRequest>[0], 'txnGroups'>
+export type SubscriptionPluginComposerSimulateResult<TReturns extends [...any[]]> = {
+  returns: TReturns
   methodResults: ABIResult[]
   simulateResponse: modelsv2.SimulateResponse
 }
