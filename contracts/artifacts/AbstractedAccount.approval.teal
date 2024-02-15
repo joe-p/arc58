@@ -56,10 +56,10 @@ for_0:
 
 	// if0_condition
 	// contracts/abstracted_account.algo.ts:37
-	// txn.sender === this.address.value && txn.rekeyTo === this.getAuthAddr()
+	// txn.sender === this.controlledAddress.value && txn.rekeyTo === this.getAuthAddr()
 	frame_dig 2 // txn: txn
 	gtxns Sender
-	byte 0x61646472657373 // "address"
+	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
 	app_global_get
 	==
 	dup
@@ -151,8 +151,8 @@ getAuthAddr:
 	proto 0 1
 
 	// contracts/abstracted_account.algo.ts:62
-	// return this.address.value === this.app.address ? Address.zeroAddress : this.app.address;
-	byte 0x61646472657373 // "address"
+	// return this.controlledAddress.value === this.app.address ? Address.zeroAddress : this.app.address;
+	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
 	app_global_get
 	global CurrentApplicationAddress
 	==
@@ -176,7 +176,7 @@ abi_route_createApplication:
 	==
 	assert
 
-	// address: address
+	// controlledAddress: address
 	txna ApplicationArgs 1
 	dup
 	len
@@ -189,23 +189,23 @@ abi_route_createApplication:
 	int 1
 	return
 
-// createApplication(address: Address, admin: Address): void
+// createApplication(controlledAddress: Address, admin: Address): void
 //
 // Create an abstracted account application.
 // This is not part of ARC58 and implementation specific.
 //
-// @param address The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
+// @param controlledAddress The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
 // @param admin The admin for this app
 createApplication:
 	proto 2 0
 
 	// contracts/abstracted_account.algo.ts:73
 	// verifyAppCallTxn(this.txn, {
-	//       sender: { includedIn: [address, admin] },
+	//       sender: { includedIn: [controlledAddress, admin] },
 	//     })
 	// verify sender
 	txn Sender
-	frame_dig -1 // address: Address
+	frame_dig -1 // controlledAddress: Address
 	==
 	txn Sender
 	frame_dig -2 // admin: Address
@@ -214,9 +214,9 @@ createApplication:
 	assert
 
 	// contracts/abstracted_account.algo.ts:77
-	// assert(admin !== address)
+	// assert(admin !== controlledAddress)
 	frame_dig -2 // admin: Address
-	frame_dig -1 // address: Address
+	frame_dig -1 // controlledAddress: Address
 	!=
 	assert
 
@@ -227,9 +227,9 @@ createApplication:
 	app_global_put
 
 	// contracts/abstracted_account.algo.ts:80
-	// this.address.value = address === Address.zeroAddress ? this.app.address : address
-	byte 0x61646472657373 // "address"
-	frame_dig -1 // address: Address
+	// this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress
+	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
+	frame_dig -1 // controlledAddress: Address
 	global ZeroAddress
 	==
 	bz ternary1_false
@@ -237,7 +237,7 @@ createApplication:
 	b ternary1_end
 
 ternary1_false:
-	frame_dig -1 // address: Address
+	frame_dig -1 // controlledAddress: Address
 
 ternary1_end:
 	app_global_put
@@ -318,8 +318,8 @@ arc58_verifyAuthAddr:
 	proto 0 0
 
 	// contracts/abstracted_account.algo.ts:105
-	// assert(this.address.value.authAddr === this.getAuthAddr())
-	byte 0x61646472657373 // "address"
+	// assert(this.controlledAddress.value.authAddr === this.getAuthAddr())
+	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
 	app_global_get
 	acct_params_get AcctAuthAddr
 	pop
@@ -373,7 +373,7 @@ arc58_rekeyTo:
 
 	// contracts/abstracted_account.algo.ts:117
 	// sendPayment({
-	//       sender: this.address.value,
+	//       sender: this.controlledAddress.value,
 	//       receiver: addr,
 	//       rekeyTo: addr,
 	//       note: 'rekeying abstracted account',
@@ -383,8 +383,8 @@ arc58_rekeyTo:
 	itxn_field TypeEnum
 
 	// contracts/abstracted_account.algo.ts:118
-	// sender: this.address.value
-	byte 0x61646472657373 // "address"
+	// sender: this.controlledAddress.value
+	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
 	app_global_get
 	itxn_field Sender
 
@@ -449,7 +449,7 @@ arc58_rekeyToPlugin:
 	dup
 
 	// contracts/abstracted_account.algo.ts:133
-	// globalKey: PluginsKey = { application: plugin, address: globals.zeroAddress }
+	// globalKey: PluginsKey = { application: plugin, allowedCaller: globals.zeroAddress }
 	frame_dig -1 // plugin: Application
 	itob
 	global ZeroAddress
@@ -483,7 +483,7 @@ skip_or0:
 
 	// if3_consequent
 	// contracts/abstracted_account.algo.ts:137
-	// key: PluginsKey = { application: plugin, address: this.txn.sender }
+	// key: PluginsKey = { application: plugin, allowedCaller: this.txn.sender }
 	frame_dig -1 // plugin: Application
 	itob
 	txn Sender
@@ -516,8 +516,8 @@ skip_and4:
 if3_end:
 	// contracts/abstracted_account.algo.ts:141
 	// sendPayment({
-	//       sender: this.address.value,
-	//       receiver: this.address.value,
+	//       sender: this.controlledAddress.value,
+	//       receiver: this.controlledAddress.value,
 	//       rekeyTo: plugin.address,
 	//       note: 'rekeying to plugin app',
 	//     })
@@ -526,14 +526,14 @@ if3_end:
 	itxn_field TypeEnum
 
 	// contracts/abstracted_account.algo.ts:142
-	// sender: this.address.value
-	byte 0x61646472657373 // "address"
+	// sender: this.controlledAddress.value
+	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
 	app_global_get
 	itxn_field Sender
 
 	// contracts/abstracted_account.algo.ts:143
-	// receiver: this.address.value
-	byte 0x61646472657373 // "address"
+	// receiver: this.controlledAddress.value
+	byte 0x636f6e74726f6c6c656441646472657373 // "controlledAddress"
 	app_global_get
 	itxn_field Receiver
 
@@ -599,7 +599,7 @@ abi_route_arc58_addPlugin:
 	txna ApplicationArgs 3
 	btoi
 
-	// address: address
+	// allowedCaller: address
 	txna ApplicationArgs 2
 	dup
 	len
@@ -617,12 +617,12 @@ abi_route_arc58_addPlugin:
 	int 1
 	return
 
-// arc58_addPlugin(app: Application, address: Address, end: uint64): void
+// arc58_addPlugin(app: Application, allowedCaller: Address, end: uint64): void
 //
 // Add an app to the list of approved plugins
 //
 // @param app The app to add
-// @param address The address of that's allowed to call the app
+// @param allowedCaller The address of that's allowed to call the app
 // or the global zero address for all addresses
 // @param end The timestamp when the permission expires
 arc58_addPlugin:
@@ -641,10 +641,10 @@ arc58_addPlugin:
 	assert
 
 	// contracts/abstracted_account.algo.ts:170
-	// key: PluginsKey = { application: app, address: address }
+	// key: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -1 // app: Application
 	itob
-	frame_dig -2 // address: Address
+	frame_dig -2 // allowedCaller: Address
 	concat
 	frame_bury 0 // key: PluginsKey
 
@@ -660,7 +660,7 @@ arc58_addPlugin:
 
 // arc58_removePlugin(application,address)void
 abi_route_arc58_removePlugin:
-	// address: address
+	// allowedCaller: address
 	txna ApplicationArgs 2
 	dup
 	len
@@ -678,7 +678,7 @@ abi_route_arc58_removePlugin:
 	int 1
 	return
 
-// arc58_removePlugin(app: Application, address: Address): void
+// arc58_removePlugin(app: Application, allowedCaller: Address): void
 //
 // Remove an app from the list of approved plugins
 //
@@ -699,10 +699,10 @@ arc58_removePlugin:
 	assert
 
 	// contracts/abstracted_account.algo.ts:182
-	// key: PluginsKey = { application: app, address: address }
+	// key: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -1 // app: Application
 	itob
-	frame_dig -2 // address: Address
+	frame_dig -2 // allowedCaller: Address
 	concat
 	frame_bury 0 // key: PluginsKey
 
@@ -720,7 +720,7 @@ abi_route_arc58_addNamedPlugin:
 	txna ApplicationArgs 4
 	btoi
 
-	// address: address
+	// allowedCaller: address
 	txna ApplicationArgs 3
 	dup
 	len
@@ -742,7 +742,7 @@ abi_route_arc58_addNamedPlugin:
 	int 1
 	return
 
-// arc58_addNamedPlugin(name: string, app: Application, address: Address, end: uint64): void
+// arc58_addNamedPlugin(name: string, app: Application, allowedCaller: Address, end: uint64): void
 //
 // Add a named plugin
 //
@@ -775,10 +775,10 @@ arc58_addNamedPlugin:
 	assert
 
 	// contracts/abstracted_account.algo.ts:196
-	// key: PluginsKey = { application: app, address: address }
+	// key: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -2 // app: Application
 	itob
-	frame_dig -3 // address: Address
+	frame_dig -3 // allowedCaller: Address
 	concat
 	frame_bury 0 // key: PluginsKey
 

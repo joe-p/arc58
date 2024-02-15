@@ -7,7 +7,7 @@
       "desc": "Create an abstracted account application.This is not part of ARC58 and implementation specific.",
       "args": [
         {
-          "name": "address",
+          "name": "controlledAddress",
           "type": "address",
           "desc": "The address of the abstracted account. If zeroAddress, then the address of the contract account will be used"
         },
@@ -108,7 +108,7 @@
           "desc": "The app to add"
         },
         {
-          "name": "address",
+          "name": "allowedCaller",
           "type": "address",
           "desc": "The address of that's allowed to call the appor the global zero address for all addresses"
         },
@@ -132,7 +132,7 @@
           "desc": "The app to remove"
         },
         {
-          "name": "address",
+          "name": "allowedCaller",
           "type": "address"
         }
       ],
@@ -155,7 +155,7 @@
           "desc": "The plugin app"
         },
         {
-          "name": "address",
+          "name": "allowedCaller",
           "type": "address"
         },
         {
