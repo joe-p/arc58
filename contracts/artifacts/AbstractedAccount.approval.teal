@@ -56,21 +56,21 @@ for_0:
 
 	// if0_condition
 	// contracts/abstracted_account.algo.ts:38
-	// txn.sender === this.address.value || txn.rekeyTo === this.getAuthAddr()
+	// txn.sender === this.address.value && txn.rekeyTo === this.getAuthAddr()
 	frame_dig 2 // txn: txn
 	gtxns Sender
 	byte 0x61646472657373 // "address"
 	app_global_get
 	==
 	dup
-	bnz skip_or0
+	bz skip_and0
 	frame_dig 2 // txn: txn
 	gtxns RekeyTo
 	callsub getAuthAddr
 	==
-	||
+	&&
 
-skip_or0:
+skip_and0:
 	bz if0_end
 
 	// if0_consequent
@@ -91,23 +91,23 @@ if0_end:
 	int appl
 	==
 	dup
-	bz skip_and0
+	bz skip_and1
 	frame_dig 2 // txn: txn
 	gtxns ApplicationID
 	txna Applications 0
 	==
 	&&
 
-skip_and0:
+skip_and1:
 	dup
-	bz skip_and1
+	bz skip_and2
 	frame_dig 2 // txn: txn
 	gtxns ApplicationArgs 0
 	method "arc58_verifyAuthAddr()void"
 	==
 	&&
 
-skip_and1:
+skip_and2:
 	bz if1_end
 
 	// if1_consequent
@@ -395,7 +395,7 @@ arc58_rekeyToPlugin:
 	pop
 	!
 	dup
-	bnz skip_or1
+	bnz skip_or0
 	byte 0x70 // "p"
 	frame_dig 0 // globalKey: PluginsKey
 	concat
@@ -406,7 +406,7 @@ arc58_rekeyToPlugin:
 	<
 	||
 
-skip_or1:
+skip_or0:
 	bz if3_end
 
 	// if3_consequent
@@ -427,7 +427,7 @@ skip_or1:
 	swap
 	pop
 	dup
-	bz skip_and2
+	bz skip_and3
 	byte 0x70 // "p"
 	frame_dig 1 // key: PluginsKey
 	concat
@@ -438,7 +438,7 @@ skip_or1:
 	>
 	&&
 
-skip_and2:
+skip_and3:
 	assert
 
 if3_end:
