@@ -14,7 +14,6 @@ export class AbstractedAccount extends Contract {
    * The key is the appID + address, the value (referred to as `end`)
    * is the timestamp when the permission expires for the address to call the app for your account.
    */
-
   plugins = BoxMap<PluginsKey, uint64>({ prefix: 'p' });
 
   /**
