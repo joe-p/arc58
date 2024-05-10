@@ -3,11 +3,11 @@ import { Contract } from '@algorandfoundation/tealscript';
 export class OptInPlugin extends Contract {
   programVersion = 10;
 
-  optInToAsset(sender: Account, asset: Asset, mbrPayment: PayTxn): void {
+  optInToAsset(sender: Address, asset: AssetID, mbrPayment: PayTxn): void {
     verifyPayTxn(mbrPayment, {
       receiver: sender,
       amount: {
-        greaterThan: globals.assetOptInMinBalance,
+        greaterThanEqualTo: globals.assetOptInMinBalance,
       },
     });
 

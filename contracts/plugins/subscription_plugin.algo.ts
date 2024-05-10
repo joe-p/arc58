@@ -12,7 +12,7 @@ const RECEIVER = '46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M';
 export class SubscriptionPlugin extends Contract {
   programVersion = 10;
 
-  lastPayment = GlobalStateKey<number>();
+  lastPayment = GlobalStateKey<uint64>();
 
   @allow.bareCreate()
   createApplication(): void {
@@ -22,7 +22,7 @@ export class SubscriptionPlugin extends Contract {
   makePayment(
     sender: Address,
     // eslint-disable-next-line no-unused-vars
-    _acctRef: Account
+    _acctRef: Address
   ): void {
     assert(globals.round - this.lastPayment.value > FREQUENCY);
     this.lastPayment.value = globals.round;
