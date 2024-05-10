@@ -159,6 +159,7 @@ describe('Abstracted Subscription Program', () => {
             sender: testAccount,
             boxes,
             sendParams: { fee: algokit.microAlgos(2_000) },
+            accounts: [aliceAbstractedAccount, joe],
           }
         )
         // Step two: Call the plugin
@@ -254,6 +255,7 @@ describe('Abstracted Subscription Program', () => {
           {
             boxes,
             sendParams: { fee: algokit.microAlgos(2000) },
+            assets: [asset],
           }
         )
         // Add the mbr payment
