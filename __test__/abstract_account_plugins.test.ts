@@ -106,7 +106,7 @@ describe('Abstracted Subscription Program', () => {
     });
 
     test('Alice adds the app to the abstracted account', async () => {
-      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(22100) });
+      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(34900) });
       await abstractedAccountClient.arc58AddPlugin(
         {
           // Add the subscription plugin
@@ -114,7 +114,9 @@ describe('Abstracted Subscription Program', () => {
           // Set address to ZERO_ADDRESS so anyone can call it
           allowedCaller: ZERO_ADDRESS,
           // Set end to maxUint64 so it never expires
-          end: maxUint64,
+          lastValidRound: maxUint64,
+          // Set cooldown to 0 so it can always be called
+          cooldown: 0,
         },
         { boxes }
       );
@@ -131,6 +133,13 @@ describe('Abstracted Subscription Program', () => {
             algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
           ])
         ),
+        new Uint8Array(
+          Buffer.concat([
+            Buffer.from('p'),
+            Buffer.from(algosdk.encodeUint64(subPluginID)),
+            algosdk.decodeAddress(testAccount.addr).publicKey,
+          ])
+        ),
       ];
 
       const alicePreBalance = await algod.accountInformation(aliceAbstractedAccount).do();
@@ -142,7 +151,7 @@ describe('Abstracted Subscription Program', () => {
           .compose()
           .makePayment(
             // Send a payment from the abstracted account to Joe
-            { sender: aliceAbstractedAccount, _acctRef: joe },
+            { sender: aliceAbstractedAccount, acctRef: joe },
             // Double the fee to cover the inner txn fee
             { sender: testAccount, sendParams: { fee: algokit.microAlgos(2_000) } }
           )
@@ -217,12 +226,22 @@ describe('Abstracted Subscription Program', () => {
 
       // Add opt-in plugin
       await abstractedAccountClient.arc58AddNamedPlugin(
-        { name: 'optIn', app: optInPluginID, allowedCaller: ZERO_ADDRESS, end: maxUint64 },
+        { name: 'optIn', app: optInPluginID, allowedCaller: ZERO_ADDRESS, lastValidRound: maxUint64, cooldown: 0 },
         { boxes }
       );
     });
 
     test("Bob opts Alice's abstracted account into the asset", async () => {
+      boxes.push(
+        new Uint8Array(
+          Buffer.concat([
+            Buffer.from('p'),
+            Buffer.from(algosdk.encodeUint64(optInPluginID)),
+            algosdk.decodeAddress(bob.addr).publicKey,
+          ])
+        )
+      );
+
       // Form a payment from bob to alice's abstracted account to cover the MBR
       const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
         from: bob.addr,
