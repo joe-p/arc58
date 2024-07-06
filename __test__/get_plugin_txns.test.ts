@@ -3,6 +3,20 @@ import { describe, test, expect } from '@jest/globals';
 
 const BRANCHING_OPCODES = ['b', 'bz', 'bnz', 'callsub', 'retsub', 'match', 'switch'];
 const MAX_AVM_VERSION = 10;
+const STATIC_OPS = [
+  'pushint',
+  'pushbytes',
+  'bytecblock',
+  'intcblock',
+  'bytec_0',
+  'bytec_1',
+  'bytec_2',
+  'bytec_3',
+  'intc_0',
+  'intc_1',
+  'intc_2',
+  'intc_3',
+];
 
 function getPluginTxns(teal: string): Record<string, string>[] {
   const txns: Record<string, string>[] = [];
@@ -48,8 +62,12 @@ function getPluginTxns(teal: string): Record<string, string>[] {
       if (opcode === 'itxn_field') {
         const field = line.split(' ')[1];
 
-        if (ops.length > 1 || !ops[0].match(/^(push)?(int|byte)(c_|cblock)?/)) {
+        const firstOp = ops[0].split(' ')[0];
+
+        if (ops.length !== 1 || !STATIC_OPS.includes(firstOp)) {
           currentTxn[field] = 'dynamic';
+        } else if (firstOp.startsWith('intc') || firstOp.startsWith('bytec')) {
+          currentTxn[field] = ops[0].split(' // ')[0];
         } else {
           currentTxn[field] = ops[0].split(' ')[1];
         }
@@ -71,13 +89,13 @@ describe('getPluginTxns', () => {
 
     itxn_begin
 
-    byte 0xdeadbeef
+    pushbytes 0xdeadbeef
     itxn_field Sender
 
-    int 0
+    pushint 0
     itxn_field TypeEnum
 
-    int 1
+    pushint 1
     itxn_field Amount
 
     itxn_submit
@@ -94,14 +112,14 @@ describe('getPluginTxns', () => {
 
     itxn_begin
 
-    byte 0xdeadbeef
+    pushbytes 0xdeadbeef
     itxn_field Sender
 
-    int 0
+    pushint 0
     itxn_field TypeEnum
 
-    int 1
-    int 1
+    pushint 1
+    pushint 1
     +
     itxn_field Amount
 
@@ -119,15 +137,15 @@ describe('getPluginTxns', () => {
 
     itxn_begin
 
-    byte 0xdeadbeef
+    pushbytes 0xdeadbeef
     itxn_field Sender
 
     callsub malicious_subroutine
 
-    int 0
+    pushint 0
     itxn_field TypeEnum
 
-    int 1
+    pushint 1
     itxn_field Amount
 
     itxn_submit
@@ -142,13 +160,13 @@ describe('getPluginTxns', () => {
 
     itxn_begin
 
-    byte 0xdeadbeef
+    pushbytes 0xdeadbeef
     itxn_field Sender
 
-    int 0
+    pushint 0
     itxn_field TypeEnum
 
-    int 1
+    pushint 1
     itxn_field Amount
 
     itxn_submit
