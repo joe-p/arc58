@@ -18,8 +18,8 @@ const STATIC_OPS = [
   'intc_3',
 ];
 
-function getPluginTxns(teal: string): Record<string, string>[] {
-  const txns: Record<string, string>[] = [];
+function getPluginTxns(teal: string): Record<string, string | number>[] {
+  const txns: Record<string, string | number>[] = [];
   let inTxn = false;
   const ops: string[] = [];
 
@@ -37,7 +37,7 @@ function getPluginTxns(teal: string): Record<string, string>[] {
     .map((line) => line.trim())
     .filter((line) => !line.startsWith('//') && line.length > 0);
 
-  let currentTxn: Record<string, string> = {};
+  let currentTxn: Record<string, string | number> = {};
 
   lines.forEach((line) => {
     const opcode = line.split(' ')[0];
@@ -62,17 +62,24 @@ function getPluginTxns(teal: string): Record<string, string>[] {
       if (opcode === 'itxn_field') {
         const field = line.split(' ')[1];
 
-        const firstOp = ops[0].split(' ')[0];
+        const lastOpLine = ops.at(-1)!;
+        const lastOp = lastOpLine.split(' ')[0];
+        ops.length = 0;
 
-        if (ops.length !== 1 || !STATIC_OPS.includes(firstOp)) {
+        if (!STATIC_OPS.includes(lastOp)) {
           currentTxn[field] = 'dynamic';
-        } else if (firstOp.startsWith('intc') || firstOp.startsWith('bytec')) {
-          currentTxn[field] = ops[0].split(' // ')[1];
-        } else {
-          currentTxn[field] = ops[0].split(' ')[1];
+          return;
         }
 
-        ops.length = 0;
+        let value: string;
+
+        if (lastOp.startsWith('intc') || lastOp.startsWith('bytec')) {
+          value = lastOpLine.split(' // ')[1];
+        } else {
+          value = lastOpLine.split(' ')[1];
+        }
+
+        currentTxn[field] = lastOp.includes('int') ? parseInt(value, 10) : value;
       } else {
         ops.push(line);
       }
@@ -103,7 +110,7 @@ describe('getPluginTxns', () => {
 
     const txns = getPluginTxns(teal);
     expect(txns.length).toBe(1);
-    expect(txns[0]).toEqual({ TypeEnum: '0', Sender: '0xdeadbeef', Amount: '1' });
+    expect(txns[0]).toEqual({ TypeEnum: 0, Sender: '0xdeadbeef', Amount: 1 });
   });
 
   test('dynamic pay', () => {
@@ -128,7 +135,7 @@ describe('getPluginTxns', () => {
 
     const txns = getPluginTxns(teal);
     expect(txns.length).toBe(1);
-    expect(txns[0]).toEqual({ TypeEnum: '0', Sender: '0xdeadbeef', Amount: 'dynamic' });
+    expect(txns[0]).toEqual({ TypeEnum: 0, Sender: '0xdeadbeef', Amount: 'dynamic' });
   });
 
   test('branch', () => {
