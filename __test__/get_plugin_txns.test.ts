@@ -67,7 +67,7 @@ function getPluginTxns(teal: string): Record<string, string>[] {
         if (ops.length !== 1 || !STATIC_OPS.includes(firstOp)) {
           currentTxn[field] = 'dynamic';
         } else if (firstOp.startsWith('intc') || firstOp.startsWith('bytec')) {
-          currentTxn[field] = ops[0].split(' // ')[0];
+          currentTxn[field] = ops[0].split(' // ')[1];
         } else {
           currentTxn[field] = ops[0].split(' ')[1];
         }
@@ -112,10 +112,10 @@ describe('getPluginTxns', () => {
 
     itxn_begin
 
-    pushbytes 0xdeadbeef
+    bytecblock 4 // 0xdeadbeef
     itxn_field Sender
 
-    pushint 0
+    intc_1 // 0
     itxn_field TypeEnum
 
     pushint 1
