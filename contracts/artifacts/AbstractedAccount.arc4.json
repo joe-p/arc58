@@ -134,10 +134,6 @@
           "name": "app",
           "type": "uint64",
           "desc": "The app to remove"
-        },
-        {
-          "name": "allowedCaller",
-          "type": "address"
         }
       ],
       "returns": {

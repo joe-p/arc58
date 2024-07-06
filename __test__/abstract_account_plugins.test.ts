@@ -95,13 +95,7 @@ describe('Abstracted Subscription Program', () => {
 
     beforeAll(() => {
       /** The box key for a plugin is `p + plugin ID + allowed caller`  */
-      pluginBox = new Uint8Array(
-        Buffer.concat([
-          Buffer.from('p'),
-          Buffer.from(algosdk.encodeUint64(subPluginID)),
-          algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
-        ])
-      );
+      pluginBox = new Uint8Array(Buffer.concat([Buffer.from('p'), Buffer.from(algosdk.encodeUint64(subPluginID))]));
       boxes = [pluginBox];
     });
 
@@ -125,22 +119,7 @@ describe('Abstracted Subscription Program', () => {
     test('Someone calls the program to trigger payment', async () => {
       const { algod, testAccount } = fixture.context;
 
-      boxes = [
-        new Uint8Array(
-          Buffer.concat([
-            Buffer.from('p'),
-            Buffer.from(algosdk.encodeUint64(subPluginID)),
-            algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
-          ])
-        ),
-        new Uint8Array(
-          Buffer.concat([
-            Buffer.from('p'),
-            Buffer.from(algosdk.encodeUint64(subPluginID)),
-            algosdk.decodeAddress(testAccount.addr).publicKey,
-          ])
-        ),
-      ];
+      boxes = [new Uint8Array(Buffer.concat([Buffer.from('p'), Buffer.from(algosdk.encodeUint64(subPluginID))]))];
 
       const alicePreBalance = await algod.accountInformation(aliceAbstractedAccount).do();
       const joePreBalance = await algod.accountInformation(joe).do();
@@ -210,13 +189,7 @@ describe('Abstracted Subscription Program', () => {
       const txn = await algokit.sendTransaction({ transaction: assetCreateTxn, from: bob }, algod);
       asset = Number(txn.confirmation!.assetIndex!);
 
-      pluginBox = new Uint8Array(
-        Buffer.concat([
-          Buffer.from('p'),
-          Buffer.from(algosdk.encodeUint64(optInPluginID)),
-          algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
-        ])
-      );
+      pluginBox = new Uint8Array(Buffer.concat([Buffer.from('p'), Buffer.from(algosdk.encodeUint64(optInPluginID))]));
 
       boxes.push(pluginBox);
     });
@@ -232,16 +205,6 @@ describe('Abstracted Subscription Program', () => {
     });
 
     test("Bob opts Alice's abstracted account into the asset", async () => {
-      boxes.push(
-        new Uint8Array(
-          Buffer.concat([
-            Buffer.from('p'),
-            Buffer.from(algosdk.encodeUint64(optInPluginID)),
-            algosdk.decodeAddress(bob.addr).publicKey,
-          ])
-        )
-      );
-
       // Form a payment from bob to alice's abstracted account to cover the MBR
       const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
         from: bob.addr,
