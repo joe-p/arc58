@@ -88,14 +88,15 @@
     ]
   },
   {
-    "teal": 22,
+    "teal": 23,
     "source": 3,
+    "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
     "pc": [
       40
     ]
   },
   {
-    "teal": 27,
+    "teal": 28,
     "source": 6,
     "pc": [
       41,
@@ -103,28 +104,28 @@
     ]
   },
   {
-    "teal": 28,
+    "teal": 29,
     "source": 6,
     "pc": [
       43
     ]
   },
   {
-    "teal": 29,
+    "teal": 30,
     "source": 6,
     "pc": [
       44
     ]
   },
   {
-    "teal": 30,
+    "teal": 31,
     "source": 6,
     "pc": [
       45
     ]
   },
   {
-    "teal": 31,
+    "teal": 32,
     "source": 6,
     "pc": [
       46,
@@ -132,28 +133,29 @@
     ]
   },
   {
-    "teal": 32,
+    "teal": 33,
     "source": 6,
     "pc": [
       48
     ]
   },
   {
-    "teal": 33,
+    "teal": 34,
     "source": 6,
     "pc": [
       49
     ]
   },
   {
-    "teal": 34,
+    "teal": 37,
     "source": 6,
+    "errorMessage": "argument 0 (mbrPayment) for optInToAsset must be a pay transaction",
     "pc": [
       50
     ]
   },
   {
-    "teal": 37,
+    "teal": 40,
     "source": 6,
     "pc": [
       51,
@@ -162,14 +164,14 @@
     ]
   },
   {
-    "teal": 38,
+    "teal": 41,
     "source": 6,
     "pc": [
       54
     ]
   },
   {
-    "teal": 41,
+    "teal": 44,
     "source": 6,
     "pc": [
       55,
@@ -178,21 +180,21 @@
     ]
   },
   {
-    "teal": 42,
+    "teal": 45,
     "source": 6,
     "pc": [
       58
     ]
   },
   {
-    "teal": 43,
+    "teal": 46,
     "source": 6,
     "pc": [
       59
     ]
   },
   {
-    "teal": 44,
+    "teal": 47,
     "source": 6,
     "pc": [
       60,
@@ -200,21 +202,22 @@
     ]
   },
   {
-    "teal": 45,
+    "teal": 48,
     "source": 6,
     "pc": [
       62
     ]
   },
   {
-    "teal": 46,
+    "teal": 51,
     "source": 6,
+    "errorMessage": "argument 2 (sender) for optInToAsset must be a address",
     "pc": [
       63
     ]
   },
   {
-    "teal": 49,
+    "teal": 54,
     "source": 6,
     "pc": [
       64,
@@ -223,21 +226,21 @@
     ]
   },
   {
-    "teal": 50,
+    "teal": 55,
     "source": 6,
     "pc": [
       67
     ]
   },
   {
-    "teal": 51,
+    "teal": 56,
     "source": 6,
     "pc": [
       68
     ]
   },
   {
-    "teal": 55,
+    "teal": 60,
     "source": 6,
     "pc": [
       69,
@@ -246,7 +249,7 @@
     ]
   },
   {
-    "teal": 65,
+    "teal": 70,
     "source": 7,
     "pc": [
       72,
@@ -254,7 +257,7 @@
     ]
   },
   {
-    "teal": 66,
+    "teal": 71,
     "source": 8,
     "pc": [
       74,
@@ -262,7 +265,7 @@
     ]
   },
   {
-    "teal": 67,
+    "teal": 72,
     "source": 8,
     "pc": [
       76,
@@ -270,21 +273,22 @@
     ]
   },
   {
-    "teal": 68,
+    "teal": 73,
     "source": 8,
     "pc": [
       78
     ]
   },
   {
-    "teal": 69,
+    "teal": 76,
     "source": 8,
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPayment\",\"field\":\"receiver\",\"expected\":\"sender\"}",
     "pc": [
       79
     ]
   },
   {
-    "teal": 72,
+    "teal": 79,
     "source": 7,
     "pc": [
       80,
@@ -292,7 +296,7 @@
     ]
   },
   {
-    "teal": 73,
+    "teal": 80,
     "source": 9,
     "pc": [
       82,
@@ -300,7 +304,7 @@
     ]
   },
   {
-    "teal": 74,
+    "teal": 81,
     "source": 10,
     "pc": [
       84,
@@ -308,28 +312,29 @@
     ]
   },
   {
-    "teal": 75,
+    "teal": 82,
     "source": 10,
     "pc": [
       86
     ]
   },
   {
-    "teal": 76,
+    "teal": 85,
     "source": 10,
+    "errorMessage": "transaction verification failed: {\"txn\":\"mbrPayment\",\"field\":\"amount\",\"condition\":\"greaterThanEqualTo\",\"expected\":\">=globals.assetOptInMinBalance\"}",
     "pc": [
       87
     ]
   },
   {
-    "teal": 86,
+    "teal": 95,
     "source": 14,
     "pc": [
       88
     ]
   },
   {
-    "teal": 87,
+    "teal": 96,
     "source": 14,
     "pc": [
       89,
@@ -337,7 +342,7 @@
     ]
   },
   {
-    "teal": 88,
+    "teal": 97,
     "source": 14,
     "pc": [
       91,
@@ -345,7 +350,7 @@
     ]
   },
   {
-    "teal": 92,
+    "teal": 101,
     "source": 15,
     "pc": [
       93,
@@ -353,7 +358,7 @@
     ]
   },
   {
-    "teal": 93,
+    "teal": 102,
     "source": 15,
     "pc": [
       95,
@@ -361,7 +366,7 @@
     ]
   },
   {
-    "teal": 97,
+    "teal": 106,
     "source": 16,
     "pc": [
       97,
@@ -369,7 +374,7 @@
     ]
   },
   {
-    "teal": 98,
+    "teal": 107,
     "source": 16,
     "pc": [
       99,
@@ -377,14 +382,14 @@
     ]
   },
   {
-    "teal": 102,
+    "teal": 111,
     "source": 17,
     "pc": [
       101
     ]
   },
   {
-    "teal": 103,
+    "teal": 112,
     "source": 17,
     "pc": [
       102,
@@ -392,7 +397,7 @@
     ]
   },
   {
-    "teal": 107,
+    "teal": 116,
     "source": 18,
     "pc": [
       104,
@@ -400,7 +405,7 @@
     ]
   },
   {
-    "teal": 108,
+    "teal": 117,
     "source": 18,
     "pc": [
       106,
@@ -408,7 +413,7 @@
     ]
   },
   {
-    "teal": 112,
+    "teal": 121,
     "source": 19,
     "pc": [
       108,
@@ -416,7 +421,7 @@
     ]
   },
   {
-    "teal": 113,
+    "teal": 122,
     "source": 19,
     "pc": [
       110,
@@ -424,14 +429,14 @@
     ]
   },
   {
-    "teal": 116,
+    "teal": 125,
     "source": 14,
     "pc": [
       112
     ]
   },
   {
-    "teal": 117,
+    "teal": 126,
     "source": 14,
     "pc": [
       113,
@@ -439,35 +444,35 @@
     ]
   },
   {
-    "teal": 120,
+    "teal": 129,
     "source": 14,
     "pc": [
       115
     ]
   },
   {
-    "teal": 121,
+    "teal": 130,
     "source": 6,
     "pc": [
       116
     ]
   },
   {
-    "teal": 124,
+    "teal": 133,
     "source": 3,
     "pc": [
       117
     ]
   },
   {
-    "teal": 125,
+    "teal": 134,
     "source": 3,
     "pc": [
       118
     ]
   },
   {
-    "teal": 128,
+    "teal": 137,
     "source": 3,
     "pc": [
       119,
@@ -479,7 +484,7 @@
     ]
   },
   {
-    "teal": 129,
+    "teal": 138,
     "source": 3,
     "pc": [
       125,
@@ -488,7 +493,7 @@
     ]
   },
   {
-    "teal": 130,
+    "teal": 139,
     "source": 3,
     "pc": [
       128,
@@ -498,14 +503,15 @@
     ]
   },
   {
-    "teal": 131,
+    "teal": 142,
     "source": 3,
+    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
     "pc": [
       132
     ]
   },
   {
-    "teal": 134,
+    "teal": 145,
     "source": 3,
     "pc": [
       133,
@@ -517,7 +523,7 @@
     ]
   },
   {
-    "teal": 135,
+    "teal": 146,
     "source": 3,
     "pc": [
       139,
@@ -526,7 +532,7 @@
     ]
   },
   {
-    "teal": 136,
+    "teal": 147,
     "source": 3,
     "pc": [
       142,
@@ -536,8 +542,9 @@
     ]
   },
   {
-    "teal": 137,
+    "teal": 150,
     "source": 3,
+    "errorMessage": "this contract does not implement the given ABI method for call NoOp",
     "pc": [
       146
     ]
