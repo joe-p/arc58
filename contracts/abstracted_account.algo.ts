@@ -1,23 +1,33 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-type PluginsKey = { application: AppID; allowedCaller: Address };
+type PluginsKey = {
+  /** The application containing plugin logic */
+  application: AppID;
+  /** The address that is allowed to initiate a rekey to the plugin */
+  allowedCaller: Address;
+};
 
-type PluginInfo = { lastValidRound: uint64; cooldown: uint64; lastCalled: uint64 };
+type PluginInfo = {
+  /** The last round at which this plugin can be called */
+  lastValidRound: uint64;
+  /** The number of rounds that must pass before the plugin can be called again */
+  cooldown: uint64;
+  /** The last round the plugin was called */
+  lastCalled: uint64;
+};
 
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
   programVersion = 10;
 
-  /** The admin of the abstracted account */
+  /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
   admin = GlobalStateKey<Address>({ key: 'a' });
 
   /** The address this app controls */
   controlledAddress = GlobalStateKey<Address>({ key: 'c' });
 
   /**
-   * The apps and addresses that are authorized to send itxns from the abstracted account,
-   * The key is the appID + address, the value (referred to as `end`)
-   * is the timestamp when the permission expires for the address to call the app for your account.
+   * Plugins that add functionality to the controlledAddress and the account that has permission to use it.
    */
   plugins = BoxMap<PluginsKey, PluginInfo>({ prefix: 'p' });
 
