@@ -1,6 +1,8 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-type PluginInfo = { lastValidRound: uint64; cooldown: uint64; lastCalled: uint64; allowedCaller: Address };
+type PluginsKey = { application: AppID; allowedCaller: Address };
+
+type PluginInfo = { lastValidRound: uint64; cooldown: uint64; lastCalled: uint64 };
 
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
@@ -17,12 +19,12 @@ export class AbstractedAccount extends Contract {
    * The key is the appID + address, the value (referred to as `end`)
    * is the timestamp when the permission expires for the address to call the app for your account.
    */
-  plugins = BoxMap<AppID, PluginInfo>({ prefix: 'p' });
+  plugins = BoxMap<PluginsKey, PluginInfo>({ prefix: 'p' });
 
   /**
    * Plugins that have been given a name for discoverability
    */
-  namedPlugins = BoxMap<bytes, AppID>({ prefix: 'n' });
+  namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
 
   /**
    * Ensure that by the end of the group the abstracted account has control of its address
@@ -124,15 +126,22 @@ export class AbstractedAccount extends Contract {
     if (flash) this.verifyRekeyToAbstractedAccount();
   }
 
-  private assertPluginAllowed(app: AppID) {
-    assert(this.plugins(app).exists, 'This plugin does not exist');
+  private pluginCallAllowed(app: AppID, caller: Address): boolean {
+    const key: PluginsKey = { application: app, allowedCaller: caller };
 
-    const plugin = this.plugins(app).value;
-    const allowed = plugin.allowedCaller === this.txn.sender || plugin.allowedCaller === Address.zeroAddress;
+    const allowed =
+      this.plugins(key).exists &&
+      this.plugins(key).value.lastValidRound >= globals.round &&
+      globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown;
 
-    assert(plugin.lastValidRound >= globals.round, 'This plugin has expired');
-    assert(globals.round - plugin.lastCalled >= plugin.cooldown);
-    assert(allowed, 'The sender is not allowed to use this plugin');
+    // This might seem strange at first but we want to short circuit if the caller is allowed to save opcode budget
+    if (allowed) return true;
+
+    // If not allowed, try with the global address
+    if (caller !== globals.zeroAddress) return this.pluginCallAllowed(app, globals.zeroAddress);
+
+    // Otherwise return false
+    return false;
   }
 
   /**
@@ -141,7 +150,7 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   arc58_rekeyToPlugin(plugin: AppID): void {
-    this.assertPluginAllowed(plugin);
+    assert(this.pluginCallAllowed(plugin, this.txn.sender), 'This sender is not allowed to trigger this plugin');
 
     sendPayment({
       sender: this.controlledAddress.value,
@@ -150,7 +159,6 @@ export class AbstractedAccount extends Contract {
       note: 'rekeying to plugin app',
     });
 
-    this.plugins(plugin).value.lastCalled = globals.round;
     this.verifyRekeyToAbstractedAccount();
   }
 
@@ -160,7 +168,7 @@ export class AbstractedAccount extends Contract {
    * @param name The name of the plugin to rekey to
    */
   arc58_rekeyToNamedPlugin(name: string): void {
-    this.arc58_rekeyToPlugin(this.namedPlugins(name).value);
+    this.arc58_rekeyToPlugin(this.namedPlugins(name).value.application);
   }
 
   /**
@@ -174,12 +182,8 @@ export class AbstractedAccount extends Contract {
    */
   arc58_addPlugin(app: AppID, allowedCaller: Address, lastValidRound: uint64, cooldown: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
-    this.plugins(app).value = {
-      lastValidRound: lastValidRound,
-      cooldown: cooldown,
-      lastCalled: 0,
-      allowedCaller: allowedCaller,
-    };
+    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
+    this.plugins(key).value = { lastValidRound: lastValidRound, cooldown: cooldown, lastCalled: 0 };
   }
 
   /**
@@ -187,10 +191,11 @@ export class AbstractedAccount extends Contract {
    *
    * @param app The app to remove
    */
-  arc58_removePlugin(app: AppID): void {
+  arc58_removePlugin(app: AppID, allowedCaller: Address): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
-    this.plugins(app).delete();
+    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
+    this.plugins(key).delete();
   }
 
   /**
@@ -209,13 +214,9 @@ export class AbstractedAccount extends Contract {
     verifyTxn(this.txn, { sender: this.admin.value });
     assert(!this.namedPlugins(name).exists);
 
-    this.namedPlugins(name).value = app;
-    this.plugins(app).value = {
-      allowedCaller: allowedCaller,
-      lastValidRound: lastValidRound,
-      cooldown: cooldown,
-      lastCalled: 0,
-    };
+    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
+    this.namedPlugins(name).value = key;
+    this.plugins(key).value = { lastValidRound: lastValidRound, cooldown: cooldown, lastCalled: 0 };
   }
 
   /**
