@@ -453,7 +453,6 @@ pluginCallAllowed:
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
-	dup
 
 	// contracts/abstracted_account.algo.ts:130
 	// key: PluginsKey = { application: app, allowedCaller: caller }
@@ -464,10 +463,11 @@ pluginCallAllowed:
 	frame_bury 0 // key: PluginsKey
 
 	// contracts/abstracted_account.algo.ts:132
-	// allowed =
+	// return (
 	//       this.plugins(key).exists &&
 	//       this.plugins(key).value.lastValidRound >= globals.round &&
 	//       globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown
+	//     );
 	byte 0x70 // "p"
 	frame_dig 0 // key: PluginsKey
 	concat
@@ -513,48 +513,8 @@ pluginCallAllowed:
 	&&
 
 *skip_and5:
-	frame_bury 1 // allowed: bool
-
-	// *if3_condition
-	// contracts/abstracted_account.algo.ts:138
-	// allowed
-	frame_dig 1 // allowed: bool
-	bz *if3_end
-
-	// *if3_consequent
-	// contracts/abstracted_account.algo.ts:138
-	// return true;
-	int 1
-	b *pluginCallAllowed*return
-
-*if3_end:
-	// *if4_condition
-	// contracts/abstracted_account.algo.ts:141
-	// caller !== globals.zeroAddress
-	frame_dig -2 // caller: Address
-	global ZeroAddress
-	!=
-	bz *if4_end
-
-	// *if4_consequent
-	// contracts/abstracted_account.algo.ts:141
-	// return this.pluginCallAllowed(app, globals.zeroAddress);
-	global ZeroAddress
-	frame_dig -1 // app: AppID
-	callsub pluginCallAllowed
-	b *pluginCallAllowed*return
-
-*if4_end:
-	// contracts/abstracted_account.algo.ts:144
-	// return false;
-	int 0
-
-*pluginCallAllowed*return:
 	// set the subroutine return value
 	frame_bury 0
-
-	// pop all local variables from the stack
-	popn 1
 	retsub
 
 // arc58_rekeyToPlugin(uint64)void
@@ -576,7 +536,25 @@ pluginCallAllowed:
 arc58_rekeyToPlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:153
+	// Push empty bytes after the frame pointer to reserve space for local variables
+	byte 0x
+
+	// contracts/abstracted_account.algo.ts:145
+	// globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress)
+	global ZeroAddress
+	frame_dig -1 // plugin: AppID
+	callsub pluginCallAllowed
+	frame_bury 0 // globalAllowed: bool
+
+	// *if3_condition
+	// contracts/abstracted_account.algo.ts:147
+	// !globalAllowed
+	frame_dig 0 // globalAllowed: bool
+	!
+	bz *if3_end
+
+	// *if3_consequent
+	// contracts/abstracted_account.algo.ts:148
 	// assert(this.pluginCallAllowed(plugin, this.txn.sender), 'This sender is not allowed to trigger this plugin')
 	txn Sender
 	frame_dig -1 // plugin: AppID
@@ -585,7 +563,8 @@ arc58_rekeyToPlugin:
 	// This sender is not allowed to trigger this plugin
 	assert
 
-	// contracts/abstracted_account.algo.ts:155
+*if3_end:
+	// contracts/abstracted_account.algo.ts:150
 	// sendPayment({
 	//       sender: this.controlledAddress.value,
 	//       receiver: this.controlledAddress.value,
@@ -596,26 +575,26 @@ arc58_rekeyToPlugin:
 	int pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:156
+	// contracts/abstracted_account.algo.ts:151
 	// sender: this.controlledAddress.value
 	byte 0x63 // "c"
 	app_global_get
 	itxn_field Sender
 
-	// contracts/abstracted_account.algo.ts:157
+	// contracts/abstracted_account.algo.ts:152
 	// receiver: this.controlledAddress.value
 	byte 0x63 // "c"
 	app_global_get
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:158
+	// contracts/abstracted_account.algo.ts:153
 	// rekeyTo: plugin.address
 	frame_dig -1 // plugin: AppID
 	app_params_get AppAddress
 	pop
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:159
+	// contracts/abstracted_account.algo.ts:154
 	// note: 'rekeying to plugin app'
 	byte 0x72656b6579696e6720746f20706c7567696e20617070 // "rekeying to plugin app"
 	itxn_field Note
@@ -626,6 +605,31 @@ arc58_rekeyToPlugin:
 
 	// Submit inner transaction
 	itxn_submit
+
+	// contracts/abstracted_account.algo.ts:157
+	// this.plugins({
+	//       application: plugin,
+	//       allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender,
+	//     }).value.lastCalled = globals.round
+	int 16 // headOffset
+	global Round
+	itob
+	byte 0x70 // "p"
+	frame_dig -1 // plugin: AppID
+	itob
+	frame_dig 0 // globalAllowed: bool
+	bz *ternary5_false
+	global ZeroAddress
+	b *ternary5_end
+
+*ternary5_false:
+	txn Sender
+
+*ternary5_end:
+	concat
+	concat
+	cover 2
+	box_replace
 
 	// contracts/abstracted_account.algo.ts:162
 	// this.verifyRekeyToAbstractedAccount()

@@ -129,19 +129,11 @@ export class AbstractedAccount extends Contract {
   private pluginCallAllowed(app: AppID, caller: Address): boolean {
     const key: PluginsKey = { application: app, allowedCaller: caller };
 
-    const allowed =
+    return (
       this.plugins(key).exists &&
       this.plugins(key).value.lastValidRound >= globals.round &&
-      globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown;
-
-    // This might seem strange at first but we want to short circuit if the caller is allowed to save opcode budget
-    if (allowed) return true;
-
-    // If not allowed, try with the global address
-    if (caller !== globals.zeroAddress) return this.pluginCallAllowed(app, globals.zeroAddress);
-
-    // Otherwise return false
-    return false;
+      globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown
+    );
   }
 
   /**
@@ -150,7 +142,10 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   arc58_rekeyToPlugin(plugin: AppID): void {
-    assert(this.pluginCallAllowed(plugin, this.txn.sender), 'This sender is not allowed to trigger this plugin');
+    const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
+
+    if (!globalAllowed)
+      assert(this.pluginCallAllowed(plugin, this.txn.sender), 'This sender is not allowed to trigger this plugin');
 
     sendPayment({
       sender: this.controlledAddress.value,
@@ -158,6 +153,11 @@ export class AbstractedAccount extends Contract {
       rekeyTo: plugin.address,
       note: 'rekeying to plugin app',
     });
+
+    this.plugins({
+      application: plugin,
+      allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender,
+    }).value.lastCalled = globals.round;
 
     this.verifyRekeyToAbstractedAccount();
   }

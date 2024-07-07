@@ -133,13 +133,6 @@ describe('Abstracted Subscription Program', () => {
             algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
           ])
         ),
-        new Uint8Array(
-          Buffer.concat([
-            Buffer.from('p'),
-            Buffer.from(algosdk.encodeUint64(subPluginID)),
-            algosdk.decodeAddress(testAccount.addr).publicKey,
-          ])
-        ),
       ];
 
       const alicePreBalance = await algod.accountInformation(aliceAbstractedAccount).do();
@@ -232,16 +225,6 @@ describe('Abstracted Subscription Program', () => {
     });
 
     test("Bob opts Alice's abstracted account into the asset", async () => {
-      boxes.push(
-        new Uint8Array(
-          Buffer.concat([
-            Buffer.from('p'),
-            Buffer.from(algosdk.encodeUint64(optInPluginID)),
-            algosdk.decodeAddress(bob.addr).publicKey,
-          ])
-        )
-      );
-
       // Form a payment from bob to alice's abstracted account to cover the MBR
       const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
         from: bob.addr,
