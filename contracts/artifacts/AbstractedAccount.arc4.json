@@ -119,7 +119,8 @@
         },
         {
           "name": "cooldown",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "The number of rounds that must pass before the plugin can be called again"
         }
       ],
       "returns": {

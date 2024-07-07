@@ -707,10 +707,11 @@ arc58_rekeyToNamedPlugin:
 // @param allowedCaller The address of that's allowed to call the app
 // or the global zero address for all addresses
 // @param lastValidRound The round when the permission expires
+// @param cooldown  The number of rounds that must pass before the plugin can be called again
 arc58_addPlugin:
 	proto 4 0
 
-	// contracts/abstracted_account.algo.ts:175
+	// contracts/abstracted_account.algo.ts:176
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -721,7 +722,7 @@ arc58_addPlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:176
+	// contracts/abstracted_account.algo.ts:177
 	// this.plugins(app).value = {
 	//       lastValidRound: lastValidRound,
 	//       cooldown: cooldown,
@@ -763,7 +764,7 @@ arc58_addPlugin:
 arc58_removePlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:190
+	// contracts/abstracted_account.algo.ts:191
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -774,7 +775,7 @@ arc58_removePlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:192
+	// contracts/abstracted_account.algo.ts:193
 	// this.plugins(app).delete()
 	byte 0x70 // "p"
 	frame_dig -1 // app: AppID
@@ -825,7 +826,7 @@ arc58_removePlugin:
 arc58_addNamedPlugin:
 	proto 5 0
 
-	// contracts/abstracted_account.algo.ts:208
+	// contracts/abstracted_account.algo.ts:209
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -836,7 +837,7 @@ arc58_addNamedPlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:209
+	// contracts/abstracted_account.algo.ts:210
 	// assert(!this.namedPlugins(name).exists)
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
@@ -847,7 +848,7 @@ arc58_addNamedPlugin:
 	!
 	assert
 
-	// contracts/abstracted_account.algo.ts:211
+	// contracts/abstracted_account.algo.ts:212
 	// this.namedPlugins(name).value = app
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
@@ -856,7 +857,7 @@ arc58_addNamedPlugin:
 	itob
 	box_put
 
-	// contracts/abstracted_account.algo.ts:212
+	// contracts/abstracted_account.algo.ts:213
 	// this.plugins(app).value = {
 	//       allowedCaller: allowedCaller,
 	//       lastValidRound: lastValidRound,
@@ -901,7 +902,7 @@ arc58_removeNamedPlugin:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	byte 0x
 
-	// contracts/abstracted_account.algo.ts:226
+	// contracts/abstracted_account.algo.ts:227
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -912,7 +913,7 @@ arc58_removeNamedPlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:228
+	// contracts/abstracted_account.algo.ts:229
 	// app = this.namedPlugins(name).value
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
@@ -924,14 +925,14 @@ arc58_removeNamedPlugin:
 	btoi
 	frame_bury 0 // app: uint64
 
-	// contracts/abstracted_account.algo.ts:229
+	// contracts/abstracted_account.algo.ts:230
 	// this.namedPlugins(name).delete()
 	byte 0x6e // "n"
 	frame_dig -1 // name: string
 	concat
 	box_del
 
-	// contracts/abstracted_account.algo.ts:230
+	// contracts/abstracted_account.algo.ts:231
 	// this.plugins(app).delete()
 	byte 0x70 // "p"
 	frame_dig 0 // app: uint64

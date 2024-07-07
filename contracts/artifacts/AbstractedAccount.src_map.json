@@ -2685,7 +2685,7 @@
   },
   {
     "teal": 676,
-    "source": 174,
+    "source": 175,
     "pc": [
       643,
       644,
@@ -2694,14 +2694,14 @@
   },
   {
     "teal": 677,
-    "source": 174,
+    "source": 175,
     "pc": [
       646
     ]
   },
   {
     "teal": 680,
-    "source": 174,
+    "source": 175,
     "pc": [
       647,
       648,
@@ -2710,14 +2710,14 @@
   },
   {
     "teal": 681,
-    "source": 174,
+    "source": 175,
     "pc": [
       650
     ]
   },
   {
     "teal": 684,
-    "source": 174,
+    "source": 175,
     "pc": [
       651,
       652,
@@ -2726,35 +2726,35 @@
   },
   {
     "teal": 685,
-    "source": 174,
+    "source": 175,
     "pc": [
       654
     ]
   },
   {
     "teal": 686,
-    "source": 174,
+    "source": 175,
     "pc": [
       655
     ]
   },
   {
     "teal": 687,
-    "source": 174,
+    "source": 175,
     "pc": [
       656
     ]
   },
   {
     "teal": 688,
-    "source": 174,
+    "source": 175,
     "pc": [
       657
     ]
   },
   {
     "teal": 691,
-    "source": 174,
+    "source": 175,
     "errorMessage": "argument 2 (allowedCaller) for arc58_addPlugin must be a address",
     "pc": [
       658
@@ -2762,7 +2762,7 @@
   },
   {
     "teal": 694,
-    "source": 174,
+    "source": 175,
     "pc": [
       659,
       660,
@@ -2771,14 +2771,14 @@
   },
   {
     "teal": 695,
-    "source": 174,
+    "source": 175,
     "pc": [
       662
     ]
   },
   {
     "teal": 698,
-    "source": 174,
+    "source": 175,
     "pc": [
       663,
       664,
@@ -2787,21 +2787,21 @@
   },
   {
     "teal": 699,
-    "source": 174,
+    "source": 175,
     "pc": [
       666
     ]
   },
   {
     "teal": 700,
-    "source": 174,
+    "source": 175,
     "pc": [
       667
     ]
   },
   {
-    "teal": 711,
-    "source": 174,
+    "teal": 712,
+    "source": 175,
     "pc": [
       668,
       669,
@@ -2809,155 +2809,155 @@
     ]
   },
   {
-    "teal": 716,
-    "source": 175,
+    "teal": 717,
+    "source": 176,
     "pc": [
       671,
       672
     ]
   },
   {
-    "teal": 717,
-    "source": 175,
+    "teal": 718,
+    "source": 176,
     "pc": [
       673
     ]
   },
   {
-    "teal": 718,
-    "source": 175,
+    "teal": 719,
+    "source": 176,
     "pc": [
       674
     ]
   },
   {
-    "teal": 719,
-    "source": 175,
+    "teal": 720,
+    "source": 176,
     "pc": [
       675
     ]
   },
   {
-    "teal": 722,
-    "source": 175,
+    "teal": 723,
+    "source": 176,
     "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
       676
     ]
   },
   {
-    "teal": 731,
-    "source": 176,
+    "teal": 732,
+    "source": 177,
     "pc": [
       677
     ]
   },
   {
-    "teal": 732,
-    "source": 176,
+    "teal": 733,
+    "source": 177,
     "pc": [
       678,
       679
     ]
   },
   {
-    "teal": 733,
-    "source": 176,
+    "teal": 734,
+    "source": 177,
     "pc": [
       680
-    ]
-  },
-  {
-    "teal": 734,
-    "source": 176,
-    "pc": [
-      681
     ]
   },
   {
     "teal": 735,
     "source": 177,
     "pc": [
-      682,
-      683
+      681
     ]
   },
   {
     "teal": 736,
-    "source": 177,
+    "source": 178,
     "pc": [
-      684
+      682,
+      683
     ]
   },
   {
     "teal": 737,
     "source": 178,
     "pc": [
+      684
+    ]
+  },
+  {
+    "teal": 738,
+    "source": 179,
+    "pc": [
       685,
       686
     ]
   },
   {
-    "teal": 738,
-    "source": 178,
+    "teal": 739,
+    "source": 179,
     "pc": [
       687
-    ]
-  },
-  {
-    "teal": 739,
-    "source": 178,
-    "pc": [
-      688
     ]
   },
   {
     "teal": 740,
     "source": 179,
     "pc": [
-      689,
-      690
+      688
     ]
   },
   {
     "teal": 741,
-    "source": 179,
+    "source": 180,
     "pc": [
-      691
+      689,
+      690
     ]
   },
   {
     "teal": 742,
     "source": 180,
     "pc": [
+      691
+    ]
+  },
+  {
+    "teal": 743,
+    "source": 181,
+    "pc": [
       692,
       693
     ]
   },
   {
-    "teal": 743,
-    "source": 180,
+    "teal": 744,
+    "source": 181,
     "pc": [
       694
     ]
   },
   {
-    "teal": 744,
-    "source": 176,
+    "teal": 745,
+    "source": 177,
     "pc": [
       695
     ]
   },
   {
-    "teal": 745,
-    "source": 174,
+    "teal": 746,
+    "source": 175,
     "pc": [
       696
     ]
   },
   {
-    "teal": 750,
-    "source": 189,
+    "teal": 751,
+    "source": 190,
     "pc": [
       697,
       698,
@@ -2965,15 +2965,15 @@
     ]
   },
   {
-    "teal": 751,
-    "source": 189,
+    "teal": 752,
+    "source": 190,
     "pc": [
       700
     ]
   },
   {
-    "teal": 754,
-    "source": 189,
+    "teal": 755,
+    "source": 190,
     "pc": [
       701,
       702,
@@ -2981,22 +2981,22 @@
     ]
   },
   {
-    "teal": 755,
-    "source": 189,
+    "teal": 756,
+    "source": 190,
     "pc": [
       704
     ]
   },
   {
-    "teal": 756,
-    "source": 189,
+    "teal": 757,
+    "source": 190,
     "pc": [
       705
     ]
   },
   {
-    "teal": 764,
-    "source": 189,
+    "teal": 765,
+    "source": 190,
     "pc": [
       706,
       707,
@@ -3004,88 +3004,88 @@
     ]
   },
   {
-    "teal": 769,
-    "source": 190,
+    "teal": 770,
+    "source": 191,
     "pc": [
       709,
       710
     ]
   },
   {
-    "teal": 770,
-    "source": 190,
+    "teal": 771,
+    "source": 191,
     "pc": [
       711
     ]
   },
   {
-    "teal": 771,
-    "source": 190,
+    "teal": 772,
+    "source": 191,
     "pc": [
       712
     ]
   },
   {
-    "teal": 772,
-    "source": 190,
+    "teal": 773,
+    "source": 191,
     "pc": [
       713
     ]
   },
   {
-    "teal": 775,
-    "source": 190,
+    "teal": 776,
+    "source": 191,
     "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
       714
     ]
   },
   {
-    "teal": 779,
-    "source": 192,
+    "teal": 780,
+    "source": 193,
     "pc": [
       715
     ]
   },
   {
-    "teal": 780,
-    "source": 192,
+    "teal": 781,
+    "source": 193,
     "pc": [
       716,
       717
     ]
   },
   {
-    "teal": 781,
-    "source": 192,
+    "teal": 782,
+    "source": 193,
     "pc": [
       718
     ]
   },
   {
-    "teal": 782,
-    "source": 192,
+    "teal": 783,
+    "source": 193,
     "pc": [
       719
     ]
   },
   {
-    "teal": 783,
-    "source": 192,
+    "teal": 784,
+    "source": 193,
     "pc": [
       720
     ]
   },
   {
-    "teal": 784,
-    "source": 189,
+    "teal": 785,
+    "source": 190,
     "pc": [
       721
     ]
   },
   {
-    "teal": 789,
-    "source": 206,
+    "teal": 790,
+    "source": 207,
     "pc": [
       722,
       723,
@@ -3093,15 +3093,15 @@
     ]
   },
   {
-    "teal": 790,
-    "source": 206,
+    "teal": 791,
+    "source": 207,
     "pc": [
       725
     ]
   },
   {
-    "teal": 793,
-    "source": 205,
+    "teal": 794,
+    "source": 206,
     "pc": [
       726,
       727,
@@ -3109,15 +3109,15 @@
     ]
   },
   {
-    "teal": 794,
-    "source": 205,
+    "teal": 795,
+    "source": 206,
     "pc": [
       729
     ]
   },
   {
-    "teal": 797,
-    "source": 204,
+    "teal": 798,
+    "source": 205,
     "pc": [
       730,
       731,
@@ -3125,44 +3125,44 @@
     ]
   },
   {
-    "teal": 798,
-    "source": 204,
+    "teal": 799,
+    "source": 205,
     "pc": [
       733
     ]
   },
   {
-    "teal": 799,
-    "source": 204,
+    "teal": 800,
+    "source": 205,
     "pc": [
       734
     ]
   },
   {
-    "teal": 800,
-    "source": 204,
+    "teal": 801,
+    "source": 205,
     "pc": [
       735
     ]
   },
   {
-    "teal": 801,
-    "source": 204,
+    "teal": 802,
+    "source": 205,
     "pc": [
       736
     ]
   },
   {
-    "teal": 804,
-    "source": 204,
+    "teal": 805,
+    "source": 205,
     "errorMessage": "argument 2 (allowedCaller) for arc58_addNamedPlugin must be a address",
     "pc": [
       737
     ]
   },
   {
-    "teal": 807,
-    "source": 203,
+    "teal": 808,
+    "source": 204,
     "pc": [
       738,
       739,
@@ -3170,15 +3170,15 @@
     ]
   },
   {
-    "teal": 808,
-    "source": 203,
+    "teal": 809,
+    "source": 204,
     "pc": [
       741
     ]
   },
   {
-    "teal": 811,
-    "source": 202,
+    "teal": 812,
+    "source": 203,
     "pc": [
       742,
       743,
@@ -3186,8 +3186,8 @@
     ]
   },
   {
-    "teal": 812,
-    "source": 202,
+    "teal": 813,
+    "source": 203,
     "pc": [
       745,
       746,
@@ -3195,8 +3195,8 @@
     ]
   },
   {
-    "teal": 815,
-    "source": 201,
+    "teal": 816,
+    "source": 202,
     "pc": [
       748,
       749,
@@ -3204,22 +3204,22 @@
     ]
   },
   {
-    "teal": 816,
-    "source": 201,
+    "teal": 817,
+    "source": 202,
     "pc": [
       751
     ]
   },
   {
-    "teal": 817,
-    "source": 201,
+    "teal": 818,
+    "source": 202,
     "pc": [
       752
     ]
   },
   {
-    "teal": 826,
-    "source": 201,
+    "teal": 827,
+    "source": 202,
     "pc": [
       753,
       754,
@@ -3227,256 +3227,256 @@
     ]
   },
   {
-    "teal": 831,
-    "source": 208,
+    "teal": 832,
+    "source": 209,
     "pc": [
       756,
       757
     ]
   },
   {
-    "teal": 832,
-    "source": 208,
+    "teal": 833,
+    "source": 209,
     "pc": [
       758
     ]
   },
   {
-    "teal": 833,
-    "source": 208,
+    "teal": 834,
+    "source": 209,
     "pc": [
       759
     ]
   },
   {
-    "teal": 834,
-    "source": 208,
+    "teal": 835,
+    "source": 209,
     "pc": [
       760
     ]
   },
   {
-    "teal": 837,
-    "source": 208,
+    "teal": 838,
+    "source": 209,
     "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
       761
     ]
   },
   {
-    "teal": 841,
-    "source": 209,
+    "teal": 842,
+    "source": 210,
     "pc": [
       762
     ]
   },
   {
-    "teal": 842,
-    "source": 209,
+    "teal": 843,
+    "source": 210,
     "pc": [
       763,
       764
     ]
   },
   {
-    "teal": 843,
-    "source": 209,
+    "teal": 844,
+    "source": 210,
     "pc": [
       765
     ]
   },
   {
-    "teal": 844,
-    "source": 209,
+    "teal": 845,
+    "source": 210,
     "pc": [
       766
     ]
   },
   {
-    "teal": 845,
-    "source": 209,
+    "teal": 846,
+    "source": 210,
     "pc": [
       767
     ]
   },
   {
-    "teal": 846,
-    "source": 209,
+    "teal": 847,
+    "source": 210,
     "pc": [
       768
     ]
   },
   {
-    "teal": 847,
-    "source": 209,
+    "teal": 848,
+    "source": 210,
     "pc": [
       769
     ]
   },
   {
-    "teal": 848,
-    "source": 209,
+    "teal": 849,
+    "source": 210,
     "pc": [
       770
     ]
   },
   {
-    "teal": 852,
-    "source": 211,
+    "teal": 853,
+    "source": 212,
     "pc": [
       771
     ]
   },
   {
-    "teal": 853,
-    "source": 211,
+    "teal": 854,
+    "source": 212,
     "pc": [
       772,
       773
     ]
   },
   {
-    "teal": 854,
-    "source": 211,
+    "teal": 855,
+    "source": 212,
     "pc": [
       774
     ]
   },
   {
-    "teal": 855,
-    "source": 211,
+    "teal": 856,
+    "source": 212,
     "pc": [
       775,
       776
     ]
   },
   {
-    "teal": 856,
-    "source": 211,
+    "teal": 857,
+    "source": 212,
     "pc": [
       777
     ]
   },
   {
-    "teal": 857,
-    "source": 211,
+    "teal": 858,
+    "source": 212,
     "pc": [
       778
     ]
   },
   {
-    "teal": 866,
-    "source": 212,
+    "teal": 867,
+    "source": 213,
     "pc": [
       779
     ]
   },
   {
-    "teal": 867,
-    "source": 212,
+    "teal": 868,
+    "source": 213,
     "pc": [
       780,
       781
     ]
   },
   {
-    "teal": 868,
-    "source": 212,
+    "teal": 869,
+    "source": 213,
     "pc": [
       782
     ]
   },
   {
-    "teal": 869,
-    "source": 212,
+    "teal": 870,
+    "source": 213,
     "pc": [
       783
     ]
   },
   {
-    "teal": 870,
-    "source": 214,
+    "teal": 871,
+    "source": 215,
     "pc": [
       784,
       785
     ]
   },
   {
-    "teal": 871,
-    "source": 214,
+    "teal": 872,
+    "source": 215,
     "pc": [
       786
     ]
   },
   {
-    "teal": 872,
-    "source": 215,
+    "teal": 873,
+    "source": 216,
     "pc": [
       787,
       788
     ]
   },
   {
-    "teal": 873,
-    "source": 215,
+    "teal": 874,
+    "source": 216,
     "pc": [
       789
-    ]
-  },
-  {
-    "teal": 874,
-    "source": 215,
-    "pc": [
-      790
     ]
   },
   {
     "teal": 875,
     "source": 216,
     "pc": [
+      790
+    ]
+  },
+  {
+    "teal": 876,
+    "source": 217,
+    "pc": [
       791,
       792
     ]
   },
   {
-    "teal": 876,
-    "source": 216,
+    "teal": 877,
+    "source": 217,
     "pc": [
       793
     ]
   },
   {
-    "teal": 877,
-    "source": 213,
+    "teal": 878,
+    "source": 214,
     "pc": [
       794,
       795
     ]
   },
   {
-    "teal": 878,
-    "source": 213,
+    "teal": 879,
+    "source": 214,
     "pc": [
       796
     ]
   },
   {
-    "teal": 879,
-    "source": 212,
+    "teal": 880,
+    "source": 213,
     "pc": [
       797
     ]
   },
   {
-    "teal": 880,
-    "source": 201,
+    "teal": 881,
+    "source": 202,
     "pc": [
       798
     ]
   },
   {
-    "teal": 885,
-    "source": 225,
+    "teal": 886,
+    "source": 226,
     "pc": [
       799,
       800,
@@ -3484,8 +3484,8 @@
     ]
   },
   {
-    "teal": 886,
-    "source": 225,
+    "teal": 887,
+    "source": 226,
     "pc": [
       802,
       803,
@@ -3493,8 +3493,8 @@
     ]
   },
   {
-    "teal": 889,
-    "source": 225,
+    "teal": 890,
+    "source": 226,
     "pc": [
       805,
       806,
@@ -3502,22 +3502,22 @@
     ]
   },
   {
-    "teal": 890,
-    "source": 225,
+    "teal": 891,
+    "source": 226,
     "pc": [
       808
     ]
   },
   {
-    "teal": 891,
-    "source": 225,
+    "teal": 892,
+    "source": 226,
     "pc": [
       809
     ]
   },
   {
-    "teal": 899,
-    "source": 225,
+    "teal": 900,
+    "source": 226,
     "pc": [
       810,
       811,
@@ -3525,176 +3525,176 @@
     ]
   },
   {
-    "teal": 902,
-    "source": 225,
+    "teal": 903,
+    "source": 226,
     "pc": [
       813,
       814
     ]
   },
   {
-    "teal": 907,
-    "source": 226,
+    "teal": 908,
+    "source": 227,
     "pc": [
       815,
       816
     ]
   },
   {
-    "teal": 908,
-    "source": 226,
+    "teal": 909,
+    "source": 227,
     "pc": [
       817
     ]
   },
   {
-    "teal": 909,
-    "source": 226,
+    "teal": 910,
+    "source": 227,
     "pc": [
       818
     ]
   },
   {
-    "teal": 910,
-    "source": 226,
+    "teal": 911,
+    "source": 227,
     "pc": [
       819
     ]
   },
   {
-    "teal": 913,
-    "source": 226,
+    "teal": 914,
+    "source": 227,
     "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
       820
     ]
   },
   {
-    "teal": 917,
-    "source": 228,
+    "teal": 918,
+    "source": 229,
     "pc": [
       821
     ]
   },
   {
-    "teal": 918,
-    "source": 228,
+    "teal": 919,
+    "source": 229,
     "pc": [
       822,
       823
     ]
   },
   {
-    "teal": 919,
-    "source": 228,
+    "teal": 920,
+    "source": 229,
     "pc": [
       824
     ]
   },
   {
-    "teal": 920,
-    "source": 228,
+    "teal": 921,
+    "source": 229,
     "pc": [
       825
     ]
   },
   {
-    "teal": 923,
-    "source": 228,
+    "teal": 924,
+    "source": 229,
     "errorMessage": "box value does not exist: this.namedPlugins(name).value",
     "pc": [
       826
     ]
   },
   {
-    "teal": 924,
-    "source": 228,
+    "teal": 925,
+    "source": 229,
     "pc": [
       827
     ]
   },
   {
-    "teal": 925,
-    "source": 228,
+    "teal": 926,
+    "source": 229,
     "pc": [
       828,
       829
     ]
   },
   {
-    "teal": 929,
-    "source": 229,
+    "teal": 930,
+    "source": 230,
     "pc": [
       830
     ]
   },
   {
-    "teal": 930,
-    "source": 229,
+    "teal": 931,
+    "source": 230,
     "pc": [
       831,
       832
     ]
   },
   {
-    "teal": 931,
-    "source": 229,
+    "teal": 932,
+    "source": 230,
     "pc": [
       833
     ]
   },
   {
-    "teal": 932,
-    "source": 229,
+    "teal": 933,
+    "source": 230,
     "pc": [
       834
     ]
   },
   {
-    "teal": 936,
-    "source": 230,
+    "teal": 937,
+    "source": 231,
     "pc": [
       835
     ]
   },
   {
-    "teal": 937,
-    "source": 230,
+    "teal": 938,
+    "source": 231,
     "pc": [
       836,
       837
     ]
   },
   {
-    "teal": 938,
-    "source": 230,
+    "teal": 939,
+    "source": 231,
     "pc": [
       838
     ]
   },
   {
-    "teal": 939,
-    "source": 230,
+    "teal": 940,
+    "source": 231,
     "pc": [
       839
     ]
   },
   {
-    "teal": 940,
-    "source": 230,
+    "teal": 941,
+    "source": 231,
     "pc": [
       840
     ]
   },
   {
-    "teal": 941,
-    "source": 225,
+    "teal": 942,
+    "source": 226,
     "pc": [
       841
     ]
   },
   {
-    "teal": 944,
+    "teal": 945,
     "source": 5,
     "pc": [
       842,
@@ -3706,7 +3706,7 @@
     ]
   },
   {
-    "teal": 945,
+    "teal": 946,
     "source": 5,
     "pc": [
       848,
@@ -3715,7 +3715,7 @@
     ]
   },
   {
-    "teal": 946,
+    "teal": 947,
     "source": 5,
     "pc": [
       851,
@@ -3725,7 +3725,7 @@
     ]
   },
   {
-    "teal": 949,
+    "teal": 950,
     "source": 5,
     "errorMessage": "this contract does not implement the given ABI method for create NoOp",
     "pc": [
@@ -3733,7 +3733,7 @@
     ]
   },
   {
-    "teal": 952,
+    "teal": 953,
     "source": 5,
     "pc": [
       856,
@@ -3745,7 +3745,7 @@
     ]
   },
   {
-    "teal": 953,
+    "teal": 954,
     "source": 5,
     "pc": [
       862,
@@ -3757,7 +3757,7 @@
     ]
   },
   {
-    "teal": 954,
+    "teal": 955,
     "source": 5,
     "pc": [
       868,
@@ -3765,7 +3765,7 @@
     ]
   },
   {
-    "teal": 955,
+    "teal": 956,
     "source": 5,
     "pc": [
       870,
@@ -3777,7 +3777,7 @@
     ]
   },
   {
-    "teal": 956,
+    "teal": 957,
     "source": 5,
     "pc": [
       876,
@@ -3789,7 +3789,7 @@
     ]
   },
   {
-    "teal": 957,
+    "teal": 958,
     "source": 5,
     "pc": [
       882,
@@ -3801,7 +3801,7 @@
     ]
   },
   {
-    "teal": 958,
+    "teal": 959,
     "source": 5,
     "pc": [
       888,
@@ -3813,7 +3813,7 @@
     ]
   },
   {
-    "teal": 959,
+    "teal": 960,
     "source": 5,
     "pc": [
       894,
@@ -3825,7 +3825,7 @@
     ]
   },
   {
-    "teal": 960,
+    "teal": 961,
     "source": 5,
     "pc": [
       900,
@@ -3837,7 +3837,7 @@
     ]
   },
   {
-    "teal": 961,
+    "teal": 962,
     "source": 5,
     "pc": [
       906,
@@ -3849,7 +3849,7 @@
     ]
   },
   {
-    "teal": 962,
+    "teal": 963,
     "source": 5,
     "pc": [
       912,
@@ -3858,7 +3858,7 @@
     ]
   },
   {
-    "teal": 963,
+    "teal": 964,
     "source": 5,
     "pc": [
       915,
@@ -3886,7 +3886,7 @@
     ]
   },
   {
-    "teal": 966,
+    "teal": 967,
     "source": 5,
     "errorMessage": "this contract does not implement the given ABI method for call NoOp",
     "pc": [

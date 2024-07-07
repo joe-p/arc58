@@ -170,6 +170,7 @@ export class AbstractedAccount extends Contract {
    * @param allowedCaller The address of that's allowed to call the app
    * or the global zero address for all addresses
    * @param lastValidRound The round when the permission expires
+   * @param cooldown  The number of rounds that must pass before the plugin can be called again
    */
   arc58_addPlugin(app: AppID, allowedCaller: Address, lastValidRound: uint64, cooldown: uint64): void {
     verifyTxn(this.txn, { sender: this.admin.value });
