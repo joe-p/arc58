@@ -15,7 +15,7 @@ type PluginInfo = {
   /** The last round the plugin was called */
   lastCalled: uint64;
   /** Whether the plugin has permissions to change the admin account */
-  adminPrivileges: uint8;
+  adminPrivileges: boolean;
 };
 
 export class AbstractedAccount extends Contract {
@@ -224,7 +224,7 @@ export class AbstractedAccount extends Contract {
       lastValidRound: lastValidRound,
       cooldown: cooldown,
       lastCalled: 0,
-      adminPrivileges: adminPrivileges ? 1 as uint8 : 0 as uint8,
+      adminPrivileges: adminPrivileges,
     };
   }
 
@@ -264,12 +264,15 @@ export class AbstractedAccount extends Contract {
 
     const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
     this.namedPlugins(name).value = key;
-    this.plugins(key).value = {
+
+    const pluginInfo: PluginInfo = {
       lastValidRound: lastValidRound,
       cooldown: cooldown,
       lastCalled: 0,
-      adminPrivileges: adminPrivileges ? 1 as uint8 : 0 as uint8,
+      adminPrivileges: adminPrivileges,
     };
+
+    this.plugins(key).value = pluginInfo
   }
 
   /**
