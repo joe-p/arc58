@@ -106,6 +106,7 @@ export class AbstractedAccount extends Contract {
    * Get the admin of this app. This method SHOULD always be used rather than reading directly from state
    * because different implementations may have different ways of determining the admin.
    */
+  @abi.readonly
   arc58_getAdmin(): Address {
     return this.admin.value;
   }
@@ -144,6 +145,21 @@ export class AbstractedAccount extends Contract {
       this.plugins(key).value.lastValidRound >= globals.round &&
       globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown
     );
+  }
+
+  /**
+   * check whether the plugin can be used
+   * 
+   * @param plugin the plugin to be rekeyed to
+   * @returns whether the plugin can be called via txn sender or globally
+   */
+  @abi.readonly
+  arc58_canCall(plugin: AppID): boolean {
+    const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
+    if (globalAllowed)
+      return true;
+  
+    return this.pluginCallAllowed(plugin, this.txn.sender);
   }
 
   /**
