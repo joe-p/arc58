@@ -154,12 +154,12 @@ export class AbstractedAccount extends Contract {
    * @returns whether the plugin can be called via txn sender or globally
    */
   @abi.readonly
-  arc58_canCall(plugin: AppID): boolean {
+  arc58_canCall(plugin: AppID, address: Address): boolean {
     const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
     if (globalAllowed)
       return true;
   
-    return this.pluginCallAllowed(plugin, this.txn.sender);
+    return this.pluginCallAllowed(plugin, address);
   }
 
   /**
