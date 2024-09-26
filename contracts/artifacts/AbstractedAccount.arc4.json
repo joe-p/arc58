@@ -4,7 +4,7 @@
   "methods": [
     {
       "name": "createApplication",
-      "desc": "Create an abstracted account application.This is not part of ARC58 and implementation specific.",
+      "desc": "Create an abstracted account application.\nThis is not part of ARC58 and implementation specific.",
       "args": [
         {
           "name": "controlledAddress",
@@ -36,8 +36,32 @@
       }
     },
     {
+      "name": "arc58_pluginChangeAdmin",
+      "desc": "Attempt to change the admin via plugin.",
+      "args": [
+        {
+          "name": "plugin",
+          "type": "uint64",
+          "desc": "The app calling the plugin"
+        },
+        {
+          "name": "allowedCaller",
+          "type": "address",
+          "desc": "The address that triggered the plugin"
+        },
+        {
+          "name": "newAdmin",
+          "type": "address",
+          "desc": "The new admin"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "arc58_getAdmin",
-      "desc": "Get the admin of this app. This method SHOULD always be used rather than reading directly from statebecause different implementations may have different ways of determining the admin.",
+      "desc": "Get the admin of this app. This method SHOULD always be used rather than reading directly from state\nbecause different implementations may have different ways of determining the admin.",
       "args": [],
       "returns": {
         "type": "address"
@@ -110,7 +134,7 @@
         {
           "name": "allowedCaller",
           "type": "address",
-          "desc": "The address of that's allowed to call the appor the global zero address for all addresses"
+          "desc": "The address of that's allowed to call the app\nor the global zero address for all addresses"
         },
         {
           "name": "lastValidRound",
@@ -121,6 +145,11 @@
           "name": "cooldown",
           "type": "uint64",
           "desc": "The number of rounds that must pass before the plugin can be called again"
+        },
+        {
+          "name": "adminPrivileges",
+          "type": "bool",
+          "desc": "Whether the plugin has permissions to change the admin account"
         }
       ],
       "returns": {
@@ -161,15 +190,23 @@
         },
         {
           "name": "allowedCaller",
-          "type": "address"
+          "type": "address",
+          "desc": "The address of that's allowed to call the app\nor the global zero address for all addresses"
         },
         {
           "name": "lastValidRound",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "The round when the permission expires"
         },
         {
           "name": "cooldown",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "The number of rounds that must pass before the plugin can be called again"
+        },
+        {
+          "name": "adminPrivileges",
+          "type": "bool",
+          "desc": "Whether the plugin has permissions to change the admin account"
         }
       ],
       "returns": {
