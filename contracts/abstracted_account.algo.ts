@@ -25,7 +25,6 @@ type MethodsKey = {
     allowedCaller: Address;
 }
 
-
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
   programVersion = 10;
@@ -191,9 +190,8 @@ export class AbstractedAccount extends Contract {
 
       if (
         txn.typeEnum !== TransactionType.ApplicationCall ||
-        txn.applicationID !== app ||
-        txn.sender !== caller ||
-        txn.applicationArgs[0] === method('arc58_rekeyToPlugin(Application)void')
+        (txn.applicationID !== app && txn.applicationID !== this.app) ||
+        txn.sender !== caller
       ) {
         continue;
       }
