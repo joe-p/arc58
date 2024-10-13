@@ -18,6 +18,14 @@ type PluginInfo = {
   adminPrivileges: boolean;
 };
 
+type MethodsKey = {
+    /** The application containing plugin logic */
+    application: AppID;
+    /** The address that is allowed to initiate a rekey to the plugin */
+    allowedCaller: Address;
+}
+
+
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
   programVersion = 10;
@@ -34,6 +42,12 @@ export class AbstractedAccount extends Contract {
   plugins = BoxMap<PluginsKey, PluginInfo>({ prefix: 'p' });
 
   /**
+   * methods restrict plugin delegation only to the method names allowed for the delegation
+   * a methods box entry missing means that all methods on the plugin are allowed
+   */
+  methods = BoxMap<MethodsKey, string[]>({ prefix: 'm' });
+
+  /**
    * Plugins that have been given a name for discoverability
    */
   namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
@@ -44,7 +58,7 @@ export class AbstractedAccount extends Contract {
   private verifyRekeyToAbstractedAccount(): void {
     let rekeyedBack = false;
 
-    for (let i = this.txn.groupIndex; i < this.txnGroup.length; i += 1) {
+    for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
       // The transaction is an explicit rekey back
@@ -162,8 +176,45 @@ export class AbstractedAccount extends Contract {
     return (
       this.plugins(key).exists &&
       this.plugins(key).value.lastValidRound >= globals.round &&
-      globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown
+      globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown &&
+      // if methods doesn't have an entry all methods are allowed, otherwise check all the txns
+      (!this.methods(key).exists || this.methodCallsAllowed(app, caller))
     );
+  }
+
+  private methodCallsAllowed(app: AppID, caller: Address): boolean {
+    const key: PluginsKey = { application: app, allowedCaller: caller };
+    const allowedMethods = this.methods(key).value;
+
+    for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
+      const txn = this.txnGroup[i];
+
+      if (
+        txn.typeEnum !== TransactionType.ApplicationCall ||
+        txn.applicationID !== app ||
+        txn.sender !== caller ||
+        txn.applicationArgs[0] === method('arc58_rekeyToPlugin(Application)void')
+      ) {
+        continue;
+      }
+
+      let currentMethodAllowed: boolean = false;
+      allowedMethods.forEach(methodSignature => {
+        if (txn.applicationArgs[0] === method(methodSignature)) {
+          currentMethodAllowed = true;
+        }
+      });
+
+      if (!currentMethodAllowed) {
+        return false
+      }
+
+      if (txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')) {
+        return true
+      }
+    }
+
+    return true;
   }
 
   /**
@@ -216,7 +267,8 @@ export class AbstractedAccount extends Contract {
     allowedCaller: Address,
     lastValidRound: uint64,
     cooldown: uint64,
-    adminPrivileges: boolean
+    adminPrivileges: boolean,
+    methods: string[],
   ): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
@@ -226,6 +278,10 @@ export class AbstractedAccount extends Contract {
       lastCalled: 0,
       adminPrivileges: adminPrivileges,
     };
+
+    if (methods.length > 0) {
+      this.methods(key).value = methods;
+    }
   }
 
   /**
