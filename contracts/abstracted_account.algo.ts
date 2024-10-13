@@ -196,6 +196,10 @@ export class AbstractedAccount extends Contract {
         continue;
       }
 
+      if (txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')) {
+        return true
+      }
+
       let currentMethodAllowed: boolean = false;
       allowedMethods.forEach(methodSignature => {
         if (txn.applicationArgs[0] === method(methodSignature)) {
@@ -205,10 +209,6 @@ export class AbstractedAccount extends Contract {
 
       if (!currentMethodAllowed) {
         return false
-      }
-
-      if (txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')) {
-        return true
       }
     }
 
