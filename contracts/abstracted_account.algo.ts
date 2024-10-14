@@ -44,7 +44,7 @@ export class AbstractedAccount extends Contract {
    * methods restrict plugin delegation only to the method names allowed for the delegation
    * a methods box entry missing means that all methods on the plugin are allowed
    */
-  methods = BoxMap<MethodsKey, string[]>({ prefix: 'm' });
+  methods = BoxMap<MethodsKey, bytes<4>[]>({ prefix: 'm' });
 
   /**
    * Plugins that have been given a name for discoverability
@@ -202,7 +202,7 @@ export class AbstractedAccount extends Contract {
 
       let currentMethodAllowed: boolean = false;
       for (let ii = 0; ii < allowedMethods.length; ii += 1) {
-        if (txn.applicationArgs[0] === allowedMethods[ii]) {
+        if (txn.applicationArgs[0] as bytes<4> === allowedMethods[ii]) {
           currentMethodAllowed = true;
         }
       }
@@ -266,7 +266,7 @@ export class AbstractedAccount extends Contract {
     lastValidRound: uint64,
     cooldown: uint64,
     adminPrivileges: boolean,
-    methods: string[],
+    methods: bytes<4>[],
   ): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
