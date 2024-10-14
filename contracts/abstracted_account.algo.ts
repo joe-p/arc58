@@ -202,7 +202,7 @@ export class AbstractedAccount extends Contract {
 
       let currentMethodAllowed: boolean = false;
       for (let ii = 0; ii < allowedMethods.length; ii += 1) {
-        if (txn.applicationArgs[0] as bytes<4> === allowedMethods[ii]) {
+        if ((txn.applicationArgs[0] as bytes<4>) === allowedMethods[ii]) {
           currentMethodAllowed = true;
         }
       }
