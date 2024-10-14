@@ -57,7 +57,7 @@ export class AbstractedAccount extends Contract {
   private verifyRekeyToAbstractedAccount(): void {
     let rekeyedBack = false;
 
-    for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
+    for (let i = this.txn.groupIndex; i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
       // The transaction is an explicit rekey back
