@@ -201,11 +201,11 @@ export class AbstractedAccount extends Contract {
       }
 
       let currentMethodAllowed: boolean = false;
-      allowedMethods.forEach(methodSignature => {
-        if (txn.applicationArgs[0] === method(methodSignature)) {
+      for (let ii = 0; ii < allowedMethods.length; ii += 1) {
+        if (txn.applicationArgs[0] === allowedMethods[ii]) {
           currentMethodAllowed = true;
         }
-      });
+      }
 
       if (!currentMethodAllowed) {
         return false
