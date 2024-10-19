@@ -57,7 +57,7 @@ export class AbstractedAccount extends Contract {
       if (
         txn.typeEnum === TransactionType.ApplicationCall &&
         txn.applicationID === this.app &&
-        txn.onCompletion === OnCompletion.NoOp &&
+        txn.onCompletion === 0 && // OnCompletion.NoOp
         txn.numAppArgs === 1 &&
         txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
       ) {
