@@ -12,6 +12,8 @@ const fixture = algorandFixture();
 describe('Abstracted Subscription Program', () => {
   /** Alice's externally owned account (ie. a keypair account she has in Pera) */
   let aliceEOA: algosdk.Account;
+  /** The admin account for the abstracted account */
+  let admin: algosdk.Account;
   /** The address of Alice's new abstracted account. Sends app calls from aliceEOA unless otherwise specified */
   let aliceAbstractedAccount: string;
   /** The client for Alice's abstracted account */
@@ -34,13 +36,22 @@ describe('Abstracted Subscription Program', () => {
 
   beforeAll(async () => {
     await fixture.beforeEach();
-    const { algod, testAccount } = fixture.context;
+    const { algod, testAccount, algorand } = fixture.context;
     suggestedParams = await algod.getTransactionParams().do();
     aliceEOA = testAccount;
+    admin = algorand.account.random().account;
+    const dispenser = await algorand.account.localNetDispenser();
+
+    await algorand.send.payment({
+      sender: dispenser.addr,
+      signer: dispenser.signer,
+      receiver: admin.addr,
+      amount: algokit.microAlgos(1_000_000),
+    });
 
     abstractedAccountClient = new AbstractedAccountClient(
       {
-        sender: aliceEOA,
+        sender: admin,
         resolveBy: 'id',
         id: 0,
       },
@@ -51,8 +62,7 @@ describe('Abstracted Subscription Program', () => {
     await abstractedAccountClient.create.createApplication({
       // Set address to ZERO_ADDRESS so the app address is used
       controlledAddress: ZERO_ADDRESS,
-      // aliceEOA will be the admin
-      admin: aliceEOA.addr,
+      admin: admin.addr,
     });
 
     aliceAbstractedAccount = (await abstractedAccountClient.appClient.getAppReference()).appAddress;
