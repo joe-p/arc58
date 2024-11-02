@@ -9,16 +9,24 @@ import { OptInPluginClient } from '../contracts/clients/OptInPluginClient';
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 const fixture = algorandFixture();
 
+algokit.Config.configure({
+  logger: {
+    info: () => {},
+    error: () => {},
+    warn: () => {},
+    verbose: () => {},
+    debug: () => {},
+  },
+});
+
 [true, false].forEach((controlledAddressIsZeroAddress) => {
-  describe(`Abstracted Subscription Program (${
-    controlledAddressIsZeroAddress ? 'app address' : 'controlled address'
-  })`, () => {
+  describe(`ARC58 Plugins (${controlledAddressIsZeroAddress ? 'app address' : 'controlled address'})`, () => {
     /** Alice's externally owned account (ie. a keypair account she has in Pera) */
     let aliceEOA: algosdk.Account;
     /** The admin account for the abstracted account */
     let admin: algosdk.Account;
-    /** The address of Alice's new abstracted account. Sends app calls from aliceEOA unless otherwise specified */
-    let aliceAbstractedAccount: string;
+    /** The controlled address */
+    let controlledAddress: string;
     /** The client for Alice's abstracted account */
     let abstractedAccountClient: AbstractedAccountClient;
     /** The client for the subscription plugin */
@@ -42,6 +50,7 @@ const fixture = algorandFixture();
       const { algod, testAccount, algorand } = fixture.context;
       suggestedParams = await algod.getTransactionParams().do();
       aliceEOA = testAccount;
+      controlledAddress = controlledAddressIsZeroAddress ? ZERO_ADDRESS : aliceEOA.addr;
       admin = algorand.account.random().account;
       const dispenser = await algorand.account.localNetDispenser();
 
@@ -63,12 +72,22 @@ const fixture = algorandFixture();
 
       // Create an abstracted account app
       await abstractedAccountClient.create.createApplication({
-        // Set address to ZERO_ADDRESS so the app address is used
-        controlledAddress: ZERO_ADDRESS,
+        controlledAddress,
         admin: admin.addr,
       });
 
-      aliceAbstractedAccount = (await abstractedAccountClient.appClient.getAppReference()).appAddress;
+      const { appAddress } = await abstractedAccountClient.appClient.getAppReference();
+
+      if (controlledAddressIsZeroAddress) {
+        controlledAddress = appAddress;
+      } else {
+        await algorand.send.payment({
+          sender: aliceEOA.addr,
+          receiver: aliceEOA.addr,
+          amount: algokit.microAlgos(0),
+          rekeyTo: appAddress,
+        });
+      }
 
       // Fund the abstracted account with 0.2 ALGO so it can hold an ASA
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(200_000) });
@@ -76,7 +95,7 @@ const fixture = algorandFixture();
       // Deploy the subscription plugin
       subPluginClient = new SubscriptionPluginClient(
         {
-          sender: aliceEOA,
+          sender: admin,
           resolveBy: 'id',
           id: 0,
         },
@@ -88,7 +107,7 @@ const fixture = algorandFixture();
       // Deploy the opt-in plugin
       optInPluginClient = new OptInPluginClient(
         {
-          sender: aliceEOA,
+          sender: admin,
           resolveBy: 'id',
           id: 0,
         },
@@ -150,7 +169,7 @@ const fixture = algorandFixture();
           ),
         ];
 
-        const alicePreBalance = await algod.accountInformation(aliceAbstractedAccount).do();
+        const alicePreBalance = await algod.accountInformation(controlledAddress).do();
         const joePreBalance = await algod.accountInformation(joe).do();
 
         // Get the call to the subscription plugin
@@ -159,7 +178,7 @@ const fixture = algorandFixture();
             .compose()
             .makePayment(
               // Send a payment from the abstracted account to Joe
-              { sender: aliceAbstractedAccount, _acctRef: joe },
+              { sender: controlledAddress, _acctRef: joe },
               // Double the fee to cover the inner txn fee
               { sender: testAccount, sendParams: { fee: algokit.microAlgos(2_000) } }
             )
@@ -176,7 +195,7 @@ const fixture = algorandFixture();
               sender: testAccount,
               boxes,
               sendParams: { fee: algokit.microAlgos(2_000) },
-              accounts: [aliceAbstractedAccount, joe],
+              accounts: [controlledAddress, joe],
             }
           )
           // Step two: Call the plugin
@@ -186,7 +205,7 @@ const fixture = algorandFixture();
           .execute();
 
         // Verify the payment was made
-        const alicePostBalance = await algod.accountInformation(aliceAbstractedAccount).do();
+        const alicePostBalance = await algod.accountInformation(controlledAddress).do();
         const joePostBalance = await algod.accountInformation(joe).do();
         expect(alicePostBalance.amount).toBe(alicePreBalance.amount - 100_000);
         expect(joePostBalance.amount).toBe(joePreBalance.amount + 100_000);
@@ -250,7 +269,7 @@ const fixture = algorandFixture();
         // Form a payment from bob to alice's abstracted account to cover the MBR
         const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
           from: bob.addr,
-          to: aliceAbstractedAccount,
+          to: controlledAddress,
           amount: 200_000,
           suggestedParams,
         });
@@ -260,7 +279,7 @@ const fixture = algorandFixture();
           await optInPluginClient
             .compose()
             .optInToAsset(
-              { sender: aliceAbstractedAccount, asset, mbrPayment },
+              { sender: controlledAddress, asset, mbrPayment },
               { sender: bob, sendParams: { fee: algokit.microAlgos(2000) } }
             )
             .atc()
@@ -280,6 +299,7 @@ const fixture = algorandFixture();
               boxes,
               sendParams: { fee: algokit.microAlgos(2000) },
               assets: [asset],
+              accounts: [controlledAddress],
             }
           )
           // Add the mbr payment
