@@ -118,8 +118,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64)')
-    )) as [number, number, number];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
+    )) as [number, number, number, boolean];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -147,8 +147,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64)')
-    )) as [number, number, number];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
+    )) as [number, number, number, boolean];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -175,8 +175,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(caller.addr).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64)')
-    )) as [number, number, number];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
+    )) as [number, number, number, boolean];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -203,7 +203,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=534');
+    expect(error).toMatch('pc=693');
   });
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
@@ -215,7 +215,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=534');
+    expect(error).toMatch('pc=693');
   });
 
   test('expired', async () => {
@@ -238,6 +238,6 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=534');
+    expect(error).toMatch('pc=693');
   });
 });
