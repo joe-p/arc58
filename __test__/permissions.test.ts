@@ -219,8 +219,6 @@ describe('ARC58 Plugin Permissions', () => {
   });
 
   test('expired', async () => {
-    const { algorand } = fixture;
-
     await abstractedAccountClient.arc58AddPlugin({
       app: plugin,
       allowedCaller: ZERO_ADDRESS,

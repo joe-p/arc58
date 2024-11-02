@@ -44,7 +44,7 @@ export class AbstractedAccount extends Contract {
   private verifyRekeyToAbstractedAccount(): void {
     let rekeyedBack = false;
 
-    for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
+    for (let i = this.txn.groupIndex + 1; i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
       // The transaction is an explicit rekey back
@@ -111,14 +111,17 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app calling the plugin
    * @param allowedCaller The address that triggered the plugin
    * @param newAdmin The new admin
-   * 
+   *
    */
   arc58_pluginChangeAdmin(plugin: AppID, allowedCaller: Address, newAdmin: Address): void {
     verifyTxn(this.txn, { sender: plugin.address });
     assert(this.controlledAddress.value.authAddr === plugin.address, 'This plugin is not in control of the account');
 
     const key: PluginsKey = { application: plugin, allowedCaller: allowedCaller };
-    assert(this.plugins(key).exists && this.plugins(key).value.adminPrivileges, 'This plugin does not have admin privileges');
+    assert(
+      this.plugins(key).exists && this.plugins(key).value.adminPrivileges,
+      'This plugin does not have admin privileges'
+    );
 
     this.admin.value = newAdmin;
   }
@@ -170,16 +173,15 @@ export class AbstractedAccount extends Contract {
 
   /**
    * check whether the plugin can be used
-   * 
+   *
    * @param plugin the plugin to be rekeyed to
    * @returns whether the plugin can be called via txn sender or globally
    */
   @abi.readonly
   arc58_canCall(plugin: AppID, address: Address): boolean {
     const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
-    if (globalAllowed)
-      return true;
-  
+    if (globalAllowed) return true;
+
     return this.pluginCallAllowed(plugin, address);
   }
 
@@ -289,7 +291,7 @@ export class AbstractedAccount extends Contract {
       adminPrivileges: adminPrivileges,
     };
 
-    this.plugins(key).value = pluginInfo
+    this.plugins(key).value = pluginInfo;
   }
 
   /**
