@@ -203,7 +203,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=693');
+    expect(error).toMatch('pc=706');
   });
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
@@ -215,12 +215,10 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=693');
+    expect(error).toMatch('pc=706');
   });
 
   test('expired', async () => {
-    const { algorand } = fixture;
-
     await abstractedAccountClient.arc58AddPlugin({
       app: plugin,
       allowedCaller: ZERO_ADDRESS,
@@ -238,6 +236,6 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=693');
+    expect(error).toMatch('pc=706');
   });
 });
