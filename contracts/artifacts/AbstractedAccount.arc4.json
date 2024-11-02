@@ -62,6 +62,7 @@
     {
       "name": "arc58_getAdmin",
       "desc": "Get the admin of this app. This method SHOULD always be used rather than reading directly from state\nbecause different implementations may have different ways of determining the admin.",
+      "readonly": true,
       "args": [],
       "returns": {
         "type": "address"
@@ -92,6 +93,26 @@
       ],
       "returns": {
         "type": "void"
+      }
+    },
+    {
+      "name": "arc58_canCall",
+      "desc": "check whether the plugin can be used",
+      "readonly": true,
+      "args": [
+        {
+          "name": "plugin",
+          "type": "uint64",
+          "desc": "the plugin to be rekeyed to"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "desc": "whether the plugin can be called via txn sender or globally"
       }
     },
     {
