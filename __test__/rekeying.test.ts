@@ -5,7 +5,6 @@ import algosdk, { Algodv2, makeBasicAccountTransactionSigner } from 'algosdk';
 import { microAlgos } from '@algorandfoundation/algokit-utils';
 import { AbstractedAccountClient } from '../contracts/clients/AbstractedAccountClient';
 
-const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 const fixture = algorandFixture();
 
 describe('Rekeying Test', () => {
