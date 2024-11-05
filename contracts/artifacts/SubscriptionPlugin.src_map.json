@@ -1,14 +1,26 @@
 [
   {
     "teal": 1,
-    "source": 10,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
-      0,
+      0
+    ]
+  },
+  {
+    "teal": 2,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+    "pc": [
       1,
       2,
       3,
       4,
-      5,
+      5
+    ]
+  },
+  {
+    "teal": 3,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+    "pc": [
       6,
       7,
       8,
@@ -26,53 +38,53 @@
     ]
   },
   {
-    "teal": 13,
-    "source": 10,
+    "teal": 15,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       20,
       21
     ]
   },
   {
-    "teal": 14,
-    "source": 10,
+    "teal": 16,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       22
     ]
   },
   {
-    "teal": 15,
-    "source": 10,
+    "teal": 17,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       23,
       24
     ]
   },
   {
-    "teal": 16,
-    "source": 10,
+    "teal": 18,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       25
     ]
   },
   {
-    "teal": 17,
-    "source": 10,
+    "teal": 19,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       26,
       27
     ]
   },
   {
-    "teal": 18,
-    "source": 10,
+    "teal": 20,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       28
     ]
   },
   {
-    "teal": 19,
-    "source": 10,
+    "teal": 21,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       29,
       30,
@@ -103,16 +115,16 @@
     ]
   },
   {
-    "teal": 23,
-    "source": 10,
+    "teal": 25,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
     "pc": [
       55
     ]
   },
   {
-    "teal": 28,
-    "source": 15,
+    "teal": 30,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:15",
     "pc": [
       56,
       57,
@@ -120,22 +132,22 @@
     ]
   },
   {
-    "teal": 29,
-    "source": 15,
+    "teal": 31,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:15",
     "pc": [
       59
     ]
   },
   {
-    "teal": 30,
-    "source": 15,
+    "teal": 32,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:15",
     "pc": [
       60
     ]
   },
   {
-    "teal": 34,
-    "source": 15,
+    "teal": 36,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:15",
     "pc": [
       61,
       62,
@@ -143,36 +155,36 @@
     ]
   },
   {
-    "teal": 38,
-    "source": 17,
+    "teal": 40,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:17",
     "pc": [
       64
     ]
   },
   {
-    "teal": 39,
-    "source": 17,
+    "teal": 41,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:17",
     "pc": [
       65
     ]
   },
   {
-    "teal": 40,
-    "source": 17,
+    "teal": 42,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:17",
     "pc": [
       66
     ]
   },
   {
-    "teal": 41,
-    "source": 15,
+    "teal": 43,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:15",
     "pc": [
       67
     ]
   },
   {
-    "teal": 46,
-    "source": 23,
+    "teal": 48,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:23",
     "pc": [
       68,
       69,
@@ -180,44 +192,44 @@
     ]
   },
   {
-    "teal": 47,
-    "source": 23,
+    "teal": 49,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:23",
     "pc": [
       71
     ]
   },
   {
-    "teal": 48,
-    "source": 23,
+    "teal": 50,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:23",
     "pc": [
       72
     ]
   },
   {
-    "teal": 49,
-    "source": 23,
+    "teal": 51,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:23",
     "pc": [
       73
     ]
   },
   {
-    "teal": 50,
-    "source": 23,
+    "teal": 52,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:23",
     "pc": [
       74
     ]
   },
   {
-    "teal": 53,
-    "source": 23,
+    "teal": 55,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:23",
     "errorMessage": "argument 0 (_acctRef) for makePayment must be a address",
     "pc": [
       75
     ]
   },
   {
-    "teal": 56,
-    "source": 21,
+    "teal": 58,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:21",
     "pc": [
       76,
       77,
@@ -225,44 +237,44 @@
     ]
   },
   {
-    "teal": 57,
-    "source": 21,
+    "teal": 59,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:21",
     "pc": [
       79
     ]
   },
   {
-    "teal": 58,
-    "source": 21,
+    "teal": 60,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:21",
     "pc": [
       80
     ]
   },
   {
-    "teal": 59,
-    "source": 21,
+    "teal": 61,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:21",
     "pc": [
       81
     ]
   },
   {
-    "teal": 60,
-    "source": 21,
+    "teal": 62,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:21",
     "pc": [
       82
     ]
   },
   {
-    "teal": 63,
-    "source": 21,
+    "teal": 65,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:21",
     "errorMessage": "argument 1 (sender) for makePayment must be a address",
     "pc": [
       83
     ]
   },
   {
-    "teal": 66,
-    "source": 20,
+    "teal": 68,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:20",
     "pc": [
       84,
       85,
@@ -270,22 +282,22 @@
     ]
   },
   {
-    "teal": 67,
-    "source": 20,
+    "teal": 69,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:20",
     "pc": [
       87
     ]
   },
   {
-    "teal": 68,
-    "source": 20,
+    "teal": 70,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:20",
     "pc": [
       88
     ]
   },
   {
-    "teal": 72,
-    "source": 20,
+    "teal": 74,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:20",
     "pc": [
       89,
       90,
@@ -293,118 +305,118 @@
     ]
   },
   {
-    "teal": 76,
-    "source": 25,
+    "teal": 78,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:25",
     "pc": [
       92,
       93
     ]
   },
   {
-    "teal": 77,
-    "source": 25,
+    "teal": 79,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:25",
     "pc": [
       94
     ]
   },
   {
-    "teal": 78,
-    "source": 25,
+    "teal": 80,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:25",
     "pc": [
       95
     ]
   },
   {
-    "teal": 79,
-    "source": 25,
+    "teal": 81,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:25",
     "pc": [
       96
     ]
   },
   {
-    "teal": 80,
-    "source": 25,
+    "teal": 82,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:25",
     "pc": [
       97
     ]
   },
   {
-    "teal": 81,
-    "source": 25,
+    "teal": 83,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:25",
     "pc": [
       98
     ]
   },
   {
-    "teal": 82,
-    "source": 25,
+    "teal": 84,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:25",
     "pc": [
       99
     ]
   },
   {
-    "teal": 86,
-    "source": 26,
+    "teal": 88,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:26",
     "pc": [
       100
     ]
   },
   {
-    "teal": 87,
-    "source": 26,
+    "teal": 89,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:26",
     "pc": [
       101,
       102
     ]
   },
   {
-    "teal": 88,
-    "source": 26,
+    "teal": 90,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:26",
     "pc": [
       103
     ]
   },
   {
-    "teal": 97,
-    "source": 28,
+    "teal": 99,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:28",
     "pc": [
       104
     ]
   },
   {
-    "teal": 98,
-    "source": 28,
+    "teal": 100,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:28",
     "pc": [
       105
     ]
   },
   {
-    "teal": 99,
-    "source": 28,
+    "teal": 101,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:28",
     "pc": [
       106,
       107
     ]
   },
   {
-    "teal": 103,
-    "source": 29,
+    "teal": 105,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:29",
     "pc": [
       108,
       109
     ]
   },
   {
-    "teal": 104,
-    "source": 29,
+    "teal": 106,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:29",
     "pc": [
       110,
       111
     ]
   },
   {
-    "teal": 108,
-    "source": 30,
+    "teal": 110,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:30",
     "pc": [
       112,
       113,
@@ -413,16 +425,16 @@
     ]
   },
   {
-    "teal": 109,
-    "source": 30,
+    "teal": 111,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:30",
     "pc": [
       116,
       117
     ]
   },
   {
-    "teal": 113,
-    "source": 31,
+    "teal": 115,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:31",
     "pc": [
       118,
       119,
@@ -461,69 +473,69 @@
     ]
   },
   {
-    "teal": 114,
-    "source": 31,
+    "teal": 116,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:31",
     "pc": [
       152,
       153
     ]
   },
   {
-    "teal": 118,
-    "source": 32,
+    "teal": 120,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:32",
     "pc": [
       154,
       155
     ]
   },
   {
-    "teal": 119,
-    "source": 32,
+    "teal": 121,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:32",
     "pc": [
       156,
       157
     ]
   },
   {
-    "teal": 122,
-    "source": 28,
+    "teal": 124,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:28",
     "pc": [
       158
     ]
   },
   {
-    "teal": 123,
-    "source": 28,
+    "teal": 125,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:28",
     "pc": [
       159,
       160
     ]
   },
   {
-    "teal": 126,
-    "source": 28,
+    "teal": 128,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:28",
     "pc": [
       161
     ]
   },
   {
-    "teal": 127,
-    "source": 20,
+    "teal": 129,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:20",
     "pc": [
       162
     ]
   },
   {
-    "teal": 130,
-    "source": 10,
+    "teal": 132,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       163,
       164
     ]
   },
   {
-    "teal": 131,
-    "source": 10,
+    "teal": 133,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       165,
       166,
@@ -531,8 +543,8 @@
     ]
   },
   {
-    "teal": 132,
-    "source": 10,
+    "teal": 134,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       168,
       169,
@@ -543,8 +555,8 @@
     ]
   },
   {
-    "teal": 133,
-    "source": 10,
+    "teal": 135,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       174,
       175,
@@ -552,8 +564,8 @@
     ]
   },
   {
-    "teal": 134,
-    "source": 10,
+    "teal": 136,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       177,
       178,
@@ -562,16 +574,16 @@
     ]
   },
   {
-    "teal": 137,
-    "source": 10,
+    "teal": 139,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "errorMessage": "this contract does not implement the given ABI method for create NoOp",
     "pc": [
       181
     ]
   },
   {
-    "teal": 140,
-    "source": 10,
+    "teal": 142,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       182,
       183,
@@ -582,8 +594,8 @@
     ]
   },
   {
-    "teal": 141,
-    "source": 10,
+    "teal": 143,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       188,
       189,
@@ -591,8 +603,8 @@
     ]
   },
   {
-    "teal": 142,
-    "source": 10,
+    "teal": 144,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "pc": [
       191,
       192,
@@ -601,8 +613,8 @@
     ]
   },
   {
-    "teal": 145,
-    "source": 10,
+    "teal": 147,
+    "source": "contracts/plugins/subscription_plugin.algo.ts:10",
     "errorMessage": "this contract does not implement the given ABI method for call NoOp",
     "pc": [
       195
