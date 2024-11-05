@@ -1,15 +1,9 @@
 [
   {
     "teal": 1,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "source": 3,
     "pc": [
-      0
-    ]
-  },
-  {
-    "teal": 2,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
-    "pc": [
+      0,
       1,
       2,
       3,
@@ -17,53 +11,53 @@
     ]
   },
   {
-    "teal": 14,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 13,
+    "source": 3,
     "pc": [
       5,
       6
     ]
   },
   {
-    "teal": 15,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 14,
+    "source": 3,
     "pc": [
       7
     ]
   },
   {
-    "teal": 16,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 15,
+    "source": 3,
     "pc": [
       8,
       9
     ]
   },
   {
-    "teal": 17,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 16,
+    "source": 3,
     "pc": [
       10
     ]
   },
   {
-    "teal": 18,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 17,
+    "source": 3,
     "pc": [
       11,
       12
     ]
   },
   {
-    "teal": 19,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 18,
+    "source": 3,
     "pc": [
       13
     ]
   },
   {
-    "teal": 20,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 19,
+    "source": 3,
     "pc": [
       14,
       15,
@@ -94,75 +88,75 @@
     ]
   },
   {
-    "teal": 24,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 23,
+    "source": 3,
     "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
     "pc": [
       40
     ]
   },
   {
-    "teal": 29,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 28,
+    "source": 6,
     "pc": [
       41,
       42
     ]
   },
   {
-    "teal": 30,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 29,
+    "source": 6,
     "pc": [
       43
     ]
   },
   {
-    "teal": 31,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 30,
+    "source": 6,
     "pc": [
       44
     ]
   },
   {
-    "teal": 32,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 31,
+    "source": 6,
     "pc": [
       45
     ]
   },
   {
-    "teal": 33,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 32,
+    "source": 6,
     "pc": [
       46,
       47
     ]
   },
   {
-    "teal": 34,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 33,
+    "source": 6,
     "pc": [
       48
     ]
   },
   {
-    "teal": 35,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 34,
+    "source": 6,
     "pc": [
       49
     ]
   },
   {
-    "teal": 38,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 37,
+    "source": 6,
     "errorMessage": "argument 0 (mbrPayment) for optInToAsset must be a pay transaction",
     "pc": [
       50
     ]
   },
   {
-    "teal": 41,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 40,
+    "source": 6,
     "pc": [
       51,
       52,
@@ -170,15 +164,15 @@
     ]
   },
   {
-    "teal": 42,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 41,
+    "source": 6,
     "pc": [
       54
     ]
   },
   {
-    "teal": 45,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 44,
+    "source": 6,
     "pc": [
       55,
       56,
@@ -186,45 +180,45 @@
     ]
   },
   {
-    "teal": 46,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 45,
+    "source": 6,
     "pc": [
       58
     ]
   },
   {
-    "teal": 47,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 46,
+    "source": 6,
     "pc": [
       59
     ]
   },
   {
-    "teal": 48,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 47,
+    "source": 6,
     "pc": [
       60,
       61
     ]
   },
   {
-    "teal": 49,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 48,
+    "source": 6,
     "pc": [
       62
     ]
   },
   {
-    "teal": 52,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 51,
+    "source": 6,
     "errorMessage": "argument 2 (sender) for optInToAsset must be a address",
     "pc": [
       63
     ]
   },
   {
-    "teal": 55,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 54,
+    "source": 6,
     "pc": [
       64,
       65,
@@ -232,22 +226,22 @@
     ]
   },
   {
-    "teal": 56,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 55,
+    "source": 6,
     "pc": [
       67
     ]
   },
   {
-    "teal": 57,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 56,
+    "source": 6,
     "pc": [
       68
     ]
   },
   {
-    "teal": 61,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 60,
+    "source": 6,
     "pc": [
       69,
       70,
@@ -255,231 +249,231 @@
     ]
   },
   {
-    "teal": 71,
-    "source": "contracts/plugins/optin_plugin.algo.ts:7",
+    "teal": 70,
+    "source": 7,
     "pc": [
       72,
       73
     ]
   },
   {
-    "teal": 72,
-    "source": "contracts/plugins/optin_plugin.algo.ts:8",
+    "teal": 71,
+    "source": 8,
     "pc": [
       74,
       75
     ]
   },
   {
-    "teal": 73,
-    "source": "contracts/plugins/optin_plugin.algo.ts:8",
+    "teal": 72,
+    "source": 8,
     "pc": [
       76,
       77
     ]
   },
   {
-    "teal": 74,
-    "source": "contracts/plugins/optin_plugin.algo.ts:8",
+    "teal": 73,
+    "source": 8,
     "pc": [
       78
     ]
   },
   {
-    "teal": 77,
-    "source": "contracts/plugins/optin_plugin.algo.ts:8",
+    "teal": 76,
+    "source": 8,
     "errorMessage": "transaction verification failed: {\"txn\":\"mbrPayment\",\"field\":\"receiver\",\"expected\":\"sender\"}",
     "pc": [
       79
     ]
   },
   {
-    "teal": 80,
-    "source": "contracts/plugins/optin_plugin.algo.ts:7",
+    "teal": 79,
+    "source": 7,
     "pc": [
       80,
       81
     ]
   },
   {
-    "teal": 81,
-    "source": "contracts/plugins/optin_plugin.algo.ts:9",
+    "teal": 80,
+    "source": 9,
     "pc": [
       82,
       83
     ]
   },
   {
-    "teal": 82,
-    "source": "contracts/plugins/optin_plugin.algo.ts:10",
+    "teal": 81,
+    "source": 10,
     "pc": [
       84,
       85
     ]
   },
   {
-    "teal": 83,
-    "source": "contracts/plugins/optin_plugin.algo.ts:10",
+    "teal": 82,
+    "source": 10,
     "pc": [
       86
     ]
   },
   {
-    "teal": 86,
-    "source": "contracts/plugins/optin_plugin.algo.ts:10",
+    "teal": 85,
+    "source": 10,
     "errorMessage": "transaction verification failed: {\"txn\":\"mbrPayment\",\"field\":\"amount\",\"condition\":\"greaterThanEqualTo\",\"expected\":\">=globals.assetOptInMinBalance\"}",
     "pc": [
       87
     ]
   },
   {
-    "teal": 96,
-    "source": "contracts/plugins/optin_plugin.algo.ts:14",
+    "teal": 95,
+    "source": 14,
     "pc": [
       88
     ]
   },
   {
-    "teal": 97,
-    "source": "contracts/plugins/optin_plugin.algo.ts:14",
+    "teal": 96,
+    "source": 14,
     "pc": [
       89,
       90
     ]
   },
   {
-    "teal": 98,
-    "source": "contracts/plugins/optin_plugin.algo.ts:14",
+    "teal": 97,
+    "source": 14,
     "pc": [
       91,
       92
     ]
   },
   {
-    "teal": 102,
-    "source": "contracts/plugins/optin_plugin.algo.ts:15",
+    "teal": 101,
+    "source": 15,
     "pc": [
       93,
       94
     ]
   },
   {
-    "teal": 103,
-    "source": "contracts/plugins/optin_plugin.algo.ts:15",
+    "teal": 102,
+    "source": 15,
     "pc": [
       95,
       96
     ]
   },
   {
-    "teal": 107,
-    "source": "contracts/plugins/optin_plugin.algo.ts:16",
+    "teal": 106,
+    "source": 16,
     "pc": [
       97,
       98
     ]
   },
   {
-    "teal": 108,
-    "source": "contracts/plugins/optin_plugin.algo.ts:16",
+    "teal": 107,
+    "source": 16,
     "pc": [
       99,
       100
     ]
   },
   {
-    "teal": 112,
-    "source": "contracts/plugins/optin_plugin.algo.ts:17",
+    "teal": 111,
+    "source": 17,
     "pc": [
       101
     ]
   },
   {
-    "teal": 113,
-    "source": "contracts/plugins/optin_plugin.algo.ts:17",
+    "teal": 112,
+    "source": 17,
     "pc": [
       102,
       103
     ]
   },
   {
-    "teal": 117,
-    "source": "contracts/plugins/optin_plugin.algo.ts:18",
+    "teal": 116,
+    "source": 18,
     "pc": [
       104,
       105
     ]
   },
   {
-    "teal": 118,
-    "source": "contracts/plugins/optin_plugin.algo.ts:18",
+    "teal": 117,
+    "source": 18,
     "pc": [
       106,
       107
     ]
   },
   {
-    "teal": 122,
-    "source": "contracts/plugins/optin_plugin.algo.ts:19",
+    "teal": 121,
+    "source": 19,
     "pc": [
       108,
       109
     ]
   },
   {
-    "teal": 123,
-    "source": "contracts/plugins/optin_plugin.algo.ts:19",
+    "teal": 122,
+    "source": 19,
     "pc": [
       110,
       111
     ]
   },
   {
-    "teal": 126,
-    "source": "contracts/plugins/optin_plugin.algo.ts:14",
+    "teal": 125,
+    "source": 14,
     "pc": [
       112
     ]
   },
   {
-    "teal": 127,
-    "source": "contracts/plugins/optin_plugin.algo.ts:14",
+    "teal": 126,
+    "source": 14,
     "pc": [
       113,
       114
     ]
   },
   {
-    "teal": 130,
-    "source": "contracts/plugins/optin_plugin.algo.ts:14",
+    "teal": 129,
+    "source": 14,
     "pc": [
       115
     ]
   },
   {
-    "teal": 131,
-    "source": "contracts/plugins/optin_plugin.algo.ts:6",
+    "teal": 130,
+    "source": 6,
     "pc": [
       116
     ]
   },
   {
-    "teal": 134,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 133,
+    "source": 3,
     "pc": [
       117
     ]
   },
   {
-    "teal": 135,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 134,
+    "source": 3,
     "pc": [
       118
     ]
   },
   {
-    "teal": 138,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 137,
+    "source": 3,
     "pc": [
       119,
       120,
@@ -490,8 +484,8 @@
     ]
   },
   {
-    "teal": 139,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 138,
+    "source": 3,
     "pc": [
       125,
       126,
@@ -499,8 +493,8 @@
     ]
   },
   {
-    "teal": 140,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 139,
+    "source": 3,
     "pc": [
       128,
       129,
@@ -509,16 +503,16 @@
     ]
   },
   {
-    "teal": 143,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 142,
+    "source": 3,
     "errorMessage": "this contract does not implement the given ABI method for create NoOp",
     "pc": [
       132
     ]
   },
   {
-    "teal": 146,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 145,
+    "source": 3,
     "pc": [
       133,
       134,
@@ -529,8 +523,8 @@
     ]
   },
   {
-    "teal": 147,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 146,
+    "source": 3,
     "pc": [
       139,
       140,
@@ -538,8 +532,8 @@
     ]
   },
   {
-    "teal": 148,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 147,
+    "source": 3,
     "pc": [
       142,
       143,
@@ -548,8 +542,8 @@
     ]
   },
   {
-    "teal": 151,
-    "source": "contracts/plugins/optin_plugin.algo.ts:3",
+    "teal": 150,
+    "source": 3,
     "errorMessage": "this contract does not implement the given ABI method for call NoOp",
     "pc": [
       146

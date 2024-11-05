@@ -1,27 +1,15 @@
 [
   {
     "teal": 1,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "source": 21,
     "pc": [
-      0
-    ]
-  },
-  {
-    "teal": 2,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      0,
       1,
       2,
       3,
       4,
       5,
-      6
-    ]
-  },
-  {
-    "teal": 3,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      6,
       7,
       8,
       9,
@@ -51,59 +39,59 @@
       33,
       34,
       35,
-      36,
+      36
+    ]
+  },
+  {
+    "teal": 13,
+    "source": 21,
+    "pc": [
       37,
       38
     ]
   },
   {
-    "teal": 15,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "teal": 14,
+    "source": 21,
     "pc": [
-      39,
+      39
+    ]
+  },
+  {
+    "teal": 15,
+    "source": 21,
+    "pc": [
       40
     ]
   },
   {
     "teal": 16,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "source": 21,
     "pc": [
       41
     ]
   },
   {
     "teal": 17,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "source": 21,
     "pc": [
-      42
-    ]
-  },
-  {
-    "teal": 18,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      42,
       43
     ]
   },
   {
+    "teal": 18,
+    "source": 21,
+    "pc": [
+      44
+    ]
+  },
+  {
     "teal": 19,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "source": 21,
     "pc": [
-      44,
-      45
-    ]
-  },
-  {
-    "teal": 20,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      46
-    ]
-  },
-  {
-    "teal": 21,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      45,
+      46,
       47,
       48,
       49,
@@ -127,1183 +115,1215 @@
       67,
       68,
       69,
-      70,
-      71,
-      72
+      70
     ]
   },
   {
-    "teal": 25,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "teal": 23,
+    "source": 21,
     "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
     "pc": [
-      73
+      71
     ]
   },
   {
-    "teal": 31,
-    "source": "contracts/abstracted_account.algo.ts:44",
+    "teal": 29,
+    "source": 41,
     "pc": [
-      74,
-      75,
-      76
+      72,
+      73,
+      74
     ]
   },
   {
-    "teal": 34,
-    "source": "contracts/abstracted_account.algo.ts:44",
+    "teal": 32,
+    "source": 41,
     "pc": [
+      75
+    ]
+  },
+  {
+    "teal": 33,
+    "source": 41,
+    "pc": [
+      76,
       77
     ]
   },
   {
-    "teal": 35,
-    "source": "contracts/abstracted_account.algo.ts:44",
+    "teal": 37,
+    "source": 42,
     "pc": [
-      78,
-      79
+      78
     ]
   },
   {
-    "teal": 39,
-    "source": "contracts/abstracted_account.algo.ts:45",
+    "teal": 38,
+    "source": 42,
     "pc": [
+      79,
       80
     ]
   },
   {
-    "teal": 40,
-    "source": "contracts/abstracted_account.algo.ts:45",
+    "teal": 42,
+    "source": 44,
     "pc": [
       81,
       82
     ]
   },
   {
-    "teal": 44,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 43,
+    "source": 44,
     "pc": [
-      83,
+      83
+    ]
+  },
+  {
+    "teal": 44,
+    "source": 44,
+    "pc": [
       84
     ]
   },
   {
     "teal": 45,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "source": 44,
     "pc": [
-      85
-    ]
-  },
-  {
-    "teal": 46,
-    "source": "contracts/abstracted_account.algo.ts:47",
-    "pc": [
+      85,
       86
     ]
   },
   {
-    "teal": 47,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 50,
+    "source": 44,
     "pc": [
       87,
       88
     ]
   },
   {
-    "teal": 52,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 51,
+    "source": 44,
     "pc": [
       89,
       90
     ]
   },
   {
+    "teal": 52,
+    "source": 44,
+    "pc": [
+      91
+    ]
+  },
+  {
     "teal": 53,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "source": 44,
     "pc": [
-      91,
-      92
+      92,
+      93,
+      94
     ]
   },
   {
-    "teal": 54,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 57,
+    "source": 45,
     "pc": [
-      93
-    ]
-  },
-  {
-    "teal": 55,
-    "source": "contracts/abstracted_account.algo.ts:47",
-    "pc": [
-      94,
       95,
       96
     ]
   },
   {
-    "teal": 59,
-    "source": "contracts/abstracted_account.algo.ts:48",
+    "teal": 58,
+    "source": 45,
     "pc": [
       97,
       98
     ]
   },
   {
-    "teal": 60,
-    "source": "contracts/abstracted_account.algo.ts:48",
+    "teal": 63,
+    "source": 48,
     "pc": [
       99,
       100
     ]
   },
   {
-    "teal": 65,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 64,
+    "source": 48,
     "pc": [
       101,
       102
     ]
   },
   {
-    "teal": 66,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 65,
+    "source": 48,
     "pc": [
       103,
       104
     ]
   },
   {
-    "teal": 67,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 66,
+    "source": 48,
     "pc": [
       105
     ]
   },
   {
-    "teal": 68,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 67,
+    "source": 48,
     "pc": [
       106
     ]
   },
   {
+    "teal": 68,
+    "source": 48,
+    "pc": [
+      107,
+      108,
+      109
+    ]
+  },
+  {
     "teal": 69,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "source": 48,
     "pc": [
-      107
-    ]
-  },
-  {
-    "teal": 70,
-    "source": "contracts/abstracted_account.algo.ts:51",
-    "pc": [
-      108
-    ]
-  },
-  {
-    "teal": 71,
-    "source": "contracts/abstracted_account.algo.ts:51",
-    "pc": [
-      109,
       110,
       111
     ]
   },
   {
-    "teal": 72,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 70,
+    "source": 48,
     "pc": [
       112,
       113
     ]
   },
   {
-    "teal": 73,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 71,
+    "source": 48,
     "pc": [
       114,
       115
     ]
   },
   {
-    "teal": 74,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 72,
+    "source": 48,
     "pc": [
-      116,
+      116
+    ]
+  },
+  {
+    "teal": 73,
+    "source": 48,
+    "pc": [
       117
     ]
   },
   {
-    "teal": 75,
-    "source": "contracts/abstracted_account.algo.ts:51",
-    "pc": [
-      118
-    ]
-  },
-  {
     "teal": 76,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "source": 48,
     "pc": [
-      119
+      118,
+      119,
+      120
     ]
   },
   {
-    "teal": 79,
-    "source": "contracts/abstracted_account.algo.ts:51",
+    "teal": 81,
+    "source": 49,
     "pc": [
-      120,
-      121,
-      122
+      121
     ]
   },
   {
-    "teal": 84,
-    "source": "contracts/abstracted_account.algo.ts:52",
+    "teal": 82,
+    "source": 49,
     "pc": [
+      122,
       123
     ]
   },
   {
-    "teal": 85,
-    "source": "contracts/abstracted_account.algo.ts:52",
+    "teal": 83,
+    "source": 50,
     "pc": [
       124,
-      125
+      125,
+      126
     ]
   },
   {
-    "teal": 86,
-    "source": "contracts/abstracted_account.algo.ts:53",
+    "teal": 93,
+    "source": 55,
     "pc": [
-      126,
       127,
       128
     ]
   },
   {
-    "teal": 96,
-    "source": "contracts/abstracted_account.algo.ts:58",
+    "teal": 94,
+    "source": 55,
     "pc": [
       129,
       130
     ]
   },
   {
-    "teal": 97,
-    "source": "contracts/abstracted_account.algo.ts:58",
+    "teal": 95,
+    "source": 55,
     "pc": [
-      131,
+      131
+    ]
+  },
+  {
+    "teal": 96,
+    "source": 55,
+    "pc": [
       132
     ]
   },
   {
-    "teal": 98,
-    "source": "contracts/abstracted_account.algo.ts:58",
+    "teal": 97,
+    "source": 55,
     "pc": [
       133
     ]
   },
   {
+    "teal": 98,
+    "source": 55,
+    "pc": [
+      134,
+      135,
+      136
+    ]
+  },
+  {
     "teal": 99,
-    "source": "contracts/abstracted_account.algo.ts:58",
+    "source": 56,
     "pc": [
-      134
-    ]
-  },
-  {
-    "teal": 100,
-    "source": "contracts/abstracted_account.algo.ts:58",
-    "pc": [
-      135
-    ]
-  },
-  {
-    "teal": 101,
-    "source": "contracts/abstracted_account.algo.ts:58",
-    "pc": [
-      136,
       137,
       138
     ]
   },
   {
-    "teal": 102,
-    "source": "contracts/abstracted_account.algo.ts:59",
+    "teal": 100,
+    "source": 56,
     "pc": [
       139,
       140
     ]
   },
   {
-    "teal": 103,
-    "source": "contracts/abstracted_account.algo.ts:59",
+    "teal": 101,
+    "source": 56,
     "pc": [
       141,
-      142
+      142,
+      143
     ]
   },
   {
-    "teal": 104,
-    "source": "contracts/abstracted_account.algo.ts:59",
+    "teal": 102,
+    "source": 56,
     "pc": [
-      143,
-      144,
+      144
+    ]
+  },
+  {
+    "teal": 103,
+    "source": 55,
+    "pc": [
       145
     ]
   },
   {
-    "teal": 105,
-    "source": "contracts/abstracted_account.algo.ts:59",
+    "teal": 106,
+    "source": 56,
     "pc": [
       146
     ]
   },
   {
-    "teal": 106,
-    "source": "contracts/abstracted_account.algo.ts:58",
+    "teal": 107,
+    "source": 56,
     "pc": [
-      147
+      147,
+      148,
+      149
     ]
   },
   {
-    "teal": 109,
-    "source": "contracts/abstracted_account.algo.ts:59",
+    "teal": 108,
+    "source": 57,
     "pc": [
-      148
-    ]
-  },
-  {
-    "teal": 110,
-    "source": "contracts/abstracted_account.algo.ts:59",
-    "pc": [
-      149,
       150,
       151
     ]
   },
   {
-    "teal": 111,
-    "source": "contracts/abstracted_account.algo.ts:60",
+    "teal": 109,
+    "source": 57,
     "pc": [
       152,
       153
     ]
   },
   {
-    "teal": 112,
-    "source": "contracts/abstracted_account.algo.ts:60",
+    "teal": 110,
+    "source": 57,
     "pc": [
-      154,
+      154
+    ]
+  },
+  {
+    "teal": 111,
+    "source": 57,
+    "pc": [
       155
     ]
   },
   {
-    "teal": 113,
-    "source": "contracts/abstracted_account.algo.ts:60",
+    "teal": 112,
+    "source": 56,
     "pc": [
       156
     ]
   },
   {
-    "teal": 114,
-    "source": "contracts/abstracted_account.algo.ts:60",
+    "teal": 115,
+    "source": 57,
     "pc": [
       157
     ]
   },
   {
-    "teal": 115,
-    "source": "contracts/abstracted_account.algo.ts:59",
+    "teal": 116,
+    "source": 57,
     "pc": [
-      158
+      158,
+      159,
+      160
     ]
   },
   {
-    "teal": 118,
-    "source": "contracts/abstracted_account.algo.ts:60",
+    "teal": 117,
+    "source": 58,
     "pc": [
-      159
-    ]
-  },
-  {
-    "teal": 119,
-    "source": "contracts/abstracted_account.algo.ts:60",
-    "pc": [
-      160,
       161,
       162
     ]
   },
   {
-    "teal": 120,
-    "source": "contracts/abstracted_account.algo.ts:61",
+    "teal": 118,
+    "source": 58,
     "pc": [
       163,
       164
     ]
   },
   {
-    "teal": 121,
-    "source": "contracts/abstracted_account.algo.ts:61",
+    "teal": 119,
+    "source": 58,
     "pc": [
-      165,
+      165
+    ]
+  },
+  {
+    "teal": 120,
+    "source": 58,
+    "pc": [
       166
     ]
   },
   {
-    "teal": 122,
-    "source": "contracts/abstracted_account.algo.ts:61",
+    "teal": 121,
+    "source": 57,
     "pc": [
       167
     ]
   },
   {
-    "teal": 123,
-    "source": "contracts/abstracted_account.algo.ts:61",
+    "teal": 124,
+    "source": 58,
     "pc": [
       168
     ]
   },
   {
-    "teal": 124,
-    "source": "contracts/abstracted_account.algo.ts:60",
+    "teal": 125,
+    "source": 58,
     "pc": [
-      169
+      169,
+      170,
+      171
     ]
   },
   {
-    "teal": 127,
-    "source": "contracts/abstracted_account.algo.ts:61",
+    "teal": 126,
+    "source": 59,
     "pc": [
-      170
-    ]
-  },
-  {
-    "teal": 128,
-    "source": "contracts/abstracted_account.algo.ts:61",
-    "pc": [
-      171,
       172,
       173
     ]
   },
   {
-    "teal": 129,
-    "source": "contracts/abstracted_account.algo.ts:62",
+    "teal": 127,
+    "source": 59,
     "pc": [
       174,
-      175
+      175,
+      176
     ]
   },
   {
-    "teal": 130,
-    "source": "contracts/abstracted_account.algo.ts:62",
+    "teal": 128,
+    "source": 59,
     "pc": [
-      176,
       177,
       178
     ]
   },
   {
-    "teal": 131,
-    "source": "contracts/abstracted_account.algo.ts:62",
+    "teal": 129,
+    "source": 59,
     "pc": [
-      179,
+      179
+    ]
+  },
+  {
+    "teal": 130,
+    "source": 58,
+    "pc": [
       180
     ]
   },
   {
-    "teal": 132,
-    "source": "contracts/abstracted_account.algo.ts:62",
-    "pc": [
-      181
-    ]
-  },
-  {
     "teal": 133,
-    "source": "contracts/abstracted_account.algo.ts:61",
+    "source": 54,
     "pc": [
-      182
+      181,
+      182,
+      183
     ]
   },
   {
-    "teal": 136,
-    "source": "contracts/abstracted_account.algo.ts:57",
+    "teal": 138,
+    "source": 61,
     "pc": [
-      183,
-      184,
-      185
+      184
     ]
   },
   {
-    "teal": 141,
-    "source": "contracts/abstracted_account.algo.ts:64",
+    "teal": 139,
+    "source": 61,
     "pc": [
+      185,
       186
     ]
   },
   {
-    "teal": 142,
-    "source": "contracts/abstracted_account.algo.ts:64",
+    "teal": 140,
+    "source": 62,
     "pc": [
       187,
-      188
+      188,
+      189
     ]
   },
   {
-    "teal": 143,
-    "source": "contracts/abstracted_account.algo.ts:65",
+    "teal": 147,
+    "source": 44,
     "pc": [
-      189,
       190,
       191
     ]
   },
   {
-    "teal": 150,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 148,
+    "source": 44,
     "pc": [
-      192,
+      192
+    ]
+  },
+  {
+    "teal": 149,
+    "source": 44,
+    "pc": [
       193
     ]
   },
   {
-    "teal": 151,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 150,
+    "source": 44,
     "pc": [
-      194
-    ]
-  },
-  {
-    "teal": 152,
-    "source": "contracts/abstracted_account.algo.ts:47",
-    "pc": [
+      194,
       195
     ]
   },
   {
-    "teal": 153,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 151,
+    "source": 44,
     "pc": [
       196,
-      197
+      197,
+      198
     ]
   },
   {
-    "teal": 154,
-    "source": "contracts/abstracted_account.algo.ts:47",
+    "teal": 156,
+    "source": 66,
     "pc": [
-      198,
       199,
       200
     ]
   },
   {
-    "teal": 159,
-    "source": "contracts/abstracted_account.algo.ts:69",
+    "teal": 157,
+    "source": 66,
     "pc": [
-      201,
+      201
+    ]
+  },
+  {
+    "teal": 158,
+    "source": 41,
+    "pc": [
       202
     ]
   },
   {
-    "teal": 160,
-    "source": "contracts/abstracted_account.algo.ts:69",
+    "teal": 163,
+    "source": 75,
     "pc": [
-      203
+      203,
+      204,
+      205
     ]
   },
   {
-    "teal": 161,
-    "source": "contracts/abstracted_account.algo.ts:44",
+    "teal": 164,
+    "source": 75,
     "pc": [
-      204
+      206
     ]
   },
   {
-    "teal": 168,
-    "source": "contracts/abstracted_account.algo.ts:76",
+    "teal": 165,
+    "source": 75,
     "pc": [
-      205,
-      206,
       207
     ]
   },
   {
-    "teal": 172,
-    "source": "contracts/abstracted_account.algo.ts:77",
+    "teal": 166,
+    "source": 75,
     "pc": [
       208
     ]
   },
   {
-    "teal": 173,
-    "source": "contracts/abstracted_account.algo.ts:77",
+    "teal": 167,
+    "source": 75,
     "pc": [
       209
     ]
   },
   {
-    "teal": 174,
-    "source": "contracts/abstracted_account.algo.ts:77",
+    "teal": 170,
+    "source": 75,
+    "errorMessage": "argument 0 (admin) for createApplication must be a address",
     "pc": [
-      210,
-      211
+      210
+    ]
+  },
+  {
+    "teal": 173,
+    "source": 75,
+    "pc": [
+      211,
+      212,
+      213
+    ]
+  },
+  {
+    "teal": 174,
+    "source": 75,
+    "pc": [
+      214
     ]
   },
   {
     "teal": 175,
-    "source": "contracts/abstracted_account.algo.ts:77",
+    "source": 75,
     "pc": [
-      212
-    ]
-  },
-  {
-    "teal": 176,
-    "source": "contracts/abstracted_account.algo.ts:77",
-    "pc": [
-      213,
-      214,
       215
     ]
   },
   {
-    "teal": 177,
-    "source": "contracts/abstracted_account.algo.ts:77",
+    "teal": 184,
+    "source": 75,
     "pc": [
       216,
-      217
+      217,
+      218
     ]
   },
   {
-    "teal": 178,
-    "source": "contracts/abstracted_account.algo.ts:77",
+    "teal": 191,
+    "source": 77,
     "pc": [
-      218,
       219,
       220
     ]
   },
   {
-    "teal": 181,
-    "source": "contracts/abstracted_account.algo.ts:77",
+    "teal": 192,
+    "source": 77,
     "pc": [
       221,
       222
     ]
   },
   {
-    "teal": 184,
-    "source": "contracts/abstracted_account.algo.ts:76",
+    "teal": 193,
+    "source": 77,
     "pc": [
       223
     ]
   },
   {
-    "teal": 189,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 196,
+    "source": 77,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"admin\"}",
     "pc": [
-      224,
-      225,
-      226
+      224
     ]
   },
   {
-    "teal": 190,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 200,
+    "source": 80,
     "pc": [
+      225
+    ]
+  },
+  {
+    "teal": 201,
+    "source": 80,
+    "pc": [
+      226,
       227
     ]
   },
   {
-    "teal": 191,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 202,
+    "source": 80,
     "pc": [
       228
     ]
   },
   {
-    "teal": 192,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 203,
+    "source": 75,
     "pc": [
       229
     ]
   },
   {
-    "teal": 193,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 208,
+    "source": 88,
     "pc": [
-      230
+      230,
+      231,
+      232
     ]
   },
   {
-    "teal": 196,
-    "source": "contracts/abstracted_account.algo.ts:87",
-    "errorMessage": "argument 0 (admin) for createApplication must be a address",
+    "teal": 209,
+    "source": 88,
     "pc": [
-      231
+      233
     ]
   },
   {
-    "teal": 199,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 210,
+    "source": 88,
     "pc": [
-      232,
-      233,
       234
     ]
   },
   {
-    "teal": 200,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 211,
+    "source": 88,
     "pc": [
       235
     ]
   },
   {
-    "teal": 201,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 212,
+    "source": 88,
     "pc": [
       236
     ]
   },
   {
-    "teal": 202,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 215,
+    "source": 88,
+    "errorMessage": "argument 0 (newAdmin) for arc58_changeAdmin must be a address",
     "pc": [
       237
     ]
   },
   {
-    "teal": 203,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 218,
+    "source": 88,
     "pc": [
-      238
+      238,
+      239,
+      240
     ]
   },
   {
-    "teal": 206,
-    "source": "contracts/abstracted_account.algo.ts:87",
-    "errorMessage": "argument 1 (controlledAddress) for createApplication must be a address",
+    "teal": 219,
+    "source": 88,
     "pc": [
-      239
+      241
     ]
   },
   {
-    "teal": 209,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 220,
+    "source": 88,
     "pc": [
-      240,
-      241,
       242
     ]
   },
   {
-    "teal": 210,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 228,
+    "source": 88,
     "pc": [
-      243
+      243,
+      244,
+      245
     ]
   },
   {
-    "teal": 211,
-    "source": "contracts/abstracted_account.algo.ts:87",
+    "teal": 233,
+    "source": 89,
     "pc": [
-      244
-    ]
-  },
-  {
-    "teal": 221,
-    "source": "contracts/abstracted_account.algo.ts:87",
-    "pc": [
-      245,
       246,
       247
     ]
   },
   {
-    "teal": 228,
-    "source": "contracts/abstracted_account.algo.ts:89",
+    "teal": 234,
+    "source": 89,
     "pc": [
-      248,
+      248
+    ]
+  },
+  {
+    "teal": 235,
+    "source": 89,
+    "pc": [
       249
     ]
   },
   {
-    "teal": 229,
-    "source": "contracts/abstracted_account.algo.ts:89",
+    "teal": 236,
+    "source": 89,
     "pc": [
-      250,
+      250
+    ]
+  },
+  {
+    "teal": 239,
+    "source": 89,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
+    "pc": [
       251
     ]
   },
   {
-    "teal": 230,
-    "source": "contracts/abstracted_account.algo.ts:89",
+    "teal": 243,
+    "source": 90,
     "pc": [
       252
     ]
   },
   {
-    "teal": 231,
-    "source": "contracts/abstracted_account.algo.ts:89",
+    "teal": 244,
+    "source": 90,
     "pc": [
       253,
       254
     ]
   },
   {
-    "teal": 232,
-    "source": "contracts/abstracted_account.algo.ts:89",
+    "teal": 245,
+    "source": 90,
     "pc": [
-      255,
+      255
+    ]
+  },
+  {
+    "teal": 246,
+    "source": 88,
+    "pc": [
       256
     ]
   },
   {
-    "teal": 233,
-    "source": "contracts/abstracted_account.algo.ts:89",
+    "teal": 251,
+    "source": 101,
     "pc": [
-      257
-    ]
-  },
-  {
-    "teal": 234,
-    "source": "contracts/abstracted_account.algo.ts:89",
-    "pc": [
-      258
-    ]
-  },
-  {
-    "teal": 237,
-    "source": "contracts/abstracted_account.algo.ts:89",
-    "errorMessage": "transaction verification failed: {\"txn\":{\"txnText\":\"this.txn\"},\"field\":\"sender\",\"condition\":\"includedIn\",\"expected\":\"[controlledAddress, admin]\"}",
-    "pc": [
+      257,
+      258,
       259
     ]
   },
   {
-    "teal": 241,
-    "source": "contracts/abstracted_account.algo.ts:92",
+    "teal": 252,
+    "source": 101,
     "pc": [
-      260,
+      260
+    ]
+  },
+  {
+    "teal": 253,
+    "source": 101,
+    "pc": [
       261
     ]
   },
   {
-    "teal": 242,
-    "source": "contracts/abstracted_account.algo.ts:92",
+    "teal": 254,
+    "source": 101,
     "pc": [
-      262,
+      262
+    ]
+  },
+  {
+    "teal": 255,
+    "source": 101,
+    "pc": [
       263
     ]
   },
   {
-    "teal": 243,
-    "source": "contracts/abstracted_account.algo.ts:92",
+    "teal": 258,
+    "source": 101,
+    "errorMessage": "argument 0 (newAdmin) for arc58_pluginChangeAdmin must be a address",
     "pc": [
       264
     ]
   },
   {
-    "teal": 244,
-    "source": "contracts/abstracted_account.algo.ts:92",
+    "teal": 261,
+    "source": 101,
     "pc": [
-      265
+      265,
+      266,
+      267
     ]
   },
   {
-    "teal": 248,
-    "source": "contracts/abstracted_account.algo.ts:94",
+    "teal": 262,
+    "source": 101,
     "pc": [
-      266
-    ]
-  },
-  {
-    "teal": 249,
-    "source": "contracts/abstracted_account.algo.ts:94",
-    "pc": [
-      267,
       268
     ]
   },
   {
-    "teal": 250,
-    "source": "contracts/abstracted_account.algo.ts:94",
+    "teal": 263,
+    "source": 101,
     "pc": [
       269
     ]
   },
   {
-    "teal": 254,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 264,
+    "source": 101,
     "pc": [
       270
     ]
   },
   {
-    "teal": 255,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 265,
+    "source": 101,
     "pc": [
-      271,
+      271
+    ]
+  },
+  {
+    "teal": 268,
+    "source": 101,
+    "errorMessage": "argument 1 (allowedCaller) for arc58_pluginChangeAdmin must be a address",
+    "pc": [
       272
     ]
   },
   {
-    "teal": 256,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 271,
+    "source": 101,
     "pc": [
       273,
-      274
-    ]
-  },
-  {
-    "teal": 257,
-    "source": "contracts/abstracted_account.algo.ts:95",
-    "pc": [
+      274,
       275
     ]
   },
   {
-    "teal": 258,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 272,
+    "source": 101,
     "pc": [
-      276,
-      277,
-      278
+      276
     ]
   },
   {
-    "teal": 259,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 275,
+    "source": 101,
     "pc": [
-      279,
+      277,
+      278,
+      279
+    ]
+  },
+  {
+    "teal": 276,
+    "source": 101,
+    "pc": [
       280
     ]
   },
   {
-    "teal": 260,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 277,
+    "source": 101,
     "pc": [
-      281,
-      282,
-      283
+      281
     ]
   },
   {
-    "teal": 263,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 287,
+    "source": 101,
     "pc": [
-      284,
+      282,
+      283,
+      284
+    ]
+  },
+  {
+    "teal": 290,
+    "source": 101,
+    "pc": [
       285
     ]
   },
   {
-    "teal": 266,
-    "source": "contracts/abstracted_account.algo.ts:95",
+    "teal": 295,
+    "source": 102,
     "pc": [
-      286
-    ]
-  },
-  {
-    "teal": 267,
-    "source": "contracts/abstracted_account.algo.ts:87",
-    "pc": [
+      286,
       287
     ]
   },
   {
-    "teal": 272,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 296,
+    "source": 102,
     "pc": [
       288,
-      289,
-      290
+      289
     ]
   },
   {
-    "teal": 273,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 297,
+    "source": 102,
     "pc": [
+      290,
       291
     ]
   },
   {
-    "teal": 274,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 298,
+    "source": 102,
     "pc": [
       292
     ]
   },
   {
-    "teal": 275,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 299,
+    "source": 102,
     "pc": [
       293
     ]
   },
   {
-    "teal": 276,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 302,
+    "source": 102,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"plugin.address\"}",
     "pc": [
       294
     ]
   },
   {
-    "teal": 279,
-    "source": "contracts/abstracted_account.algo.ts:103",
-    "errorMessage": "argument 0 (newAdmin) for arc58_changeAdmin must be a address",
+    "teal": 306,
+    "source": 103,
     "pc": [
-      295
+      295,
+      296
     ]
   },
   {
-    "teal": 282,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 307,
+    "source": 103,
     "pc": [
-      296,
       297,
       298
     ]
   },
   {
-    "teal": 283,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 308,
+    "source": 103,
     "pc": [
       299
     ]
   },
   {
-    "teal": 284,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 309,
+    "source": 103,
     "pc": [
-      300
+      300,
+      301
     ]
   },
   {
-    "teal": 292,
-    "source": "contracts/abstracted_account.algo.ts:103",
+    "teal": 310,
+    "source": 103,
     "pc": [
-      301,
       302,
       303
     ]
   },
   {
-    "teal": 297,
-    "source": "contracts/abstracted_account.algo.ts:104",
+    "teal": 311,
+    "source": 103,
     "pc": [
-      304,
+      304
+    ]
+  },
+  {
+    "teal": 312,
+    "source": 103,
+    "pc": [
       305
     ]
   },
   {
-    "teal": 298,
-    "source": "contracts/abstracted_account.algo.ts:104",
+    "teal": 315,
+    "source": 103,
+    "errorMessage": "This plugin is not in control of the account",
     "pc": [
       306
     ]
   },
   {
-    "teal": 299,
-    "source": "contracts/abstracted_account.algo.ts:104",
+    "teal": 319,
+    "source": 105,
     "pc": [
-      307
-    ]
-  },
-  {
-    "teal": 300,
-    "source": "contracts/abstracted_account.algo.ts:104",
-    "pc": [
+      307,
       308
     ]
   },
   {
-    "teal": 303,
-    "source": "contracts/abstracted_account.algo.ts:104",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
+    "teal": 320,
+    "source": 105,
     "pc": [
       309
     ]
   },
   {
-    "teal": 307,
-    "source": "contracts/abstracted_account.algo.ts:105",
+    "teal": 321,
+    "source": 105,
     "pc": [
-      310
+      310,
+      311
     ]
   },
   {
-    "teal": 308,
-    "source": "contracts/abstracted_account.algo.ts:105",
+    "teal": 322,
+    "source": 105,
     "pc": [
-      311,
       312
     ]
   },
   {
-    "teal": 309,
-    "source": "contracts/abstracted_account.algo.ts:105",
+    "teal": 323,
+    "source": 105,
     "pc": [
-      313
-    ]
-  },
-  {
-    "teal": 310,
-    "source": "contracts/abstracted_account.algo.ts:103",
-    "pc": [
+      313,
       314
     ]
   },
   {
-    "teal": 315,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 330,
+    "source": 107,
     "pc": [
-      315,
+      315
+    ]
+  },
+  {
+    "teal": 331,
+    "source": 107,
+    "pc": [
       316,
       317
     ]
   },
   {
-    "teal": 316,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 332,
+    "source": 107,
     "pc": [
       318
     ]
   },
   {
-    "teal": 317,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 333,
+    "source": 107,
     "pc": [
       319
     ]
   },
   {
-    "teal": 318,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 334,
+    "source": 107,
     "pc": [
       320
     ]
   },
   {
-    "teal": 319,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 335,
+    "source": 107,
     "pc": [
       321
     ]
   },
   {
-    "teal": 322,
-    "source": "contracts/abstracted_account.algo.ts:116",
-    "errorMessage": "argument 0 (newAdmin) for arc58_pluginChangeAdmin must be a address",
+    "teal": 336,
+    "source": 107,
     "pc": [
       322
     ]
   },
   {
-    "teal": 325,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 337,
+    "source": 107,
     "pc": [
       323,
       324,
@@ -1311,1039 +1331,1015 @@
     ]
   },
   {
-    "teal": 326,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 338,
+    "source": 107,
     "pc": [
       326
     ]
   },
   {
-    "teal": 327,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 339,
+    "source": 107,
     "pc": [
-      327
-    ]
-  },
-  {
-    "teal": 328,
-    "source": "contracts/abstracted_account.algo.ts:116",
-    "pc": [
+      327,
       328
     ]
   },
   {
-    "teal": 329,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 340,
+    "source": 107,
     "pc": [
       329
     ]
   },
   {
-    "teal": 332,
-    "source": "contracts/abstracted_account.algo.ts:116",
-    "errorMessage": "argument 1 (allowedCaller) for arc58_pluginChangeAdmin must be a address",
+    "teal": 341,
+    "source": 107,
     "pc": [
       330
     ]
   },
   {
-    "teal": 335,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 344,
+    "source": 107,
+    "errorMessage": "box value does not exist: this.plugins(key).value",
     "pc": [
-      331,
+      331
+    ]
+  },
+  {
+    "teal": 345,
+    "source": 107,
+    "pc": [
       332,
       333
     ]
   },
   {
-    "teal": 336,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 346,
+    "source": 107,
     "pc": [
-      334
+      334,
+      335
     ]
   },
   {
-    "teal": 339,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 347,
+    "source": 107,
     "pc": [
-      335,
       336,
-      337
-    ]
-  },
-  {
-    "teal": 340,
-    "source": "contracts/abstracted_account.algo.ts:116",
-    "pc": [
+      337,
       338
     ]
   },
   {
-    "teal": 341,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 348,
+    "source": 107,
     "pc": [
       339
     ]
   },
   {
-    "teal": 351,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 349,
+    "source": 107,
     "pc": [
-      340,
-      341,
+      340
+    ]
+  },
+  {
+    "teal": 353,
+    "source": 106,
+    "errorMessage": "This plugin does not have admin privileges",
+    "pc": [
+      341
+    ]
+  },
+  {
+    "teal": 357,
+    "source": 111,
+    "pc": [
       342
     ]
   },
   {
-    "teal": 354,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 358,
+    "source": 111,
     "pc": [
-      343
+      343,
+      344
     ]
   },
   {
     "teal": 359,
-    "source": "contracts/abstracted_account.algo.ts:117",
+    "source": 111,
     "pc": [
-      344,
       345
     ]
   },
   {
     "teal": 360,
-    "source": "contracts/abstracted_account.algo.ts:117",
+    "source": 101,
     "pc": [
-      346,
-      347
+      346
     ]
   },
   {
-    "teal": 361,
-    "source": "contracts/abstracted_account.algo.ts:117",
+    "teal": 365,
+    "source": 118,
     "pc": [
-      348,
-      349
+      347,
+      348
     ]
   },
   {
-    "teal": 362,
-    "source": "contracts/abstracted_account.algo.ts:117",
+    "teal": 368,
+    "source": 118,
     "pc": [
-      350
-    ]
-  },
-  {
-    "teal": 363,
-    "source": "contracts/abstracted_account.algo.ts:117",
-    "pc": [
+      349,
+      350,
       351
     ]
   },
   {
-    "teal": 366,
-    "source": "contracts/abstracted_account.algo.ts:117",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"plugin.address\"}",
+    "teal": 369,
+    "source": 118,
     "pc": [
       352
     ]
   },
   {
     "teal": 370,
-    "source": "contracts/abstracted_account.algo.ts:118",
+    "source": 118,
     "pc": [
       353
     ]
   },
   {
     "teal": 371,
-    "source": "contracts/abstracted_account.algo.ts:118",
+    "source": 118,
     "pc": [
       354
     ]
   },
   {
     "teal": 372,
-    "source": "contracts/abstracted_account.algo.ts:118",
+    "source": 118,
     "pc": [
-      355,
-      356
+      355
     ]
   },
   {
-    "teal": 373,
-    "source": "contracts/abstracted_account.algo.ts:118",
+    "teal": 379,
+    "source": 118,
     "pc": [
-      357
+      356,
+      357,
+      358
     ]
   },
   {
-    "teal": 374,
-    "source": "contracts/abstracted_account.algo.ts:118",
+    "teal": 383,
+    "source": 120,
     "pc": [
-      358,
       359
     ]
   },
   {
-    "teal": 375,
-    "source": "contracts/abstracted_account.algo.ts:118",
-    "pc": [
-      360,
-      361
-    ]
-  },
-  {
-    "teal": 376,
-    "source": "contracts/abstracted_account.algo.ts:118",
-    "pc": [
-      362
-    ]
-  },
-  {
-    "teal": 377,
-    "source": "contracts/abstracted_account.algo.ts:118",
-    "pc": [
-      363
-    ]
-  },
-  {
-    "teal": 380,
-    "source": "contracts/abstracted_account.algo.ts:118",
-    "errorMessage": "This plugin is not in control of the account",
-    "pc": [
-      364
-    ]
-  },
-  {
     "teal": 384,
-    "source": "contracts/abstracted_account.algo.ts:120",
+    "source": 120,
     "pc": [
-      365,
-      366
+      360
     ]
   },
   {
     "teal": 385,
-    "source": "contracts/abstracted_account.algo.ts:120",
+    "source": 118,
     "pc": [
-      367
+      361
     ]
   },
   {
-    "teal": 386,
-    "source": "contracts/abstracted_account.algo.ts:120",
+    "teal": 390,
+    "source": 126,
     "pc": [
+      362,
+      363,
+      364
+    ]
+  },
+  {
+    "teal": 391,
+    "source": 126,
+    "pc": [
+      365
+    ]
+  },
+  {
+    "teal": 392,
+    "source": 126,
+    "pc": [
+      366
+    ]
+  },
+  {
+    "teal": 398,
+    "source": 126,
+    "pc": [
+      367,
       368,
       369
     ]
   },
   {
-    "teal": 387,
-    "source": "contracts/abstracted_account.algo.ts:120",
+    "teal": 402,
+    "source": 127,
     "pc": [
-      370
+      370,
+      371
     ]
   },
   {
-    "teal": 388,
-    "source": "contracts/abstracted_account.algo.ts:120",
+    "teal": 403,
+    "source": 127,
     "pc": [
-      371,
-      372
-    ]
-  },
-  {
-    "teal": 395,
-    "source": "contracts/abstracted_account.algo.ts:122",
-    "pc": [
+      372,
       373
     ]
   },
   {
-    "teal": 396,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 404,
+    "source": 127,
     "pc": [
-      374,
-      375
+      374
     ]
   },
   {
-    "teal": 397,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 405,
+    "source": 127,
     "pc": [
+      375,
       376
     ]
   },
   {
-    "teal": 398,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 406,
+    "source": 127,
     "pc": [
       377
     ]
   },
   {
-    "teal": 399,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 407,
+    "source": 127,
     "pc": [
       378
     ]
   },
   {
-    "teal": 400,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 408,
+    "source": 126,
     "pc": [
       379
     ]
   },
   {
-    "teal": 401,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 413,
+    "source": 136,
     "pc": [
-      380
+      380,
+      381,
+      382
     ]
   },
   {
-    "teal": 402,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 414,
+    "source": 136,
     "pc": [
-      381,
-      382,
       383
     ]
   },
   {
-    "teal": 403,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 415,
+    "source": 136,
     "pc": [
       384
     ]
   },
   {
-    "teal": 404,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 416,
+    "source": 136,
     "pc": [
-      385,
+      385
+    ]
+  },
+  {
+    "teal": 417,
+    "source": 136,
+    "pc": [
       386
     ]
   },
   {
-    "teal": 405,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 420,
+    "source": 136,
+    "errorMessage": "argument 0 (flash) for arc58_rekeyTo must be a bool",
     "pc": [
       387
     ]
   },
   {
-    "teal": 406,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 421,
+    "source": 136,
     "pc": [
       388
     ]
   },
   {
-    "teal": 409,
-    "source": "contracts/abstracted_account.algo.ts:122",
-    "errorMessage": "box value does not exist: this.plugins(key).value",
+    "teal": 422,
+    "source": 136,
     "pc": [
       389
     ]
   },
   {
-    "teal": 410,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 425,
+    "source": 136,
     "pc": [
       390,
-      391
+      391,
+      392
     ]
   },
   {
-    "teal": 411,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 426,
+    "source": 136,
     "pc": [
-      392,
       393
     ]
   },
   {
-    "teal": 412,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 427,
+    "source": 136,
     "pc": [
-      394,
-      395,
+      394
+    ]
+  },
+  {
+    "teal": 428,
+    "source": 136,
+    "pc": [
+      395
+    ]
+  },
+  {
+    "teal": 429,
+    "source": 136,
+    "pc": [
       396
     ]
   },
   {
-    "teal": 413,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 432,
+    "source": 136,
+    "errorMessage": "argument 1 (addr) for arc58_rekeyTo must be a address",
     "pc": [
       397
     ]
   },
   {
-    "teal": 414,
-    "source": "contracts/abstracted_account.algo.ts:122",
+    "teal": 435,
+    "source": 136,
     "pc": [
-      398
-    ]
-  },
-  {
-    "teal": 418,
-    "source": "contracts/abstracted_account.algo.ts:121",
-    "errorMessage": "This plugin does not have admin privileges",
-    "pc": [
-      399
-    ]
-  },
-  {
-    "teal": 422,
-    "source": "contracts/abstracted_account.algo.ts:126",
-    "pc": [
+      398,
+      399,
       400
     ]
   },
   {
-    "teal": 423,
-    "source": "contracts/abstracted_account.algo.ts:126",
+    "teal": 436,
+    "source": 136,
     "pc": [
-      401,
+      401
+    ]
+  },
+  {
+    "teal": 437,
+    "source": 136,
+    "pc": [
       402
     ]
   },
   {
-    "teal": 424,
-    "source": "contracts/abstracted_account.algo.ts:126",
+    "teal": 446,
+    "source": 136,
     "pc": [
-      403
+      403,
+      404,
+      405
     ]
   },
   {
-    "teal": 425,
-    "source": "contracts/abstracted_account.algo.ts:116",
+    "teal": 451,
+    "source": 137,
     "pc": [
-      404
+      406,
+      407
     ]
   },
   {
-    "teal": 430,
-    "source": "contracts/abstracted_account.algo.ts:133",
+    "teal": 452,
+    "source": 137,
     "pc": [
-      405,
-      406
+      408
     ]
   },
   {
-    "teal": 433,
-    "source": "contracts/abstracted_account.algo.ts:133",
+    "teal": 453,
+    "source": 137,
     "pc": [
-      407,
-      408,
       409
     ]
   },
   {
-    "teal": 434,
-    "source": "contracts/abstracted_account.algo.ts:133",
+    "teal": 454,
+    "source": 137,
     "pc": [
       410
     ]
   },
   {
-    "teal": 435,
-    "source": "contracts/abstracted_account.algo.ts:133",
+    "teal": 457,
+    "source": 137,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
       411
     ]
   },
   {
-    "teal": 436,
-    "source": "contracts/abstracted_account.algo.ts:133",
+    "teal": 465,
+    "source": 139,
     "pc": [
       412
     ]
   },
   {
-    "teal": 437,
-    "source": "contracts/abstracted_account.algo.ts:133",
+    "teal": 466,
+    "source": 139,
     "pc": [
       413
     ]
   },
   {
-    "teal": 444,
-    "source": "contracts/abstracted_account.algo.ts:133",
+    "teal": 467,
+    "source": 139,
     "pc": [
       414,
-      415,
-      416
-    ]
-  },
-  {
-    "teal": 448,
-    "source": "contracts/abstracted_account.algo.ts:135",
-    "pc": [
-      417
-    ]
-  },
-  {
-    "teal": 449,
-    "source": "contracts/abstracted_account.algo.ts:135",
-    "pc": [
-      418
-    ]
-  },
-  {
-    "teal": 450,
-    "source": "contracts/abstracted_account.algo.ts:133",
-    "pc": [
-      419
-    ]
-  },
-  {
-    "teal": 455,
-    "source": "contracts/abstracted_account.algo.ts:141",
-    "pc": [
-      420,
-      421,
-      422
-    ]
-  },
-  {
-    "teal": 456,
-    "source": "contracts/abstracted_account.algo.ts:141",
-    "pc": [
-      423
-    ]
-  },
-  {
-    "teal": 457,
-    "source": "contracts/abstracted_account.algo.ts:141",
-    "pc": [
-      424
-    ]
-  },
-  {
-    "teal": 463,
-    "source": "contracts/abstracted_account.algo.ts:141",
-    "pc": [
-      425,
-      426,
-      427
-    ]
-  },
-  {
-    "teal": 467,
-    "source": "contracts/abstracted_account.algo.ts:142",
-    "pc": [
-      428
-    ]
-  },
-  {
-    "teal": 468,
-    "source": "contracts/abstracted_account.algo.ts:142",
-    "pc": [
-      429
-    ]
-  },
-  {
-    "teal": 469,
-    "source": "contracts/abstracted_account.algo.ts:142",
-    "pc": [
-      430,
-      431
-    ]
-  },
-  {
-    "teal": 470,
-    "source": "contracts/abstracted_account.algo.ts:142",
-    "pc": [
-      432
+      415
     ]
   },
   {
     "teal": 471,
-    "source": "contracts/abstracted_account.algo.ts:142",
+    "source": 140,
     "pc": [
-      433,
-      434,
-      435
+      416,
+      417
     ]
   },
   {
     "teal": 472,
-    "source": "contracts/abstracted_account.algo.ts:142",
+    "source": 140,
     "pc": [
-      436
+      418,
+      419
     ]
   },
   {
-    "teal": 473,
-    "source": "contracts/abstracted_account.algo.ts:142",
+    "teal": 476,
+    "source": 141,
     "pc": [
-      437
+      420,
+      421
     ]
   },
   {
-    "teal": 474,
-    "source": "contracts/abstracted_account.algo.ts:141",
+    "teal": 477,
+    "source": 141,
     "pc": [
-      438
-    ]
-  },
-  {
-    "teal": 479,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
-      439,
-      440,
-      441
-    ]
-  },
-  {
-    "teal": 480,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
-      442
+      422,
+      423
     ]
   },
   {
     "teal": 481,
-    "source": "contracts/abstracted_account.algo.ts:151",
+    "source": 142,
     "pc": [
-      443
-    ]
-  },
-  {
-    "teal": 482,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
-      444
-    ]
-  },
-  {
-    "teal": 483,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
-      445
-    ]
-  },
-  {
-    "teal": 486,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "errorMessage": "argument 0 (flash) for arc58_rekeyTo must be a bool",
-    "pc": [
-      446
-    ]
-  },
-  {
-    "teal": 487,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
-      447
-    ]
-  },
-  {
-    "teal": 488,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
-      448
-    ]
-  },
-  {
-    "teal": 491,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
       449,
       450,
-      451
-    ]
-  },
-  {
-    "teal": 492,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
+      451,
       452
     ]
   },
   {
-    "teal": 493,
-    "source": "contracts/abstracted_account.algo.ts:151",
+    "teal": 482,
+    "source": 142,
     "pc": [
-      453
-    ]
-  },
-  {
-    "teal": 494,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
+      453,
       454
     ]
   },
   {
-    "teal": 495,
-    "source": "contracts/abstracted_account.algo.ts:151",
+    "teal": 485,
+    "source": 139,
     "pc": [
       455
     ]
   },
   {
-    "teal": 498,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "errorMessage": "argument 1 (addr) for arc58_rekeyTo must be a address",
+    "teal": 486,
+    "source": 139,
     "pc": [
-      456
+      456,
+      457
     ]
   },
   {
-    "teal": 501,
-    "source": "contracts/abstracted_account.algo.ts:151",
+    "teal": 489,
+    "source": 139,
     "pc": [
-      457,
-      458,
-      459
+      458
     ]
   },
   {
-    "teal": 502,
-    "source": "contracts/abstracted_account.algo.ts:151",
+    "teal": 494,
+    "source": 145,
     "pc": [
+      459,
       460
     ]
   },
   {
-    "teal": 503,
-    "source": "contracts/abstracted_account.algo.ts:151",
+    "teal": 495,
+    "source": 145,
     "pc": [
-      461
-    ]
-  },
-  {
-    "teal": 512,
-    "source": "contracts/abstracted_account.algo.ts:151",
-    "pc": [
+      461,
       462,
-      463,
-      464
+      463
     ]
   },
   {
-    "teal": 517,
-    "source": "contracts/abstracted_account.algo.ts:152",
+    "teal": 500,
+    "source": 145,
     "pc": [
+      464,
       465,
       466
     ]
   },
   {
-    "teal": 518,
-    "source": "contracts/abstracted_account.algo.ts:152",
+    "teal": 503,
+    "source": 136,
     "pc": [
       467
     ]
   },
   {
-    "teal": 519,
-    "source": "contracts/abstracted_account.algo.ts:152",
+    "teal": 507,
+    "source": 148,
     "pc": [
-      468
-    ]
-  },
-  {
-    "teal": 520,
-    "source": "contracts/abstracted_account.algo.ts:152",
-    "pc": [
-      469
-    ]
-  },
-  {
-    "teal": 523,
-    "source": "contracts/abstracted_account.algo.ts:152",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
-    "pc": [
+      468,
+      469,
       470
     ]
   },
   {
-    "teal": 532,
-    "source": "contracts/abstracted_account.algo.ts:154",
+    "teal": 510,
+    "source": 148,
     "pc": [
       471
     ]
   },
   {
-    "teal": 533,
-    "source": "contracts/abstracted_account.algo.ts:154",
+    "teal": 514,
+    "source": 149,
     "pc": [
-      472
+      472,
+      473
     ]
   },
   {
-    "teal": 534,
-    "source": "contracts/abstracted_account.algo.ts:154",
+    "teal": 515,
+    "source": 149,
     "pc": [
-      473,
       474
     ]
   },
   {
-    "teal": 538,
-    "source": "contracts/abstracted_account.algo.ts:155",
+    "teal": 516,
+    "source": 149,
     "pc": [
-      475
-    ]
-  },
-  {
-    "teal": 539,
-    "source": "contracts/abstracted_account.algo.ts:155",
-    "pc": [
+      475,
       476
     ]
   },
   {
-    "teal": 540,
-    "source": "contracts/abstracted_account.algo.ts:155",
+    "teal": 517,
+    "source": 149,
     "pc": [
-      477,
-      478
+      477
     ]
   },
   {
-    "teal": 544,
-    "source": "contracts/abstracted_account.algo.ts:156",
+    "teal": 518,
+    "source": 149,
     "pc": [
-      479,
+      478,
+      479
+    ]
+  },
+  {
+    "teal": 526,
+    "source": 152,
+    "pc": [
       480
     ]
   },
   {
-    "teal": 545,
-    "source": "contracts/abstracted_account.algo.ts:156",
+    "teal": 527,
+    "source": 152,
     "pc": [
       481,
       482
     ]
   },
   {
-    "teal": 549,
-    "source": "contracts/abstracted_account.algo.ts:157",
+    "teal": 528,
+    "source": 152,
     "pc": [
-      483,
+      483
+    ]
+  },
+  {
+    "teal": 529,
+    "source": 152,
+    "pc": [
       484
     ]
   },
   {
-    "teal": 550,
-    "source": "contracts/abstracted_account.algo.ts:157",
+    "teal": 530,
+    "source": 152,
     "pc": [
-      485,
+      485
+    ]
+  },
+  {
+    "teal": 531,
+    "source": 152,
+    "pc": [
       486
     ]
   },
   {
-    "teal": 554,
-    "source": "contracts/abstracted_account.algo.ts:158",
+    "teal": 532,
+    "source": 152,
     "pc": [
-      487,
+      487
+    ]
+  },
+  {
+    "teal": 533,
+    "source": 152,
+    "pc": [
       488,
       489,
-      490,
-      491,
+      490
+    ]
+  },
+  {
+    "teal": 534,
+    "source": 153,
+    "pc": [
+      491
+    ]
+  },
+  {
+    "teal": 535,
+    "source": 153,
+    "pc": [
       492,
-      493,
-      494,
-      495,
-      496,
+      493
+    ]
+  },
+  {
+    "teal": 536,
+    "source": 153,
+    "pc": [
+      494
+    ]
+  },
+  {
+    "teal": 537,
+    "source": 153,
+    "pc": [
+      495
+    ]
+  },
+  {
+    "teal": 540,
+    "source": 153,
+    "errorMessage": "box value does not exist: this.plugins(key).value",
+    "pc": [
+      496
+    ]
+  },
+  {
+    "teal": 541,
+    "source": 153,
+    "pc": [
       497,
-      498,
+      498
+    ]
+  },
+  {
+    "teal": 542,
+    "source": 153,
+    "pc": [
       499,
-      500,
+      500
+    ]
+  },
+  {
+    "teal": 543,
+    "source": 153,
+    "pc": [
       501,
       502,
-      503,
-      504,
+      503
+    ]
+  },
+  {
+    "teal": 544,
+    "source": 153,
+    "pc": [
+      504
+    ]
+  },
+  {
+    "teal": 545,
+    "source": 153,
+    "pc": [
       505,
-      506,
-      507,
-      508,
-      509,
+      506
+    ]
+  },
+  {
+    "teal": 546,
+    "source": 153,
+    "pc": [
+      507
+    ]
+  },
+  {
+    "teal": 547,
+    "source": 152,
+    "pc": [
+      508
+    ]
+  },
+  {
+    "teal": 550,
+    "source": 153,
+    "pc": [
+      509
+    ]
+  },
+  {
+    "teal": 551,
+    "source": 153,
+    "pc": [
       510,
       511,
-      512,
+      512
+    ]
+  },
+  {
+    "teal": 552,
+    "source": 154,
+    "pc": [
       513,
-      514,
+      514
+    ]
+  },
+  {
+    "teal": 553,
+    "source": 154,
+    "pc": [
       515
     ]
   },
   {
-    "teal": 555,
-    "source": "contracts/abstracted_account.algo.ts:158",
+    "teal": 554,
+    "source": 154,
     "pc": [
       516,
       517
     ]
   },
   {
-    "teal": 558,
-    "source": "contracts/abstracted_account.algo.ts:154",
+    "teal": 555,
+    "source": 154,
     "pc": [
       518
     ]
   },
   {
-    "teal": 559,
-    "source": "contracts/abstracted_account.algo.ts:154",
+    "teal": 556,
+    "source": 154,
     "pc": [
-      519,
+      519
+    ]
+  },
+  {
+    "teal": 559,
+    "source": 154,
+    "errorMessage": "box value does not exist: this.plugins(key).value",
+    "pc": [
       520
     ]
   },
   {
+    "teal": 560,
+    "source": 154,
+    "pc": [
+      521,
+      522
+    ]
+  },
+  {
+    "teal": 561,
+    "source": 154,
+    "pc": [
+      523,
+      524
+    ]
+  },
+  {
     "teal": 562,
-    "source": "contracts/abstracted_account.algo.ts:154",
+    "source": 154,
     "pc": [
-      521
-    ]
-  },
-  {
-    "teal": 567,
-    "source": "contracts/abstracted_account.algo.ts:161",
-    "pc": [
-      522,
-      523
-    ]
-  },
-  {
-    "teal": 568,
-    "source": "contracts/abstracted_account.algo.ts:161",
-    "pc": [
-      524,
       525,
-      526
+      526,
+      527
     ]
   },
   {
-    "teal": 573,
-    "source": "contracts/abstracted_account.algo.ts:161",
+    "teal": 563,
+    "source": 154,
     "pc": [
-      527,
-      528,
+      528
+    ]
+  },
+  {
+    "teal": 564,
+    "source": 154,
+    "pc": [
       529
     ]
   },
   {
-    "teal": 576,
-    "source": "contracts/abstracted_account.algo.ts:151",
+    "teal": 565,
+    "source": 154,
     "pc": [
       530
     ]
   },
   {
-    "teal": 580,
-    "source": "contracts/abstracted_account.algo.ts:164",
+    "teal": 566,
+    "source": 154,
     "pc": [
       531,
-      532,
+      532
+    ]
+  },
+  {
+    "teal": 567,
+    "source": 154,
+    "pc": [
       533
     ]
   },
   {
-    "teal": 583,
-    "source": "contracts/abstracted_account.algo.ts:164",
+    "teal": 568,
+    "source": 154,
     "pc": [
       534
     ]
   },
   {
-    "teal": 587,
-    "source": "contracts/abstracted_account.algo.ts:165",
+    "teal": 571,
+    "source": 154,
+    "errorMessage": "box value does not exist: this.plugins(key).value",
     "pc": [
-      535,
-      536
+      535
     ]
   },
   {
-    "teal": 588,
-    "source": "contracts/abstracted_account.algo.ts:165",
+    "teal": 572,
+    "source": 154,
     "pc": [
+      536,
       537
     ]
   },
   {
-    "teal": 589,
-    "source": "contracts/abstracted_account.algo.ts:165",
+    "teal": 573,
+    "source": 154,
     "pc": [
       538,
       539
     ]
   },
   {
-    "teal": 590,
-    "source": "contracts/abstracted_account.algo.ts:165",
+    "teal": 574,
+    "source": 154,
     "pc": [
-      540
-    ]
-  },
-  {
-    "teal": 591,
-    "source": "contracts/abstracted_account.algo.ts:165",
-    "pc": [
+      540,
       541,
       542
     ]
   },
   {
-    "teal": 599,
-    "source": "contracts/abstracted_account.algo.ts:168",
+    "teal": 575,
+    "source": 154,
     "pc": [
       543
     ]
   },
   {
-    "teal": 600,
-    "source": "contracts/abstracted_account.algo.ts:168",
+    "teal": 576,
+    "source": 154,
     "pc": [
-      544,
+      544
+    ]
+  },
+  {
+    "teal": 577,
+    "source": 153,
+    "pc": [
       545
     ]
   },
   {
-    "teal": 601,
-    "source": "contracts/abstracted_account.algo.ts:168",
+    "teal": 581,
+    "source": 148,
     "pc": [
-      546
-    ]
-  },
-  {
-    "teal": 602,
-    "source": "contracts/abstracted_account.algo.ts:168",
-    "pc": [
+      546,
       547
     ]
   },
   {
-    "teal": 603,
-    "source": "contracts/abstracted_account.algo.ts:168",
+    "teal": 582,
+    "source": 148,
     "pc": [
       548
     ]
   },
   {
-    "teal": 604,
-    "source": "contracts/abstracted_account.algo.ts:168",
+    "teal": 587,
+    "source": 164,
     "pc": [
-      549
-    ]
-  },
-  {
-    "teal": 605,
-    "source": "contracts/abstracted_account.algo.ts:168",
-    "pc": [
+      549,
       550
     ]
   },
   {
-    "teal": 606,
-    "source": "contracts/abstracted_account.algo.ts:168",
+    "teal": 590,
+    "source": 165,
     "pc": [
       551,
       552,
@@ -2351,2019 +2347,2035 @@
     ]
   },
   {
-    "teal": 607,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 591,
+    "source": 165,
     "pc": [
       554
     ]
   },
   {
-    "teal": 608,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 592,
+    "source": 165,
     "pc": [
-      555,
+      555
+    ]
+  },
+  {
+    "teal": 593,
+    "source": 165,
+    "pc": [
       556
     ]
   },
   {
-    "teal": 609,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 594,
+    "source": 165,
     "pc": [
       557
     ]
   },
   {
-    "teal": 610,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 597,
+    "source": 165,
+    "errorMessage": "argument 0 (address) for arc58_canCall must be a address",
     "pc": [
       558
     ]
   },
   {
-    "teal": 613,
-    "source": "contracts/abstracted_account.algo.ts:169",
-    "errorMessage": "box value does not exist: this.plugins(key).value",
+    "teal": 600,
+    "source": 165,
     "pc": [
-      559
-    ]
-  },
-  {
-    "teal": 614,
-    "source": "contracts/abstracted_account.algo.ts:169",
-    "pc": [
+      559,
       560,
       561
     ]
   },
   {
-    "teal": 615,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 601,
+    "source": 165,
     "pc": [
-      562,
-      563
+      562
     ]
   },
   {
-    "teal": 616,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 604,
+    "source": 164,
     "pc": [
+      563,
       564,
-      565,
-      566
+      565
     ]
   },
   {
-    "teal": 617,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 605,
+    "source": 164,
     "pc": [
+      566,
       567
     ]
   },
   {
-    "teal": 618,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 606,
+    "source": 164,
     "pc": [
-      568,
-      569
+      568
     ]
   },
   {
-    "teal": 619,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 607,
+    "source": 164,
     "pc": [
+      569,
       570
     ]
   },
   {
-    "teal": 620,
-    "source": "contracts/abstracted_account.algo.ts:168",
+    "teal": 608,
+    "source": 164,
     "pc": [
       571
     ]
   },
   {
-    "teal": 623,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 609,
+    "source": 164,
     "pc": [
       572
     ]
   },
   {
-    "teal": 624,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 610,
+    "source": 164,
     "pc": [
-      573,
-      574,
+      573
+    ]
+  },
+  {
+    "teal": 611,
+    "source": 164,
+    "pc": [
+      574
+    ]
+  },
+  {
+    "teal": 612,
+    "source": 164,
+    "pc": [
       575
     ]
   },
   {
-    "teal": 625,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "teal": 621,
+    "source": 164,
     "pc": [
       576,
-      577
-    ]
-  },
-  {
-    "teal": 626,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "pc": [
+      577,
       578
     ]
   },
   {
-    "teal": 627,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "teal": 624,
+    "source": 164,
     "pc": [
-      579,
-      580
+      579
     ]
   },
   {
     "teal": 628,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "source": 166,
     "pc": [
+      580,
       581
     ]
   },
   {
     "teal": 629,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "source": 166,
     "pc": [
-      582
-    ]
-  },
-  {
-    "teal": 632,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "errorMessage": "box value does not exist: this.plugins(key).value",
-    "pc": [
+      582,
       583
     ]
   },
   {
-    "teal": 633,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "teal": 630,
+    "source": 166,
     "pc": [
       584,
-      585
+      585,
+      586
     ]
   },
   {
-    "teal": 634,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "teal": 631,
+    "source": 166,
     "pc": [
-      586,
-      587
+      587,
+      588
     ]
   },
   {
-    "teal": 635,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "teal": 636,
+    "source": 167,
     "pc": [
-      588,
       589,
       590
     ]
   },
   {
-    "teal": 636,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "pc": [
-      591
-    ]
-  },
-  {
     "teal": 637,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "source": 167,
     "pc": [
-      592
-    ]
-  },
-  {
-    "teal": 638,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "pc": [
+      591,
+      592,
       593
     ]
   },
   {
-    "teal": 639,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "teal": 642,
+    "source": 167,
     "pc": [
-      594,
-      595
+      594
     ]
   },
   {
-    "teal": 640,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "teal": 643,
+    "source": 167,
     "pc": [
-      596
-    ]
-  },
-  {
-    "teal": 641,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "pc": [
+      595,
+      596,
       597
     ]
   },
   {
-    "teal": 644,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "errorMessage": "box value does not exist: this.plugins(key).value",
-    "pc": [
-      598
-    ]
-  },
-  {
-    "teal": 645,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "pc": [
-      599,
-      600
-    ]
-  },
-  {
-    "teal": 646,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "pc": [
-      601,
-      602
-    ]
-  },
-  {
-    "teal": 647,
-    "source": "contracts/abstracted_account.algo.ts:170",
-    "pc": [
-      603,
-      604,
-      605
-    ]
-  },
-  {
     "teal": 648,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "source": 169,
     "pc": [
-      606
+      598,
+      599
     ]
   },
   {
     "teal": 649,
-    "source": "contracts/abstracted_account.algo.ts:170",
+    "source": 169,
+    "pc": [
+      600,
+      601
+    ]
+  },
+  {
+    "teal": 650,
+    "source": 169,
+    "pc": [
+      602,
+      603,
+      604
+    ]
+  },
+  {
+    "teal": 654,
+    "source": 164,
+    "pc": [
+      605,
+      606
+    ]
+  },
+  {
+    "teal": 655,
+    "source": 164,
     "pc": [
       607
     ]
   },
   {
-    "teal": 650,
-    "source": "contracts/abstracted_account.algo.ts:169",
+    "teal": 660,
+    "source": 177,
     "pc": [
-      608
-    ]
-  },
-  {
-    "teal": 654,
-    "source": "contracts/abstracted_account.algo.ts:164",
-    "pc": [
+      608,
       609,
       610
     ]
   },
   {
-    "teal": 655,
-    "source": "contracts/abstracted_account.algo.ts:164",
+    "teal": 661,
+    "source": 177,
     "pc": [
       611
     ]
   },
   {
-    "teal": 660,
-    "source": "contracts/abstracted_account.algo.ts:180",
+    "teal": 664,
+    "source": 177,
     "pc": [
       612,
-      613
-    ]
-  },
-  {
-    "teal": 663,
-    "source": "contracts/abstracted_account.algo.ts:181",
-    "pc": [
-      614,
-      615,
-      616
-    ]
-  },
-  {
-    "teal": 664,
-    "source": "contracts/abstracted_account.algo.ts:181",
-    "pc": [
-      617
+      613,
+      614
     ]
   },
   {
     "teal": 665,
-    "source": "contracts/abstracted_account.algo.ts:181",
+    "source": 177,
     "pc": [
-      618
+      615
     ]
   },
   {
     "teal": 666,
-    "source": "contracts/abstracted_account.algo.ts:181",
+    "source": 177,
     "pc": [
+      616
+    ]
+  },
+  {
+    "teal": 674,
+    "source": 177,
+    "pc": [
+      617,
+      618,
       619
     ]
   },
   {
-    "teal": 667,
-    "source": "contracts/abstracted_account.algo.ts:181",
+    "teal": 677,
+    "source": 177,
     "pc": [
       620
     ]
   },
   {
-    "teal": 670,
-    "source": "contracts/abstracted_account.algo.ts:181",
-    "errorMessage": "argument 0 (address) for arc58_canCall must be a address",
+    "teal": 681,
+    "source": 178,
     "pc": [
-      621
+      621,
+      622
     ]
   },
   {
-    "teal": 673,
-    "source": "contracts/abstracted_account.algo.ts:181",
+    "teal": 682,
+    "source": 178,
     "pc": [
-      622,
       623,
       624
     ]
   },
   {
-    "teal": 674,
-    "source": "contracts/abstracted_account.algo.ts:181",
-    "pc": [
-      625
-    ]
-  },
-  {
-    "teal": 677,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      626,
-      627,
-      628
-    ]
-  },
-  {
-    "teal": 678,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      629,
-      630
-    ]
-  },
-  {
-    "teal": 679,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      631
-    ]
-  },
-  {
-    "teal": 680,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      632,
-      633
-    ]
-  },
-  {
-    "teal": 681,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      634
-    ]
-  },
-  {
-    "teal": 682,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      635
-    ]
-  },
-  {
     "teal": 683,
-    "source": "contracts/abstracted_account.algo.ts:180",
+    "source": 178,
     "pc": [
-      636
+      625,
+      626,
+      627
     ]
   },
   {
     "teal": 684,
-    "source": "contracts/abstracted_account.algo.ts:180",
+    "source": 178,
     "pc": [
+      628,
+      629
+    ]
+  },
+  {
+    "teal": 689,
+    "source": 180,
+    "pc": [
+      630,
+      631
+    ]
+  },
+  {
+    "teal": 690,
+    "source": 180,
+    "pc": [
+      632
+    ]
+  },
+  {
+    "teal": 691,
+    "source": 180,
+    "pc": [
+      633,
+      634,
+      635
+    ]
+  },
+  {
+    "teal": 696,
+    "source": 181,
+    "pc": [
+      636,
       637
     ]
   },
   {
-    "teal": 685,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      638
-    ]
-  },
-  {
-    "teal": 694,
-    "source": "contracts/abstracted_account.algo.ts:180",
-    "pc": [
-      639,
-      640,
-      641
-    ]
-  },
-  {
     "teal": 697,
-    "source": "contracts/abstracted_account.algo.ts:180",
+    "source": 181,
     "pc": [
+      638,
+      639
+    ]
+  },
+  {
+    "teal": 698,
+    "source": 181,
+    "pc": [
+      640,
+      641,
       642
     ]
   },
   {
     "teal": 701,
-    "source": "contracts/abstracted_account.algo.ts:182",
+    "source": 181,
+    "errorMessage": "This sender is not allowed to trigger this plugin",
     "pc": [
-      643,
+      643
+    ]
+  },
+  {
+    "teal": 710,
+    "source": 183,
+    "pc": [
       644
     ]
   },
   {
-    "teal": 702,
-    "source": "contracts/abstracted_account.algo.ts:182",
+    "teal": 711,
+    "source": 183,
     "pc": [
-      645,
-      646
+      645
     ]
   },
   {
-    "teal": 703,
-    "source": "contracts/abstracted_account.algo.ts:182",
+    "teal": 712,
+    "source": 183,
     "pc": [
-      647,
+      646,
+      647
+    ]
+  },
+  {
+    "teal": 716,
+    "source": 184,
+    "pc": [
       648,
       649
     ]
   },
   {
-    "teal": 704,
-    "source": "contracts/abstracted_account.algo.ts:182",
+    "teal": 717,
+    "source": 184,
     "pc": [
       650,
       651
     ]
   },
   {
-    "teal": 709,
-    "source": "contracts/abstracted_account.algo.ts:183",
+    "teal": 721,
+    "source": 185,
     "pc": [
       652,
       653
     ]
   },
   {
-    "teal": 710,
-    "source": "contracts/abstracted_account.algo.ts:183",
+    "teal": 722,
+    "source": 185,
     "pc": [
       654,
-      655,
-      656
-    ]
-  },
-  {
-    "teal": 715,
-    "source": "contracts/abstracted_account.algo.ts:183",
-    "pc": [
-      657
-    ]
-  },
-  {
-    "teal": 716,
-    "source": "contracts/abstracted_account.algo.ts:183",
-    "pc": [
-      658,
-      659,
-      660
-    ]
-  },
-  {
-    "teal": 721,
-    "source": "contracts/abstracted_account.algo.ts:185",
-    "pc": [
-      661,
-      662
-    ]
-  },
-  {
-    "teal": 722,
-    "source": "contracts/abstracted_account.algo.ts:185",
-    "pc": [
-      663,
-      664
+      655
     ]
   },
   {
     "teal": 723,
-    "source": "contracts/abstracted_account.algo.ts:185",
+    "source": 185,
     "pc": [
-      665,
-      666,
-      667
+      656
     ]
   },
   {
-    "teal": 727,
-    "source": "contracts/abstracted_account.algo.ts:180",
+    "teal": 724,
+    "source": 185,
     "pc": [
-      668,
-      669
+      657,
+      658
     ]
   },
   {
     "teal": 728,
-    "source": "contracts/abstracted_account.algo.ts:180",
+    "source": 186,
     "pc": [
-      670
-    ]
-  },
-  {
-    "teal": 733,
-    "source": "contracts/abstracted_account.algo.ts:193",
-    "pc": [
+      659,
+      660,
+      661,
+      662,
+      663,
+      664,
+      665,
+      666,
+      667,
+      668,
+      669,
+      670,
       671,
       672,
-      673
-    ]
-  },
-  {
-    "teal": 734,
-    "source": "contracts/abstracted_account.algo.ts:193",
-    "pc": [
-      674
-    ]
-  },
-  {
-    "teal": 737,
-    "source": "contracts/abstracted_account.algo.ts:193",
-    "pc": [
+      673,
+      674,
       675,
       676,
-      677
-    ]
-  },
-  {
-    "teal": 738,
-    "source": "contracts/abstracted_account.algo.ts:193",
-    "pc": [
-      678
-    ]
-  },
-  {
-    "teal": 739,
-    "source": "contracts/abstracted_account.algo.ts:193",
-    "pc": [
-      679
-    ]
-  },
-  {
-    "teal": 747,
-    "source": "contracts/abstracted_account.algo.ts:193",
-    "pc": [
+      677,
+      678,
+      679,
       680,
       681,
       682
     ]
   },
   {
-    "teal": 750,
-    "source": "contracts/abstracted_account.algo.ts:193",
+    "teal": 729,
+    "source": 186,
     "pc": [
-      683
+      683,
+      684
     ]
   },
   {
-    "teal": 754,
-    "source": "contracts/abstracted_account.algo.ts:194",
+    "teal": 732,
+    "source": 183,
     "pc": [
-      684,
       685
     ]
   },
   {
-    "teal": 755,
-    "source": "contracts/abstracted_account.algo.ts:194",
+    "teal": 733,
+    "source": 183,
     "pc": [
       686,
       687
     ]
   },
   {
-    "teal": 756,
-    "source": "contracts/abstracted_account.algo.ts:194",
+    "teal": 736,
+    "source": 183,
     "pc": [
-      688,
-      689,
-      690
+      688
     ]
   },
   {
-    "teal": 757,
-    "source": "contracts/abstracted_account.algo.ts:194",
+    "teal": 743,
+    "source": 189,
     "pc": [
-      691,
+      689
+    ]
+  },
+  {
+    "teal": 744,
+    "source": 190,
+    "pc": [
+      690,
+      691
+    ]
+  },
+  {
+    "teal": 745,
+    "source": 190,
+    "pc": [
       692
     ]
   },
   {
-    "teal": 762,
-    "source": "contracts/abstracted_account.algo.ts:196",
+    "teal": 746,
+    "source": 191,
     "pc": [
       693,
       694
     ]
   },
   {
-    "teal": 763,
-    "source": "contracts/abstracted_account.algo.ts:196",
+    "teal": 747,
+    "source": 191,
     "pc": [
-      695
-    ]
-  },
-  {
-    "teal": 764,
-    "source": "contracts/abstracted_account.algo.ts:196",
-    "pc": [
+      695,
       696,
-      697,
-      698
+      697
     ]
   },
   {
-    "teal": 769,
-    "source": "contracts/abstracted_account.algo.ts:197",
+    "teal": 748,
+    "source": 191,
     "pc": [
-      699,
-      700
+      698,
+      699
     ]
   },
   {
-    "teal": 770,
-    "source": "contracts/abstracted_account.algo.ts:197",
+    "teal": 749,
+    "source": 191,
     "pc": [
+      700,
       701,
       702
     ]
   },
   {
-    "teal": 771,
-    "source": "contracts/abstracted_account.algo.ts:197",
+    "teal": 752,
+    "source": 191,
     "pc": [
       703,
-      704,
+      704
+    ]
+  },
+  {
+    "teal": 755,
+    "source": 191,
+    "pc": [
       705
     ]
   },
   {
-    "teal": 774,
-    "source": "contracts/abstracted_account.algo.ts:197",
-    "errorMessage": "This sender is not allowed to trigger this plugin",
+    "teal": 756,
+    "source": 189,
     "pc": [
       706
     ]
   },
   {
-    "teal": 784,
-    "source": "contracts/abstracted_account.algo.ts:199",
+    "teal": 757,
+    "source": 189,
     "pc": [
       707
     ]
   },
   {
-    "teal": 785,
-    "source": "contracts/abstracted_account.algo.ts:199",
+    "teal": 760,
+    "source": 189,
+    "errorMessage": "box value does not exist: this.plugins({ application: plugin, allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender, }).value",
     "pc": [
       708
     ]
   },
   {
-    "teal": 786,
-    "source": "contracts/abstracted_account.algo.ts:199",
+    "teal": 761,
+    "source": 189,
     "pc": [
       709,
       710
     ]
   },
   {
-    "teal": 790,
-    "source": "contracts/abstracted_account.algo.ts:200",
+    "teal": 762,
+    "source": 189,
     "pc": [
-      711
-    ]
-  },
-  {
-    "teal": 791,
-    "source": "contracts/abstracted_account.algo.ts:200",
-    "pc": [
+      711,
       712
     ]
   },
   {
-    "teal": 792,
-    "source": "contracts/abstracted_account.algo.ts:200",
+    "teal": 763,
+    "source": 189,
     "pc": [
       713,
       714
     ]
   },
   {
-    "teal": 796,
-    "source": "contracts/abstracted_account.algo.ts:201",
+    "teal": 764,
+    "source": 192,
     "pc": [
-      715
-    ]
-  },
-  {
-    "teal": 797,
-    "source": "contracts/abstracted_account.algo.ts:201",
-    "pc": [
+      715,
       716
     ]
   },
   {
-    "teal": 798,
-    "source": "contracts/abstracted_account.algo.ts:201",
+    "teal": 765,
+    "source": 192,
     "pc": [
-      717,
+      717
+    ]
+  },
+  {
+    "teal": 766,
+    "source": 189,
+    "pc": [
       718
     ]
   },
   {
-    "teal": 802,
-    "source": "contracts/abstracted_account.algo.ts:202",
+    "teal": 767,
+    "source": 190,
     "pc": [
       719,
       720
     ]
   },
   {
-    "teal": 803,
-    "source": "contracts/abstracted_account.algo.ts:202",
+    "teal": 768,
+    "source": 190,
     "pc": [
-      721,
-      722
+      721
     ]
   },
   {
-    "teal": 804,
-    "source": "contracts/abstracted_account.algo.ts:202",
+    "teal": 769,
+    "source": 191,
     "pc": [
+      722,
       723
     ]
   },
   {
-    "teal": 805,
-    "source": "contracts/abstracted_account.algo.ts:202",
+    "teal": 770,
+    "source": 191,
     "pc": [
       724,
-      725
+      725,
+      726
     ]
   },
   {
-    "teal": 809,
-    "source": "contracts/abstracted_account.algo.ts:203",
+    "teal": 771,
+    "source": 191,
     "pc": [
-      726,
       727,
-      728,
+      728
+    ]
+  },
+  {
+    "teal": 772,
+    "source": 191,
+    "pc": [
       729,
       730,
-      731,
-      732,
-      733,
-      734,
-      735,
-      736,
-      737,
-      738,
-      739,
-      740,
-      741,
-      742,
-      743,
-      744,
-      745,
-      746,
-      747,
-      748,
-      749
+      731
     ]
   },
   {
-    "teal": 810,
-    "source": "contracts/abstracted_account.algo.ts:203",
+    "teal": 775,
+    "source": 191,
     "pc": [
+      732,
+      733
+    ]
+  },
+  {
+    "teal": 778,
+    "source": 191,
+    "pc": [
+      734
+    ]
+  },
+  {
+    "teal": 779,
+    "source": 189,
+    "pc": [
+      735
+    ]
+  },
+  {
+    "teal": 780,
+    "source": 189,
+    "pc": [
+      736,
+      737
+    ]
+  },
+  {
+    "teal": 781,
+    "source": 189,
+    "pc": [
+      738
+    ]
+  },
+  {
+    "teal": 785,
+    "source": 194,
+    "pc": [
+      739,
+      740,
+      741
+    ]
+  },
+  {
+    "teal": 786,
+    "source": 177,
+    "pc": [
+      742
+    ]
+  },
+  {
+    "teal": 791,
+    "source": 202,
+    "pc": [
+      743,
+      744,
+      745
+    ]
+  },
+  {
+    "teal": 792,
+    "source": 202,
+    "pc": [
+      746,
+      747,
+      748
+    ]
+  },
+  {
+    "teal": 795,
+    "source": 202,
+    "pc": [
+      749,
       750,
       751
     ]
   },
   {
-    "teal": 813,
-    "source": "contracts/abstracted_account.algo.ts:199",
+    "teal": 796,
+    "source": 202,
     "pc": [
       752
     ]
   },
   {
-    "teal": 814,
-    "source": "contracts/abstracted_account.algo.ts:199",
+    "teal": 797,
+    "source": 202,
     "pc": [
-      753,
-      754
+      753
     ]
   },
   {
-    "teal": 817,
-    "source": "contracts/abstracted_account.algo.ts:199",
+    "teal": 805,
+    "source": 202,
     "pc": [
-      755
-    ]
-  },
-  {
-    "teal": 824,
-    "source": "contracts/abstracted_account.algo.ts:206",
-    "pc": [
+      754,
+      755,
       756
     ]
   },
   {
-    "teal": 825,
-    "source": "contracts/abstracted_account.algo.ts:207",
+    "teal": 809,
+    "source": 203,
     "pc": [
-      757,
-      758
+      757
     ]
   },
   {
-    "teal": 826,
-    "source": "contracts/abstracted_account.algo.ts:207",
+    "teal": 810,
+    "source": 203,
     "pc": [
+      758,
       759
     ]
   },
   {
-    "teal": 827,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 811,
+    "source": 203,
     "pc": [
-      760,
-      761
+      760
     ]
   },
   {
-    "teal": 828,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 812,
+    "source": 203,
     "pc": [
-      762,
-      763,
-      764
+      761,
+      762
     ]
   },
   {
-    "teal": 829,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 813,
+    "source": 203,
     "pc": [
-      765,
+      763
+    ]
+  },
+  {
+    "teal": 814,
+    "source": 203,
+    "pc": [
+      764,
+      765
+    ]
+  },
+  {
+    "teal": 815,
+    "source": 203,
+    "pc": [
       766
     ]
   },
   {
-    "teal": 830,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 816,
+    "source": 203,
     "pc": [
-      767,
-      768,
-      769
+      767
     ]
   },
   {
-    "teal": 833,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 817,
+    "source": 203,
     "pc": [
-      770,
+      768,
+      769,
+      770
+    ]
+  },
+  {
+    "teal": 818,
+    "source": 202,
+    "pc": [
       771
     ]
   },
   {
-    "teal": 836,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 823,
+    "source": 221,
     "pc": [
-      772
-    ]
-  },
-  {
-    "teal": 837,
-    "source": "contracts/abstracted_account.algo.ts:206",
-    "pc": [
-      773
-    ]
-  },
-  {
-    "teal": 838,
-    "source": "contracts/abstracted_account.algo.ts:206",
-    "pc": [
+      772,
+      773,
       774
     ]
   },
   {
-    "teal": 841,
-    "source": "contracts/abstracted_account.algo.ts:206",
-    "errorMessage": "box value does not exist: this.plugins({ application: plugin, allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender, }).value",
+    "teal": 824,
+    "source": 221,
     "pc": [
       775
     ]
   },
   {
-    "teal": 842,
-    "source": "contracts/abstracted_account.algo.ts:206",
+    "teal": 825,
+    "source": 221,
     "pc": [
-      776,
+      776
+    ]
+  },
+  {
+    "teal": 826,
+    "source": 221,
+    "pc": [
       777
     ]
   },
   {
-    "teal": 843,
-    "source": "contracts/abstracted_account.algo.ts:206",
+    "teal": 827,
+    "source": 221,
     "pc": [
-      778,
+      778
+    ]
+  },
+  {
+    "teal": 830,
+    "source": 221,
+    "errorMessage": "argument 0 (adminPrivileges) for arc58_addPlugin must be a bool",
+    "pc": [
       779
     ]
   },
   {
-    "teal": 844,
-    "source": "contracts/abstracted_account.algo.ts:206",
+    "teal": 831,
+    "source": 221,
     "pc": [
-      780,
+      780
+    ]
+  },
+  {
+    "teal": 832,
+    "source": 221,
+    "pc": [
       781
     ]
   },
   {
-    "teal": 845,
-    "source": "contracts/abstracted_account.algo.ts:209",
+    "teal": 835,
+    "source": 220,
     "pc": [
       782,
-      783
-    ]
-  },
-  {
-    "teal": 846,
-    "source": "contracts/abstracted_account.algo.ts:209",
-    "pc": [
+      783,
       784
     ]
   },
   {
-    "teal": 847,
-    "source": "contracts/abstracted_account.algo.ts:206",
+    "teal": 836,
+    "source": 220,
     "pc": [
       785
     ]
   },
   {
-    "teal": 848,
-    "source": "contracts/abstracted_account.algo.ts:207",
+    "teal": 839,
+    "source": 219,
     "pc": [
       786,
-      787
-    ]
-  },
-  {
-    "teal": 849,
-    "source": "contracts/abstracted_account.algo.ts:207",
-    "pc": [
+      787,
       788
     ]
   },
   {
-    "teal": 850,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 840,
+    "source": 219,
     "pc": [
-      789,
-      790
+      789
     ]
   },
   {
-    "teal": 851,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 843,
+    "source": 218,
     "pc": [
+      790,
       791,
-      792,
+      792
+    ]
+  },
+  {
+    "teal": 844,
+    "source": 218,
+    "pc": [
       793
     ]
   },
   {
-    "teal": 852,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 845,
+    "source": 218,
     "pc": [
-      794,
+      794
+    ]
+  },
+  {
+    "teal": 846,
+    "source": 218,
+    "pc": [
       795
     ]
   },
   {
-    "teal": 853,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 847,
+    "source": 218,
     "pc": [
-      796,
-      797,
-      798
+      796
     ]
   },
   {
-    "teal": 856,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 850,
+    "source": 218,
+    "errorMessage": "argument 3 (allowedCaller) for arc58_addPlugin must be a address",
     "pc": [
+      797
+    ]
+  },
+  {
+    "teal": 853,
+    "source": 217,
+    "pc": [
+      798,
       799,
       800
     ]
   },
   {
-    "teal": 859,
-    "source": "contracts/abstracted_account.algo.ts:208",
+    "teal": 854,
+    "source": 217,
     "pc": [
       801
     ]
   },
   {
-    "teal": 860,
-    "source": "contracts/abstracted_account.algo.ts:206",
+    "teal": 857,
+    "source": 216,
     "pc": [
-      802
-    ]
-  },
-  {
-    "teal": 861,
-    "source": "contracts/abstracted_account.algo.ts:206",
-    "pc": [
+      802,
       803,
       804
     ]
   },
   {
-    "teal": 862,
-    "source": "contracts/abstracted_account.algo.ts:206",
+    "teal": 858,
+    "source": 216,
     "pc": [
       805
     ]
   },
   {
-    "teal": 866,
-    "source": "contracts/abstracted_account.algo.ts:211",
+    "teal": 859,
+    "source": 216,
     "pc": [
-      806,
-      807,
-      808
-    ]
-  },
-  {
-    "teal": 867,
-    "source": "contracts/abstracted_account.algo.ts:193",
-    "pc": [
-      809
+      806
     ]
   },
   {
     "teal": 872,
-    "source": "contracts/abstracted_account.algo.ts:219",
+    "source": 216,
     "pc": [
-      810,
+      807,
+      808,
+      809
+    ]
+  },
+  {
+    "teal": 875,
+    "source": 216,
+    "pc": [
+      810
+    ]
+  },
+  {
+    "teal": 880,
+    "source": 223,
+    "pc": [
       811,
       812
     ]
   },
   {
-    "teal": 873,
-    "source": "contracts/abstracted_account.algo.ts:219",
+    "teal": 881,
+    "source": 223,
     "pc": [
-      813,
-      814,
+      813
+    ]
+  },
+  {
+    "teal": 882,
+    "source": 223,
+    "pc": [
+      814
+    ]
+  },
+  {
+    "teal": 883,
+    "source": 223,
+    "pc": [
       815
     ]
   },
   {
-    "teal": 876,
-    "source": "contracts/abstracted_account.algo.ts:219",
+    "teal": 886,
+    "source": 223,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
-      816,
+      816
+    ]
+  },
+  {
+    "teal": 890,
+    "source": 224,
+    "pc": [
       817,
       818
     ]
   },
   {
-    "teal": 877,
-    "source": "contracts/abstracted_account.algo.ts:219",
+    "teal": 891,
+    "source": 224,
     "pc": [
       819
     ]
   },
   {
-    "teal": 878,
-    "source": "contracts/abstracted_account.algo.ts:219",
-    "pc": [
-      820
-    ]
-  },
-  {
-    "teal": 886,
-    "source": "contracts/abstracted_account.algo.ts:219",
-    "pc": [
-      821,
-      822,
-      823
-    ]
-  },
-  {
-    "teal": 890,
-    "source": "contracts/abstracted_account.algo.ts:220",
-    "pc": [
-      824
-    ]
-  },
-  {
-    "teal": 891,
-    "source": "contracts/abstracted_account.algo.ts:220",
-    "pc": [
-      825,
-      826
-    ]
-  },
-  {
     "teal": 892,
-    "source": "contracts/abstracted_account.algo.ts:220",
+    "source": 224,
     "pc": [
-      827,
-      828
+      820,
+      821
     ]
   },
   {
     "teal": 893,
-    "source": "contracts/abstracted_account.algo.ts:220",
+    "source": 224,
+    "pc": [
+      822
+    ]
+  },
+  {
+    "teal": 894,
+    "source": 224,
+    "pc": [
+      823,
+      824
+    ]
+  },
+  {
+    "teal": 903,
+    "source": 225,
+    "pc": [
+      825
+    ]
+  },
+  {
+    "teal": 904,
+    "source": 225,
+    "pc": [
+      826,
+      827
+    ]
+  },
+  {
+    "teal": 905,
+    "source": 225,
+    "pc": [
+      828
+    ]
+  },
+  {
+    "teal": 906,
+    "source": 226,
     "pc": [
       829,
       830
     ]
   },
   {
-    "teal": 894,
-    "source": "contracts/abstracted_account.algo.ts:220",
+    "teal": 907,
+    "source": 226,
     "pc": [
       831
     ]
   },
   {
-    "teal": 895,
-    "source": "contracts/abstracted_account.algo.ts:220",
+    "teal": 908,
+    "source": 227,
     "pc": [
       832,
       833
     ]
   },
   {
-    "teal": 896,
-    "source": "contracts/abstracted_account.algo.ts:220",
+    "teal": 909,
+    "source": 227,
     "pc": [
       834
     ]
   },
   {
-    "teal": 897,
-    "source": "contracts/abstracted_account.algo.ts:220",
+    "teal": 910,
+    "source": 227,
     "pc": [
       835
     ]
   },
   {
-    "teal": 898,
-    "source": "contracts/abstracted_account.algo.ts:220",
+    "teal": 911,
+    "source": 228,
     "pc": [
       836,
-      837,
+      837
+    ]
+  },
+  {
+    "teal": 912,
+    "source": 228,
+    "pc": [
       838
     ]
   },
   {
-    "teal": 899,
-    "source": "contracts/abstracted_account.algo.ts:219",
+    "teal": 913,
+    "source": 229,
     "pc": [
-      839
+      839,
+      840
     ]
   },
   {
-    "teal": 904,
-    "source": "contracts/abstracted_account.algo.ts:238",
+    "teal": 914,
+    "source": 229,
     "pc": [
-      840,
-      841,
-      842
+      841
     ]
   },
   {
-    "teal": 905,
-    "source": "contracts/abstracted_account.algo.ts:238",
+    "teal": 915,
+    "source": 229,
     "pc": [
+      842,
       843
     ]
   },
   {
-    "teal": 906,
-    "source": "contracts/abstracted_account.algo.ts:238",
+    "teal": 916,
+    "source": 229,
     "pc": [
       844
     ]
   },
   {
-    "teal": 907,
-    "source": "contracts/abstracted_account.algo.ts:238",
+    "teal": 917,
+    "source": 225,
     "pc": [
       845
     ]
   },
   {
-    "teal": 908,
-    "source": "contracts/abstracted_account.algo.ts:238",
+    "teal": 918,
+    "source": 225,
     "pc": [
       846
     ]
   },
   {
-    "teal": 911,
-    "source": "contracts/abstracted_account.algo.ts:238",
-    "errorMessage": "argument 0 (adminPrivileges) for arc58_addPlugin must be a bool",
+    "teal": 919,
+    "source": 216,
     "pc": [
       847
     ]
   },
   {
-    "teal": 912,
-    "source": "contracts/abstracted_account.algo.ts:238",
+    "teal": 924,
+    "source": 238,
     "pc": [
-      848
+      848,
+      849,
+      850
     ]
   },
   {
-    "teal": 913,
-    "source": "contracts/abstracted_account.algo.ts:238",
+    "teal": 925,
+    "source": 238,
     "pc": [
-      849
+      851
     ]
   },
   {
-    "teal": 916,
-    "source": "contracts/abstracted_account.algo.ts:237",
+    "teal": 926,
+    "source": 238,
     "pc": [
-      850,
-      851,
       852
     ]
   },
   {
-    "teal": 917,
-    "source": "contracts/abstracted_account.algo.ts:237",
+    "teal": 927,
+    "source": 238,
     "pc": [
       853
     ]
   },
   {
-    "teal": 920,
-    "source": "contracts/abstracted_account.algo.ts:236",
+    "teal": 928,
+    "source": 238,
     "pc": [
-      854,
-      855,
-      856
+      854
     ]
   },
   {
-    "teal": 921,
-    "source": "contracts/abstracted_account.algo.ts:236",
+    "teal": 931,
+    "source": 238,
+    "errorMessage": "argument 0 (allowedCaller) for arc58_removePlugin must be a address",
     "pc": [
-      857
+      855
     ]
   },
   {
-    "teal": 924,
-    "source": "contracts/abstracted_account.algo.ts:235",
+    "teal": 934,
+    "source": 238,
     "pc": [
-      858,
-      859,
-      860
+      856,
+      857,
+      858
     ]
   },
   {
-    "teal": 925,
-    "source": "contracts/abstracted_account.algo.ts:235",
+    "teal": 935,
+    "source": 238,
     "pc": [
-      861
+      859
     ]
   },
   {
-    "teal": 926,
-    "source": "contracts/abstracted_account.algo.ts:235",
+    "teal": 938,
+    "source": 238,
     "pc": [
+      860,
+      861,
       862
     ]
   },
   {
-    "teal": 927,
-    "source": "contracts/abstracted_account.algo.ts:235",
+    "teal": 939,
+    "source": 238,
     "pc": [
       863
     ]
   },
   {
-    "teal": 928,
-    "source": "contracts/abstracted_account.algo.ts:235",
+    "teal": 940,
+    "source": 238,
     "pc": [
       864
     ]
   },
   {
-    "teal": 931,
-    "source": "contracts/abstracted_account.algo.ts:235",
-    "errorMessage": "argument 3 (allowedCaller) for arc58_addPlugin must be a address",
+    "teal": 948,
+    "source": 238,
     "pc": [
-      865
+      865,
+      866,
+      867
     ]
   },
   {
-    "teal": 934,
-    "source": "contracts/abstracted_account.algo.ts:234",
+    "teal": 951,
+    "source": 238,
     "pc": [
-      866,
-      867,
       868
     ]
   },
   {
-    "teal": 935,
-    "source": "contracts/abstracted_account.algo.ts:234",
+    "teal": 956,
+    "source": 239,
     "pc": [
-      869
+      869,
+      870
     ]
   },
   {
-    "teal": 938,
-    "source": "contracts/abstracted_account.algo.ts:233",
+    "teal": 957,
+    "source": 239,
     "pc": [
-      870,
-      871,
+      871
+    ]
+  },
+  {
+    "teal": 958,
+    "source": 239,
+    "pc": [
       872
     ]
   },
   {
-    "teal": 939,
-    "source": "contracts/abstracted_account.algo.ts:233",
+    "teal": 959,
+    "source": 239,
     "pc": [
       873
     ]
   },
   {
-    "teal": 940,
-    "source": "contracts/abstracted_account.algo.ts:233",
+    "teal": 962,
+    "source": 239,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
       874
     ]
   },
   {
-    "teal": 953,
-    "source": "contracts/abstracted_account.algo.ts:233",
+    "teal": 966,
+    "source": 241,
     "pc": [
       875,
-      876,
+      876
+    ]
+  },
+  {
+    "teal": 967,
+    "source": 241,
+    "pc": [
       877
     ]
   },
   {
-    "teal": 956,
-    "source": "contracts/abstracted_account.algo.ts:233",
+    "teal": 968,
+    "source": 241,
     "pc": [
-      878
+      878,
+      879
     ]
   },
   {
-    "teal": 961,
-    "source": "contracts/abstracted_account.algo.ts:240",
+    "teal": 969,
+    "source": 241,
     "pc": [
-      879,
       880
     ]
   },
   {
-    "teal": 962,
-    "source": "contracts/abstracted_account.algo.ts:240",
+    "teal": 970,
+    "source": 241,
     "pc": [
-      881
-    ]
-  },
-  {
-    "teal": 963,
-    "source": "contracts/abstracted_account.algo.ts:240",
-    "pc": [
+      881,
       882
     ]
   },
   {
-    "teal": 964,
-    "source": "contracts/abstracted_account.algo.ts:240",
+    "teal": 974,
+    "source": 242,
     "pc": [
       883
     ]
   },
   {
-    "teal": 967,
-    "source": "contracts/abstracted_account.algo.ts:240",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
+    "teal": 975,
+    "source": 242,
     "pc": [
-      884
+      884,
+      885
     ]
   },
   {
-    "teal": 971,
-    "source": "contracts/abstracted_account.algo.ts:241",
+    "teal": 976,
+    "source": 242,
     "pc": [
-      885,
       886
     ]
   },
   {
-    "teal": 972,
-    "source": "contracts/abstracted_account.algo.ts:241",
+    "teal": 977,
+    "source": 242,
     "pc": [
       887
     ]
   },
   {
-    "teal": 973,
-    "source": "contracts/abstracted_account.algo.ts:241",
+    "teal": 978,
+    "source": 238,
     "pc": [
-      888,
-      889
+      888
     ]
   },
   {
-    "teal": 974,
-    "source": "contracts/abstracted_account.algo.ts:241",
+    "teal": 983,
+    "source": 262,
     "pc": [
-      890
-    ]
-  },
-  {
-    "teal": 975,
-    "source": "contracts/abstracted_account.algo.ts:241",
-    "pc": [
-      891,
-      892
+      889,
+      890,
+      891
     ]
   },
   {
     "teal": 984,
-    "source": "contracts/abstracted_account.algo.ts:242",
+    "source": 262,
+    "pc": [
+      892
+    ]
+  },
+  {
+    "teal": 985,
+    "source": 262,
     "pc": [
       893
     ]
   },
   {
-    "teal": 985,
-    "source": "contracts/abstracted_account.algo.ts:242",
+    "teal": 986,
+    "source": 262,
     "pc": [
-      894,
+      894
+    ]
+  },
+  {
+    "teal": 987,
+    "source": 262,
+    "pc": [
       895
     ]
   },
   {
-    "teal": 986,
-    "source": "contracts/abstracted_account.algo.ts:242",
+    "teal": 990,
+    "source": 262,
+    "errorMessage": "argument 0 (adminPrivileges) for arc58_addNamedPlugin must be a bool",
     "pc": [
       896
     ]
   },
   {
-    "teal": 987,
-    "source": "contracts/abstracted_account.algo.ts:243",
+    "teal": 991,
+    "source": 262,
     "pc": [
-      897,
+      897
+    ]
+  },
+  {
+    "teal": 992,
+    "source": 262,
+    "pc": [
       898
     ]
   },
   {
-    "teal": 988,
-    "source": "contracts/abstracted_account.algo.ts:243",
+    "teal": 995,
+    "source": 261,
     "pc": [
-      899
-    ]
-  },
-  {
-    "teal": 989,
-    "source": "contracts/abstracted_account.algo.ts:244",
-    "pc": [
+      899,
       900,
       901
     ]
   },
   {
-    "teal": 990,
-    "source": "contracts/abstracted_account.algo.ts:244",
+    "teal": 996,
+    "source": 261,
     "pc": [
       902
     ]
   },
   {
-    "teal": 991,
-    "source": "contracts/abstracted_account.algo.ts:244",
+    "teal": 999,
+    "source": 260,
     "pc": [
-      903
-    ]
-  },
-  {
-    "teal": 992,
-    "source": "contracts/abstracted_account.algo.ts:245",
-    "pc": [
+      903,
       904,
       905
     ]
   },
   {
-    "teal": 993,
-    "source": "contracts/abstracted_account.algo.ts:245",
+    "teal": 1000,
+    "source": 260,
     "pc": [
       906
     ]
   },
   {
-    "teal": 994,
-    "source": "contracts/abstracted_account.algo.ts:246",
+    "teal": 1003,
+    "source": 259,
     "pc": [
       907,
-      908
-    ]
-  },
-  {
-    "teal": 995,
-    "source": "contracts/abstracted_account.algo.ts:246",
-    "pc": [
+      908,
       909
     ]
   },
   {
-    "teal": 996,
-    "source": "contracts/abstracted_account.algo.ts:246",
+    "teal": 1004,
+    "source": 259,
     "pc": [
-      910,
+      910
+    ]
+  },
+  {
+    "teal": 1005,
+    "source": 259,
+    "pc": [
       911
     ]
   },
   {
-    "teal": 997,
-    "source": "contracts/abstracted_account.algo.ts:246",
+    "teal": 1006,
+    "source": 259,
     "pc": [
       912
     ]
   },
   {
-    "teal": 998,
-    "source": "contracts/abstracted_account.algo.ts:242",
+    "teal": 1007,
+    "source": 259,
     "pc": [
       913
     ]
   },
   {
-    "teal": 999,
-    "source": "contracts/abstracted_account.algo.ts:242",
+    "teal": 1010,
+    "source": 259,
+    "errorMessage": "argument 3 (allowedCaller) for arc58_addNamedPlugin must be a address",
     "pc": [
       914
     ]
   },
   {
-    "teal": 1000,
-    "source": "contracts/abstracted_account.algo.ts:233",
+    "teal": 1013,
+    "source": 258,
     "pc": [
-      915
+      915,
+      916,
+      917
     ]
   },
   {
-    "teal": 1005,
-    "source": "contracts/abstracted_account.algo.ts:255",
+    "teal": 1014,
+    "source": 258,
     "pc": [
-      916,
-      917,
       918
     ]
   },
   {
-    "teal": 1006,
-    "source": "contracts/abstracted_account.algo.ts:255",
+    "teal": 1017,
+    "source": 257,
     "pc": [
-      919
-    ]
-  },
-  {
-    "teal": 1007,
-    "source": "contracts/abstracted_account.algo.ts:255",
-    "pc": [
-      920
-    ]
-  },
-  {
-    "teal": 1008,
-    "source": "contracts/abstracted_account.algo.ts:255",
-    "pc": [
+      919,
+      920,
       921
     ]
   },
   {
-    "teal": 1009,
-    "source": "contracts/abstracted_account.algo.ts:255",
+    "teal": 1018,
+    "source": 257,
     "pc": [
-      922
-    ]
-  },
-  {
-    "teal": 1012,
-    "source": "contracts/abstracted_account.algo.ts:255",
-    "errorMessage": "argument 0 (allowedCaller) for arc58_removePlugin must be a address",
-    "pc": [
-      923
-    ]
-  },
-  {
-    "teal": 1015,
-    "source": "contracts/abstracted_account.algo.ts:255",
-    "pc": [
-      924,
-      925,
-      926
-    ]
-  },
-  {
-    "teal": 1016,
-    "source": "contracts/abstracted_account.algo.ts:255",
-    "pc": [
-      927
-    ]
-  },
-  {
-    "teal": 1019,
-    "source": "contracts/abstracted_account.algo.ts:255",
-    "pc": [
-      928,
-      929,
-      930
-    ]
-  },
-  {
-    "teal": 1020,
-    "source": "contracts/abstracted_account.algo.ts:255",
-    "pc": [
-      931
+      922,
+      923,
+      924
     ]
   },
   {
     "teal": 1021,
-    "source": "contracts/abstracted_account.algo.ts:255",
+    "source": 256,
     "pc": [
-      932
+      925,
+      926,
+      927
     ]
   },
   {
-    "teal": 1029,
-    "source": "contracts/abstracted_account.algo.ts:255",
+    "teal": 1022,
+    "source": 256,
     "pc": [
-      933,
-      934,
-      935
+      928
     ]
   },
   {
-    "teal": 1032,
-    "source": "contracts/abstracted_account.algo.ts:255",
+    "teal": 1023,
+    "source": 256,
     "pc": [
-      936
+      929
     ]
   },
   {
     "teal": 1037,
-    "source": "contracts/abstracted_account.algo.ts:256",
+    "source": 256,
     "pc": [
-      937,
+      930,
+      931,
+      932
+    ]
+  },
+  {
+    "teal": 1040,
+    "source": 256,
+    "pc": [
+      933
+    ]
+  },
+  {
+    "teal": 1041,
+    "source": 256,
+    "pc": [
+      934
+    ]
+  },
+  {
+    "teal": 1046,
+    "source": 264,
+    "pc": [
+      935,
+      936
+    ]
+  },
+  {
+    "teal": 1047,
+    "source": 264,
+    "pc": [
+      937
+    ]
+  },
+  {
+    "teal": 1048,
+    "source": 264,
+    "pc": [
       938
     ]
   },
   {
-    "teal": 1038,
-    "source": "contracts/abstracted_account.algo.ts:256",
+    "teal": 1049,
+    "source": 264,
     "pc": [
       939
     ]
   },
   {
-    "teal": 1039,
-    "source": "contracts/abstracted_account.algo.ts:256",
+    "teal": 1052,
+    "source": 264,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
     "pc": [
       940
     ]
   },
   {
-    "teal": 1040,
-    "source": "contracts/abstracted_account.algo.ts:256",
+    "teal": 1056,
+    "source": 265,
     "pc": [
       941
     ]
   },
   {
-    "teal": 1043,
-    "source": "contracts/abstracted_account.algo.ts:256",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
+    "teal": 1057,
+    "source": 265,
     "pc": [
-      942
+      942,
+      943
     ]
   },
   {
-    "teal": 1047,
-    "source": "contracts/abstracted_account.algo.ts:258",
+    "teal": 1058,
+    "source": 265,
     "pc": [
-      943,
       944
     ]
   },
   {
-    "teal": 1048,
-    "source": "contracts/abstracted_account.algo.ts:258",
+    "teal": 1059,
+    "source": 265,
     "pc": [
       945
     ]
   },
   {
-    "teal": 1049,
-    "source": "contracts/abstracted_account.algo.ts:258",
+    "teal": 1060,
+    "source": 265,
     "pc": [
-      946,
+      946
+    ]
+  },
+  {
+    "teal": 1061,
+    "source": 265,
+    "pc": [
       947
     ]
   },
   {
-    "teal": 1050,
-    "source": "contracts/abstracted_account.algo.ts:258",
+    "teal": 1062,
+    "source": 265,
     "pc": [
       948
     ]
   },
   {
-    "teal": 1051,
-    "source": "contracts/abstracted_account.algo.ts:258",
+    "teal": 1063,
+    "source": 265,
     "pc": [
-      949,
-      950
+      949
     ]
   },
   {
-    "teal": 1055,
-    "source": "contracts/abstracted_account.algo.ts:259",
+    "teal": 1067,
+    "source": 267,
     "pc": [
+      950,
       951
     ]
   },
   {
-    "teal": 1056,
-    "source": "contracts/abstracted_account.algo.ts:259",
+    "teal": 1068,
+    "source": 267,
     "pc": [
-      952,
-      953
+      952
     ]
   },
   {
-    "teal": 1057,
-    "source": "contracts/abstracted_account.algo.ts:259",
+    "teal": 1069,
+    "source": 267,
     "pc": [
+      953,
       954
     ]
   },
   {
-    "teal": 1058,
-    "source": "contracts/abstracted_account.algo.ts:259",
+    "teal": 1070,
+    "source": 267,
     "pc": [
       955
     ]
   },
   {
-    "teal": 1059,
-    "source": "contracts/abstracted_account.algo.ts:255",
+    "teal": 1071,
+    "source": 267,
     "pc": [
-      956
+      956,
+      957
     ]
   },
   {
-    "teal": 1064,
-    "source": "contracts/abstracted_account.algo.ts:279",
+    "teal": 1075,
+    "source": 268,
     "pc": [
-      957,
-      958,
-      959
+      958
     ]
   },
   {
-    "teal": 1065,
-    "source": "contracts/abstracted_account.algo.ts:279",
+    "teal": 1076,
+    "source": 268,
     "pc": [
+      959,
       960
     ]
   },
   {
-    "teal": 1066,
-    "source": "contracts/abstracted_account.algo.ts:279",
+    "teal": 1077,
+    "source": 268,
     "pc": [
       961
     ]
   },
   {
-    "teal": 1067,
-    "source": "contracts/abstracted_account.algo.ts:279",
+    "teal": 1078,
+    "source": 268,
     "pc": [
-      962
-    ]
-  },
-  {
-    "teal": 1068,
-    "source": "contracts/abstracted_account.algo.ts:279",
-    "pc": [
+      962,
       963
     ]
   },
   {
-    "teal": 1071,
-    "source": "contracts/abstracted_account.algo.ts:279",
-    "errorMessage": "argument 0 (adminPrivileges) for arc58_addNamedPlugin must be a bool",
+    "teal": 1079,
+    "source": 268,
     "pc": [
       964
     ]
   },
   {
-    "teal": 1072,
-    "source": "contracts/abstracted_account.algo.ts:279",
+    "teal": 1088,
+    "source": 271,
     "pc": [
-      965
-    ]
-  },
-  {
-    "teal": 1073,
-    "source": "contracts/abstracted_account.algo.ts:279",
-    "pc": [
+      965,
       966
     ]
   },
   {
-    "teal": 1076,
-    "source": "contracts/abstracted_account.algo.ts:278",
+    "teal": 1089,
+    "source": 271,
     "pc": [
-      967,
+      967
+    ]
+  },
+  {
+    "teal": 1090,
+    "source": 272,
+    "pc": [
       968,
       969
     ]
   },
   {
-    "teal": 1077,
-    "source": "contracts/abstracted_account.algo.ts:278",
+    "teal": 1091,
+    "source": 272,
     "pc": [
       970
     ]
   },
   {
-    "teal": 1080,
-    "source": "contracts/abstracted_account.algo.ts:277",
+    "teal": 1092,
+    "source": 272,
     "pc": [
-      971,
+      971
+    ]
+  },
+  {
+    "teal": 1093,
+    "source": 273,
+    "pc": [
       972,
       973
     ]
   },
   {
-    "teal": 1081,
-    "source": "contracts/abstracted_account.algo.ts:277",
+    "teal": 1094,
+    "source": 273,
     "pc": [
       974
     ]
   },
   {
-    "teal": 1084,
-    "source": "contracts/abstracted_account.algo.ts:276",
+    "teal": 1095,
+    "source": 274,
     "pc": [
       975,
-      976,
+      976
+    ]
+  },
+  {
+    "teal": 1096,
+    "source": 274,
+    "pc": [
       977
     ]
   },
   {
-    "teal": 1085,
-    "source": "contracts/abstracted_account.algo.ts:276",
+    "teal": 1097,
+    "source": 274,
     "pc": [
-      978
-    ]
-  },
-  {
-    "teal": 1086,
-    "source": "contracts/abstracted_account.algo.ts:276",
-    "pc": [
+      978,
       979
     ]
   },
   {
-    "teal": 1087,
-    "source": "contracts/abstracted_account.algo.ts:276",
+    "teal": 1098,
+    "source": 274,
     "pc": [
       980
     ]
   },
   {
-    "teal": 1088,
-    "source": "contracts/abstracted_account.algo.ts:276",
+    "teal": 1099,
+    "source": 270,
     "pc": [
       981
     ]
   },
   {
-    "teal": 1091,
-    "source": "contracts/abstracted_account.algo.ts:276",
-    "errorMessage": "argument 3 (allowedCaller) for arc58_addNamedPlugin must be a address",
+    "teal": 1100,
+    "source": 270,
     "pc": [
-      982
+      982,
+      983
     ]
   },
   {
-    "teal": 1094,
-    "source": "contracts/abstracted_account.algo.ts:275",
+    "teal": 1104,
+    "source": 277,
     "pc": [
-      983,
-      984,
-      985
+      984
     ]
   },
   {
-    "teal": 1095,
-    "source": "contracts/abstracted_account.algo.ts:275",
+    "teal": 1105,
+    "source": 277,
     "pc": [
+      985,
       986
     ]
   },
   {
-    "teal": 1098,
-    "source": "contracts/abstracted_account.algo.ts:274",
+    "teal": 1106,
+    "source": 277,
     "pc": [
-      987,
+      987
+    ]
+  },
+  {
+    "teal": 1107,
+    "source": 277,
+    "pc": [
       988,
       989
     ]
   },
   {
-    "teal": 1099,
-    "source": "contracts/abstracted_account.algo.ts:274",
+    "teal": 1108,
+    "source": 277,
     "pc": [
-      990,
-      991,
-      992
+      990
     ]
   },
   {
-    "teal": 1102,
-    "source": "contracts/abstracted_account.algo.ts:273",
+    "teal": 1109,
+    "source": 256,
     "pc": [
+      991
+    ]
+  },
+  {
+    "teal": 1114,
+    "source": 285,
+    "pc": [
+      992,
       993,
-      994,
-      995
+      994
     ]
   },
   {
-    "teal": 1103,
-    "source": "contracts/abstracted_account.algo.ts:273",
+    "teal": 1115,
+    "source": 285,
     "pc": [
-      996
-    ]
-  },
-  {
-    "teal": 1104,
-    "source": "contracts/abstracted_account.algo.ts:273",
-    "pc": [
+      995,
+      996,
       997
     ]
   },
   {
     "teal": 1118,
-    "source": "contracts/abstracted_account.algo.ts:273",
+    "source": 285,
     "pc": [
       998,
       999,
@@ -4371,763 +4383,408 @@
     ]
   },
   {
-    "teal": 1121,
-    "source": "contracts/abstracted_account.algo.ts:273",
+    "teal": 1119,
+    "source": 285,
     "pc": [
       1001
     ]
   },
   {
-    "teal": 1122,
-    "source": "contracts/abstracted_account.algo.ts:273",
+    "teal": 1120,
+    "source": 285,
     "pc": [
       1002
     ]
   },
   {
-    "teal": 1127,
-    "source": "contracts/abstracted_account.algo.ts:281",
+    "teal": 1128,
+    "source": 285,
     "pc": [
       1003,
-      1004
-    ]
-  },
-  {
-    "teal": 1128,
-    "source": "contracts/abstracted_account.algo.ts:281",
-    "pc": [
+      1004,
       1005
     ]
   },
   {
-    "teal": 1129,
-    "source": "contracts/abstracted_account.algo.ts:281",
+    "teal": 1131,
+    "source": 285,
     "pc": [
       1006
     ]
   },
   {
-    "teal": 1130,
-    "source": "contracts/abstracted_account.algo.ts:281",
+    "teal": 1136,
+    "source": 286,
     "pc": [
-      1007
-    ]
-  },
-  {
-    "teal": 1133,
-    "source": "contracts/abstracted_account.algo.ts:281",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
-    "pc": [
+      1007,
       1008
     ]
   },
   {
     "teal": 1137,
-    "source": "contracts/abstracted_account.algo.ts:282",
+    "source": 286,
     "pc": [
-      1009,
-      1010
+      1009
     ]
   },
   {
     "teal": 1138,
-    "source": "contracts/abstracted_account.algo.ts:282",
+    "source": 286,
     "pc": [
-      1011,
-      1012
+      1010
     ]
   },
   {
     "teal": 1139,
-    "source": "contracts/abstracted_account.algo.ts:282",
+    "source": 286,
+    "pc": [
+      1011
+    ]
+  },
+  {
+    "teal": 1142,
+    "source": 286,
+    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
+    "pc": [
+      1012
+    ]
+  },
+  {
+    "teal": 1146,
+    "source": 288,
     "pc": [
       1013
     ]
   },
   {
-    "teal": 1140,
-    "source": "contracts/abstracted_account.algo.ts:282",
+    "teal": 1147,
+    "source": 288,
     "pc": [
-      1014
-    ]
-  },
-  {
-    "teal": 1141,
-    "source": "contracts/abstracted_account.algo.ts:282",
-    "pc": [
+      1014,
       1015
     ]
   },
   {
-    "teal": 1142,
-    "source": "contracts/abstracted_account.algo.ts:282",
+    "teal": 1148,
+    "source": 288,
     "pc": [
       1016
     ]
   },
   {
-    "teal": 1143,
-    "source": "contracts/abstracted_account.algo.ts:282",
+    "teal": 1149,
+    "source": 288,
     "pc": [
-      1017
-    ]
-  },
-  {
-    "teal": 1144,
-    "source": "contracts/abstracted_account.algo.ts:282",
-    "pc": [
+      1017,
       1018
     ]
   },
   {
-    "teal": 1148,
-    "source": "contracts/abstracted_account.algo.ts:284",
+    "teal": 1153,
+    "source": 289,
     "pc": [
-      1019,
-      1020
+      1019
     ]
   },
   {
-    "teal": 1149,
-    "source": "contracts/abstracted_account.algo.ts:284",
+    "teal": 1154,
+    "source": 289,
     "pc": [
+      1020,
       1021
     ]
   },
   {
-    "teal": 1150,
-    "source": "contracts/abstracted_account.algo.ts:284",
+    "teal": 1155,
+    "source": 289,
     "pc": [
-      1022,
+      1022
+    ]
+  },
+  {
+    "teal": 1156,
+    "source": 289,
+    "pc": [
       1023
     ]
   },
   {
-    "teal": 1151,
-    "source": "contracts/abstracted_account.algo.ts:284",
+    "teal": 1160,
+    "source": 290,
     "pc": [
       1024
     ]
   },
   {
-    "teal": 1152,
-    "source": "contracts/abstracted_account.algo.ts:284",
+    "teal": 1161,
+    "source": 288,
     "pc": [
       1025,
       1026
     ]
   },
   {
-    "teal": 1156,
-    "source": "contracts/abstracted_account.algo.ts:285",
+    "teal": 1162,
+    "source": 288,
     "pc": [
-      1027,
+      1027
+    ]
+  },
+  {
+    "teal": 1165,
+    "source": 288,
+    "errorMessage": "box value does not exist: this.namedPlugins(name).value",
+    "pc": [
       1028
     ]
   },
   {
-    "teal": 1157,
-    "source": "contracts/abstracted_account.algo.ts:285",
+    "teal": 1166,
+    "source": 290,
     "pc": [
-      1029,
+      1029
+    ]
+  },
+  {
+    "teal": 1167,
+    "source": 290,
+    "pc": [
       1030
     ]
   },
   {
-    "teal": 1158,
-    "source": "contracts/abstracted_account.algo.ts:285",
+    "teal": 1168,
+    "source": 285,
     "pc": [
       1031
     ]
   },
   {
-    "teal": 1159,
-    "source": "contracts/abstracted_account.algo.ts:285",
+    "teal": 1171,
+    "source": 21,
     "pc": [
       1032,
-      1033
-    ]
-  },
-  {
-    "teal": 1160,
-    "source": "contracts/abstracted_account.algo.ts:285",
-    "pc": [
-      1034
-    ]
-  },
-  {
-    "teal": 1169,
-    "source": "contracts/abstracted_account.algo.ts:288",
-    "pc": [
+      1033,
+      1034,
       1035,
-      1036
-    ]
-  },
-  {
-    "teal": 1170,
-    "source": "contracts/abstracted_account.algo.ts:288",
-    "pc": [
+      1036,
       1037
     ]
   },
   {
-    "teal": 1171,
-    "source": "contracts/abstracted_account.algo.ts:289",
+    "teal": 1172,
+    "source": 21,
     "pc": [
       1038,
-      1039
-    ]
-  },
-  {
-    "teal": 1172,
-    "source": "contracts/abstracted_account.algo.ts:289",
-    "pc": [
+      1039,
       1040
     ]
   },
   {
     "teal": 1173,
-    "source": "contracts/abstracted_account.algo.ts:289",
+    "source": 21,
     "pc": [
-      1041
-    ]
-  },
-  {
-    "teal": 1174,
-    "source": "contracts/abstracted_account.algo.ts:290",
-    "pc": [
+      1041,
       1042,
-      1043
-    ]
-  },
-  {
-    "teal": 1175,
-    "source": "contracts/abstracted_account.algo.ts:290",
-    "pc": [
+      1043,
       1044
     ]
   },
   {
     "teal": 1176,
-    "source": "contracts/abstracted_account.algo.ts:291",
+    "source": 21,
+    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
     "pc": [
-      1045,
-      1046
-    ]
-  },
-  {
-    "teal": 1177,
-    "source": "contracts/abstracted_account.algo.ts:291",
-    "pc": [
-      1047
-    ]
-  },
-  {
-    "teal": 1178,
-    "source": "contracts/abstracted_account.algo.ts:291",
-    "pc": [
-      1048,
-      1049
+      1045
     ]
   },
   {
     "teal": 1179,
-    "source": "contracts/abstracted_account.algo.ts:291",
+    "source": 21,
     "pc": [
-      1050
-    ]
-  },
-  {
-    "teal": 1180,
-    "source": "contracts/abstracted_account.algo.ts:287",
-    "pc": [
+      1046,
+      1047,
+      1048,
+      1049,
+      1050,
       1051
     ]
   },
   {
-    "teal": 1181,
-    "source": "contracts/abstracted_account.algo.ts:287",
+    "teal": 1180,
+    "source": 21,
     "pc": [
       1052,
-      1053
-    ]
-  },
-  {
-    "teal": 1185,
-    "source": "contracts/abstracted_account.algo.ts:294",
-    "pc": [
-      1054
-    ]
-  },
-  {
-    "teal": 1186,
-    "source": "contracts/abstracted_account.algo.ts:294",
-    "pc": [
+      1053,
+      1054,
       1055,
-      1056
-    ]
-  },
-  {
-    "teal": 1187,
-    "source": "contracts/abstracted_account.algo.ts:294",
-    "pc": [
+      1056,
       1057
     ]
   },
   {
-    "teal": 1188,
-    "source": "contracts/abstracted_account.algo.ts:294",
+    "teal": 1181,
+    "source": 21,
     "pc": [
       1058,
-      1059
-    ]
-  },
-  {
-    "teal": 1189,
-    "source": "contracts/abstracted_account.algo.ts:294",
-    "pc": [
-      1060
-    ]
-  },
-  {
-    "teal": 1190,
-    "source": "contracts/abstracted_account.algo.ts:273",
-    "pc": [
-      1061
-    ]
-  },
-  {
-    "teal": 1195,
-    "source": "contracts/abstracted_account.algo.ts:302",
-    "pc": [
+      1059,
+      1060,
+      1061,
       1062,
-      1063,
-      1064
+      1063
     ]
   },
   {
-    "teal": 1196,
-    "source": "contracts/abstracted_account.algo.ts:302",
+    "teal": 1182,
+    "source": 21,
     "pc": [
-      1065,
+      1064,
+      1065
+    ]
+  },
+  {
+    "teal": 1183,
+    "source": 21,
+    "pc": [
       1066,
-      1067
-    ]
-  },
-  {
-    "teal": 1199,
-    "source": "contracts/abstracted_account.algo.ts:302",
-    "pc": [
+      1067,
       1068,
       1069,
-      1070
-    ]
-  },
-  {
-    "teal": 1200,
-    "source": "contracts/abstracted_account.algo.ts:302",
-    "pc": [
+      1070,
       1071
     ]
   },
   {
-    "teal": 1201,
-    "source": "contracts/abstracted_account.algo.ts:302",
+    "teal": 1184,
+    "source": 21,
     "pc": [
-      1072
-    ]
-  },
-  {
-    "teal": 1209,
-    "source": "contracts/abstracted_account.algo.ts:302",
-    "pc": [
+      1072,
       1073,
       1074,
-      1075
+      1075,
+      1076,
+      1077
     ]
   },
   {
-    "teal": 1212,
-    "source": "contracts/abstracted_account.algo.ts:302",
+    "teal": 1185,
+    "source": 21,
     "pc": [
-      1076
+      1078,
+      1079,
+      1080,
+      1081,
+      1082,
+      1083
     ]
   },
   {
-    "teal": 1217,
-    "source": "contracts/abstracted_account.algo.ts:303",
+    "teal": 1186,
+    "source": 21,
     "pc": [
-      1077,
-      1078
-    ]
-  },
-  {
-    "teal": 1218,
-    "source": "contracts/abstracted_account.algo.ts:303",
-    "pc": [
-      1079
-    ]
-  },
-  {
-    "teal": 1219,
-    "source": "contracts/abstracted_account.algo.ts:303",
-    "pc": [
-      1080
-    ]
-  },
-  {
-    "teal": 1220,
-    "source": "contracts/abstracted_account.algo.ts:303",
-    "pc": [
-      1081
-    ]
-  },
-  {
-    "teal": 1223,
-    "source": "contracts/abstracted_account.algo.ts:303",
-    "errorMessage": "transaction verification failed: {\"txn\":\"this.txn\",\"field\":\"sender\",\"expected\":\"this.admin.value\"}",
-    "pc": [
-      1082
-    ]
-  },
-  {
-    "teal": 1227,
-    "source": "contracts/abstracted_account.algo.ts:305",
-    "pc": [
-      1083,
-      1084
-    ]
-  },
-  {
-    "teal": 1228,
-    "source": "contracts/abstracted_account.algo.ts:305",
-    "pc": [
+      1084,
       1085,
-      1086
-    ]
-  },
-  {
-    "teal": 1229,
-    "source": "contracts/abstracted_account.algo.ts:305",
-    "pc": [
-      1087
-    ]
-  },
-  {
-    "teal": 1230,
-    "source": "contracts/abstracted_account.algo.ts:305",
-    "pc": [
+      1086,
+      1087,
       1088,
       1089
     ]
   },
   {
-    "teal": 1234,
-    "source": "contracts/abstracted_account.algo.ts:306",
+    "teal": 1187,
+    "source": 21,
     "pc": [
       1090,
-      1091
-    ]
-  },
-  {
-    "teal": 1235,
-    "source": "contracts/abstracted_account.algo.ts:306",
-    "pc": [
+      1091,
       1092,
-      1093
-    ]
-  },
-  {
-    "teal": 1236,
-    "source": "contracts/abstracted_account.algo.ts:306",
-    "pc": [
-      1094
-    ]
-  },
-  {
-    "teal": 1237,
-    "source": "contracts/abstracted_account.algo.ts:306",
-    "pc": [
+      1093,
+      1094,
       1095
     ]
   },
   {
-    "teal": 1241,
-    "source": "contracts/abstracted_account.algo.ts:307",
+    "teal": 1188,
+    "source": 21,
     "pc": [
-      1096
-    ]
-  },
-  {
-    "teal": 1242,
-    "source": "contracts/abstracted_account.algo.ts:305",
-    "pc": [
+      1096,
       1097,
-      1098
-    ]
-  },
-  {
-    "teal": 1243,
-    "source": "contracts/abstracted_account.algo.ts:305",
-    "pc": [
-      1099
-    ]
-  },
-  {
-    "teal": 1246,
-    "source": "contracts/abstracted_account.algo.ts:305",
-    "errorMessage": "box value does not exist: this.namedPlugins(name).value",
-    "pc": [
-      1100
-    ]
-  },
-  {
-    "teal": 1247,
-    "source": "contracts/abstracted_account.algo.ts:307",
-    "pc": [
+      1098,
+      1099,
+      1100,
       1101
     ]
   },
   {
-    "teal": 1248,
-    "source": "contracts/abstracted_account.algo.ts:307",
+    "teal": 1189,
+    "source": 21,
     "pc": [
-      1102
-    ]
-  },
-  {
-    "teal": 1249,
-    "source": "contracts/abstracted_account.algo.ts:302",
-    "pc": [
-      1103
-    ]
-  },
-  {
-    "teal": 1252,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      1102,
+      1103,
       1104,
       1105,
       1106,
-      1107,
-      1108,
-      1109
+      1107
     ]
   },
   {
-    "teal": 1253,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "teal": 1190,
+    "source": 21,
     "pc": [
+      1108,
+      1109,
       1110,
       1111,
-      1112
+      1112,
+      1113
     ]
   },
   {
-    "teal": 1254,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "teal": 1191,
+    "source": 21,
     "pc": [
-      1113,
       1114,
       1115,
       1116
     ]
   },
   {
-    "teal": 1257,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+    "teal": 1192,
+    "source": 21,
     "pc": [
-      1117
-    ]
-  },
-  {
-    "teal": 1260,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      1117,
       1118,
       1119,
       1120,
       1121,
       1122,
-      1123
-    ]
-  },
-  {
-    "teal": 1261,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      1123,
       1124,
       1125,
       1126,
       1127,
       1128,
-      1129
-    ]
-  },
-  {
-    "teal": 1262,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      1129,
       1130,
       1131,
       1132,
       1133,
       1134,
-      1135
-    ]
-  },
-  {
-    "teal": 1263,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      1135,
       1136,
-      1137
-    ]
-  },
-  {
-    "teal": 1264,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
+      1137,
       1138,
       1139,
       1140,
       1141,
-      1142,
-      1143
+      1142
     ]
   },
   {
-    "teal": 1265,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1144,
-      1145,
-      1146,
-      1147,
-      1148,
-      1149
-    ]
-  },
-  {
-    "teal": 1266,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1150,
-      1151,
-      1152,
-      1153,
-      1154,
-      1155
-    ]
-  },
-  {
-    "teal": 1267,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1156,
-      1157,
-      1158,
-      1159,
-      1160,
-      1161
-    ]
-  },
-  {
-    "teal": 1268,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1162,
-      1163,
-      1164,
-      1165,
-      1166,
-      1167
-    ]
-  },
-  {
-    "teal": 1269,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1168,
-      1169,
-      1170,
-      1171,
-      1172,
-      1173
-    ]
-  },
-  {
-    "teal": 1270,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1174,
-      1175,
-      1176,
-      1177,
-      1178,
-      1179
-    ]
-  },
-  {
-    "teal": 1271,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1180,
-      1181,
-      1182,
-      1183,
-      1184,
-      1185
-    ]
-  },
-  {
-    "teal": 1272,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1186,
-      1187,
-      1188
-    ]
-  },
-  {
-    "teal": 1273,
-    "source": "contracts/abstracted_account.algo.ts:21",
-    "pc": [
-      1189,
-      1190,
-      1191,
-      1192,
-      1193,
-      1194,
-      1195,
-      1196,
-      1197,
-      1198,
-      1199,
-      1200,
-      1201,
-      1202,
-      1203,
-      1204,
-      1205,
-      1206,
-      1207,
-      1208,
-      1209,
-      1210,
-      1211,
-      1212,
-      1213,
-      1214
-    ]
-  },
-  {
-    "teal": 1276,
-    "source": "contracts/abstracted_account.algo.ts:21",
+    "teal": 1195,
+    "source": 21,
     "errorMessage": "this contract does not implement the given ABI method for call NoOp",
     "pc": [
-      1215
+      1143
     ]
   }
 ]
