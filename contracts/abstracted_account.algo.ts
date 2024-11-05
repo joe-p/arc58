@@ -25,11 +25,8 @@ export class AbstractedAccount extends Contract {
   /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
   admin = GlobalStateKey<Address>({ key: 'a' });
 
-  /** The address this app controls */
-  controlledAddress = GlobalStateKey<Address>({ key: 'c' });
-
   /**
-   * Plugins that add functionality to the controlledAddress and the account that has permission to use it.
+   * Plugins that add functionality to the contract wallet and the account that has permission to use it.
    */
   plugins = BoxMap<PluginsKey, PluginInfo>({ prefix: 'p' });
 
@@ -39,7 +36,7 @@ export class AbstractedAccount extends Contract {
   namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
 
   /**
-   * Ensure that by the end of the group the abstracted account has control of its address
+   * Ensure that by the end of the group the abstracted account has control of itself
    */
   private verifyRekeyToAbstractedAccount(): void {
     let rekeyedBack = false;
@@ -48,7 +45,7 @@ export class AbstractedAccount extends Contract {
       const txn = this.txnGroup[i];
 
       // The transaction is an explicit rekey back
-      if (txn.sender === this.controlledAddress.value && txn.rekeyTo === this.app.address) {
+      if (txn.sender === this.app.address && txn.rekeyTo === this.app.address) {
         rekeyedBack = true;
         break;
       }
@@ -70,29 +67,17 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * What the value of this.address.value.authAddr should be when this.controlledAddress
-   * is able to be controlled by this app. It will either be this.app.address or zeroAddress
-   */
-  private getAuthAddr(): Address {
-    return this.controlledAddress.value === this.app.address ? Address.zeroAddress : this.app.address;
-  }
-
-  /**
    * Create an abstracted account application.
    * This is not part of ARC58 and implementation specific.
    *
-   * @param controlledAddress The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
    * @param admin The admin for this app
    */
-  createApplication(controlledAddress: Address, admin: Address): void {
+  createApplication(admin: Address): void {
     verifyAppCallTxn(this.txn, {
-      sender: { includedIn: [controlledAddress, admin] },
+      sender: admin,
     });
 
-    assert(admin !== controlledAddress);
-
     this.admin.value = admin;
-    this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress;
   }
 
   /**
@@ -115,7 +100,7 @@ export class AbstractedAccount extends Contract {
    */
   arc58_pluginChangeAdmin(plugin: AppID, allowedCaller: Address, newAdmin: Address): void {
     verifyTxn(this.txn, { sender: plugin.address });
-    assert(this.controlledAddress.value.authAddr === plugin.address, 'This plugin is not in control of the account');
+    assert(this.app.address.authAddr === plugin.address, 'This plugin is not in control of the account');
 
     const key: PluginsKey = { application: plugin, allowedCaller: allowedCaller };
     assert(
@@ -139,7 +124,7 @@ export class AbstractedAccount extends Contract {
    * Verify the abstracted account is rekeyed to this app
    */
   arc58_verifyAuthAddr(): void {
-    assert(this.controlledAddress.value.authAddr === this.getAuthAddr());
+    assert(this.app.address.authAddr === globals.zeroAddress);
   }
 
   /**
@@ -152,7 +137,6 @@ export class AbstractedAccount extends Contract {
     verifyAppCallTxn(this.txn, { sender: this.admin.value });
 
     sendPayment({
-      sender: this.controlledAddress.value,
       receiver: addr,
       rekeyTo: addr,
       note: 'rekeying abstracted account',
@@ -197,8 +181,7 @@ export class AbstractedAccount extends Contract {
       assert(this.pluginCallAllowed(plugin, this.txn.sender), 'This sender is not allowed to trigger this plugin');
 
     sendPayment({
-      sender: this.controlledAddress.value,
-      receiver: this.controlledAddress.value,
+      receiver: this.app.address,
       rekeyTo: plugin.address,
       note: 'rekeying to plugin app',
     });

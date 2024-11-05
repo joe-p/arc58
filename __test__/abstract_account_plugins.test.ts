@@ -49,8 +49,6 @@ describe('Abstracted Subscription Program', () => {
 
     // Create an abstracted account app
     await abstractedAccountClient.create.createApplication({
-      // Set address to ZERO_ADDRESS so the app address is used
-      controlledAddress: ZERO_ADDRESS,
       // aliceEOA will be the admin
       admin: aliceEOA.addr,
     });
