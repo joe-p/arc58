@@ -58,7 +58,7 @@
       "global": {
         "lastPayment": {
           "key": "bGFzdFBheW1lbnQ=",
-          "keyType": "bytes",
+          "keyType": "AVMBytes",
           "valueType": "uint64"
         }
       },
@@ -76,621 +76,639 @@
     "call": []
   },
   "sourceInfo": {
-    "approval": [
-      {
-        "teal": 1,
-        "source": 12,
-        "pc": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19
-        ]
-      },
-      {
-        "teal": 13,
-        "source": 12,
-        "pc": [
-          20,
-          21
-        ]
-      },
-      {
-        "teal": 14,
-        "source": 12,
-        "pc": [
-          22
-        ]
-      },
-      {
-        "teal": 15,
-        "source": 12,
-        "pc": [
-          23,
-          24
-        ]
-      },
-      {
-        "teal": 16,
-        "source": 12,
-        "pc": [
-          25
-        ]
-      },
-      {
-        "teal": 17,
-        "source": 12,
-        "pc": [
-          26,
-          27
-        ]
-      },
-      {
-        "teal": 18,
-        "source": 12,
-        "pc": [
-          28
-        ]
-      },
-      {
-        "teal": 19,
-        "source": 12,
-        "pc": [
-          29,
-          30,
-          31,
-          32,
-          33,
-          34,
-          35,
-          36,
-          37,
-          38,
-          39,
-          40,
-          41,
-          42,
-          43,
-          44,
-          45,
-          46,
-          47,
-          48,
-          49,
-          50,
-          51,
-          52,
-          53,
-          54
-        ]
-      },
-      {
-        "teal": 23,
-        "source": 12,
-        "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
-        "pc": [
-          55
-        ]
-      },
-      {
-        "teal": 28,
-        "source": 17,
-        "pc": [
-          56,
-          57,
-          58
-        ]
-      },
-      {
-        "teal": 29,
-        "source": 17,
-        "pc": [
-          59
-        ]
-      },
-      {
-        "teal": 30,
-        "source": 17,
-        "pc": [
-          60
-        ]
-      },
-      {
-        "teal": 34,
-        "source": 17,
-        "pc": [
-          61,
-          62,
-          63
-        ]
-      },
-      {
-        "teal": 38,
-        "source": 19,
-        "pc": [
-          64
-        ]
-      },
-      {
-        "teal": 39,
-        "source": 19,
-        "pc": [
-          65
-        ]
-      },
-      {
-        "teal": 40,
-        "source": 19,
-        "pc": [
-          66
-        ]
-      },
-      {
-        "teal": 41,
-        "source": 17,
-        "pc": [
-          67
-        ]
-      },
-      {
-        "teal": 46,
-        "source": 25,
-        "pc": [
-          68,
-          69,
-          70
-        ]
-      },
-      {
-        "teal": 47,
-        "source": 25,
-        "pc": [
-          71
-        ]
-      },
-      {
-        "teal": 48,
-        "source": 25,
-        "pc": [
-          72
-        ]
-      },
-      {
-        "teal": 49,
-        "source": 25,
-        "pc": [
-          73
-        ]
-      },
-      {
-        "teal": 50,
-        "source": 25,
-        "pc": [
-          74
-        ]
-      },
-      {
-        "teal": 53,
-        "source": 25,
-        "errorMessage": "argument 0 (_acctRef) for makePayment must be a address",
-        "pc": [
-          75
-        ]
-      },
-      {
-        "teal": 56,
-        "source": 23,
-        "pc": [
-          76,
-          77,
-          78
-        ]
-      },
-      {
-        "teal": 57,
-        "source": 23,
-        "pc": [
-          79
-        ]
-      },
-      {
-        "teal": 58,
-        "source": 23,
-        "pc": [
-          80
-        ]
-      },
-      {
-        "teal": 59,
-        "source": 23,
-        "pc": [
-          81
-        ]
-      },
-      {
-        "teal": 60,
-        "source": 23,
-        "pc": [
-          82
-        ]
-      },
-      {
-        "teal": 63,
-        "source": 23,
-        "errorMessage": "argument 1 (sender) for makePayment must be a address",
-        "pc": [
-          83
-        ]
-      },
-      {
-        "teal": 66,
-        "source": 22,
-        "pc": [
-          84,
-          85,
-          86
-        ]
-      },
-      {
-        "teal": 67,
-        "source": 22,
-        "pc": [
-          87
-        ]
-      },
-      {
-        "teal": 68,
-        "source": 22,
-        "pc": [
-          88
-        ]
-      },
-      {
-        "teal": 72,
-        "source": 22,
-        "pc": [
-          89,
-          90,
-          91
-        ]
-      },
-      {
-        "teal": 76,
-        "source": 27,
-        "pc": [
-          92,
-          93
-        ]
-      },
-      {
-        "teal": 77,
-        "source": 27,
-        "pc": [
-          94
-        ]
-      },
-      {
-        "teal": 78,
-        "source": 27,
-        "pc": [
-          95
-        ]
-      },
-      {
-        "teal": 79,
-        "source": 27,
-        "pc": [
-          96
-        ]
-      },
-      {
-        "teal": 80,
-        "source": 27,
-        "pc": [
-          97
-        ]
-      },
-      {
-        "teal": 81,
-        "source": 27,
-        "pc": [
-          98
-        ]
-      },
-      {
-        "teal": 82,
-        "source": 27,
-        "pc": [
-          99
-        ]
-      },
-      {
-        "teal": 86,
-        "source": 28,
-        "pc": [
-          100
-        ]
-      },
-      {
-        "teal": 87,
-        "source": 28,
-        "pc": [
-          101,
-          102
-        ]
-      },
-      {
-        "teal": 88,
-        "source": 28,
-        "pc": [
-          103
-        ]
-      },
-      {
-        "teal": 97,
-        "source": 30,
-        "pc": [
-          104
-        ]
-      },
-      {
-        "teal": 98,
-        "source": 30,
-        "pc": [
-          105
-        ]
-      },
-      {
-        "teal": 99,
-        "source": 30,
-        "pc": [
-          106,
-          107
-        ]
-      },
-      {
-        "teal": 103,
-        "source": 31,
-        "pc": [
-          108,
-          109
-        ]
-      },
-      {
-        "teal": 104,
-        "source": 31,
-        "pc": [
-          110,
-          111
-        ]
-      },
-      {
-        "teal": 108,
-        "source": 32,
-        "pc": [
-          112,
-          113,
-          114,
-          115
-        ]
-      },
-      {
-        "teal": 109,
-        "source": 32,
-        "pc": [
-          116,
-          117
-        ]
-      },
-      {
-        "teal": 113,
-        "source": 33,
-        "pc": [
-          118,
-          119,
-          120,
-          121,
-          122,
-          123,
-          124,
-          125,
-          126,
-          127,
-          128,
-          129,
-          130,
-          131,
-          132,
-          133,
-          134,
-          135,
-          136,
-          137,
-          138,
-          139,
-          140,
-          141,
-          142,
-          143,
-          144,
-          145,
-          146,
-          147,
-          148,
-          149,
-          150,
-          151
-        ]
-      },
-      {
-        "teal": 114,
-        "source": 33,
-        "pc": [
-          152,
-          153
-        ]
-      },
-      {
-        "teal": 118,
-        "source": 34,
-        "pc": [
-          154,
-          155
-        ]
-      },
-      {
-        "teal": 119,
-        "source": 34,
-        "pc": [
-          156,
-          157
-        ]
-      },
-      {
-        "teal": 122,
-        "source": 30,
-        "pc": [
-          158
-        ]
-      },
-      {
-        "teal": 123,
-        "source": 30,
-        "pc": [
-          159,
-          160
-        ]
-      },
-      {
-        "teal": 126,
-        "source": 30,
-        "pc": [
-          161
-        ]
-      },
-      {
-        "teal": 127,
-        "source": 22,
-        "pc": [
-          162
-        ]
-      },
-      {
-        "teal": 130,
-        "source": 12,
-        "pc": [
-          163,
-          164
-        ]
-      },
-      {
-        "teal": 131,
-        "source": 12,
-        "pc": [
-          165,
-          166,
-          167
-        ]
-      },
-      {
-        "teal": 132,
-        "source": 12,
-        "pc": [
-          168,
-          169,
-          170,
-          171,
-          172,
-          173
-        ]
-      },
-      {
-        "teal": 133,
-        "source": 12,
-        "pc": [
-          174,
-          175,
-          176
-        ]
-      },
-      {
-        "teal": 134,
-        "source": 12,
-        "pc": [
-          177,
-          178,
-          179,
-          180
-        ]
-      },
-      {
-        "teal": 137,
-        "source": 12,
-        "errorMessage": "this contract does not implement the given ABI method for create NoOp",
-        "pc": [
-          181
-        ]
-      },
-      {
-        "teal": 140,
-        "source": 12,
-        "pc": [
-          182,
-          183,
-          184,
-          185,
-          186,
-          187
-        ]
-      },
-      {
-        "teal": 141,
-        "source": 12,
-        "pc": [
-          188,
-          189,
-          190
-        ]
-      },
-      {
-        "teal": 142,
-        "source": 12,
-        "pc": [
-          191,
-          192,
-          193,
-          194
-        ]
-      },
-      {
-        "teal": 145,
-        "source": 12,
-        "errorMessage": "this contract does not implement the given ABI method for call NoOp",
-        "pc": [
-          195
-        ]
-      }
-    ],
-    "clear": []
+    "approval": {
+      "sourceInfo": [
+        {
+          "teal": 1,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            0
+          ]
+        },
+        {
+          "teal": 2,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "teal": 3,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ]
+        },
+        {
+          "teal": 15,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            20,
+            21
+          ]
+        },
+        {
+          "teal": 16,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            22
+          ]
+        },
+        {
+          "teal": 17,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            23,
+            24
+          ]
+        },
+        {
+          "teal": 18,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            25
+          ]
+        },
+        {
+          "teal": 19,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            26,
+            27
+          ]
+        },
+        {
+          "teal": 20,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            28
+          ]
+        },
+        {
+          "teal": 21,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54
+          ]
+        },
+        {
+          "teal": 25,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
+          "pc": [
+            55
+          ]
+        },
+        {
+          "teal": 30,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:15",
+          "pc": [
+            56,
+            57,
+            58
+          ]
+        },
+        {
+          "teal": 31,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:15",
+          "pc": [
+            59
+          ]
+        },
+        {
+          "teal": 32,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:15",
+          "pc": [
+            60
+          ]
+        },
+        {
+          "teal": 36,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:15",
+          "pc": [
+            61,
+            62,
+            63
+          ]
+        },
+        {
+          "teal": 40,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:17",
+          "pc": [
+            64
+          ]
+        },
+        {
+          "teal": 41,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:17",
+          "pc": [
+            65
+          ]
+        },
+        {
+          "teal": 42,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:17",
+          "pc": [
+            66
+          ]
+        },
+        {
+          "teal": 43,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:15",
+          "pc": [
+            67
+          ]
+        },
+        {
+          "teal": 48,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:23",
+          "pc": [
+            68,
+            69,
+            70
+          ]
+        },
+        {
+          "teal": 49,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:23",
+          "pc": [
+            71
+          ]
+        },
+        {
+          "teal": 50,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:23",
+          "pc": [
+            72
+          ]
+        },
+        {
+          "teal": 51,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:23",
+          "pc": [
+            73
+          ]
+        },
+        {
+          "teal": 52,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:23",
+          "pc": [
+            74
+          ]
+        },
+        {
+          "teal": 55,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:23",
+          "errorMessage": "argument 0 (_acctRef) for makePayment must be a address",
+          "pc": [
+            75
+          ]
+        },
+        {
+          "teal": 58,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:21",
+          "pc": [
+            76,
+            77,
+            78
+          ]
+        },
+        {
+          "teal": 59,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:21",
+          "pc": [
+            79
+          ]
+        },
+        {
+          "teal": 60,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:21",
+          "pc": [
+            80
+          ]
+        },
+        {
+          "teal": 61,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:21",
+          "pc": [
+            81
+          ]
+        },
+        {
+          "teal": 62,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:21",
+          "pc": [
+            82
+          ]
+        },
+        {
+          "teal": 65,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:21",
+          "errorMessage": "argument 1 (sender) for makePayment must be a address",
+          "pc": [
+            83
+          ]
+        },
+        {
+          "teal": 68,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:20",
+          "pc": [
+            84,
+            85,
+            86
+          ]
+        },
+        {
+          "teal": 69,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:20",
+          "pc": [
+            87
+          ]
+        },
+        {
+          "teal": 70,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:20",
+          "pc": [
+            88
+          ]
+        },
+        {
+          "teal": 74,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:20",
+          "pc": [
+            89,
+            90,
+            91
+          ]
+        },
+        {
+          "teal": 78,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:25",
+          "pc": [
+            92,
+            93
+          ]
+        },
+        {
+          "teal": 79,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:25",
+          "pc": [
+            94
+          ]
+        },
+        {
+          "teal": 80,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:25",
+          "pc": [
+            95
+          ]
+        },
+        {
+          "teal": 81,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:25",
+          "pc": [
+            96
+          ]
+        },
+        {
+          "teal": 82,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:25",
+          "pc": [
+            97
+          ]
+        },
+        {
+          "teal": 83,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:25",
+          "pc": [
+            98
+          ]
+        },
+        {
+          "teal": 84,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:25",
+          "pc": [
+            99
+          ]
+        },
+        {
+          "teal": 88,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:26",
+          "pc": [
+            100
+          ]
+        },
+        {
+          "teal": 89,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:26",
+          "pc": [
+            101,
+            102
+          ]
+        },
+        {
+          "teal": 90,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:26",
+          "pc": [
+            103
+          ]
+        },
+        {
+          "teal": 99,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:28",
+          "pc": [
+            104
+          ]
+        },
+        {
+          "teal": 100,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:28",
+          "pc": [
+            105
+          ]
+        },
+        {
+          "teal": 101,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:28",
+          "pc": [
+            106,
+            107
+          ]
+        },
+        {
+          "teal": 105,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:29",
+          "pc": [
+            108,
+            109
+          ]
+        },
+        {
+          "teal": 106,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:29",
+          "pc": [
+            110,
+            111
+          ]
+        },
+        {
+          "teal": 110,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:30",
+          "pc": [
+            112,
+            113,
+            114,
+            115
+          ]
+        },
+        {
+          "teal": 111,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:30",
+          "pc": [
+            116,
+            117
+          ]
+        },
+        {
+          "teal": 115,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:31",
+          "pc": [
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139,
+            140,
+            141,
+            142,
+            143,
+            144,
+            145,
+            146,
+            147,
+            148,
+            149,
+            150,
+            151
+          ]
+        },
+        {
+          "teal": 116,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:31",
+          "pc": [
+            152,
+            153
+          ]
+        },
+        {
+          "teal": 120,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:32",
+          "pc": [
+            154,
+            155
+          ]
+        },
+        {
+          "teal": 121,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:32",
+          "pc": [
+            156,
+            157
+          ]
+        },
+        {
+          "teal": 124,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:28",
+          "pc": [
+            158
+          ]
+        },
+        {
+          "teal": 125,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:28",
+          "pc": [
+            159,
+            160
+          ]
+        },
+        {
+          "teal": 128,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:28",
+          "pc": [
+            161
+          ]
+        },
+        {
+          "teal": 129,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:20",
+          "pc": [
+            162
+          ]
+        },
+        {
+          "teal": 132,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            163,
+            164
+          ]
+        },
+        {
+          "teal": 133,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            165,
+            166,
+            167
+          ]
+        },
+        {
+          "teal": 134,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            168,
+            169,
+            170,
+            171,
+            172,
+            173
+          ]
+        },
+        {
+          "teal": 135,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            174,
+            175,
+            176
+          ]
+        },
+        {
+          "teal": 136,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            177,
+            178,
+            179,
+            180
+          ]
+        },
+        {
+          "teal": 139,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+          "pc": [
+            181
+          ]
+        },
+        {
+          "teal": 142,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            182,
+            183,
+            184,
+            185,
+            186,
+            187
+          ]
+        },
+        {
+          "teal": 143,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            188,
+            189,
+            190
+          ]
+        },
+        {
+          "teal": 144,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "pc": [
+            191,
+            192,
+            193,
+            194
+          ]
+        },
+        {
+          "teal": 147,
+          "source": "contracts/plugins/subscription_plugin.algo.ts:10",
+          "errorMessage": "this contract does not implement the given ABI method for call NoOp",
+          "pc": [
+            195
+          ]
+        }
+      ],
+      "pcOffsetMethod": "none"
+    },
+    "clear": {
+      "sourceInfo": [],
+      "pcOffsetMethod": "none"
+    }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjEwMy4wCi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9hbGdvcmFuZGZvdW5kYXRpb24vVEVBTFNjcmlwdAoKLy8gVGhpcyBjb250cmFjdCBpcyBjb21wbGlhbnQgd2l0aCBhbmQvb3IgaW1wbGVtZW50cyB0aGUgZm9sbG93aW5nIEFSQ3M6IFsgQVJDNCBdCgovLyBUaGUgZm9sbG93aW5nIHRlbiBsaW5lcyBvZiBURUFMIGhhbmRsZSBpbml0aWFsIHByb2dyYW0gZmxvdwovLyBUaGlzIHBhdHRlcm4gaXMgdXNlZCB0byBtYWtlIGl0IGVhc3kgZm9yIGFueW9uZSB0byBwYXJzZSB0aGUgc3RhcnQgb2YgdGhlIHByb2dyYW0gYW5kIGRldGVybWluZSBpZiBhIHNwZWNpZmljIGFjdGlvbiBpcyBhbGxvd2VkCi8vIEhlcmUsIGFjdGlvbiByZWZlcnMgdG8gdGhlIE9uQ29tcGxldGUgaW4gY29tYmluYXRpb24gd2l0aCB3aGV0aGVyIHRoZSBhcHAgaXMgYmVpbmcgY3JlYXRlZCBvciBjYWxsZWQKLy8gRXZlcnkgcG9zc2libGUgYWN0aW9uIGZvciB0aGlzIGNvbnRyYWN0IGlzIHJlcHJlc2VudGVkIGluIHRoZSBzd2l0Y2ggc3RhdGVtZW50Ci8vIElmIHRoZSBhY3Rpb24gaXMgbm90IGltcGxlbWVudGVkIGluIHRoZSBjb250cmFjdCwgaXRzIHJlc3BlY3RpdmUgYnJhbmNoIHdpbGwgYmUgIipOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggKmNhbGxfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKmNyZWF0ZV9Ob09wICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRAoKKk5PVF9JTVBMRU1FTlRFRDoKCS8vIFRoZSByZXF1ZXN0ZWQgYWN0aW9uIGlzIG5vdCBpbXBsZW1lbnRlZCBpbiB0aGlzIGNvbnRyYWN0LiBBcmUgeW91IHVzaW5nIHRoZSBjb3JyZWN0IE9uQ29tcGxldGU/IERpZCB5b3Ugc2V0IHlvdXIgYXBwIElEPwoJZXJyCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJLy8gZXhlY3V0ZSBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50IDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oKTogdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoxOQoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IDAKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWludCAwCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgovLyBtYWtlUGF5bWVudChhZGRyZXNzLGFkZHJlc3Mpdm9pZAoqYWJpX3JvdXRlX21ha2VQYXltZW50OgoJLy8gX2FjY3RSZWY6IGFkZHJlc3MKCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWR1cAoJbGVuCglpbnQgMzIKCT09CgoJLy8gYXJndW1lbnQgMCAoX2FjY3RSZWYpIGZvciBtYWtlUGF5bWVudCBtdXN0IGJlIGEgYWRkcmVzcwoJYXNzZXJ0CgoJLy8gc2VuZGVyOiBhZGRyZXNzCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglkdXAKCWxlbgoJaW50IDMyCgk9PQoKCS8vIGFyZ3VtZW50IDEgKHNlbmRlcikgZm9yIG1ha2VQYXltZW50IG11c3QgYmUgYSBhZGRyZXNzCglhc3NlcnQKCgkvLyBleGVjdXRlIG1ha2VQYXltZW50KGFkZHJlc3MsYWRkcmVzcyl2b2lkCgljYWxsc3ViIG1ha2VQYXltZW50CglpbnQgMQoJcmV0dXJuCgovLyBtYWtlUGF5bWVudChzZW5kZXI6IEFkZHJlc3MsIF9hY2N0UmVmOiBBZGRyZXNzKTogdm9pZAptYWtlUGF5bWVudDoKCXByb3RvIDIgMAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyNwoJLy8gYXNzZXJ0KGdsb2JhbHMucm91bmQgLSB0aGlzLmxhc3RQYXltZW50LnZhbHVlID4gRlJFUVVFTkNZKQoJZ2xvYmFsIFJvdW5kCglieXRlIDB4NmM2MTczNzQ1MDYxNzk2ZDY1NmU3NCAvLyAibGFzdFBheW1lbnQiCglhcHBfZ2xvYmFsX2dldAoJLQoJaW50IDEKCT4KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyOAoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IGdsb2JhbHMucm91bmQKCWJ5dGUgMHg2YzYxNzM3NDUwNjE3OTZkNjU2ZTc0IC8vICJsYXN0UGF5bWVudCIKCWdsb2JhbCBSb3VuZAoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MzAKCS8vIHNlbmRQYXltZW50KHsKCS8vICAgICAgIHNlbmRlcjogc2VuZGVyLAoJLy8gICAgICAgYW1vdW50OiBBTU9VTlQsCgkvLyAgICAgICByZWNlaXZlcjogYWRkcignNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TScpLAoJLy8gICAgICAgcmVrZXlUbzogc2VuZGVyLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnQgcGF5CglpdHhuX2ZpZWxkIFR5cGVFbnVtCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjMxCgkvLyBzZW5kZXI6IHNlbmRlcgoJZnJhbWVfZGlnIC0xIC8vIHNlbmRlcjogQWRkcmVzcwoJaXR4bl9maWVsZCBTZW5kZXIKCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MzIKCS8vIGFtb3VudDogQU1PVU5UCglpbnQgMTAwMDAwCglpdHhuX2ZpZWxkIEFtb3VudAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czozMwoJLy8gcmVjZWl2ZXI6IGFkZHIoJzQ2WFlSN09UUlpYSVNJMlRSU0JEV1BVVlFUNEVDQldOSTdURldQUFM2RUtBUEo3VzVPQlhTTkc2Nk0nKQoJYWRkciA0NlhZUjdPVFJaWElTSTJUUlNCRFdQVVZRVDRFQ0JXTkk3VEZXUFBTNkVLQVBKN1c1T0JYU05HNjZNCglpdHhuX2ZpZWxkIFJlY2VpdmVyCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjM0CgkvLyByZWtleVRvOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludCAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKKmNyZWF0ZV9Ob09wOgoJdHhuIE51bUFwcEFyZ3MKCWJ6ICphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCW1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCAqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNyZWF0ZSBOb09wCgllcnIKCipjYWxsX05vT3A6CgltZXRob2QgIm1ha2VQYXltZW50KGFkZHJlc3MsYWRkcmVzcyl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9tYWtlUGF5bWVudAoKCS8vIHRoaXMgY29udHJhY3QgZG9lcyBub3QgaW1wbGVtZW50IHRoZSBnaXZlbiBBQkkgbWV0aG9kIGZvciBjYWxsIE5vT3AKCWVycg==",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayAxIDAgMzIKYnl0ZWNibG9jayAweDZjNjE3Mzc0NTA2MTc5NmQ2NTZlNzQKCi8vIFRoaXMgVEVBTCB3YXMgZ2VuZXJhdGVkIGJ5IFRFQUxTY3JpcHQgdjAuMTA1LjUKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbGVtZW50ZWQgaW4gdGhlIGNvbnRyYWN0LCBpdHMgcmVzcGVjdGl2ZSBicmFuY2ggd2lsbCBiZSAiKk5PVF9JTVBMRU1FTlRFRCIgd2hpY2gganVzdCBjb250YWlucyAiZXJyIgp0eG4gQXBwbGljYXRpb25JRAohCnB1c2hpbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggKmNhbGxfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKmNyZWF0ZV9Ob09wICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRAoKKk5PVF9JTVBMRU1FTlRFRDoKCS8vIFRoZSByZXF1ZXN0ZWQgYWN0aW9uIGlzIG5vdCBpbXBsZW1lbnRlZCBpbiB0aGlzIGNvbnRyYWN0LiBBcmUgeW91IHVzaW5nIHRoZSBjb3JyZWN0IE9uQ29tcGxldGU/IERpZCB5b3Ugc2V0IHlvdXIgYXBwIElEPwoJZXJyCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJLy8gZXhlY3V0ZSBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oKTogdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoxNwoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IDAKCWJ5dGVjIDAgLy8gICJsYXN0UGF5bWVudCIKCWludGMgMSAvLyAwCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgovLyBtYWtlUGF5bWVudChhZGRyZXNzLGFkZHJlc3Mpdm9pZAoqYWJpX3JvdXRlX21ha2VQYXltZW50OgoJLy8gX2FjY3RSZWY6IGFkZHJlc3MKCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWR1cAoJbGVuCglpbnRjIDIgLy8gMzIKCT09CgoJLy8gYXJndW1lbnQgMCAoX2FjY3RSZWYpIGZvciBtYWtlUGF5bWVudCBtdXN0IGJlIGEgYWRkcmVzcwoJYXNzZXJ0CgoJLy8gc2VuZGVyOiBhZGRyZXNzCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglkdXAKCWxlbgoJaW50YyAyIC8vIDMyCgk9PQoKCS8vIGFyZ3VtZW50IDEgKHNlbmRlcikgZm9yIG1ha2VQYXltZW50IG11c3QgYmUgYSBhZGRyZXNzCglhc3NlcnQKCgkvLyBleGVjdXRlIG1ha2VQYXltZW50KGFkZHJlc3MsYWRkcmVzcyl2b2lkCgljYWxsc3ViIG1ha2VQYXltZW50CglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBtYWtlUGF5bWVudChzZW5kZXI6IEFkZHJlc3MsIF9hY2N0UmVmOiBBZGRyZXNzKTogdm9pZAptYWtlUGF5bWVudDoKCXByb3RvIDIgMAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyNQoJLy8gYXNzZXJ0KGdsb2JhbHMucm91bmQgLSB0aGlzLmxhc3RQYXltZW50LnZhbHVlID4gRlJFUVVFTkNZKQoJZ2xvYmFsIFJvdW5kCglieXRlYyAwIC8vICAibGFzdFBheW1lbnQiCglhcHBfZ2xvYmFsX2dldAoJLQoJaW50YyAwIC8vIDEKCT4KCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyNgoJLy8gdGhpcy5sYXN0UGF5bWVudC52YWx1ZSA9IGdsb2JhbHMucm91bmQKCWJ5dGVjIDAgLy8gICJsYXN0UGF5bWVudCIKCWdsb2JhbCBSb3VuZAoJYXBwX2dsb2JhbF9wdXQKCgkvLyBjb250cmFjdHMvcGx1Z2lucy9zdWJzY3JpcHRpb25fcGx1Z2luLmFsZ28udHM6MjgKCS8vIHNlbmRQYXltZW50KHsKCS8vICAgICAgIHNlbmRlcjogc2VuZGVyLAoJLy8gICAgICAgYW1vdW50OiBBTU9VTlQsCgkvLyAgICAgICByZWNlaXZlcjogYWRkcignNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TScpLAoJLy8gICAgICAgcmVrZXlUbzogc2VuZGVyLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnRjIDAgLy8gIHBheQoJaXR4bl9maWVsZCBUeXBlRW51bQoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL3N1YnNjcmlwdGlvbl9wbHVnaW4uYWxnby50czoyOQoJLy8gc2VuZGVyOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgU2VuZGVyCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjMwCgkvLyBhbW91bnQ6IEFNT1VOVAoJcHVzaGludCAxMDAwMDAKCWl0eG5fZmllbGQgQW1vdW50CgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjMxCgkvLyByZWNlaXZlcjogYWRkcignNDZYWVI3T1RSWlhJU0kyVFJTQkRXUFVWUVQ0RUNCV05JN1RGV1BQUzZFS0FQSjdXNU9CWFNORzY2TScpCglwdXNoYnl0ZXMgMHhlN2FmODhmZGQzOGU2ZTg5MjM1MzhjODIzYjNlOTU4NGY4NDEwNmNkNDdlNjViM2RmMmYxMTQwN2E3ZjZlYjgzIC8vIGFkZHIgIjQ2WFlSN09UUlpYSVNJMlRSU0JEV1BVVlFUNEVDQldOSTdURldQUFM2RUtBUEo3VzVPQlhTTkc2Nk0iCglpdHhuX2ZpZWxkIFJlY2VpdmVyCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvc3Vic2NyaXB0aW9uX3BsdWdpbi5hbGdvLnRzOjMyCgkvLyByZWtleVRvOiBzZW5kZXIKCWZyYW1lX2RpZyAtMSAvLyBzZW5kZXI6IEFkZHJlc3MKCWl0eG5fZmllbGQgUmVrZXlUbwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMSAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKKmNyZWF0ZV9Ob09wOgoJdHhuIE51bUFwcEFyZ3MKCWJ6ICphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCXB1c2hieXRlcyAweGI4NDQ3YjM2IC8vIG1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCAqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNyZWF0ZSBOb09wCgllcnIKCipjYWxsX05vT3A6CglwdXNoYnl0ZXMgMHhhODk3N2YxOCAvLyBtZXRob2QgIm1ha2VQYXltZW50KGFkZHJlc3MsYWRkcmVzcyl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9tYWtlUGF5bWVudAoKCS8vIHRoaXMgY29udHJhY3QgZG9lcyBub3QgaW1wbGVtZW50IHRoZSBnaXZlbiBBQkkgbWV0aG9kIGZvciBjYWxsIE5vT3AKCWVycg==",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "byteCode": {
@@ -701,9 +719,9 @@
     "compiler": "algod",
     "compilerVersion": {
       "major": 3,
-      "minor": 25,
+      "minor": 26,
       "patch": 0,
-      "commitHash": "9855f57c"
+      "commitHash": "0d10b244"
     }
   }
 }

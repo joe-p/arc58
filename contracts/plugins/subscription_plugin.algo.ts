@@ -6,8 +6,6 @@ import { Contract } from '@algorandfoundation/tealscript';
 const FREQUENCY = 1;
 /** Amount of the payment */
 const AMOUNT = 100_000;
-/** Payment receiver */
-const RECEIVER = '46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M';
 
 export class SubscriptionPlugin extends Contract {
   programVersion = 10;

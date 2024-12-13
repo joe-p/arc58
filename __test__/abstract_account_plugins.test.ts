@@ -49,8 +49,6 @@ describe('Abstracted Subscription Program', () => {
 
     // Create an abstracted account app
     await abstractedAccountClient.create.createApplication({
-      // Set address to ZERO_ADDRESS so the app address is used
-      controlledAddress: ZERO_ADDRESS,
       // aliceEOA will be the admin
       admin: aliceEOA.addr,
     });
@@ -217,11 +215,18 @@ describe('Abstracted Subscription Program', () => {
     });
 
     test('Alice adds the app to the abstracted account', async () => {
-      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(43000) });
+      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(43800) });
 
       // Add opt-in plugin
       await abstractedAccountClient.arc58AddNamedPlugin(
-        { name: 'optIn', app: optInPluginID, allowedCaller: ZERO_ADDRESS, lastValidRound: maxUint64, cooldown: 0, adminPrivileges: false },
+        {
+          name: 'optIn',
+          app: optInPluginID,
+          allowedCaller: ZERO_ADDRESS,
+          lastValidRound: maxUint64,
+          cooldown: 0,
+          adminPrivileges: false,
+        },
         { boxes }
       );
     });

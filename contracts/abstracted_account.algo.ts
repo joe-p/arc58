@@ -32,11 +32,8 @@ export class AbstractedAccount extends Contract {
   /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
   admin = GlobalStateKey<Address>({ key: 'a' });
 
-  /** The address this app controls */
-  controlledAddress = GlobalStateKey<Address>({ key: 'c' });
-
   /**
-   * Plugins that add functionality to the controlledAddress and the account that has permission to use it.
+   * Plugins that add functionality to the contract wallet and the account that has permission to use it.
    */
   plugins = BoxMap<PluginsKey, PluginInfo>({ prefix: 'p' });
 
@@ -52,16 +49,16 @@ export class AbstractedAccount extends Contract {
   namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
 
   /**
-   * Ensure that by the end of the group the abstracted account has control of its address
+   * Ensure that by the end of the group the abstracted account has control of itself
    */
   private verifyRekeyToAbstractedAccount(): void {
     let rekeyedBack = false;
 
-    for (let i = this.txn.groupIndex; i < this.txnGroup.length; i += 1) {
+    for (let i = this.txn.groupIndex + 1; i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
       // The transaction is an explicit rekey back
-      if (txn.sender === this.controlledAddress.value && txn.rekeyTo === this.controlledAddress.value) {
+      if (txn.sender === this.app.address && txn.rekeyTo === this.app.address) {
         rekeyedBack = true;
         break;
       }
@@ -70,6 +67,7 @@ export class AbstractedAccount extends Contract {
       if (
         txn.typeEnum === TransactionType.ApplicationCall &&
         txn.applicationID === this.app &&
+        txn.onCompletion === 0 && // OnCompletion.NoOp
         txn.numAppArgs === 1 &&
         txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
       ) {
@@ -82,29 +80,17 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
-   * What the value of this.address.value.authAddr should be when this.controlledAddress
-   * is able to be controlled by this app. It will either be this.app.address or zeroAddress
-   */
-  private getAuthAddr(): Address {
-    return this.controlledAddress.value === this.app.address ? Address.zeroAddress : this.app.address;
-  }
-
-  /**
    * Create an abstracted account application.
    * This is not part of ARC58 and implementation specific.
    *
-   * @param controlledAddress The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
    * @param admin The admin for this app
    */
-  createApplication(controlledAddress: Address, admin: Address): void {
+  createApplication(admin: Address): void {
     verifyAppCallTxn(this.txn, {
-      sender: { includedIn: [controlledAddress, admin] },
+      sender: admin,
     });
 
-    assert(admin !== controlledAddress);
-
     this.admin.value = admin;
-    this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress;
   }
 
   /**
@@ -123,14 +109,17 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app calling the plugin
    * @param allowedCaller The address that triggered the plugin
    * @param newAdmin The new admin
-   * 
+   *
    */
   arc58_pluginChangeAdmin(plugin: AppID, allowedCaller: Address, newAdmin: Address): void {
     verifyTxn(this.txn, { sender: plugin.address });
-    assert(this.controlledAddress.value.authAddr === plugin.address, 'This plugin is not in control of the account');
+    assert(this.app.address.authAddr === plugin.address, 'This plugin is not in control of the account');
 
     const key: PluginsKey = { application: plugin, allowedCaller: allowedCaller };
-    assert(this.plugins(key).exists && this.plugins(key).value.adminPrivileges, 'This plugin does not have admin privileges');
+    assert(
+      this.plugins(key).exists && this.plugins(key).value.adminPrivileges,
+      'This plugin does not have admin privileges'
+    );
 
     this.admin.value = newAdmin;
   }
@@ -139,6 +128,7 @@ export class AbstractedAccount extends Contract {
    * Get the admin of this app. This method SHOULD always be used rather than reading directly from state
    * because different implementations may have different ways of determining the admin.
    */
+  @abi.readonly
   arc58_getAdmin(): Address {
     return this.admin.value;
   }
@@ -147,7 +137,7 @@ export class AbstractedAccount extends Contract {
    * Verify the abstracted account is rekeyed to this app
    */
   arc58_verifyAuthAddr(): void {
-    assert(this.controlledAddress.value.authAddr === this.getAuthAddr());
+    assert(this.app.address.authAddr === globals.zeroAddress);
   }
 
   /**
@@ -160,7 +150,6 @@ export class AbstractedAccount extends Contract {
     verifyAppCallTxn(this.txn, { sender: this.admin.value });
 
     sendPayment({
-      sender: this.controlledAddress.value,
       receiver: addr,
       rekeyTo: addr,
       note: 'rekeying abstracted account',
@@ -216,6 +205,20 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
+   * check whether the plugin can be used
+   *
+   * @param plugin the plugin to be rekeyed to
+   * @returns whether the plugin can be called via txn sender or globally
+   */
+  @abi.readonly
+  arc58_canCall(plugin: AppID, address: Address): boolean {
+    const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
+    if (globalAllowed) return true;
+
+    return this.pluginCallAllowed(plugin, address);
+  }
+
+  /**
    * Temporarily rekey to an approved plugin app address
    *
    * @param plugin The app to rekey to
@@ -227,8 +230,7 @@ export class AbstractedAccount extends Contract {
       assert(this.pluginCallAllowed(plugin, this.txn.sender), 'This sender is not allowed to trigger this plugin');
 
     sendPayment({
-      sender: this.controlledAddress.value,
-      receiver: this.controlledAddress.value,
+      receiver: this.app.address,
       rekeyTo: plugin.address,
       note: 'rekeying to plugin app',
     });
@@ -326,7 +328,7 @@ export class AbstractedAccount extends Contract {
       adminPrivileges: adminPrivileges,
     };
 
-    this.plugins(key).value = pluginInfo
+    this.plugins(key).value = pluginInfo;
   }
 
   /**

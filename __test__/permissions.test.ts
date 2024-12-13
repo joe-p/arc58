@@ -62,8 +62,6 @@ describe('ARC58 Plugin Permissions', () => {
 
     // Create an abstracted account app
     await abstractedAccountClient.create.createApplication({
-      // Set address to ZERO_ADDRESS so the app address is used
-      controlledAddress: ZERO_ADDRESS,
       // aliceEOA will be the admin
       admin: aliceEOA.addr,
     });
@@ -118,8 +116,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64)')
-    )) as [number, number, number];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
+    )) as [number, number, number, boolean];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -147,8 +145,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64)')
-    )) as [number, number, number];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
+    )) as [number, number, number, boolean];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -175,8 +173,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(caller.addr).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64)')
-    )) as [number, number, number];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
+    )) as [number, number, number, boolean];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -203,7 +201,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=534');
+    expect(error).toMatch('pc=643');
   });
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
@@ -215,12 +213,10 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=534');
+    expect(error).toMatch('pc=643');
   });
 
   test('expired', async () => {
-    const { algorand } = fixture;
-
     await abstractedAccountClient.arc58AddPlugin({
       app: plugin,
       allowedCaller: ZERO_ADDRESS,
@@ -238,6 +234,6 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=534');
+    expect(error).toMatch('pc=643');
   });
 });
