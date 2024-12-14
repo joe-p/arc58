@@ -1,9 +1,9 @@
 import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
-import algosdk from 'algosdk';
-import { AbstractedAccountClient } from '../contracts/clients/AbstractedAccountClient';
-import { OptInPluginClient } from '../contracts/clients/OptInPluginClient';
+import algosdk, { makeBasicAccountTransactionSigner } from 'algosdk';
+import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
+import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 algokit.Config.configure({ populateAppCallResources: true });
@@ -23,48 +23,47 @@ describe('ARC58 Plugin Permissions', () => {
   const fixture = algorandFixture();
 
   async function callPlugin() {
-    const boxes = [
-      new Uint8Array(
-        Buffer.concat([
-          Buffer.from('p'),
-          Buffer.from(algosdk.encodeUint64(plugin)),
-          algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
-        ])
-      ),
-      new Uint8Array(
-        Buffer.concat([
-          Buffer.from('p'),
-          Buffer.from(algosdk.encodeUint64(plugin)),
-          algosdk.decodeAddress(caller.addr).publicKey,
-        ])
-      ),
-    ];
+    // const boxes = [
+    //   new Uint8Array(
+    //     Buffer.concat([
+    //       Buffer.from('p'),
+    //       Buffer.from(algosdk.encodeUint64(plugin)),
+    //       algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
+    //     ])
+    //   ),
+    //   new Uint8Array(
+    //     Buffer.concat([
+    //       Buffer.from('p'),
+    //       Buffer.from(algosdk.encodeUint64(plugin)),
+    //       algosdk.decodeAddress(caller.addr).publicKey,
+    //     ])
+    //   ),
+    // ];
 
     await abstractedAccountClient
-      .compose()
-      .arc58RekeyToPlugin({ plugin }, { sender: caller, sendParams: { fee: algokit.microAlgos(2_000) }, boxes })
-      .arc58VerifyAuthAddr({})
-      .execute();
+      .newGroup()
+      .arc58RekeyToPlugin({
+        sender: caller.addr,
+        signer: makeBasicAccountTransactionSigner(caller),
+        args: { plugin },
+        extraFee: (1000).microAlgos()
+      })
+      .arc58VerifyAuthAddr()
+      .send();
   }
 
   beforeEach(async () => {
     await fixture.beforeEach();
 
-    const { algod } = fixture.context;
-    abstractedAccountClient = new AbstractedAccountClient(
-      {
-        sender: aliceEOA,
-        resolveBy: 'id',
-        id: 0,
-      },
-      algod
-    );
+    const { algorand } = fixture.context;
 
-    // Create an abstracted account app
-    await abstractedAccountClient.create.createApplication({
-      // aliceEOA will be the admin
-      admin: aliceEOA.addr,
+    const minter = new AbstractedAccountFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
     });
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr }});
+    abstractedAccountClient = results.appClient;
 
     await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(1_000_000) });
   });
@@ -83,27 +82,43 @@ describe('ARC58 Plugin Permissions', () => {
 
     aliceEOA = testAccount;
 
-    dummyPluginClient = algorand.client.getTypedAppClientById(OptInPluginClient, { id: 0, sender: caller });
-    dummyPluginClient.create.createApplication({});
-    plugin = BigInt((await dummyPluginClient.appClient.getAppReference()).appId);
+    const optinPluginMinter = new OptInPluginFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
+    });
+    const optInMintResults = await optinPluginMinter.send.create.createApplication();
+
+    dummyPluginClient = optInMintResults.appClient;
+    plugin = dummyPluginClient.appId;
   });
 
   test('both are valid, global is used', async () => {
     const { algorand } = fixture;
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: caller.addr,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      // sender: aliceEOA.addr,
+      // signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: caller.addr,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: ZERO_ADDRESS,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      // sender: aliceEOA.addr,
+      // signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
     await callPlugin();
@@ -127,12 +142,17 @@ describe('ARC58 Plugin Permissions', () => {
   test('global valid, global is used', async () => {
     const { algorand } = fixture;
 
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: ZERO_ADDRESS,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
     await callPlugin();
@@ -155,12 +175,17 @@ describe('ARC58 Plugin Permissions', () => {
 
   test('global does not exist, sender valid', async () => {
     const { algorand } = fixture;
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: caller.addr,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: caller.addr,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
     await callPlugin();
@@ -182,12 +207,17 @@ describe('ARC58 Plugin Permissions', () => {
   });
 
   test('not enough cooldown', async () => {
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: caller.addr,
-      cooldown: 100,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: caller.addr,
+        cooldown: 100,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
     await callPlugin();
@@ -217,12 +247,17 @@ describe('ARC58 Plugin Permissions', () => {
   });
 
   test('expired', async () => {
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: ZERO_ADDRESS,
-      cooldown: 0,
-      lastValidRound: 1,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: 1,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
     let error = 'no error';
@@ -234,6 +269,6 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=643');
+    expect(error).toMatch('pc=1218');
   });
 });

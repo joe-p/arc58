@@ -166,6 +166,10 @@
           "name": "adminPrivileges",
           "type": "bool",
           "desc": "Whether the plugin has permissions to change the admin account"
+        },
+        {
+          "name": "methods",
+          "type": "byte[4][]"
         }
       ],
       "returns": {
@@ -183,7 +187,13 @@
         },
         {
           "name": "allowedCaller",
-          "type": "address"
+          "type": "address",
+          "desc": "The address of that's allowed to call the app"
+        },
+        {
+          "name": "methods",
+          "type": "byte[4][]",
+          "desc": "The methods that to remove before attempting to uninstall the plugin\nor the global zero address for all addresses"
         }
       ],
       "returns": {
@@ -223,6 +233,11 @@
           "name": "adminPrivileges",
           "type": "bool",
           "desc": "Whether the plugin has permissions to change the admin account"
+        },
+        {
+          "name": "methods",
+          "type": "byte[4][]",
+          "desc": "The methods that are allowed to be called on the plugin"
         }
       ],
       "returns": {
@@ -237,6 +252,46 @@
           "name": "name",
           "type": "string",
           "desc": "The plugin name"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "arc58_addMethod",
+      "args": [
+        {
+          "name": "app",
+          "type": "uint64"
+        },
+        {
+          "name": "allowedCaller",
+          "type": "address"
+        },
+        {
+          "name": "method",
+          "type": "byte[4]"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "arc58_removeMethod",
+      "args": [
+        {
+          "name": "app",
+          "type": "uint64"
+        },
+        {
+          "name": "allowedCaller",
+          "type": "address"
+        },
+        {
+          "name": "method",
+          "type": "byte[4]"
         }
       ],
       "returns": {
