@@ -6,14 +6,6 @@ import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/
 import { SubscriptionPluginClient, SubscriptionPluginFactory } from '../contracts/clients/SubscriptionPluginClient';
 import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
 
-declare global {
-  interface BigInt {
-      toJSON(): Number;
-  }
-}
-
-BigInt.prototype.toJSON = function () { return Number(this) }
-
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 algokit.Config.configure({ populateAppCallResources: true });
 const fixture = algorandFixture();
