@@ -6,6 +6,14 @@ import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/
 import { SubscriptionPluginClient, SubscriptionPluginFactory } from '../contracts/clients/SubscriptionPluginClient';
 import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
 
+declare global {
+  interface BigInt {
+      toJSON(): Number;
+  }
+}
+
+BigInt.prototype.toJSON = function () { return Number(this) }
+
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 algokit.Config.configure({ populateAppCallResources: true });
 const fixture = algorandFixture();
@@ -103,14 +111,14 @@ describe('Abstracted Subscription Program', () => {
       // });
 
       await abstractedAccountClient.appClient.fundAppAccount({
-        sender: aliceEOA.addr,
-        signer: makeBasicAccountTransactionSigner(aliceEOA),
+        // sender: aliceEOA.addr,
+        // signer: makeBasicAccountTransactionSigner(aliceEOA),
         amount: algokit.microAlgos(34900)
       });
 
       await abstractedAccountClient.send.arc58AddPlugin({
-        sender: aliceEOA.addr,
-        signer: makeBasicAccountTransactionSigner(aliceEOA),
+        // sender: aliceEOA.addr,
+        // signer: makeBasicAccountTransactionSigner(aliceEOA),
         args: {
           // Add the subscription plugin
           app: subPluginID,
@@ -128,7 +136,7 @@ describe('Abstracted Subscription Program', () => {
     });
 
     test('Someone calls the program to trigger payment', async () => {
-      const { algorand, algod, testAccount } = fixture.context;
+      const { algod, testAccount } = fixture.context;
 
       boxes = [
         new Uint8Array(
@@ -166,6 +174,7 @@ describe('Abstracted Subscription Program', () => {
         // Step one: rekey to the plugin
         .arc58RekeyToPlugin({
           sender: testAccount.addr,
+          signer: makeBasicAccountTransactionSigner(testAccount),
           args: { plugin: subPluginID },
           extraFee: (1_000).microAlgos(),
           boxReferences: boxes,
@@ -224,7 +233,7 @@ describe('Abstracted Subscription Program', () => {
       await abstractedAccountClient.appClient.fundAppAccount({
         sender: aliceEOA.addr,
         signer: makeBasicAccountTransactionSigner(aliceEOA),
-        amount: algokit.microAlgos(43800)
+        amount: algokit.microAlgos(50_200)
       });
 
       // Add opt-in plugin

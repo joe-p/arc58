@@ -79,11 +79,11 @@ export class AbstractedAccount extends Contract {
     }
 
     return (
-      txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void') &&
-      txn.numAppArgs === 1 &&
       txn.typeEnum === TransactionType.ApplicationCall &&
       txn.applicationID === this.app &&
-      txn.onCompletion === 0
+      txn.numAppArgs === 1 &&
+      txn.onCompletion === 0 &&
+      txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
     )
   }
 
@@ -113,20 +113,21 @@ export class AbstractedAccount extends Contract {
 
     let rekeysBack = false;
     let gRestrictions = checkGlobal && this.plugins(gkey).value.methodRestrictions > 0;
-    let restrictions = checkLocal && this.plugins(key).value.methodRestrictions > 0;
+    let lrestrictions = checkLocal && this.plugins(key).value.methodRestrictions > 0;
 
-    for (let i = this.txn.groupIndex; i < this.txnGroup.length; i += 1) {
+    for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
       if (this.ensuresRekeyBack(txn)) {
         rekeysBack = true;
       }
 
-      assert(
-        (checkGlobal && (!gRestrictions || this.methodCallAllowed(txn, app, Address.zeroAddress)))
-        || (checkLocal && (!restrictions || this.methodCallAllowed(txn, app, this.txn.sender))),
-        'method not allowed'
-      );
+      const gAllowed = !gRestrictions || this.methodCallAllowed(txn, app, Address.zeroAddress);
+      const gValid = checkGlobal && gAllowed;
+      const lAllowed = !lrestrictions || this.methodCallAllowed(txn, app, this.txn.sender);
+      const lValid = checkLocal && lAllowed;
+
+      assert(gValid || lValid, 'method not allowed');
     }
 
     assert(rekeysBack, 'no rekey back found');
@@ -155,8 +156,8 @@ export class AbstractedAccount extends Contract {
       return true;
     }
 
-    // assert(txn.applicationArgs.length > 0, 'no method signature provided');
-    // assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length');
+    assert(txn.numAppArgs > 0, 'no method signature provided');
+    assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length');
 
     const key: MethodsKey = {
       application: app,
@@ -270,10 +271,28 @@ export class AbstractedAccount extends Contract {
    * @param plugin The app to rekey to
    */
   arc58_rekeyToPlugin(plugin: AppID): void {
-    const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
-    const locallyAllowed = this.pluginCallAllowed(plugin, this.txn.sender);
+    const globalExists = this.plugins({ application: plugin, allowedCaller: Address.zeroAddress }).exists;
+    const localExists = this.plugins({ application: plugin, allowedCaller: this.txn.sender }).exists;
+  
+    let globalAllowed = false;
+    let locallyAllowed = false;
 
-    if (!globalAllowed && !locallyAllowed) {
+    if (globalExists) {
+      globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
+    }
+
+    if (localExists) {
+      locallyAllowed = this.pluginCallAllowed(plugin, this.txn.sender);
+    }
+
+    // if the plugin does not exist or is not allowed by either the global or local caller
+    // then the call is not allowed, assert check so we error out cleanly
+    if (
+      (!globalExists && !localExists)
+      || (globalExists && !globalAllowed && !locallyAllowed)
+    ) {
+      this.assertPluginCallAllowed(plugin, Address.zeroAddress);
+    } else if (localExists && !locallyAllowed && !globalAllowed) {
       this.assertPluginCallAllowed(plugin, this.txn.sender);
     }
 

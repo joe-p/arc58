@@ -215,21 +215,21 @@ ensuresRekeyBack:
 *if0_end:
 	// contracts/abstracted_account.algo.ts:81
 	// return (
-	//       txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void') &&
-	//       txn.numAppArgs === 1 &&
 	//       txn.typeEnum === TransactionType.ApplicationCall &&
 	//       txn.applicationID === this.app &&
-	//       txn.onCompletion === 0
+	//       txn.numAppArgs === 1 &&
+	//       txn.onCompletion === 0 &&
+	//       txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
 	//     )
 	frame_dig -1 // txn: Txn
-	gtxns ApplicationArgs 0
-	bytec 7 //  method "arc58_verifyAuthAddr()void"
+	gtxns TypeEnum
+	intc 4 //  appl
 	==
 	dup
 	bz *skip_and3
 	frame_dig -1 // txn: Txn
-	gtxns NumAppArgs
-	intc 0 // 1
+	gtxns ApplicationID
+	txna Applications 0
 	==
 	&&
 
@@ -237,8 +237,8 @@ ensuresRekeyBack:
 	dup
 	bz *skip_and4
 	frame_dig -1 // txn: Txn
-	gtxns TypeEnum
-	intc 4 //  appl
+	gtxns NumAppArgs
+	intc 0 // 1
 	==
 	&&
 
@@ -246,8 +246,8 @@ ensuresRekeyBack:
 	dup
 	bz *skip_and5
 	frame_dig -1 // txn: Txn
-	gtxns ApplicationID
-	txna Applications 0
+	gtxns OnCompletion
+	intc 1 // 0
 	==
 	&&
 
@@ -255,8 +255,8 @@ ensuresRekeyBack:
 	dup
 	bz *skip_and6
 	frame_dig -1 // txn: Txn
-	gtxns OnCompletion
-	intc 1 // 0
+	gtxns ApplicationArgs 0
+	bytec 7 //  method "arc58_verifyAuthAddr()void"
 	==
 	&&
 
@@ -341,7 +341,7 @@ assertValidGroup:
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
-	dupn 6
+	dupn 10
 
 	// contracts/abstracted_account.algo.ts:111
 	// gkey: PluginsKey = { application: app, allowedCaller: Address.zeroAddress }
@@ -388,7 +388,7 @@ assertValidGroup:
 	frame_bury 3 // gRestrictions: bool
 
 	// contracts/abstracted_account.algo.ts:116
-	// restrictions = checkLocal && this.plugins(key).value.methodRestrictions > 0
+	// lrestrictions = checkLocal && this.plugins(key).value.methodRestrictions > 0
 	frame_dig -3 // checkLocal: boolean
 	dup
 	bz *skip_and8
@@ -408,11 +408,13 @@ assertValidGroup:
 	&&
 
 *skip_and8:
-	frame_bury 4 // restrictions: bool
+	frame_bury 4 // lrestrictions: bool
 
 	// contracts/abstracted_account.algo.ts:118
-	// for (let i = this.txn.groupIndex; i < this.txnGroup.length; i += 1)
+	// for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1)
 	txn GroupIndex
+	intc 0 // 1
+	+
 	frame_bury 5 // i: uint64
 
 *for_1:
@@ -443,14 +445,7 @@ assertValidGroup:
 
 *if2_end:
 	// contracts/abstracted_account.algo.ts:125
-	// assert(
-	//         (checkGlobal && (!gRestrictions || this.methodCallAllowed(txn, app, Address.zeroAddress)))
-	//         || (checkLocal && (!restrictions || this.methodCallAllowed(txn, app, this.txn.sender))),
-	//         'method not allowed'
-	//       )
-	frame_dig -2 // checkGlobal: boolean
-	dup
-	bz *skip_and9
+	// gAllowed = !gRestrictions || this.methodCallAllowed(txn, app, Address.zeroAddress)
 	frame_dig 3 // gRestrictions: bool
 	!
 	dup
@@ -462,31 +457,54 @@ assertValidGroup:
 	||
 
 *skip_or0:
+	frame_bury 7 // gAllowed: bool
+
+	// contracts/abstracted_account.algo.ts:126
+	// gValid = checkGlobal && gAllowed
+	frame_dig -2 // checkGlobal: boolean
+	dup
+	bz *skip_and9
+	frame_dig 7 // gAllowed: bool
 	&&
 
 *skip_and9:
-	dup
-	bnz *skip_or1
-	frame_dig -3 // checkLocal: boolean
-	dup
-	bz *skip_and10
-	frame_dig 4 // restrictions: bool
+	frame_bury 8 // gValid: bool
+
+	// contracts/abstracted_account.algo.ts:127
+	// lAllowed = !lrestrictions || this.methodCallAllowed(txn, app, this.txn.sender)
+	frame_dig 4 // lrestrictions: bool
 	!
 	dup
-	bnz *skip_or2
+	bnz *skip_or1
 	txn Sender
 	frame_dig -1 // app: AppID
 	frame_dig 6 // txn: txn
 	callsub methodCallAllowed
 	||
 
-*skip_or2:
+*skip_or1:
+	frame_bury 9 // lAllowed: bool
+
+	// contracts/abstracted_account.algo.ts:128
+	// lValid = checkLocal && lAllowed
+	frame_dig -3 // checkLocal: boolean
+	dup
+	bz *skip_and10
+	frame_dig 9 // lAllowed: bool
 	&&
 
 *skip_and10:
+	frame_bury 10 // lValid: bool
+
+	// contracts/abstracted_account.algo.ts:130
+	// assert(gValid || lValid, 'method not allowed')
+	frame_dig 8 // gValid: bool
+	dup
+	bnz *skip_or2
+	frame_dig 10 // lValid: bool
 	||
 
-*skip_or1:
+*skip_or2:
 	// method not allowed
 	assert
 
@@ -500,7 +518,7 @@ assertValidGroup:
 	b *for_1
 
 *for_1_end:
-	// contracts/abstracted_account.algo.ts:132
+	// contracts/abstracted_account.algo.ts:133
 	// assert(rekeysBack, 'no rekey back found')
 	frame_dig 2 // rekeysBack: bool
 
@@ -523,7 +541,7 @@ methodCallAllowed:
 	bytec 0 // 0x
 
 	// *if3_condition
-	// contracts/abstracted_account.algo.ts:146
+	// contracts/abstracted_account.algo.ts:147
 	// txn.typeEnum !== TransactionType.ApplicationCall ||
 	//       // ignore calls to other applications
 	//       (txn.applicationID !== app && txn.applicationID !== this.app) ||
@@ -581,13 +599,34 @@ methodCallAllowed:
 	bz *if3_end
 
 	// *if3_consequent
-	// contracts/abstracted_account.algo.ts:155
+	// contracts/abstracted_account.algo.ts:156
 	// return true;
 	intc 0 // 1
 	b *methodCallAllowed*return
 
 *if3_end:
-	// contracts/abstracted_account.algo.ts:161
+	// contracts/abstracted_account.algo.ts:159
+	// assert(txn.numAppArgs > 0, 'no method signature provided')
+	frame_dig -1 // txn: Txn
+	gtxns NumAppArgs
+	intc 1 // 0
+	>
+
+	// no method signature provided
+	assert
+
+	// contracts/abstracted_account.algo.ts:160
+	// assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length')
+	frame_dig -1 // txn: Txn
+	gtxns ApplicationArgs 0
+	len
+	intc 2 // 4
+	==
+
+	// invalid method signature length
+	assert
+
+	// contracts/abstracted_account.algo.ts:162
 	// key: MethodsKey = {
 	//       application: app,
 	//       allowedCaller: caller,
@@ -611,7 +650,7 @@ methodCallAllowed:
 	frame_bury 0 // key: MethodsKey
 
 	// *if4_condition
-	// contracts/abstracted_account.algo.ts:167
+	// contracts/abstracted_account.algo.ts:168
 	// !this.methods(key).exists
 	bytec 3 //  "m"
 	frame_dig 0 // key: MethodsKey
@@ -623,13 +662,13 @@ methodCallAllowed:
 	bz *if4_end
 
 	// *if4_consequent
-	// contracts/abstracted_account.algo.ts:168
+	// contracts/abstracted_account.algo.ts:169
 	// return false;
 	intc 1 // 0
 	b *methodCallAllowed*return
 
 *if4_end:
-	// contracts/abstracted_account.algo.ts:171
+	// contracts/abstracted_account.algo.ts:172
 	// return true;
 	intc 0 // 1
 
@@ -664,7 +703,7 @@ methodCallAllowed:
 createApplication:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:181
+	// contracts/abstracted_account.algo.ts:182
 	// verifyAppCallTxn(this.txn, {
 	//       sender: admin,
 	//     })
@@ -676,7 +715,7 @@ createApplication:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"admin"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:185
+	// contracts/abstracted_account.algo.ts:186
 	// this.admin.value = admin
 	bytec 2 //  "a"
 	frame_dig -1 // admin: Address
@@ -708,7 +747,7 @@ createApplication:
 arc58_changeAdmin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:194
+	// contracts/abstracted_account.algo.ts:195
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -719,7 +758,7 @@ arc58_changeAdmin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:195
+	// contracts/abstracted_account.algo.ts:196
 	// this.admin.value = newAdmin
 	bytec 2 //  "a"
 	frame_dig -1 // newAdmin: Address
@@ -770,7 +809,7 @@ arc58_pluginChangeAdmin:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/abstracted_account.algo.ts:207
+	// contracts/abstracted_account.algo.ts:208
 	// verifyTxn(this.txn, { sender: plugin.address })
 	// verify sender
 	txn Sender
@@ -782,7 +821,7 @@ arc58_pluginChangeAdmin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"plugin.address"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:208
+	// contracts/abstracted_account.algo.ts:209
 	// assert(this.app.address.authAddr === plugin.address, 'This plugin is not in control of the account')
 	global CurrentApplicationAddress
 	acct_params_get AcctAuthAddr
@@ -795,7 +834,7 @@ arc58_pluginChangeAdmin:
 	// This plugin is not in control of the account
 	assert
 
-	// contracts/abstracted_account.algo.ts:210
+	// contracts/abstracted_account.algo.ts:211
 	// key: PluginsKey = { application: plugin, allowedCaller: allowedCaller }
 	frame_dig -1 // plugin: AppID
 	itob
@@ -803,7 +842,7 @@ arc58_pluginChangeAdmin:
 	concat
 	frame_bury 0 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:211
+	// contracts/abstracted_account.algo.ts:212
 	// assert(
 	//       this.plugins(key).exists && this.plugins(key).value.adminPrivileges,
 	//       'This plugin does not have admin privileges'
@@ -833,7 +872,7 @@ arc58_pluginChangeAdmin:
 	// This plugin does not have admin privileges
 	assert
 
-	// contracts/abstracted_account.algo.ts:216
+	// contracts/abstracted_account.algo.ts:217
 	// this.admin.value = newAdmin
 	bytec 2 //  "a"
 	frame_dig -3 // newAdmin: Address
@@ -859,7 +898,7 @@ arc58_pluginChangeAdmin:
 arc58_getAdmin:
 	proto 0 1
 
-	// contracts/abstracted_account.algo.ts:225
+	// contracts/abstracted_account.algo.ts:226
 	// return this.admin.value;
 	bytec 2 //  "a"
 	app_global_get
@@ -878,7 +917,7 @@ arc58_getAdmin:
 arc58_verifyAuthAddr:
 	proto 0 0
 
-	// contracts/abstracted_account.algo.ts:232
+	// contracts/abstracted_account.algo.ts:233
 	// assert(this.app.address.authAddr === globals.zeroAddress)
 	global CurrentApplicationAddress
 	acct_params_get AcctAuthAddr
@@ -926,7 +965,7 @@ arc58_verifyAuthAddr:
 arc58_rekeyTo:
 	proto 2 0
 
-	// contracts/abstracted_account.algo.ts:242
+	// contracts/abstracted_account.algo.ts:243
 	// verifyAppCallTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -937,7 +976,7 @@ arc58_rekeyTo:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:244
+	// contracts/abstracted_account.algo.ts:245
 	// sendPayment({
 	//       receiver: addr,
 	//       rekeyTo: addr,
@@ -947,17 +986,17 @@ arc58_rekeyTo:
 	intc 0 //  pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:245
+	// contracts/abstracted_account.algo.ts:246
 	// receiver: addr
 	frame_dig -1 // addr: Address
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:246
+	// contracts/abstracted_account.algo.ts:247
 	// rekeyTo: addr
 	frame_dig -1 // addr: Address
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:247
+	// contracts/abstracted_account.algo.ts:248
 	// note: 'rekeying abstracted account'
 	pushbytes 0x72656b6579696e672061627374726163746564206163636f756e74 // "rekeying abstracted account"
 	itxn_field Note
@@ -970,13 +1009,13 @@ arc58_rekeyTo:
 	itxn_submit
 
 	// *if5_condition
-	// contracts/abstracted_account.algo.ts:250
+	// contracts/abstracted_account.algo.ts:251
 	// flash
 	frame_dig -2 // flash: boolean
 	bz *if5_end
 
 	// *if5_consequent
-	// contracts/abstracted_account.algo.ts:250
+	// contracts/abstracted_account.algo.ts:251
 	// this.assertRekeysBack()
 	callsub assertRekeysBack
 
@@ -1025,7 +1064,7 @@ arc58_canCall:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/abstracted_account.algo.ts:261
+	// contracts/abstracted_account.algo.ts:262
 	// globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress)
 	global ZeroAddress
 	frame_dig -1 // plugin: AppID
@@ -1033,19 +1072,19 @@ arc58_canCall:
 	frame_bury 0 // globalAllowed: bool
 
 	// *if6_condition
-	// contracts/abstracted_account.algo.ts:262
+	// contracts/abstracted_account.algo.ts:263
 	// globalAllowed
 	frame_dig 0 // globalAllowed: bool
 	bz *if6_end
 
 	// *if6_consequent
-	// contracts/abstracted_account.algo.ts:262
+	// contracts/abstracted_account.algo.ts:263
 	// return true;
 	intc 0 // 1
 	b *arc58_canCall*return
 
 *if6_end:
-	// contracts/abstracted_account.algo.ts:264
+	// contracts/abstracted_account.algo.ts:265
 	// return this.pluginCallAllowed(plugin, address);
 	frame_dig -2 // address: Address
 	frame_dig -1 // plugin: AppID
@@ -1077,52 +1116,153 @@ arc58_rekeyToPlugin:
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
-	dup
+	dupn 3
 
-	// contracts/abstracted_account.algo.ts:273
+	// contracts/abstracted_account.algo.ts:274
+	// globalExists = this.plugins({ application: plugin, allowedCaller: Address.zeroAddress }).exists
+	bytec 1 //  "p"
+	frame_dig -1 // plugin: AppID
+	itob
+	global ZeroAddress
+	concat
+	concat
+	box_len
+	swap
+	pop
+	frame_bury 0 // globalExists: bool
+
+	// contracts/abstracted_account.algo.ts:275
+	// localExists = this.plugins({ application: plugin, allowedCaller: this.txn.sender }).exists
+	bytec 1 //  "p"
+	frame_dig -1 // plugin: AppID
+	itob
+	txn Sender
+	concat
+	concat
+	box_len
+	swap
+	pop
+	frame_bury 1 // localExists: bool
+
+	// contracts/abstracted_account.algo.ts:277
+	// globalAllowed = false
+	intc 1 // 0
+	frame_bury 2 // globalAllowed: bool
+
+	// contracts/abstracted_account.algo.ts:278
+	// locallyAllowed = false
+	intc 1 // 0
+	frame_bury 3 // locallyAllowed: bool
+
+	// *if7_condition
+	// contracts/abstracted_account.algo.ts:280
+	// globalExists
+	frame_dig 0 // globalExists: bool
+	bz *if7_end
+
+	// *if7_consequent
+	// contracts/abstracted_account.algo.ts:281
 	// globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress)
 	global ZeroAddress
 	frame_dig -1 // plugin: AppID
 	callsub pluginCallAllowed
-	frame_bury 0 // globalAllowed: bool
+	frame_bury 2 // globalAllowed: bool
 
-	// contracts/abstracted_account.algo.ts:274
+*if7_end:
+	// *if8_condition
+	// contracts/abstracted_account.algo.ts:284
+	// localExists
+	frame_dig 1 // localExists: bool
+	bz *if8_end
+
+	// *if8_consequent
+	// contracts/abstracted_account.algo.ts:285
 	// locallyAllowed = this.pluginCallAllowed(plugin, this.txn.sender)
 	txn Sender
 	frame_dig -1 // plugin: AppID
 	callsub pluginCallAllowed
-	frame_bury 1 // locallyAllowed: bool
+	frame_bury 3 // locallyAllowed: bool
 
-	// *if7_condition
-	// contracts/abstracted_account.algo.ts:276
-	// !globalAllowed && !locallyAllowed
-	frame_dig 0 // globalAllowed: bool
+*if8_end:
+	// *if9_condition
+	// contracts/abstracted_account.algo.ts:291
+	// (!globalExists && !localExists)
+	//       || (globalExists && !globalAllowed && !locallyAllowed)
+	frame_dig 0 // globalExists: bool
 	!
 	dup
 	bz *skip_and14
-	frame_dig 1 // locallyAllowed: bool
+	frame_dig 1 // localExists: bool
 	!
 	&&
 
 *skip_and14:
-	bz *if7_end
+	dup
+	bnz *skip_or6
+	frame_dig 0 // globalExists: bool
+	dup
+	bz *skip_and15
+	frame_dig 2 // globalAllowed: bool
+	!
+	&&
 
-	// *if7_consequent
-	// contracts/abstracted_account.algo.ts:277
+*skip_and15:
+	dup
+	bz *skip_and16
+	frame_dig 3 // locallyAllowed: bool
+	!
+	&&
+
+*skip_and16:
+	||
+
+*skip_or6:
+	bz *if9_elseif1_condition
+
+	// *if9_consequent
+	// contracts/abstracted_account.algo.ts:294
+	// this.assertPluginCallAllowed(plugin, Address.zeroAddress)
+	global ZeroAddress
+	frame_dig -1 // plugin: AppID
+	callsub assertPluginCallAllowed
+	b *if9_end
+
+*if9_elseif1_condition:
+	// contracts/abstracted_account.algo.ts:295
+	// localExists && !locallyAllowed && !globalAllowed
+	frame_dig 1 // localExists: bool
+	dup
+	bz *skip_and17
+	frame_dig 3 // locallyAllowed: bool
+	!
+	&&
+
+*skip_and17:
+	dup
+	bz *skip_and18
+	frame_dig 2 // globalAllowed: bool
+	!
+	&&
+
+*skip_and18:
+	bz *if9_end
+
+	// *if9_elseif1_consequent
+	// contracts/abstracted_account.algo.ts:296
 	// this.assertPluginCallAllowed(plugin, this.txn.sender)
 	txn Sender
 	frame_dig -1 // plugin: AppID
 	callsub assertPluginCallAllowed
 
-*if7_end:
-	// contracts/abstracted_account.algo.ts:280
+*if9_end:
+	// contracts/abstracted_account.algo.ts:299
 	// this.assertValidGroup(plugin, globalAllowed, locallyAllowed)
-	frame_dig 1 // locallyAllowed: bool
-	frame_dig 0 // globalAllowed: bool
+	frame_dig 3 // locallyAllowed: bool
+	frame_dig 2 // globalAllowed: bool
 	frame_dig -1 // plugin: AppID
 	callsub assertValidGroup
 
-	// contracts/abstracted_account.algo.ts:282
+	// contracts/abstracted_account.algo.ts:301
 	// sendPayment({
 	//       receiver: this.app.address,
 	//       rekeyTo: plugin.address,
@@ -1132,19 +1272,19 @@ arc58_rekeyToPlugin:
 	intc 0 //  pay
 	itxn_field TypeEnum
 
-	// contracts/abstracted_account.algo.ts:283
+	// contracts/abstracted_account.algo.ts:302
 	// receiver: this.app.address
 	global CurrentApplicationAddress
 	itxn_field Receiver
 
-	// contracts/abstracted_account.algo.ts:284
+	// contracts/abstracted_account.algo.ts:303
 	// rekeyTo: plugin.address
 	frame_dig -1 // plugin: AppID
 	app_params_get AppAddress
 	pop
 	itxn_field RekeyTo
 
-	// contracts/abstracted_account.algo.ts:285
+	// contracts/abstracted_account.algo.ts:304
 	// note: 'rekeying to plugin app'
 	pushbytes 0x72656b6579696e6720746f20706c7567696e20617070 // "rekeying to plugin app"
 	itxn_field Note
@@ -1156,7 +1296,7 @@ arc58_rekeyToPlugin:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/abstracted_account.algo.ts:288
+	// contracts/abstracted_account.algo.ts:307
 	// this.plugins({
 	//       application: plugin,
 	//       allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender,
@@ -1164,7 +1304,7 @@ arc58_rekeyToPlugin:
 	bytec 1 //  "p"
 	frame_dig -1 // plugin: AppID
 	itob
-	frame_dig 0 // globalAllowed: bool
+	frame_dig 2 // globalAllowed: bool
 	bz *ternary1_false
 	global ZeroAddress
 	b *ternary1_end
@@ -1187,7 +1327,7 @@ arc58_rekeyToPlugin:
 	bytec 1 //  "p"
 	frame_dig -1 // plugin: AppID
 	itob
-	frame_dig 0 // globalAllowed: bool
+	frame_dig 2 // globalAllowed: bool
 	bz *ternary3_false
 	global ZeroAddress
 	b *ternary3_end
@@ -1221,7 +1361,7 @@ arc58_rekeyToPlugin:
 arc58_rekeyToNamedPlugin:
 	proto 1 0
 
-	// contracts/abstracted_account.algo.ts:300
+	// contracts/abstracted_account.algo.ts:319
 	// this.arc58_rekeyToPlugin(this.namedPlugins(name).value.application)
 	intc 1 // 0
 	pushint 8
@@ -1296,7 +1436,7 @@ arc58_addPlugin:
 	bytec 0 // 0x
 	dup
 
-	// contracts/abstracted_account.algo.ts:321
+	// contracts/abstracted_account.algo.ts:340
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -1307,7 +1447,7 @@ arc58_addPlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:322
+	// contracts/abstracted_account.algo.ts:341
 	// key: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -1 // app: AppID
 	itob
@@ -1315,7 +1455,7 @@ arc58_addPlugin:
 	concat
 	frame_bury 0 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:324
+	// contracts/abstracted_account.algo.ts:343
 	// this.plugins(key).value = {
 	//       lastValidRound: lastValidRound,
 	//       cooldown: cooldown,
@@ -1346,13 +1486,13 @@ arc58_addPlugin:
 	concat
 	box_put
 
-	// contracts/abstracted_account.algo.ts:332
+	// contracts/abstracted_account.algo.ts:351
 	// for (let i = 0; i < methods.length; i += 1)
 	intc 1 // 0
 	frame_bury 1 // i: uint64
 
 *for_2:
-	// contracts/abstracted_account.algo.ts:332
+	// contracts/abstracted_account.algo.ts:351
 	// i < methods.length
 	frame_dig 1 // i: uint64
 	frame_dig -6 // methods: bytes<4>[]
@@ -1362,7 +1502,7 @@ arc58_addPlugin:
 	<
 	bz *for_2_end
 
-	// contracts/abstracted_account.algo.ts:333
+	// contracts/abstracted_account.algo.ts:352
 	// this.methods({ application: app, allowedCaller: allowedCaller, method: methods[i] }).create()
 	bytec 3 //  "m"
 	frame_dig -1 // app: AppID
@@ -1387,7 +1527,7 @@ arc58_addPlugin:
 	pop
 
 *for_2_continue:
-	// contracts/abstracted_account.algo.ts:332
+	// contracts/abstracted_account.algo.ts:351
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 0 // 1
@@ -1438,7 +1578,7 @@ arc58_removePlugin:
 	bytec 0 // 0x
 	dupn 3
 
-	// contracts/abstracted_account.algo.ts:346
+	// contracts/abstracted_account.algo.ts:365
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -1449,7 +1589,7 @@ arc58_removePlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:348
+	// contracts/abstracted_account.algo.ts:367
 	// key: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -1 // app: AppID
 	itob
@@ -1457,7 +1597,7 @@ arc58_removePlugin:
 	concat
 	frame_bury 0 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:350
+	// contracts/abstracted_account.algo.ts:369
 	// assert(this.plugins(key).exists, 'plugin does not exist')
 	bytec 1 //  "p"
 	frame_dig 0 // key: PluginsKey
@@ -1469,7 +1609,7 @@ arc58_removePlugin:
 	// plugin does not exist
 	assert
 
-	// contracts/abstracted_account.algo.ts:352
+	// contracts/abstracted_account.algo.ts:371
 	// methodRestrictionCount = this.plugins(key).value.methodRestrictions
 	bytec 1 //  "p"
 	frame_dig 0 // key: PluginsKey
@@ -1484,13 +1624,13 @@ arc58_removePlugin:
 	btoi
 	frame_bury 1 // methodRestrictionCount: uint64
 
-	// contracts/abstracted_account.algo.ts:353
+	// contracts/abstracted_account.algo.ts:372
 	// for (let i = 0; i < methods.length; i += 1)
 	intc 1 // 0
 	frame_bury 2 // i: uint64
 
 *for_3:
-	// contracts/abstracted_account.algo.ts:353
+	// contracts/abstracted_account.algo.ts:372
 	// i < methods.length
 	frame_dig 2 // i: uint64
 	frame_dig -3 // methods: bytes<4>[]
@@ -1500,7 +1640,7 @@ arc58_removePlugin:
 	<
 	bz *for_3_end
 
-	// contracts/abstracted_account.algo.ts:354
+	// contracts/abstracted_account.algo.ts:373
 	// methodKey: MethodsKey = { application: app, allowedCaller: allowedCaller, method: methods[i] }
 	frame_dig -1 // app: AppID
 	itob
@@ -1520,7 +1660,7 @@ arc58_removePlugin:
 	concat
 	frame_bury 3 // methodKey: MethodsKey
 
-	// contracts/abstracted_account.algo.ts:355
+	// contracts/abstracted_account.algo.ts:374
 	// assert(this.methods(methodKey).exists, 'method does not exist')
 	bytec 3 //  "m"
 	frame_dig 3 // methodKey: MethodsKey
@@ -1532,14 +1672,14 @@ arc58_removePlugin:
 	// method does not exist
 	assert
 
-	// contracts/abstracted_account.algo.ts:356
+	// contracts/abstracted_account.algo.ts:375
 	// methodRestrictionCount -= 1
 	frame_dig 1 // methodRestrictionCount: uint64
 	intc 0 // 1
 	-
 	frame_bury 1 // methodRestrictionCount: uint64
 
-	// contracts/abstracted_account.algo.ts:357
+	// contracts/abstracted_account.algo.ts:376
 	// this.methods(methodKey).delete()
 	bytec 3 //  "m"
 	frame_dig 3 // methodKey: MethodsKey
@@ -1547,7 +1687,7 @@ arc58_removePlugin:
 	box_del
 
 *for_3_continue:
-	// contracts/abstracted_account.algo.ts:353
+	// contracts/abstracted_account.algo.ts:372
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 0 // 1
@@ -1556,7 +1696,7 @@ arc58_removePlugin:
 	b *for_3
 
 *for_3_end:
-	// contracts/abstracted_account.algo.ts:360
+	// contracts/abstracted_account.algo.ts:379
 	// assert(methodRestrictionCount === 0, 'plugin has method restrictions')
 	frame_dig 1 // methodRestrictionCount: uint64
 	intc 1 // 0
@@ -1565,7 +1705,7 @@ arc58_removePlugin:
 	// plugin has method restrictions
 	assert
 
-	// contracts/abstracted_account.algo.ts:362
+	// contracts/abstracted_account.algo.ts:381
 	// this.plugins(key).delete()
 	bytec 1 //  "p"
 	frame_dig 0 // key: PluginsKey
@@ -1641,7 +1781,7 @@ arc58_addNamedPlugin:
 	bytec 0 // 0x
 	dupn 2
 
-	// contracts/abstracted_account.algo.ts:386
+	// contracts/abstracted_account.algo.ts:405
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -1652,7 +1792,7 @@ arc58_addNamedPlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:387
+	// contracts/abstracted_account.algo.ts:406
 	// assert(!this.namedPlugins(name).exists)
 	bytec 4 //  "n"
 	frame_dig -1 // name: string
@@ -1663,7 +1803,7 @@ arc58_addNamedPlugin:
 	!
 	assert
 
-	// contracts/abstracted_account.algo.ts:389
+	// contracts/abstracted_account.algo.ts:408
 	// key: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -2 // app: AppID
 	itob
@@ -1671,7 +1811,7 @@ arc58_addNamedPlugin:
 	concat
 	frame_bury 0 // key: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:390
+	// contracts/abstracted_account.algo.ts:409
 	// this.namedPlugins(name).value = key
 	bytec 4 //  "n"
 	frame_dig -1 // name: string
@@ -1679,7 +1819,7 @@ arc58_addNamedPlugin:
 	frame_dig 0 // key: PluginsKey
 	box_put
 
-	// contracts/abstracted_account.algo.ts:392
+	// contracts/abstracted_account.algo.ts:411
 	// pluginInfo: PluginInfo = {
 	//       lastValidRound: lastValidRound,
 	//       cooldown: cooldown,
@@ -1707,7 +1847,7 @@ arc58_addNamedPlugin:
 	concat
 	frame_bury 1 // pluginInfo: PluginInfo
 
-	// contracts/abstracted_account.algo.ts:400
+	// contracts/abstracted_account.algo.ts:419
 	// this.plugins(key).value = pluginInfo
 	bytec 1 //  "p"
 	frame_dig 0 // key: PluginsKey
@@ -1715,13 +1855,13 @@ arc58_addNamedPlugin:
 	frame_dig 1 // pluginInfo: PluginInfo
 	box_put
 
-	// contracts/abstracted_account.algo.ts:402
+	// contracts/abstracted_account.algo.ts:421
 	// for (let i = 0; i < methods.length; i += 1)
 	intc 1 // 0
 	frame_bury 2 // i: uint64
 
 *for_4:
-	// contracts/abstracted_account.algo.ts:402
+	// contracts/abstracted_account.algo.ts:421
 	// i < methods.length
 	frame_dig 2 // i: uint64
 	frame_dig -7 // methods: bytes<4>[]
@@ -1731,7 +1871,7 @@ arc58_addNamedPlugin:
 	<
 	bz *for_4_end
 
-	// contracts/abstracted_account.algo.ts:403
+	// contracts/abstracted_account.algo.ts:422
 	// this.methods({ application: app, allowedCaller: allowedCaller, method: methods[i] }).create()
 	bytec 3 //  "m"
 	frame_dig -2 // app: AppID
@@ -1756,7 +1896,7 @@ arc58_addNamedPlugin:
 	pop
 
 *for_4_continue:
-	// contracts/abstracted_account.algo.ts:402
+	// contracts/abstracted_account.algo.ts:421
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 0 // 1
@@ -1789,7 +1929,7 @@ arc58_removeNamedPlugin:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/abstracted_account.algo.ts:413
+	// contracts/abstracted_account.algo.ts:432
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -1800,7 +1940,7 @@ arc58_removeNamedPlugin:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:415
+	// contracts/abstracted_account.algo.ts:434
 	// assert(this.namedPlugins(name).exists, 'plugin does not exist')
 	bytec 4 //  "n"
 	frame_dig -1 // name: string
@@ -1812,14 +1952,14 @@ arc58_removeNamedPlugin:
 	// plugin does not exist
 	assert
 
-	// contracts/abstracted_account.algo.ts:416
+	// contracts/abstracted_account.algo.ts:435
 	// app = this.namedPlugins(name).value
 	bytec 4 //  "n"
 	frame_dig -1 // name: string
 	concat
 	frame_bury 0 // storage key//app
 
-	// contracts/abstracted_account.algo.ts:417
+	// contracts/abstracted_account.algo.ts:436
 	// assert(this.plugins(app).exists, 'plugin does not exist')
 	bytec 1 //  "p"
 	frame_dig 0 // storage key//app
@@ -1835,7 +1975,7 @@ arc58_removeNamedPlugin:
 	// plugin does not exist
 	assert
 
-	// contracts/abstracted_account.algo.ts:418
+	// contracts/abstracted_account.algo.ts:437
 	// assert(this.plugins(app).value.methodRestrictions === 0, 'plugin has method restrictions')
 	bytec 1 //  "p"
 	frame_dig 0 // storage key//app
@@ -1858,14 +1998,14 @@ arc58_removeNamedPlugin:
 	// plugin has method restrictions
 	assert
 
-	// contracts/abstracted_account.algo.ts:420
+	// contracts/abstracted_account.algo.ts:439
 	// this.namedPlugins(name).delete()
 	bytec 4 //  "n"
 	frame_dig -1 // name: string
 	concat
 	box_del
 
-	// contracts/abstracted_account.algo.ts:421
+	// contracts/abstracted_account.algo.ts:440
 	// this.plugins(app).delete()
 	bytec 1 //  "p"
 	frame_dig 0 // storage key//app
@@ -1916,7 +2056,7 @@ arc58_addMethod:
 	bytec 0 // 0x
 	dup
 
-	// contracts/abstracted_account.algo.ts:425
+	// contracts/abstracted_account.algo.ts:444
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -1927,7 +2067,7 @@ arc58_addMethod:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:427
+	// contracts/abstracted_account.algo.ts:446
 	// pluginKey: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -1 // app: AppID
 	itob
@@ -1935,7 +2075,7 @@ arc58_addMethod:
 	concat
 	frame_bury 0 // pluginKey: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:428
+	// contracts/abstracted_account.algo.ts:447
 	// methodKey: MethodsKey = { application: app, allowedCaller: allowedCaller, method: method }
 	frame_dig -1 // app: AppID
 	itob
@@ -1945,7 +2085,7 @@ arc58_addMethod:
 	concat
 	frame_bury 1 // methodKey: MethodsKey
 
-	// contracts/abstracted_account.algo.ts:430
+	// contracts/abstracted_account.algo.ts:449
 	// assert(this.plugins(pluginKey).exists, 'plugin does not exist')
 	bytec 1 //  "p"
 	frame_dig 0 // pluginKey: PluginsKey
@@ -1957,7 +2097,7 @@ arc58_addMethod:
 	// plugin does not exist
 	assert
 
-	// contracts/abstracted_account.algo.ts:431
+	// contracts/abstracted_account.algo.ts:450
 	// assert(!this.methods(methodKey).exists, 'method already exists')
 	bytec 3 //  "m"
 	frame_dig 1 // methodKey: MethodsKey
@@ -1970,7 +2110,7 @@ arc58_addMethod:
 	// method already exists
 	assert
 
-	// contracts/abstracted_account.algo.ts:433
+	// contracts/abstracted_account.algo.ts:452
 	// this.plugins(pluginKey).value.methodRestrictions += 1
 	bytec 1 //  "p"
 	frame_dig 0 // pluginKey: PluginsKey
@@ -2002,7 +2142,7 @@ arc58_addMethod:
 	cover 2
 	box_replace
 
-	// contracts/abstracted_account.algo.ts:434
+	// contracts/abstracted_account.algo.ts:453
 	// this.methods({ application: app, allowedCaller: allowedCaller, method: method }).create()
 	bytec 3 //  "m"
 	frame_dig -1 // app: AppID
@@ -2056,7 +2196,7 @@ arc58_removeMethod:
 	bytec 0 // 0x
 	dup
 
-	// contracts/abstracted_account.algo.ts:438
+	// contracts/abstracted_account.algo.ts:457
 	// verifyTxn(this.txn, { sender: this.admin.value })
 	// verify sender
 	txn Sender
@@ -2067,7 +2207,7 @@ arc58_removeMethod:
 	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"this.admin.value"}
 	assert
 
-	// contracts/abstracted_account.algo.ts:440
+	// contracts/abstracted_account.algo.ts:459
 	// pluginKey: PluginsKey = { application: app, allowedCaller: allowedCaller }
 	frame_dig -1 // app: AppID
 	itob
@@ -2075,7 +2215,7 @@ arc58_removeMethod:
 	concat
 	frame_bury 0 // pluginKey: PluginsKey
 
-	// contracts/abstracted_account.algo.ts:441
+	// contracts/abstracted_account.algo.ts:460
 	// methodKey: MethodsKey = { application: app, allowedCaller: allowedCaller, method: method }
 	frame_dig -1 // app: AppID
 	itob
@@ -2085,7 +2225,7 @@ arc58_removeMethod:
 	concat
 	frame_bury 1 // methodKey: MethodsKey
 
-	// contracts/abstracted_account.algo.ts:443
+	// contracts/abstracted_account.algo.ts:462
 	// assert(this.plugins(pluginKey).exists, 'plugin does not exist')
 	bytec 1 //  "p"
 	frame_dig 0 // pluginKey: PluginsKey
@@ -2097,7 +2237,7 @@ arc58_removeMethod:
 	// plugin does not exist
 	assert
 
-	// contracts/abstracted_account.algo.ts:444
+	// contracts/abstracted_account.algo.ts:463
 	// assert(this.methods(methodKey).exists, 'method does not exist')
 	bytec 3 //  "m"
 	frame_dig 1 // methodKey: MethodsKey
@@ -2109,7 +2249,7 @@ arc58_removeMethod:
 	// method does not exist
 	assert
 
-	// contracts/abstracted_account.algo.ts:446
+	// contracts/abstracted_account.algo.ts:465
 	// this.plugins(pluginKey).value.methodRestrictions -= 1
 	bytec 1 //  "p"
 	frame_dig 0 // pluginKey: PluginsKey
@@ -2141,7 +2281,7 @@ arc58_removeMethod:
 	cover 2
 	box_replace
 
-	// contracts/abstracted_account.algo.ts:447
+	// contracts/abstracted_account.algo.ts:466
 	// this.methods(methodKey).delete()
 	bytec 3 //  "m"
 	frame_dig 1 // methodKey: MethodsKey
