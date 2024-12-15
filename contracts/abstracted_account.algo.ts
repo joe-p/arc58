@@ -101,12 +101,12 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
- * Guarantee that our txn group is valid in a single loop over all txns in the group
- * 
- * @param app the plugin app id being validated
- * @param caller the address that triggered the plugin or global address
- * @returns whether the txn group rekeys back and uses only allowed methods
- */
+   * Guarantee that our txn group is valid in a single loop over all txns in the group
+   * 
+   * @param app the plugin app id being validated
+   * @param checkGlobal whether to check the global caller for method restrictions
+   * @param checkLocal whether to check the local caller for method restrictions
+   */
   private assertValidGroup(app: AppID, checkGlobal: boolean, checkLocal: boolean): void {
     const gkey: PluginsKey = { application: app, allowedCaller: Address.zeroAddress };
     const key: PluginsKey = { application: app, allowedCaller: this.txn.sender };
@@ -440,6 +440,14 @@ export class AbstractedAccount extends Contract {
     this.plugins(app).delete();
   }
 
+  /**
+   * Add a method restriction to a plugin
+   * 
+   * @param app The plugin app
+   * @param allowedCaller The address of that's allowed to call the app
+   * @param method The method signature to add
+   * 
+   */
   arc58_addMethod(app: AppID, allowedCaller: Address, method: bytes<4>): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
@@ -453,6 +461,13 @@ export class AbstractedAccount extends Contract {
     this.methods({ application: app, allowedCaller: allowedCaller, method: method }).create();
   }
 
+  /**
+   * Remove a method restriction from a plugin
+   * 
+   * @param app The plugin app
+   * @param allowedCaller The address of that's allowed to call the app 
+   * @param method The method signature to remove
+   */
   arc58_removeMethod(app: AppID, allowedCaller: Address, method: bytes<4>): void {
     verifyTxn(this.txn, { sender: this.admin.value });
 
