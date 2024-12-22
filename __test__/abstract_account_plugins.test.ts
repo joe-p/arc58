@@ -167,7 +167,7 @@ describe('Abstracted Subscription Program', () => {
         .arc58RekeyToPlugin({
           sender: testAccount.addr,
           signer: makeBasicAccountTransactionSigner(testAccount),
-          args: { plugin: subPluginID },
+          args: { plugin: subPluginID, methodOffsets: [] },
           extraFee: (1_000).microAlgos(),
           boxReferences: boxes,
           accountReferences: [aliceAbstractedAccount, joe],
@@ -275,7 +275,7 @@ describe('Abstracted Subscription Program', () => {
         .arc58RekeyToNamedPlugin({
           sender: bob.addr,
           signer: makeBasicAccountTransactionSigner(bob),
-          args: { name: 'optIn' },
+          args: { name: 'optIn', methodOffsets: [] },
           extraFee: (1_000).microAlgo(),
           boxReferences: boxes,
           assetReferences: [asset],
