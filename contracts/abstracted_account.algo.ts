@@ -98,8 +98,8 @@ export class AbstractedAccount extends Contract {
 
     let rekeysBack = false;
 
-    const gRestrictions = checkGlobal && this.plugins(gkey).size > 29;
-    const lrestrictions = checkLocal && this.plugins(key).size > 29;
+    const globalRestrictions = checkGlobal && this.plugins(gkey).size > 29;
+    const localRestrictions = checkLocal && this.plugins(key).size > 29;
     let methodIndex = 0;
 
     for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
@@ -111,13 +111,13 @@ export class AbstractedAccount extends Contract {
 
       // we dont need to check method restrictions at all if none exist
       // & skip transactions that aren't relevant
-      if ((!gRestrictions && !lrestrictions) || this.shouldSkipMethodCheck(txn, app)) {
+      if ((!globalRestrictions && !localRestrictions) || this.shouldSkipMethodCheck(txn, app)) {
         continue;
       }
 
-      const gValid = (
+      const globalValid = (
         checkGlobal && (
-          !gRestrictions
+          !globalRestrictions
           || (
             methodIndex < methodOffsets.length
             && this.methodCallAllowed(txn, app, Address.zeroAddress, methodOffsets[methodIndex])
@@ -125,9 +125,9 @@ export class AbstractedAccount extends Contract {
         )
       );
     
-      const lValid = (
+      const localValid = (
         checkLocal && (
-          !lrestrictions
+          !localRestrictions
           || (
             methodIndex < methodOffsets.length
             && this.methodCallAllowed(txn, app, this.txn.sender, methodOffsets[methodIndex])
@@ -135,7 +135,7 @@ export class AbstractedAccount extends Contract {
         )
       );
 
-      assert(gValid || lValid, 'method not allowed');
+      assert(globalValid || localValid, 'method not allowed');
       methodIndex += 1;
     }
 
@@ -291,11 +291,11 @@ export class AbstractedAccount extends Contract {
     const globalExists = this.plugins({ application: plugin, allowedCaller: Address.zeroAddress }).exists;
     const localExists = this.plugins({ application: plugin, allowedCaller: this.txn.sender }).exists;
 
-    let globalAllowed = false;
+    let globallyAllowed = false;
     let locallyAllowed = false;
 
     if (globalExists) {
-      globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
+      globallyAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
     }
 
     if (localExists) {
@@ -306,14 +306,14 @@ export class AbstractedAccount extends Contract {
     // then the call is not allowed, assert check so we error out cleanly
     if (
       (!globalExists && !localExists)
-      || (globalExists && !globalAllowed && !locallyAllowed)
+      || (globalExists && !globallyAllowed && !locallyAllowed)
     ) {
       this.assertPluginCallAllowed(plugin, Address.zeroAddress);
-    } else if (localExists && !locallyAllowed && !globalAllowed) {
+    } else if (localExists && !locallyAllowed && !globallyAllowed) {
       this.assertPluginCallAllowed(plugin, this.txn.sender);
     }
 
-    this.assertValidGroup(plugin, methodOffsets, globalAllowed, locallyAllowed);
+    this.assertValidGroup(plugin, methodOffsets, globallyAllowed, locallyAllowed);
 
     sendPayment({
       receiver: this.app.address,
@@ -323,7 +323,7 @@ export class AbstractedAccount extends Contract {
 
     this.plugins({
       application: plugin,
-      allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender,
+      allowedCaller: globallyAllowed ? Address.zeroAddress : this.txn.sender,
     }).value.lastCalled = globals.round;
   }
 
