@@ -20,6 +20,11 @@ type PluginInfo = {
   methods: bytes<4>[];
 };
 
+type CallerUsed = {
+  global: boolean;
+  local: boolean;
+};
+
 export class AbstractedAccount extends Contract {
   /** Target AVM 10 */
   programVersion = 10;
@@ -92,7 +97,7 @@ export class AbstractedAccount extends Contract {
    * @param checkGlobal whether to check the global caller for method restrictions
    * @param checkLocal whether to check the local caller for method restrictions
    */
-  private assertValidGroup(app: AppID, methodOffsets: uint64[], checkGlobal: boolean, checkLocal: boolean): void {
+  private assertValidGroup(app: AppID, methodOffsets: uint64[], checkGlobal: boolean, checkLocal: boolean): CallerUsed {
     const gkey: PluginsKey = { application: app, allowedCaller: Address.zeroAddress };
     const key: PluginsKey = { application: app, allowedCaller: this.txn.sender };
 
@@ -101,6 +106,10 @@ export class AbstractedAccount extends Contract {
     const globalRestrictions = checkGlobal && this.plugins(gkey).size > 29;
     const localRestrictions = checkLocal && this.plugins(key).size > 29;
     let methodIndex = 0;
+    let callerUsed: CallerUsed = {
+      global: checkGlobal && !globalRestrictions,
+      local: checkLocal && !localRestrictions,
+    };
 
     for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
@@ -124,7 +133,7 @@ export class AbstractedAccount extends Contract {
           )
         )
       );
-    
+
       const localValid = (
         checkLocal && (
           !localRestrictions
@@ -136,10 +145,23 @@ export class AbstractedAccount extends Contract {
       );
 
       assert(globalValid || localValid, 'method not allowed');
+
+      // default to using global if both are valid
+      // due to plugins having cooldowns we want to
+      // properly attribute which is being used
+      // in the case of both being allowed we default to global
+      if (globalValid) {
+        callerUsed.global = true;
+      } else if (localValid) {
+        callerUsed.local = true;
+      }
+
       methodIndex += 1;
     }
 
     assert(rekeysBack, 'no rekey back found');
+
+    return callerUsed;
   }
 
   private shouldSkipMethodCheck(txn: Txn, app: AppID): boolean {
@@ -313,7 +335,7 @@ export class AbstractedAccount extends Contract {
       this.assertPluginCallAllowed(plugin, this.txn.sender);
     }
 
-    this.assertValidGroup(plugin, methodOffsets, globallyAllowed, locallyAllowed);
+    const used = this.assertValidGroup(plugin, methodOffsets, globallyAllowed, locallyAllowed);
 
     sendPayment({
       receiver: this.app.address,
@@ -321,10 +343,19 @@ export class AbstractedAccount extends Contract {
       note: 'rekeying to plugin app',
     });
 
-    this.plugins({
-      application: plugin,
-      allowedCaller: globallyAllowed ? Address.zeroAddress : this.txn.sender,
-    }).value.lastCalled = globals.round;
+    if (used.global) {
+      this.plugins({
+        application: plugin,
+        allowedCaller: Address.zeroAddress
+      }).value.lastCalled = globals.round;
+    }
+
+    if (used.local) {
+      this.plugins({
+        application: plugin,
+        allowedCaller: this.txn.sender
+      }).value.lastCalled = globals.round;
+    }
   }
 
   /**
