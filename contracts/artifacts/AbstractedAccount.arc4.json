@@ -118,6 +118,11 @@
           "name": "plugin",
           "type": "uint64",
           "desc": "The app to rekey to"
+        },
+        {
+          "name": "methodOffsets",
+          "type": "uint64[]",
+          "desc": "The indices of the methods being used in the group\nif the plugin has method restrictions these indices are required to match\nthe methods used on each subsequent call to the plugin within the group"
         }
       ],
       "returns": {
@@ -132,6 +137,11 @@
           "name": "name",
           "type": "string",
           "desc": "The name of the plugin to rekey to"
+        },
+        {
+          "name": "methodOffsets",
+          "type": "uint64[]",
+          "desc": "The indices of the methods being used in the group\nif the plugin has method restrictions these indices are required to match\nthe methods used on each subsequent call to the plugin within the group"
         }
       ],
       "returns": {
@@ -166,6 +176,11 @@
           "name": "adminPrivileges",
           "type": "bool",
           "desc": "Whether the plugin has permissions to change the admin account"
+        },
+        {
+          "name": "methods",
+          "type": "byte[4][]",
+          "desc": "The methods that are allowed to be called for the plugin by the address"
         }
       ],
       "returns": {
@@ -183,7 +198,13 @@
         },
         {
           "name": "allowedCaller",
-          "type": "address"
+          "type": "address",
+          "desc": "The address of that's allowed to call the app"
+        },
+        {
+          "name": "methods",
+          "type": "byte[4][]",
+          "desc": "The methods that to remove before attempting to uninstall the plugin\nor the global zero address for all addresses"
         }
       ],
       "returns": {
@@ -223,6 +244,11 @@
           "name": "adminPrivileges",
           "type": "bool",
           "desc": "Whether the plugin has permissions to change the admin account"
+        },
+        {
+          "name": "methods",
+          "type": "byte[4][]",
+          "desc": "The methods that are allowed to be called for the plugin by the address"
         }
       ],
       "returns": {

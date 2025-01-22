@@ -1,9 +1,9 @@
 import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
-import algosdk from 'algosdk';
-import { AbstractedAccountClient } from '../contracts/clients/AbstractedAccountClient';
-import { OptInPluginClient } from '../contracts/clients/OptInPluginClient';
+import algosdk, { ABIMethod, getMethodByName, makeBasicAccountTransactionSigner } from 'algosdk';
+import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
+import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 algokit.Config.configure({ populateAppCallResources: true });
@@ -14,99 +14,151 @@ describe('ARC58 Plugin Permissions', () => {
   /** The client for Alice's abstracted account */
   let abstractedAccountClient: AbstractedAccountClient;
   /** The client for the dummy plugin */
-  let dummyPluginClient: OptInPluginClient;
+  let optInPluginClient: OptInPluginClient;
   /** The account that will be calling the plugin */
   let caller: algosdk.Account;
   let plugin: bigint;
+  /** The suggested params for transactions */
+  let suggestedParams: algosdk.SuggestedParams;
   /** The maximum uint64 value. Used to indicate a never-expiring plugin */
   const MAX_UINT64 = BigInt('18446744073709551615');
+  /** a created asset id to use */
+  let asset: bigint;
+
   const fixture = algorandFixture();
 
-  async function callPlugin() {
-    const boxes = [
-      new Uint8Array(
-        Buffer.concat([
-          Buffer.from('p'),
-          Buffer.from(algosdk.encodeUint64(plugin)),
-          algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
-        ])
-      ),
-      new Uint8Array(
-        Buffer.concat([
-          Buffer.from('p'),
-          Buffer.from(algosdk.encodeUint64(plugin)),
-          algosdk.decodeAddress(caller.addr).publicKey,
-        ])
-      ),
-    ];
+  async function callPlugin(
+    suggestedParams: algosdk.SuggestedParams,
+    pluginClient: OptInPluginClient,
+    asset: bigint,
+    offsets: number[] = []
+  ) {
+    const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+      from: caller.addr,
+      to: abstractedAccountClient.appAddress,
+      amount: 200_000,
+      suggestedParams,
+    });
+
+    const optInGroup = (
+      await (pluginClient
+        .createTransaction
+        .optInToAsset({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: {
+            sender: abstractedAccountClient.appAddress,
+            asset,
+            mbrPayment
+          },
+          extraFee: (1_000).microAlgos()
+        }))
+    ).transactions;
 
     await abstractedAccountClient
-      .compose()
-      .arc58RekeyToPlugin({ plugin }, { sender: caller, sendParams: { fee: algokit.microAlgos(2_000) }, boxes })
-      .arc58VerifyAuthAddr({})
-      .execute();
+      .newGroup()
+      .arc58RekeyToPlugin({
+        sender: caller.addr,
+        signer: makeBasicAccountTransactionSigner(caller),
+        args: { plugin, methodOffsets: offsets },
+        extraFee: (1000).microAlgos()
+      })
+      // Add the mbr payment
+      .addTransaction(optInGroup[0], makeBasicAccountTransactionSigner(caller)) // mbrPayment
+      // Add the opt-in plugin call
+      .addTransaction(optInGroup[1], makeBasicAccountTransactionSigner(caller)) // optInToAsset
+      .arc58VerifyAuthAddr({
+        sender: caller.addr,
+        signer: makeBasicAccountTransactionSigner(caller),
+        args: {}
+      })
+      .send();
   }
 
   beforeEach(async () => {
     await fixture.beforeEach();
 
-    const { algod } = fixture.context;
-    abstractedAccountClient = new AbstractedAccountClient(
-      {
-        sender: aliceEOA,
-        resolveBy: 'id',
-        id: 0,
-      },
-      algod
-    );
+    const { algorand } = fixture.context;
 
-    // Create an abstracted account app
-    await abstractedAccountClient.create.createApplication({
-      // aliceEOA will be the admin
-      admin: aliceEOA.addr,
+    const minter = new AbstractedAccountFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
     });
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr } });
+    abstractedAccountClient = results.appClient;
 
-    await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(1_000_000) });
+    await abstractedAccountClient.appClient.fundAppAccount({ amount: (4).algos() });
   });
 
   beforeAll(async () => {
     await fixture.beforeEach();
     const { testAccount } = fixture.context;
     const { algorand } = fixture;
-    caller = algorand.account.random().account;
-
-    algorand.send.payment({
-      sender: testAccount.addr,
-      receiver: caller.addr,
-      amount: algokit.microAlgos(1_000_000),
-    });
-
     aliceEOA = testAccount;
+    caller = algorand.account.random().account;
+    const dispenser = await algorand.account.dispenserFromEnvironment();
 
-    dummyPluginClient = algorand.client.getTypedAppClientById(OptInPluginClient, { id: 0, sender: caller });
-    dummyPluginClient.create.createApplication({});
-    plugin = BigInt((await dummyPluginClient.appClient.getAppReference()).appId);
+    suggestedParams = await algorand.getSuggestedParams();
+
+    await algorand.account.ensureFunded(
+      aliceEOA.addr,
+      dispenser,
+      (100).algos(),
+    );
+
+    await algorand.account.ensureFunded(
+      caller.addr,
+      dispenser,
+      (100).algos(),
+    );
+
+    const optinPluginMinter = new OptInPluginFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
+    });
+    const optInMintResults = await optinPluginMinter.send.create.createApplication();
+
+    optInPluginClient = optInMintResults.appClient;
+    plugin = optInPluginClient.appId;
+
+    // Create an asset
+    const txn = await algorand.send.assetCreate({
+      sender: aliceEOA.addr,
+      total: BigInt(1),
+      decimals: 0,
+      defaultFrozen: false,
+    });
+    // .sendTransaction({ transaction: assetCreateTxn, from: bob });
+    asset = BigInt(txn.confirmation!.assetIndex!);
   });
 
   test('both are valid, global is used', async () => {
     const { algorand } = fixture;
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: caller.addr,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      args: {
+        app: plugin,
+        allowedCaller: caller.addr,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: ZERO_ADDRESS,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
-    await callPlugin();
+    await callPlugin(suggestedParams, optInPluginClient, asset);
 
     const globalPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -116,8 +168,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
-    )) as [number, number, number, boolean];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
+    )) as [number, number, number, boolean, string[]];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -127,15 +179,20 @@ describe('ARC58 Plugin Permissions', () => {
   test('global valid, global is used', async () => {
     const { algorand } = fixture;
 
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: ZERO_ADDRESS,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
-    await callPlugin();
+    await callPlugin(suggestedParams, optInPluginClient, asset);
 
     const globalPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -145,8 +202,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
-    )) as [number, number, number, boolean];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
+    )) as [number, number, number, boolean, string[]];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -155,15 +212,20 @@ describe('ARC58 Plugin Permissions', () => {
 
   test('global does not exist, sender valid', async () => {
     const { algorand } = fixture;
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: caller.addr,
-      cooldown: 0,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: caller.addr,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
-    await callPlugin();
+    await callPlugin(suggestedParams, optInPluginClient, asset);
 
     const callerPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -173,8 +235,46 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(caller.addr).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool)')
-    )) as [number, number, number, boolean];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
+    )) as [number, number, number, boolean, string[]];
+
+    const round = (await algorand.client.algod.status().do())['last-round'];
+
+    expect(callerPluginBox[2]).toBe(BigInt(round));
+  });
+
+  test('global does not exist, sender valid, method allowed', async () => {
+    const { algorand } = fixture;
+    const optInToAssetSelector = optInPluginClient.appClient.getABIMethod('optInToAsset').getSelector();
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: caller.addr,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: [
+          optInToAssetSelector,
+          Buffer.from('dddd'),
+          Buffer.from('aaaa'),
+        ]
+      }
+    });
+
+    await callPlugin(suggestedParams, optInPluginClient, asset, [0]);
+
+    const callerPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
+      new Uint8Array(
+        Buffer.concat([
+          Buffer.from('p'),
+          Buffer.from(algosdk.encodeUint64(plugin)),
+          algosdk.decodeAddress(caller.addr).publicKey,
+        ])
+      ),
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
+    )) as [number, number, number, boolean, string[]];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -182,58 +282,97 @@ describe('ARC58 Plugin Permissions', () => {
   });
 
   test('not enough cooldown', async () => {
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: caller.addr,
-      cooldown: 100,
-      lastValidRound: MAX_UINT64,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: caller.addr,
+        cooldown: 100,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
-    await callPlugin();
+    await callPlugin(suggestedParams, optInPluginClient, asset);
 
     let error = 'no error';
     try {
-      await callPlugin();
+      await callPlugin(suggestedParams, optInPluginClient, asset);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=643');
+    expect(error).toMatch('pc=150');
   });
+
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
     try {
-      await callPlugin();
+      await callPlugin(suggestedParams, optInPluginClient, asset);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=643');
+    expect(error).toMatch('pc=99');
   });
 
   test('expired', async () => {
-    await abstractedAccountClient.arc58AddPlugin({
-      app: plugin,
-      allowedCaller: ZERO_ADDRESS,
-      cooldown: 0,
-      lastValidRound: 1,
-      adminPrivileges: false,
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: 1,
+        adminPrivileges: false,
+        methods: []
+      }
     });
 
     let error = 'no error';
     try {
-      await callPlugin();
+      await callPlugin(suggestedParams, optInPluginClient, asset);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=643');
+    expect(error).toMatch('pc=117');
+  });
+
+  test('method not allowed', async () => {
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+        methods: [
+          Buffer.from('dddd')
+        ]
+      }
+    });
+
+    let error = 'no error';
+    try {
+      await callPlugin(suggestedParams, optInPluginClient, asset);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      error = e.message;
+    }
+
+    // TODO: Parse this from src_map json
+    expect(error).toMatch('pc=636');
   });
 });
