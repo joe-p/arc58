@@ -193,7 +193,8 @@ ensuresRekeyBack:
 	// txn.sender === this.app.address && txn.rekeyTo === this.app.address
 	frame_dig -1 // txn: Txn
 	gtxns Sender
-	global CurrentApplicationAddress
+	bytec 3 //  "c"
+	app_global_get
 	==
 	dup
 	bz *skip_and2
@@ -256,7 +257,7 @@ ensuresRekeyBack:
 	bz *skip_and6
 	frame_dig -1 // txn: Txn
 	gtxns ApplicationArgs 0
-	bytec 6 //  method "arc58_verifyAuthAddr()void"
+	bytec 7 //  method "arc58_verifyAuthAddr()void"
 	==
 	&&
 
@@ -847,7 +848,7 @@ methodCallAllowed:
 // createApplication(address)void
 *abi_route_createApplication:
 	// admin: address
-	txna ApplicationArgs 1
+	txna ApplicationArgs 2
 	dup
 	len
 	intc 2 // 32
@@ -856,36 +857,67 @@ methodCallAllowed:
 	// argument 0 (admin) for createApplication must be a address
 	assert
 
-	// execute createApplication(address)void
+	// controlledAddress: address
+	txna ApplicationArgs 1
+	dup
+	len
+	intc 2 // 32
+	==
+
+	// argument 1 (controlledAddress) for createApplication must be a address
+	assert
+
+	// execute createApplication(address,address)void
 	callsub createApplication
 	intc 0 // 1
 	return
 
-// createApplication(admin: Address): void
+// createApplication(controlledAddress: Address, admin: Address): void
 //
 // Create an abstracted account application.
 // This is not part of ARC58 and implementation specific.
 //
+// @param controlledAddress The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
 // @param admin The admin for this app
 createApplication:
-	proto 1 0
+	proto 2 0
 
 	// contracts/abstracted_account.algo.ts:217
 	// verifyAppCallTxn(this.txn, {
-	//       sender: admin,
+	//       sender: { includedIn: [controlledAddress, admin] },
 	//     })
 	// verify sender
 	txn Sender
-	frame_dig -1 // admin: Address
+	frame_dig -1 // controlledAddress: Address
 	==
+	txn Sender
+	frame_dig -2 // admin: Address
+	==
+	||
 
-	// transaction verification failed: {"txn":"this.txn","field":"sender","expected":"admin"}
+	// transaction verification failed: {"txn":{"txnText":"this.txn"},"field":"sender","condition":"includedIn","expected":"[controlledAddress, admin]"}
 	assert
 
 	// contracts/abstracted_account.algo.ts:221
 	// this.admin.value = admin
 	bytec 2 //  "a"
-	frame_dig -1 // admin: Address
+	frame_dig -2 // admin: Address
+	app_global_put
+
+	// contracts/abstracted_account.algo.ts:95
+	// this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress
+	bytec 3 //  "c"
+	frame_dig -1 // controlledAddress: Address
+	global ZeroAddress
+	==
+	bz *ternary1_false
+	global CurrentApplicationAddress
+	b *ternary1_end
+
+*ternary1_false:
+	frame_dig -1 // controlledAddress: Address
+
+*ternary1_end:
 	app_global_put
 	retsub
 
@@ -1049,7 +1081,7 @@ arc58_pluginChangeAdmin:
 // arc58_getAdmin()address
 *abi_route_arc58_getAdmin:
 	// The ABI return prefix
-	bytec 7 // 0x151f7c75
+	bytec 8 // 0x151f7c75
 
 	// execute arc58_getAdmin()address
 	callsub arc58_getAdmin
@@ -1089,7 +1121,7 @@ arc58_verifyAuthAddr:
 	global CurrentApplicationAddress
 	acct_params_get AcctAuthAddr
 	pop
-	global ZeroAddress
+	callsub getAuthAddr
 	==
 	assert
 	retsub
@@ -1145,6 +1177,7 @@ arc58_rekeyTo:
 
 	// contracts/abstracted_account.algo.ts:280
 	// sendPayment({
+	//       sender: this.controlledAddress.value,
 	//       receiver: addr,
 	//       rekeyTo: addr,
 	//       note: 'rekeying abstracted account',
@@ -1192,7 +1225,7 @@ arc58_rekeyTo:
 // arc58_canCall(uint64,address)bool
 *abi_route_arc58_canCall:
 	// The ABI return prefix
-	bytec 7 // 0x151f7c75
+	bytec 8 // 0x151f7c75
 
 	// address: address
 	txna ApplicationArgs 2
@@ -1210,7 +1243,7 @@ arc58_rekeyTo:
 
 	// execute arc58_canCall(uint64,address)bool
 	callsub arc58_canCall
-	bytec 4 // 0x00
+	bytec 5 // 0x00
 	intc 1 // 0
 	uncover 2
 	setbit
@@ -1440,7 +1473,8 @@ arc58_rekeyToPlugin:
 
 	// contracts/abstracted_account.algo.ts:340
 	// sendPayment({
-	//       receiver: this.app.address,
+	//       sender: this.controlledAddress.value,
+	//       receiver: this.controlledAddress.value,
 	//       rekeyTo: plugin.address,
 	//       note: 'rekeying to plugin app',
 	//     })
@@ -1889,7 +1923,7 @@ arc58_addNamedPlugin:
 
 	// contracts/abstracted_account.algo.ts:447
 	// assert(!this.namedPlugins(name).exists)
-	bytec 3 //  "n"
+	bytec 4 //  "n"
 	frame_dig -1 // name: string
 	concat
 	box_len
@@ -1908,7 +1942,7 @@ arc58_addNamedPlugin:
 
 	// contracts/abstracted_account.algo.ts:450
 	// this.namedPlugins(name).value = key
-	bytec 3 //  "n"
+	bytec 4 //  "n"
 	frame_dig -1 // name: string
 	concat
 	frame_dig 0 // key: PluginsKey
@@ -2011,7 +2045,7 @@ arc58_removeNamedPlugin:
 
 	// contracts/abstracted_account.algo.ts:473
 	// app = this.namedPlugins(name).value
-	bytec 3 //  "n"
+	bytec 4 //  "n"
 	frame_dig -1 // name: string
 	concat
 	frame_bury 0 // storage key//app
@@ -2034,7 +2068,7 @@ arc58_removeNamedPlugin:
 
 	// contracts/abstracted_account.algo.ts:476
 	// this.namedPlugins(name).delete()
-	bytec 3 //  "n"
+	bytec 4 //  "n"
 	frame_dig -1 // name: string
 	concat
 	box_del
@@ -2052,7 +2086,7 @@ arc58_removeNamedPlugin:
 	retsub
 
 *create_NoOp:
-	pushbytes 0xd324bea4 // method "createApplication(address)void"
+	pushbytes 0xb4c77d71 // method "createApplication(address,address)void"
 	txna ApplicationArgs 0
 	match *abi_route_createApplication
 
@@ -2063,7 +2097,7 @@ arc58_removeNamedPlugin:
 	pushbytes 0xd24b7556 // method "arc58_changeAdmin(address)void"
 	pushbytes 0x5fa449c6 // method "arc58_pluginChangeAdmin(uint64,address,address)void"
 	pushbytes 0x13bc44e4 // method "arc58_getAdmin()address"
-	bytec 6 //  method "arc58_verifyAuthAddr()void"
+	bytec 7 //  method "arc58_verifyAuthAddr()void"
 	pushbytes 0xc95a5d3d // method "arc58_rekeyTo(address,bool)void"
 	pushbytes 0xe9026da8 // method "arc58_canCall(uint64,address)bool"
 	pushbytes 0x3f8615d7 // method "arc58_rekeyToPlugin(uint64,uint64[])void"

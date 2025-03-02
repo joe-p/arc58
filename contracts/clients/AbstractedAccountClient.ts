@@ -750,7 +750,7 @@ export class AbstractedAccountFactory {
      */
     create: {
       /**
-       * Creates a new instance of the AbstractedAccount smart contract using the createApplication(address)void ABI method.
+       * Creates a new instance of the AbstractedAccount smart contract using the createApplication(address,address)void ABI method.
        *
       * Create an abstracted account application.
       This is not part of ARC58 and implementation specific.

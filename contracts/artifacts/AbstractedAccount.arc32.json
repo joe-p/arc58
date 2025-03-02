@@ -1,6 +1,6 @@
 {
   "hints": {
-    "createApplication(address)void": {
+    "createApplication(address,address)void": {
       "call_config": {
         "no_op": "CREATE"
       }
@@ -83,6 +83,10 @@
         "admin": {
           "type": "bytes",
           "key": "a"
+        },
+        "controlledAddress": {
+          "type": "bytes",
+          "key": "c"
         }
       },
       "reserved": {}
@@ -90,7 +94,7 @@
   },
   "state": {
     "global": {
-      "num_byte_slices": 1,
+      "num_byte_slices": 2,
       "num_uints": 0
     },
     "local": {
@@ -110,6 +114,11 @@
         "name": "createApplication",
         "desc": "Create an abstracted account application.\nThis is not part of ARC58 and implementation specific.",
         "args": [
+          {
+            "name": "controlledAddress",
+            "type": "address",
+            "desc": "The address of the abstracted account. If zeroAddress, then the address of the contract account will be used"
+          },
           {
             "name": "admin",
             "type": "address",

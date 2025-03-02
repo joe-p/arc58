@@ -32,8 +32,11 @@ export class AbstractedAccount extends Contract {
   /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
   admin = GlobalStateKey<Address>({ key: 'a' });
 
+  /** The address this app controls */
+  controlledAddress = GlobalStateKey<Address>({ key: 'c' });
+
   /**
-   * Plugins that add functionality to the contract wallet and the account that has permission to use it.
+   * Plugins that add functionality to the controlledAddress and the account that has permission to use it.
    */
   plugins = BoxMap<PluginsKey, PluginInfo>({ prefix: 'p' });
 
@@ -213,17 +216,29 @@ export class AbstractedAccount extends Contract {
   }
 
   /**
+   * What the value of this.address.value.authAddr should be when this.controlledAddress
+   * is able to be controlled by this app. It will either be this.app.address or zeroAddress
+   */
+  private getAuthAddr(): Address {
+    return this.controlledAddress.value === this.app.address ? Address.zeroAddress : this.app.address;
+  }
+
+  /**
    * Create an abstracted account application.
    * This is not part of ARC58 and implementation specific.
    *
+   * @param controlledAddress The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
    * @param admin The admin for this app
    */
-  createApplication(admin: Address): void {
+  createApplication(controlledAddress: Address, admin: Address): void {
     verifyAppCallTxn(this.txn, {
-      sender: admin,
+      sender: { includedIn: [controlledAddress, admin] },
     });
 
+    assert(admin !== controlledAddress);
+
     this.admin.value = admin;
+    this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress;
   }
 
   /**
@@ -246,7 +261,7 @@ export class AbstractedAccount extends Contract {
    */
   arc58_pluginChangeAdmin(plugin: AppID, allowedCaller: Address, newAdmin: Address): void {
     verifyTxn(this.txn, { sender: plugin.address });
-    assert(this.app.address.authAddr === plugin.address, 'This plugin is not in control of the account');
+    assert(this.controlledAddress.value.authAddr === plugin.address, 'This plugin is not in control of the account');
 
     const key: PluginsKey = { application: plugin, allowedCaller: allowedCaller };
     assert(
@@ -270,7 +285,7 @@ export class AbstractedAccount extends Contract {
    * Verify the abstracted account is rekeyed to this app
    */
   arc58_verifyAuthAddr(): void {
-    assert(this.app.address.authAddr === globals.zeroAddress);
+    assert(this.controlledAddress.value.authAddr === this.getAuthAddr());
   }
 
   /**
@@ -283,6 +298,7 @@ export class AbstractedAccount extends Contract {
     verifyAppCallTxn(this.txn, { sender: this.admin.value });
 
     sendPayment({
+      sender: this.controlledAddress.value,
       receiver: addr,
       rekeyTo: addr,
       note: 'rekeying abstracted account',
@@ -343,7 +359,8 @@ export class AbstractedAccount extends Contract {
     const used = this.assertValidGroup(plugin, methodOffsets, globallyAllowed, locallyAllowed);
 
     sendPayment({
-      receiver: this.app.address,
+      sender: this.controlledAddress.value,
+      receiver: this.controlledAddress.value,
       rekeyTo: plugin.address,
       note: 'rekeying to plugin app',
     });

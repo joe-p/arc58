@@ -308,6 +308,7 @@
     "teal": 65,
     "source": "contracts/abstracted_account.algo.ts:49",
     "pc": [
+      109,
       110,
       111,
       112
@@ -340,6 +341,7 @@
     "source": "contracts/abstracted_account.algo.ts:49",
     "errorMessage": "plugin is expired",
     "pc": [
+      116,
       117
     ]
   },
@@ -535,16 +537,16 @@
     ]
   },
   {
-    "teal": 117,
-    "source": "contracts/abstracted_account.algo.ts:57",
+    "teal": 114,
+    "source": "contracts/abstracted_account.algo.ts:60",
     "pc": [
       156,
       157
     ]
   },
   {
-    "teal": 118,
-    "source": "contracts/abstracted_account.algo.ts:57",
+    "teal": 115,
+    "source": "contracts/abstracted_account.algo.ts:59",
     "pc": [
       158
     ]
@@ -654,7 +656,7 @@
     ]
   },
   {
-    "teal": 140,
+    "teal": 133,
     "source": "contracts/abstracted_account.algo.ts:61",
     "pc": [
       179
@@ -726,6 +728,7 @@
     "teal": 153,
     "source": "contracts/abstracted_account.algo.ts:61",
     "pc": [
+      192,
       193
     ]
   },
@@ -765,6 +768,7 @@
     "teal": 158,
     "source": "contracts/abstracted_account.algo.ts:62",
     "pc": [
+      201,
       202
     ]
   },
@@ -957,6 +961,8 @@
     "teal": 197,
     "source": "contracts/abstracted_account.algo.ts:67",
     "pc": [
+      240,
+      241,
       242
     ]
   },
@@ -1127,6 +1133,7 @@
     "teal": 237,
     "source": "contracts/abstracted_account.algo.ts:73",
     "pc": [
+      279,
       280
     ]
   },
@@ -1151,7 +1158,6 @@
     "teal": 240,
     "source": "contracts/abstracted_account.algo.ts:74",
     "pc": [
-      286,
       287
     ]
   },
@@ -1196,14 +1202,14 @@
     "teal": 248,
     "source": "contracts/abstracted_account.algo.ts:75",
     "pc": [
-      295,
-      296
+      295
     ]
   },
   {
     "teal": 249,
     "source": "contracts/abstracted_account.algo.ts:75",
     "pc": [
+      296,
       297,
       298
     ]
@@ -1295,6 +1301,7 @@
     "teal": 268,
     "source": "contracts/abstracted_account.algo.ts:80",
     "pc": [
+      315,
       316,
       317,
       318
@@ -1387,8 +1394,15 @@
     "teal": 292,
     "source": "contracts/abstracted_account.algo.ts:82",
     "pc": [
+      335,
       336,
-      337,
+      337
+    ]
+  },
+  {
+    "teal": 340,
+    "source": "contracts/abstracted_account.algo.ts:116",
+    "pc": [
       338
     ]
   },
@@ -1412,8 +1426,7 @@
     "teal": 302,
     "source": "contracts/abstracted_account.algo.ts:85",
     "pc": [
-      343,
-      344
+      343
     ]
   },
   {
@@ -1585,6 +1598,8 @@
     "teal": 357,
     "source": "contracts/abstracted_account.algo.ts:102",
     "pc": [
+      381,
+      382,
       383
     ]
   },
@@ -1600,6 +1615,7 @@
     "teal": 359,
     "source": "contracts/abstracted_account.algo.ts:102",
     "pc": [
+      385,
       386
     ]
   },
@@ -1676,6 +1692,7 @@
     "teal": 375,
     "source": "contracts/abstracted_account.algo.ts:106",
     "pc": [
+      401,
       402
     ]
   },
@@ -1738,7 +1755,8 @@
     "pc": [
       413,
       414,
-      415
+      415,
+      416
     ]
   },
   {
@@ -1782,7 +1800,6 @@
     "teal": 398,
     "source": "contracts/abstracted_account.algo.ts:107",
     "pc": [
-      422,
       423
     ]
   },
@@ -2033,7 +2050,6 @@
     "teal": 456,
     "source": "contracts/abstracted_account.algo.ts:115",
     "pc": [
-      475,
       476
     ]
   },
@@ -2082,6 +2098,7 @@
     "teal": 475,
     "source": "contracts/abstracted_account.algo.ts:123",
     "pc": [
+      487,
       488,
       489
     ]
@@ -2279,7 +2296,8 @@
     "teal": 518,
     "source": "contracts/abstracted_account.algo.ts:131",
     "pc": [
-      535
+      535,
+      536
     ]
   },
   {
@@ -2390,6 +2408,7 @@
     "teal": 533,
     "source": "contracts/abstracted_account.algo.ts:132",
     "pc": [
+      555,
       556
     ]
   },
@@ -2444,7 +2463,8 @@
     "teal": 542,
     "source": "contracts/abstracted_account.algo.ts:130",
     "pc": [
-      568
+      568,
+      569
     ]
   },
   {
@@ -2529,8 +2549,8 @@
     "teal": 568,
     "source": "contracts/abstracted_account.algo.ts:141",
     "pc": [
-      587,
-      588
+      584,
+      585
     ]
   },
   {
@@ -3099,7 +3119,6 @@
     "teal": 702,
     "source": "contracts/abstracted_account.algo.ts:172",
     "pc": [
-      711,
       712
     ]
   },
@@ -3115,7 +3134,6 @@
     "teal": 704,
     "source": "contracts/abstracted_account.algo.ts:172",
     "pc": [
-      715,
       716
     ]
   },
@@ -3130,6 +3148,7 @@
     "teal": 706,
     "source": "contracts/abstracted_account.algo.ts:172",
     "pc": [
+      717,
       718
     ]
   },
@@ -3146,7 +3165,6 @@
     "teal": 708,
     "source": "contracts/abstracted_account.algo.ts:172",
     "pc": [
-      722,
       723
     ]
   },
@@ -3269,7 +3287,6 @@
     "teal": 748,
     "source": "contracts/abstracted_account.algo.ts:190",
     "pc": [
-      749,
       750,
       751
     ]
@@ -3567,7 +3584,7 @@
   },
   {
     "teal": 814,
-    "source": "contracts/abstracted_account.algo.ts:203",
+    "source": "contracts/abstracted_account.algo.ts:199",
     "pc": [
       812
     ]
@@ -3591,7 +3608,7 @@
   },
   {
     "teal": 817,
-    "source": "contracts/abstracted_account.algo.ts:203",
+    "source": "contracts/abstracted_account.algo.ts:199",
     "pc": [
       818,
       819,
@@ -3602,8 +3619,8 @@
     ]
   },
   {
-    "teal": 818,
-    "source": "contracts/abstracted_account.algo.ts:203",
+    "teal": 824,
+    "source": "contracts/abstracted_account.algo.ts:206",
     "pc": [
       824
     ]
@@ -3762,8 +3779,8 @@
     ]
   },
   {
-    "teal": 860,
-    "source": "contracts/abstracted_account.algo.ts:216",
+    "teal": 862,
+    "source": "contracts/abstracted_account.algo.ts:206",
     "pc": [
       857,
       858,
@@ -3771,8 +3788,8 @@
     ]
   },
   {
-    "teal": 861,
-    "source": "contracts/abstracted_account.algo.ts:216",
+    "teal": 866,
+    "source": "contracts/abstracted_account.algo.ts:211",
     "pc": [
       860
     ]
@@ -3873,7 +3890,8 @@
     "teal": 897,
     "source": "contracts/abstracted_account.algo.ts:229",
     "pc": [
-      880
+      885,
+      886
     ]
   },
   {
@@ -3918,16 +3936,15 @@
     "teal": 907,
     "source": "contracts/abstracted_account.algo.ts:229",
     "pc": [
-      888
+      888,
+      889
     ]
   },
   {
     "teal": 915,
     "source": "contracts/abstracted_account.algo.ts:229",
     "pc": [
-      889,
-      890,
-      891
+      890
     ]
   },
   {
@@ -3949,6 +3966,7 @@
     "teal": 922,
     "source": "contracts/abstracted_account.algo.ts:230",
     "pc": [
+      894,
       895
     ]
   },
@@ -3971,6 +3989,7 @@
     "teal": 930,
     "source": "contracts/abstracted_account.algo.ts:231",
     "pc": [
+      897,
       898
     ]
   },
@@ -4000,7 +4019,6 @@
     "teal": 938,
     "source": "contracts/abstracted_account.algo.ts:242",
     "pc": [
-      903,
       904,
       905
     ]
@@ -4083,6 +4101,8 @@
     "source": "contracts/abstracted_account.algo.ts:242",
     "errorMessage": "argument 1 (allowedCaller) for arc58_pluginChangeAdmin must be a address",
     "pc": [
+      916,
+      917,
       918
     ]
   },
@@ -4090,8 +4110,6 @@
     "teal": 958,
     "source": "contracts/abstracted_account.algo.ts:242",
     "pc": [
-      919,
-      920,
       921
     ]
   },
@@ -4245,14 +4263,14 @@
     "source": "contracts/abstracted_account.algo.ts:244",
     "errorMessage": "This plugin is not in control of the account",
     "pc": [
-      952
+      952,
+      953
     ]
   },
   {
     "teal": 1006,
     "source": "contracts/abstracted_account.algo.ts:246",
     "pc": [
-      953,
       954
     ]
   },
@@ -4267,22 +4285,22 @@
     "teal": 1008,
     "source": "contracts/abstracted_account.algo.ts:246",
     "pc": [
-      956,
-      957
+      956
     ]
   },
   {
     "teal": 1009,
     "source": "contracts/abstracted_account.algo.ts:246",
     "pc": [
-      958
+      957,
+      958,
+      959
     ]
   },
   {
     "teal": 1010,
     "source": "contracts/abstracted_account.algo.ts:246",
     "pc": [
-      959,
       960
     ]
   },
@@ -4297,7 +4315,6 @@
     "teal": 1018,
     "source": "contracts/abstracted_account.algo.ts:248",
     "pc": [
-      962,
       963
     ]
   },
@@ -4379,7 +4396,9 @@
     "source": "contracts/abstracted_account.algo.ts:248",
     "errorMessage": "box value does not exist: this.plugins(key).value",
     "pc": [
-      977
+      987,
+      988,
+      989
     ]
   },
   {
@@ -4463,15 +4482,14 @@
     "source": "contracts/abstracted_account.algo.ts:259",
     "pc": [
       993,
-      994
+      994,
+      995
     ]
   },
   {
     "teal": 1055,
     "source": "contracts/abstracted_account.algo.ts:259",
     "pc": [
-      995,
-      996,
       997
     ]
   },
@@ -4553,6 +4571,7 @@
     "teal": 1079,
     "source": "contracts/abstracted_account.algo.ts:267",
     "pc": [
+      1011,
       1012
     ]
   },
@@ -4600,6 +4619,7 @@
     "teal": 1093,
     "source": "contracts/abstracted_account.algo.ts:268",
     "pc": [
+      1022,
       1023
     ]
   },
@@ -4637,6 +4657,7 @@
     "teal": 1102,
     "source": "contracts/abstracted_account.algo.ts:277",
     "pc": [
+      1029,
       1030
     ]
   },
@@ -4864,12 +4885,30 @@
       1083,
       1084,
       1085,
-      1086,
-      1087,
+      1086
+    ]
+  },
+  {
+    "teal": 1229,
+    "source": "contracts/abstracted_account.algo.ts:305",
+    "pc": [
+      1087
+    ]
+  },
+  {
+    "teal": 1230,
+    "source": "contracts/abstracted_account.algo.ts:305",
+    "pc": [
       1088,
       1089,
       1090,
-      1091,
+      1091
+    ]
+  },
+  {
+    "teal": 1235,
+    "source": "contracts/abstracted_account.algo.ts:306",
+    "pc": [
       1092,
       1093,
       1094,
@@ -4946,6 +4985,7 @@
     "teal": 1195,
     "source": "contracts/abstracted_account.algo.ts:295",
     "pc": [
+      1113,
       1114,
       1115
     ]
