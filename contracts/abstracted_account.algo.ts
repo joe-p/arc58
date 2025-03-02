@@ -26,8 +26,8 @@ type CallerUsed = {
 };
 
 export class AbstractedAccount extends Contract {
-  /** Target AVM 10 */
-  programVersion = 10;
+  /** Target AVM 11 */
+  programVersion = 11;
 
   /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
   admin = GlobalStateKey<Address>({ key: 'a' });
@@ -63,7 +63,7 @@ export class AbstractedAccount extends Contract {
     );
   }
 
-  private ensuresRekeyBack(txn: Txn): boolean {
+  private txnRekeysBack(txn: Txn): boolean {
     if (txn.sender === this.app.address && txn.rekeyTo === this.app.address) {
       return true;
     }
@@ -82,7 +82,7 @@ export class AbstractedAccount extends Contract {
     for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
-      if (this.ensuresRekeyBack(txn)) {
+      if (this.txnRekeysBack(txn)) {
         rekeysBack = true;
       }
     }
@@ -94,6 +94,7 @@ export class AbstractedAccount extends Contract {
    * Guarantee that our txn group is valid in a single loop over all txns in the group
    * 
    * @param app the plugin app id being validated
+   * @param methodOffsets the indices of the methods being used in the group
    * @param checkGlobal whether to check the global caller for method restrictions
    * @param checkLocal whether to check the local caller for method restrictions
    */
@@ -101,10 +102,10 @@ export class AbstractedAccount extends Contract {
     const gkey: PluginsKey = { application: app, allowedCaller: Address.zeroAddress };
     const key: PluginsKey = { application: app, allowedCaller: this.txn.sender };
 
-    let rekeysBack = false;
+    const globalRestrictions = checkGlobal && this.plugins(gkey).value.methods.length > 0;
+    const localRestrictions = checkLocal && this.plugins(key).value.methods.length > 0;
 
-    const globalRestrictions = checkGlobal && this.plugins(gkey).size > 29;
-    const localRestrictions = checkLocal && this.plugins(key).size > 29;
+    let rekeysBack = false;
     let methodIndex = 0;
     let callerUsed: CallerUsed = {
       global: checkGlobal && !globalRestrictions,
@@ -114,8 +115,9 @@ export class AbstractedAccount extends Contract {
     for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
-      if (this.ensuresRekeyBack(txn)) {
+      if (this.txnRekeysBack(txn)) {
         rekeysBack = true;
+        break;
       }
 
       // we dont need to check method restrictions at all if none exist
@@ -171,7 +173,7 @@ export class AbstractedAccount extends Contract {
       // ignore calls to other applications
       (txn.applicationID !== app && txn.applicationID !== this.app) ||
       // ignore rekey back assert app call
-      this.ensuresRekeyBack(txn)
+      this.txnRekeysBack(txn)
     ) {
       return true;
     }
@@ -191,6 +193,9 @@ export class AbstractedAccount extends Contract {
 
     assert(txn.numAppArgs > 0, 'no method signature provided');
     assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length');
+    // ensure the first arg to a method call is the app id itself
+    assert(txn.numAppArgs > 1, 'no app id provided');
+    assert(btoi(txn.applicationArgs[1]) === this.app.id);
 
     const key: PluginsKey = {
       application: app,
