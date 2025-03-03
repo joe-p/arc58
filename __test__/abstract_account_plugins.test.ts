@@ -44,7 +44,7 @@ describe('Abstracted Subscription Program', () => {
       defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
       algorand
     });
-    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr }});
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS } });
     abstractedAccountClient = results.appClient;
     aliceAbstractedAccount = abstractedAccountClient.appAddress;
 
@@ -151,7 +151,7 @@ describe('Abstracted Subscription Program', () => {
             sender: testAccount.addr,
             // Send a payment from the abstracted account to Joe
             args: {
-              sender: aliceAbstractedAccount,
+              sender: abstractedAccountClient.appId,
               _acctRef: joe
             },
             // Double the fee to cover the inner txn fee
@@ -260,7 +260,7 @@ describe('Abstracted Subscription Program', () => {
           .optInToAsset({
             sender: bob.addr,
             args: {
-              sender: aliceAbstractedAccount,
+              sender: abstractedAccountClient.appId,
               asset,
               mbrPayment
             },

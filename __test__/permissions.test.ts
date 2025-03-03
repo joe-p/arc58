@@ -1,9 +1,11 @@
-import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
+import { describe, test, beforeAll, beforeEach, expect, afterEach } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import algosdk, { ABIMethod, getMethodByName, makeBasicAccountTransactionSigner } from 'algosdk';
 import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
 import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
+// import { consoleLogger } from '@algorandfoundation/algokit-utils/types/logging'
+import { algoKitLogCaptureFixture } from '@algorandfoundation/algokit-utils/testing'
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 algokit.Config.configure({ populateAppCallResources: true });
@@ -26,6 +28,7 @@ describe('ARC58 Plugin Permissions', () => {
   let asset: bigint;
 
   const fixture = algorandFixture();
+  const logs = algoKitLogCaptureFixture()
 
   async function callPlugin(
     suggestedParams: algosdk.SuggestedParams,
@@ -47,7 +50,7 @@ describe('ARC58 Plugin Permissions', () => {
           sender: caller.addr,
           signer: makeBasicAccountTransactionSigner(caller),
           args: {
-            sender: abstractedAccountClient.appAddress,
+            sender: abstractedAccountClient.appId,
             asset,
             mbrPayment
           },
@@ -55,7 +58,9 @@ describe('ARC58 Plugin Permissions', () => {
         }))
     ).transactions;
 
-    await abstractedAccountClient
+    console.log('optInGroup', optInGroup[1].appArgs)
+
+    const results = await abstractedAccountClient
       .newGroup()
       .arc58RekeyToPlugin({
         sender: caller.addr,
@@ -73,10 +78,15 @@ describe('ARC58 Plugin Permissions', () => {
         args: {}
       })
       .send();
+
+    console.log('results', results.confirmations[0].logs?.map(a => new TextDecoder().decode(a)));
+
+    // dumpLogs(results.confirmations[0].logs)
   }
 
   beforeEach(async () => {
     await fixture.beforeEach();
+    logs.beforeEach()
 
     const { algorand } = fixture.context;
 
@@ -85,7 +95,7 @@ describe('ARC58 Plugin Permissions', () => {
       defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
       algorand
     });
-    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr } });
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS } });
     abstractedAccountClient = results.appClient;
 
     await abstractedAccountClient.appClient.fundAppAccount({ amount: (4).algos() });
@@ -134,6 +144,8 @@ describe('ARC58 Plugin Permissions', () => {
     asset = BigInt(txn.confirmation!.assetIndex!);
   });
 
+  afterEach(logs.afterEach)
+
   test('both are valid, global is used', async () => {
     const { algorand } = fixture;
     await abstractedAccountClient.send.arc58AddPlugin({
@@ -151,7 +163,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
-        cooldown: 0,
+        cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
         methods: []
@@ -185,7 +197,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
-        cooldown: 0,
+        cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
         methods: []
@@ -218,7 +230,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: caller.addr,
-        cooldown: 0,
+        cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
         methods: []
@@ -252,18 +264,23 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: caller.addr,
-        cooldown: 0,
+        cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
         methods: [
-          optInToAssetSelector,
-          Buffer.from('dddd'),
-          Buffer.from('aaaa'),
+          [new Uint8Array(optInToAssetSelector),0,0],
+          [new Uint8Array(Buffer.from('dddd')),0,0],
+          [new Uint8Array(Buffer.from('aaaa')),0,0]
         ]
       }
     });
 
+    console.log('optInToAssetSelector', new Uint8Array([...optInToAssetSelector]))
+
     await callPlugin(suggestedParams, optInPluginClient, asset, [0]);
+
+    // const capturedLogs = logs.testLogger.capturedLogs
+    // console.log('capturedLogs', capturedLogs)
 
     const callerPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -273,8 +290,8 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(caller.addr).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
-    )) as [number, number, number, boolean, string[]];
+      algosdk.ABIType.from('(uint64,uint64,uint64,bool,(byte[4],uint64,uint64)[])')
+    )) as [number, number, number, boolean, [string, number, number][]];
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -306,7 +323,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=150');
+    expect(error).toMatch('pc=176');
   });
 
   test('neither sender nor global plugin exists', async () => {
@@ -319,7 +336,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=99');
+    expect(error).toMatch('pc=125');
   });
 
   test('expired', async () => {
@@ -345,7 +362,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=117');
+    expect(error).toMatch('pc=143');
   });
 
   test('method not allowed', async () => {
@@ -359,7 +376,7 @@ describe('ARC58 Plugin Permissions', () => {
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
         methods: [
-          Buffer.from('dddd')
+          [new Uint8Array(Buffer.from('dddd')),0,0]
         ]
       }
     });
@@ -373,6 +390,6 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=636');
+    expect(error).toMatch('pc=878');
   });
 });

@@ -1,13 +1,13 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
-type PluginsKey = {
+export type PluginsKey = {
   /** The application containing plugin logic */
   application: AppID;
   /** The address that is allowed to initiate a rekey to the plugin */
   allowedCaller: Address;
 };
 
-type PluginInfo = {
+export type PluginInfo = {
   /** The last round at which this plugin can be called */
   lastValidRound: uint64;
   /** The number of rounds that must pass before the plugin can be called again */
@@ -17,12 +17,16 @@ type PluginInfo = {
   /** Whether the plugin has permissions to change the admin account */
   adminPrivileges: boolean;
   /** The methods that are allowed to be called for the plugin by the address */
-  methods: bytes<4>[];
+  methods: MethodInfo[];
 };
 
-type CallerUsed = {
-  global: boolean;
-  local: boolean;
+export type MethodInfo = {
+  /** The method signature */
+  selector: bytes<4>;
+  /** The number of rounds that must pass before the method can be called again */
+  cooldown: uint64;
+  /** The last round the method was called */
+  lastCalled: uint64;
 };
 
 export class AbstractedAccount extends Contract {
@@ -30,10 +34,10 @@ export class AbstractedAccount extends Contract {
   programVersion = 11;
 
   /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
-  admin = GlobalStateKey<Address>({ key: 'a' });
+  admin = GlobalStateKey<Address>({ key: 'admin' });
 
   /** The address this app controls */
-  controlledAddress = GlobalStateKey<Address>({ key: 'c' });
+  controlledAddress = GlobalStateKey<Address>({ key: 'controlled_address' });
 
   /**
    * Plugins that add functionality to the controlledAddress and the account that has permission to use it.
@@ -51,7 +55,7 @@ export class AbstractedAccount extends Contract {
     assert(this.plugins(key).exists, 'plugin does not exist');
     assert(this.plugins(key).value.lastValidRound >= globals.round, 'plugin is expired');
     assert(
-      globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown,
+      (globals.round - this.plugins(key).value.lastCalled) >= this.plugins(key).value.cooldown,
       'plugin is on cooldown'
     );
   }
@@ -98,22 +102,20 @@ export class AbstractedAccount extends Contract {
    * 
    * @param app the plugin app id being validated
    * @param methodOffsets the indices of the methods being used in the group
-   * @param checkGlobal whether to check the global caller for method restrictions
-   * @param checkLocal whether to check the local caller for method restrictions
+   * @param globallyAllowed whether to check the global caller for method restrictions
+   * @param locallyAllowed whether to check the local caller for method restrictions
    */
-  private assertValidGroup(app: AppID, methodOffsets: uint64[], checkGlobal: boolean, checkLocal: boolean): CallerUsed {
+  private assertValidGroup(app: AppID, methodOffsets: uint64[], globallyAllowed: boolean, locallyAllowed: boolean) {
     const gkey: PluginsKey = { application: app, allowedCaller: Address.zeroAddress };
     const key: PluginsKey = { application: app, allowedCaller: this.txn.sender };
 
-    const globalRestrictions = checkGlobal && this.plugins(gkey).value.methods.length > 0;
-    const localRestrictions = checkLocal && this.plugins(key).value.methods.length > 0;
+    const hasGlobalMethodRestrictions = globallyAllowed && this.plugins(gkey).value.methods.length > 0;
+    const hasGlobalPluginCooldown = globallyAllowed && this.plugins(gkey).value.cooldown > 0;
+    const hasLocalMethodRestrictions = locallyAllowed && this.plugins(key).value.methods.length > 0;
+    const hasLocalPluginCooldown = locallyAllowed && this.plugins(key).value.cooldown > 0;
 
     let rekeysBack = false;
     let methodIndex = 0;
-    let callerUsed: CallerUsed = {
-      global: checkGlobal && !globalRestrictions,
-      local: checkLocal && !localRestrictions,
-    };
 
     for (let i = (this.txn.groupIndex + 1); i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
@@ -123,30 +125,41 @@ export class AbstractedAccount extends Contract {
         break;
       }
 
-      // we dont need to check method restrictions at all if none exist
-      // & skip transactions that aren't relevant
-      if ((!globalRestrictions && !localRestrictions) || this.shouldSkipMethodCheck(txn, app)) {
+      if (txn.typeEnum !== TransactionType.ApplicationCall) {
         continue;
       }
 
+      // ensure the first arg to a method call is the app id itself
+      // index 1 is used because arg[0] is the method selector
+      assert(txn.applicationID === app, 'wrong app id');
+      assert(txn.onCompletion === 0, 'invalid onComplete');
+      assert(txn.numAppArgs > 1, 'no app id provided');
+      assert(btoi(txn.applicationArgs[1]) === this.app.id, 'wrong app id');
+
+      const globalOnCooldown = hasGlobalPluginCooldown
+        && (globals.round - this.plugins(gkey).value.lastCalled) < this.plugins(gkey).value.cooldown;
+
+      const validGlobalMethod = globallyAllowed
+        && methodIndex < methodOffsets.length
+        && this.methodCallAllowed(txn, app, Address.zeroAddress, methodOffsets[methodIndex])
+
       const globalValid = (
-        checkGlobal && (
-          !globalRestrictions
-          || (
-            methodIndex < methodOffsets.length
-            && this.methodCallAllowed(txn, app, Address.zeroAddress, methodOffsets[methodIndex])
-          )
-        )
+        globallyAllowed
+        && !globalOnCooldown
+        && (!hasGlobalMethodRestrictions || validGlobalMethod)
       );
 
+      const localOnCooldown = hasLocalPluginCooldown
+        && (globals.round - this.plugins(key).value.lastCalled) < this.plugins(key).value.cooldown;
+
+      const validLocalMethod = locallyAllowed
+        && methodIndex < methodOffsets.length
+        && this.methodCallAllowed(txn, app, this.txn.sender, methodOffsets[methodIndex])
+
       const localValid = (
-        checkLocal && (
-          !localRestrictions
-          || (
-            methodIndex < methodOffsets.length
-            && this.methodCallAllowed(txn, app, this.txn.sender, methodOffsets[methodIndex])
-          )
-        )
+        locallyAllowed
+        && !localOnCooldown
+        && (!hasLocalMethodRestrictions || validLocalMethod)
       );
 
       assert(globalValid || localValid, 'method not allowed');
@@ -155,33 +168,16 @@ export class AbstractedAccount extends Contract {
       // due to plugins having cooldowns we want to
       // properly attribute which is being used
       // in the case of both being allowed we default to global
-      if (globalValid) {
-        callerUsed.global = true;
-      } else if (localValid) {
-        callerUsed.local = true;
+      if (globalValid && hasGlobalPluginCooldown) {
+        this.plugins(gkey).value.lastCalled = globals.round;
+      } else if (localValid && hasLocalPluginCooldown) {
+        this.plugins(key).value.lastCalled = globals.round
       }
 
       methodIndex += 1;
     }
 
     assert(rekeysBack, 'no rekey back found');
-
-    return callerUsed;
-  }
-
-  private shouldSkipMethodCheck(txn: Txn, app: AppID): boolean {
-    if (
-      // ignore non-application calls
-      txn.typeEnum !== TransactionType.ApplicationCall ||
-      // ignore calls to other applications
-      (txn.applicationID !== app && txn.applicationID !== this.app) ||
-      // ignore rekey back assert app call
-      this.txnRekeysBack(txn)
-    ) {
-      return true;
-    }
-
-    return false;
   }
 
   /**
@@ -190,30 +186,35 @@ export class AbstractedAccount extends Contract {
    * @param txn the transaction being validated
    * @param app the plugin app id being validated
    * @param caller the address that triggered the plugin or global address
+   * @param offset the index of the method being used
    * @returns whether the method call is allowed
    */
-  private methodCallAllowed(txn: Txn, app: AppID, caller: Address, offset: uint64): boolean {
+private methodCallAllowed(txn: Txn, app: AppID, caller: Address, offset: uint64): boolean {
 
-    assert(txn.numAppArgs > 0, 'no method signature provided');
-    assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length');
-    // ensure the first arg to a method call is the app id itself
-    assert(txn.numAppArgs > 1, 'no app id provided');
-    assert(btoi(txn.applicationArgs[1]) === this.app.id);
+  assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length');
+  const selectorArg = castBytes<bytes<4>>(txn.applicationArgs[0]);
 
-    const key: PluginsKey = {
-      application: app,
-      allowedCaller: caller,
-    };
+  const key: PluginsKey = { application: app, allowedCaller: caller };
 
-    const methods = this.plugins(key).value.methods;
-    const allowedMethod = methods[offset];
+  const methods = this.plugins(key).value.methods;
+  const allowedMethod = methods[offset];
+  
+  const hasCooldown = allowedMethod.cooldown > 0;
+  const onCooldown = (globals.round - allowedMethod.lastCalled) < allowedMethod.cooldown;
 
-    if (allowedMethod === txn.applicationArgs[0] as bytes<4>) {
-      return false;
+  log(allowedMethod.selector)
+  log(selectorArg)
+
+  if (allowedMethod.selector === selectorArg && (!hasCooldown || !onCooldown)) {
+    // update the last called round for the method
+    if (hasCooldown) {
+      this.plugins(key).value.methods[offset].lastCalled = globals.round;
     }
-
     return true;
   }
+
+  return false;
+}
 
   /**
    * What the value of this.address.value.authAddr should be when this.controlledAddress
@@ -311,6 +312,7 @@ export class AbstractedAccount extends Contract {
    * check whether the plugin can be used
    *
    * @param plugin the plugin to be rekeyed to
+   * @param address the address that triggered the plugin
    * @returns whether the plugin can be called via txn sender or globally
    */
   @abi.readonly
@@ -356,7 +358,7 @@ export class AbstractedAccount extends Contract {
       this.assertPluginCallAllowed(plugin, this.txn.sender);
     }
 
-    const used = this.assertValidGroup(plugin, methodOffsets, globallyAllowed, locallyAllowed);
+    this.assertValidGroup(plugin, methodOffsets, globallyAllowed, locallyAllowed);
 
     sendPayment({
       sender: this.controlledAddress.value,
@@ -364,20 +366,6 @@ export class AbstractedAccount extends Contract {
       rekeyTo: plugin.address,
       note: 'rekeying to plugin app',
     });
-
-    if (used.global) {
-      this.plugins({
-        application: plugin,
-        allowedCaller: Address.zeroAddress
-      }).value.lastCalled = globals.round;
-    }
-
-    if (used.local) {
-      this.plugins({
-        application: plugin,
-        allowedCaller: this.txn.sender
-      }).value.lastCalled = globals.round;
-    }
   }
 
   /**
@@ -411,7 +399,7 @@ export class AbstractedAccount extends Contract {
     lastValidRound: uint64,
     cooldown: uint64,
     adminPrivileges: boolean,
-    methods: bytes<4>[],
+    methods: MethodInfo[],
   ): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
@@ -446,8 +434,8 @@ export class AbstractedAccount extends Contract {
   /**
    * Add a named plugin
    *
-   * @param app The plugin app
    * @param name The plugin name
+   * @param app The plugin app
    * @param allowedCaller The address of that's allowed to call the app
    * or the global zero address for all addresses
    * @param lastValidRound The round when the permission expires
@@ -463,7 +451,7 @@ export class AbstractedAccount extends Contract {
     lastValidRound: uint64,
     cooldown: uint64,
     adminPrivileges: boolean,
-    methods: bytes<4>[],
+    methods: MethodInfo[],
   ): void {
     verifyTxn(this.txn, { sender: this.admin.value });
     assert(!this.namedPlugins(name).exists);

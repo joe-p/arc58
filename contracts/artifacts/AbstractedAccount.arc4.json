@@ -107,7 +107,8 @@
         },
         {
           "name": "address",
-          "type": "address"
+          "type": "address",
+          "desc": "the address that triggered the plugin"
         }
       ],
       "returns": {
@@ -184,7 +185,7 @@
         },
         {
           "name": "methods",
-          "type": "byte[4][]",
+          "type": "(byte[4],uint64,uint64)[]",
           "desc": "The methods that are allowed to be called for the plugin by the address"
         }
       ],
@@ -252,7 +253,7 @@
         },
         {
           "name": "methods",
-          "type": "byte[4][]",
+          "type": "(byte[4],uint64,uint64)[]",
           "desc": "The methods that are allowed to be called for the plugin by the address"
         }
       ],

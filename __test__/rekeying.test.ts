@@ -5,6 +5,7 @@ import algosdk, { makeBasicAccountTransactionSigner } from 'algosdk';
 import { microAlgos } from '@algorandfoundation/algokit-utils';
 import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
 
+const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 const fixture = algorandFixture();
 
 describe('Rekeying Test', () => {
@@ -33,7 +34,7 @@ describe('Rekeying Test', () => {
       defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
       algorand,
     });
-    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr }});
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS }});
 
     abstractedAccountClient = results.appClient;
     aliceAbstractedAccount = abstractedAccountClient.appAddress;

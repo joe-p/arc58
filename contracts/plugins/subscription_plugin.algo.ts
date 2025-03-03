@@ -18,18 +18,20 @@ export class SubscriptionPlugin extends Contract {
   }
 
   makePayment(
-    sender: Address,
+    sender: AppID,
     // eslint-disable-next-line no-unused-vars
     _acctRef: Address
   ): void {
     assert(globals.round - this.lastPayment.value > FREQUENCY);
     this.lastPayment.value = globals.round;
 
+    const controlledAccount = sender.globalState('controlled_address') as Address;
+
     sendPayment({
-      sender: sender,
+      sender: controlledAccount,
       amount: AMOUNT,
       receiver: addr('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M'),
-      rekeyTo: sender,
+      rekeyTo: sender.address,
     });
   }
 }
