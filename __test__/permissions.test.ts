@@ -263,7 +263,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=706');
+    expect(error).toMatch('pc=864');
   });
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
@@ -275,7 +275,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=706');
+    expect(error).toMatch('pc=864');
   });
 
   test('expired', async () => {
@@ -300,6 +300,84 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=706');
+    expect(error).toMatch('pc=864');
+  });
+
+  test('erroneous app call in sandwich', async () => {
+    await abstractedAccountClient.send.arc58AddPlugin({
+      sender: aliceEOA.addr,
+      signer: makeBasicAccountTransactionSigner(aliceEOA),
+      args: {
+        app: plugin,
+        allowedCaller: ZERO_ADDRESS,
+        cooldown: 0,
+        lastValidRound: MAX_UINT64,
+        adminPrivileges: false,
+      }
+    });
+
+    const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+      from: caller.addr,
+      to: abstractedAccountClient.appAddress,
+      amount: 200_000,
+      suggestedParams,
+    });
+
+    // create an extra app call that on its own would succeed
+    const erroneousAppCall = (
+      await abstractedAccountClient.createTransaction.arc58AddPlugin({
+        sender: aliceEOA.addr,
+        signer: makeBasicAccountTransactionSigner(aliceEOA),
+        args: {
+          app: plugin,
+          allowedCaller: caller.addr,
+          cooldown: 0,
+          lastValidRound: MAX_UINT64,
+          adminPrivileges: false,
+        }
+      })
+    ).transactions[0];
+
+    const optInGroup = (
+      await (optInPluginClient
+        .createTransaction
+        .optInToAsset({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: {
+            sender: abstractedAccountClient.appAddress,
+            asset,
+            mbrPayment
+          },
+          extraFee: (1_000).microAlgos()
+        }))
+    ).transactions;
+
+    let error = 'no error';
+    try {
+      await abstractedAccountClient
+        .newGroup()
+        .arc58RekeyToPlugin({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: { plugin },
+          extraFee: (1000).microAlgos()
+        })
+        // Add the mbr payment
+        .addTransaction(optInGroup[0], makeBasicAccountTransactionSigner(caller)) // mbrPayment
+        // Add the opt-in plugin call
+        .addTransaction(optInGroup[1], makeBasicAccountTransactionSigner(caller)) // optInToAsset
+        .addTransaction(erroneousAppCall, makeBasicAccountTransactionSigner(aliceEOA)) // erroneous app call
+        .arc58VerifyAuthAddr({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: {}
+        })
+        .send();
+    } catch (e: any) {
+      error = e.message;
+    }
+
+    expect(error).toMatch('pc=342');
   });
 });
