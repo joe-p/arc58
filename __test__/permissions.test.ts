@@ -79,7 +79,7 @@ describe('ARC58 Plugin Permissions', () => {
       })
       .send();
 
-    console.log('results', results.confirmations[0].logs?.map(a => new TextDecoder().decode(a)));
+    console.log('results', results.confirmations[0].logs);
 
     // dumpLogs(results.confirmations[0].logs)
   }
@@ -268,9 +268,9 @@ describe('ARC58 Plugin Permissions', () => {
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
         methods: [
-          [new Uint8Array(optInToAssetSelector),0,0],
-          [new Uint8Array(Buffer.from('dddd')),0,0],
-          [new Uint8Array(Buffer.from('aaaa')),0,0]
+          [optInToAssetSelector, 0, 0],
+          [Buffer.from('dddd'), 0, 0],
+          [Buffer.from('aaaa'), 0, 0]
         ]
       }
     });
@@ -292,6 +292,8 @@ describe('ARC58 Plugin Permissions', () => {
       ),
       algosdk.ABIType.from('(uint64,uint64,uint64,bool,(byte[4],uint64,uint64)[])')
     )) as [number, number, number, boolean, [string, number, number][]];
+
+    console.log(callerPluginBox[4])
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
@@ -376,7 +378,7 @@ describe('ARC58 Plugin Permissions', () => {
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
         methods: [
-          [new Uint8Array(Buffer.from('dddd')),0,0]
+          [new Uint8Array(Buffer.from('dddd')), 0, 0]
         ]
       }
     });

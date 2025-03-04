@@ -189,32 +189,32 @@ export class AbstractedAccount extends Contract {
    * @param offset the index of the method being used
    * @returns whether the method call is allowed
    */
-private methodCallAllowed(txn: Txn, app: AppID, caller: Address, offset: uint64): boolean {
+  private methodCallAllowed(txn: Txn, app: AppID, caller: Address, offset: uint64): boolean {
 
-  assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length');
-  const selectorArg = castBytes<bytes<4>>(txn.applicationArgs[0]);
+    assert(len(txn.applicationArgs[0]) === 4, 'invalid method signature length');
+    const selectorArg = castBytes<bytes<4>>(txn.applicationArgs[0]);
 
-  const key: PluginsKey = { application: app, allowedCaller: caller };
+    const key: PluginsKey = { application: app, allowedCaller: caller };
 
-  const methods = this.plugins(key).value.methods;
-  const allowedMethod = methods[offset];
-  
-  const hasCooldown = allowedMethod.cooldown > 0;
-  const onCooldown = (globals.round - allowedMethod.lastCalled) < allowedMethod.cooldown;
+    const methods = this.plugins(key).value.methods;
+    const allowedMethod = methods[offset];
 
-  log(allowedMethod.selector)
-  log(selectorArg)
+    const hasCooldown = allowedMethod.cooldown > 0;
+    const onCooldown = (globals.round - allowedMethod.lastCalled) < allowedMethod.cooldown;
 
-  if (allowedMethod.selector === selectorArg && (!hasCooldown || !onCooldown)) {
-    // update the last called round for the method
-    if (hasCooldown) {
-      this.plugins(key).value.methods[offset].lastCalled = globals.round;
+    log(allowedMethod.selector)
+    log(selectorArg)
+
+    if (allowedMethod.selector === selectorArg && (!hasCooldown || !onCooldown)) {
+      // update the last called round for the method
+      if (hasCooldown) {
+        this.plugins(key).value.methods[offset].lastCalled = globals.round;
+      }
+      return true;
     }
-    return true;
-  }
 
-  return false;
-}
+    return false;
+  }
 
   /**
    * What the value of this.address.value.authAddr should be when this.controlledAddress
