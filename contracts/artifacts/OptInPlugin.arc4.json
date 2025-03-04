@@ -7,7 +7,7 @@
       "args": [
         {
           "name": "sender",
-          "type": "address"
+          "type": "uint64"
         },
         {
           "name": "asset",
