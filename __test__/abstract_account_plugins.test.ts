@@ -1,12 +1,13 @@
 import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
-import algosdk from 'algosdk';
-import { AbstractedAccountClient } from '../contracts/clients/AbstractedAccountClient';
-import { SubscriptionPluginClient } from '../contracts/clients/SubscriptionPluginClient';
-import { OptInPluginClient } from '../contracts/clients/OptInPluginClient';
+import algosdk, { makeBasicAccountTransactionSigner } from 'algosdk';
+import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
+import { SubscriptionPluginClient, SubscriptionPluginFactory } from '../contracts/clients/SubscriptionPluginClient';
+import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
+algokit.Config.configure({ populateAppCallResources: true });
 const fixture = algorandFixture();
 
 describe('Abstracted Subscription Program', () => {
@@ -19,11 +20,11 @@ describe('Abstracted Subscription Program', () => {
   /** The client for the subscription plugin */
   let subPluginClient: SubscriptionPluginClient;
   /** The ID of the subscription plugin */
-  let subPluginID: number;
+  let subPluginID: bigint;
   /** The client for the opt-in plugin */
   let optInPluginClient: OptInPluginClient;
   /** The ID of the opt-in plugin */
-  let optInPluginID: number;
+  let optInPluginID: bigint;
   /** The suggested params for transactions */
   let suggestedParams: algosdk.SuggestedParams;
 
@@ -34,55 +35,43 @@ describe('Abstracted Subscription Program', () => {
 
   beforeAll(async () => {
     await fixture.beforeEach();
-    const { algod, testAccount } = fixture.context;
-    suggestedParams = await algod.getTransactionParams().do();
+    const { algorand, testAccount } = fixture.context;
+    suggestedParams = await algorand.getSuggestedParams();
     aliceEOA = testAccount;
 
-    abstractedAccountClient = new AbstractedAccountClient(
-      {
-        sender: aliceEOA,
-        resolveBy: 'id',
-        id: 0,
-      },
-      algod
-    );
-
-    // Create an abstracted account app
-    await abstractedAccountClient.create.createApplication({
-      // Set address to ZERO_ADDRESS so the app address is used
-      controlledAddress: ZERO_ADDRESS,
-      // aliceEOA will be the admin
-      admin: aliceEOA.addr,
+    const minter = new AbstractedAccountFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
     });
-
-    aliceAbstractedAccount = (await abstractedAccountClient.appClient.getAppReference()).appAddress;
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS } });
+    abstractedAccountClient = results.appClient;
+    aliceAbstractedAccount = abstractedAccountClient.appAddress;
 
     // Fund the abstracted account with 0.2 ALGO so it can hold an ASA
     await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(200_000) });
 
     // Deploy the subscription plugin
-    subPluginClient = new SubscriptionPluginClient(
-      {
-        sender: aliceEOA,
-        resolveBy: 'id',
-        id: 0,
-      },
-      algod
-    );
-    await subPluginClient.create.createApplication({});
-    subPluginID = Number((await subPluginClient.appClient.getAppReference()).appId);
+    const subPluginMinter = new SubscriptionPluginFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
+    });
+
+    const subPluginMintResults = await subPluginMinter.send.create.createApplication();
+    subPluginClient = subPluginMintResults.appClient;
+    subPluginID = subPluginClient.appId;
 
     // Deploy the opt-in plugin
-    optInPluginClient = new OptInPluginClient(
-      {
-        sender: aliceEOA,
-        resolveBy: 'id',
-        id: 0,
-      },
-      algod
-    );
-    await optInPluginClient.create.createApplication({});
-    optInPluginID = Number((await optInPluginClient.appClient.getAppReference()).appId);
+    const optinPluginMinter = new OptInPluginFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
+    });
+
+    const optInMintResults = await optinPluginMinter.send.create.createApplication();
+    optInPluginClient = optInMintResults.appClient;
+    optInPluginID = optInPluginClient.appId;
   });
 
   describe('Unnamed Subscription Plugin', () => {
@@ -107,8 +96,8 @@ describe('Abstracted Subscription Program', () => {
 
     test('Alice adds the app to the abstracted account', async () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(34900) });
-      await abstractedAccountClient.arc58AddPlugin(
-        {
+      await abstractedAccountClient.send.arc58AddPlugin({
+        args: {
           // Add the subscription plugin
           app: subPluginID,
           // Set address to ZERO_ADDRESS so anyone can call it
@@ -120,8 +109,7 @@ describe('Abstracted Subscription Program', () => {
           // Set adminPrivileges to false so it cant change the admin account
           adminPrivileges: false,
         },
-        { boxes }
-      );
+      });
     });
 
     test('Someone calls the program to trigger payment', async () => {
@@ -142,35 +130,38 @@ describe('Abstracted Subscription Program', () => {
 
       // Get the call to the subscription plugin
       const makePaymentTxn = (
-        await subPluginClient
-          .compose()
-          .makePayment(
+        (await subPluginClient
+          .createTransaction
+          .makePayment({
+            sender: testAccount.addr,
             // Send a payment from the abstracted account to Joe
-            { sender: aliceAbstractedAccount, _acctRef: joe },
+            args: {
+              sender: abstractedAccountClient.appAddress,
+              _acctRef: joe
+            },
             // Double the fee to cover the inner txn fee
-            { sender: testAccount, sendParams: { fee: algokit.microAlgos(2_000) } }
-          )
-          .atc()
-      ).buildGroup()[0].txn;
+            extraFee: (1_000).microAlgos(),
+          })
+        ).transactions
+      )[0];
 
       // Compose the group needed to actually use the plugin
       await abstractedAccountClient
-        .compose()
+        .newGroup()
         // Step one: rekey to the plugin
-        .arc58RekeyToPlugin(
-          { plugin: subPluginID },
-          {
-            sender: testAccount,
-            boxes,
-            sendParams: { fee: algokit.microAlgos(2_000) },
-            accounts: [aliceAbstractedAccount, joe],
-          }
-        )
+        .arc58RekeyToPlugin({
+          sender: testAccount.addr,
+          signer: makeBasicAccountTransactionSigner(testAccount),
+          args: { plugin: subPluginID },
+          extraFee: (1_000).microAlgos(),
+          boxReferences: boxes,
+          accountReferences: [aliceAbstractedAccount, joe],
+        })
         // Step two: Call the plugin
-        .addTransaction({ transaction: makePaymentTxn, signer: testAccount })
+        .addTransaction(makePaymentTxn, testAccount.signer)
         // Step three: Call verify auth addr to rekey back to the abstracted account
-        .arc58VerifyAuthAddr({})
-        .execute();
+        .arc58VerifyAuthAddr()
+        .send();
 
       // Verify the payment was made
       const alicePostBalance = await algod.accountInformation(aliceAbstractedAccount).do();
@@ -182,7 +173,7 @@ describe('Abstracted Subscription Program', () => {
 
   describe('Named OptIn Plugin', () => {
     let bob: algosdk.Account;
-    let asset: number;
+    let asset: bigint;
 
     const nameBox = new Uint8Array(Buffer.concat([Buffer.from('n'), Buffer.from('optIn')]));
 
@@ -192,18 +183,16 @@ describe('Abstracted Subscription Program', () => {
 
     beforeAll(async () => {
       bob = fixture.context.testAccount;
-      const { algod } = fixture.context;
+      const { algorand } = fixture.context;
 
       // Create an asset
-      const assetCreateTxn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
-        from: bob.addr,
-        total: 1,
+      const txn = await algorand.send.assetCreate({
+        sender: bob.addr,
+        total: BigInt(1),
         decimals: 0,
         defaultFrozen: false,
-        suggestedParams,
       });
-      const txn = await algokit.sendTransaction({ transaction: assetCreateTxn, from: bob }, algod);
-      asset = Number(txn.confirmation!.assetIndex!);
+      asset = BigInt(txn.confirmation!.assetIndex!);
 
       pluginBox = new Uint8Array(
         Buffer.concat([
@@ -220,17 +209,18 @@ describe('Abstracted Subscription Program', () => {
       await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(43800) });
 
       // Add opt-in plugin
-      await abstractedAccountClient.arc58AddNamedPlugin(
-        {
+      await abstractedAccountClient.send.arc58AddNamedPlugin({
+        sender: aliceEOA.addr,
+        signer: makeBasicAccountTransactionSigner(aliceEOA),
+        args: {
           name: 'optIn',
           app: optInPluginID,
           allowedCaller: ZERO_ADDRESS,
           lastValidRound: maxUint64,
           cooldown: 0,
           adminPrivileges: false,
-        },
-        { boxes }
-      );
+        }
+      });
     });
 
     test("Bob opts Alice's abstracted account into the asset", async () => {
@@ -244,38 +234,38 @@ describe('Abstracted Subscription Program', () => {
 
       // Form the group txn needed to call the opt-in plugin
       const optInGroup = (
-        await optInPluginClient
-          .compose()
-          .optInToAsset(
-            { sender: aliceAbstractedAccount, asset, mbrPayment },
-            { sender: bob, sendParams: { fee: algokit.microAlgos(2000) } }
-          )
-          .atc()
-      ).buildGroup();
-      optInGroup.forEach((txn) => {
-        // eslint-disable-next-line no-param-reassign
-        txn.txn.group = undefined;
-      });
+        await (optInPluginClient
+          .createTransaction
+          .optInToAsset({
+            sender: bob.addr,
+            args: {
+              sender: abstractedAccountClient.appAddress,
+              asset,
+              mbrPayment
+            },
+            extraFee: (1_000).microAlgo()
+          }))
+      ).transactions;
 
       // Compose the group needed to actually use the plugin
       await abstractedAccountClient
-        .compose()
+        .newGroup()
         // Rekey to the opt-in plugin
-        .arc58RekeyToNamedPlugin(
-          { name: 'optIn' },
-          {
-            boxes,
-            sendParams: { fee: algokit.microAlgos(2000) },
-            assets: [asset],
-          }
-        )
+        .arc58RekeyToNamedPlugin({
+          sender: bob.addr,
+          signer: makeBasicAccountTransactionSigner(bob),
+          args: { name: 'optIn' },
+          extraFee: (1_000).microAlgo(),
+          boxReferences: boxes,
+          assetReferences: [asset],
+        })
         // Add the mbr payment
-        .addTransaction({ transaction: optInGroup[0].txn, signer: bob }) // mbrPayment
+        .addTransaction(optInGroup[0], makeBasicAccountTransactionSigner(bob)) // mbrPayment
         // Add the opt-in plugin call
-        .addTransaction({ transaction: optInGroup[1].txn, signer: bob }) // optInToAsset
+        .addTransaction(optInGroup[1], makeBasicAccountTransactionSigner(bob)) // optInToAsset
         // Call verify auth addr to verify the abstracted account is rekeyed back to itself
-        .arc58VerifyAuthAddr({})
-        .execute();
+        .arc58VerifyAuthAddr()
+        .send();
     });
   });
 });
