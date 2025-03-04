@@ -102,8 +102,6 @@ export class AbstractedAccount extends Contract {
 
       assert(txn.applicationID === app, 'Invalid app call');
       assert(txn.onCompletion === 0, 'Invalid onCompletion');
-      assert(txn.numAppArgs >= 2, 'Invalid number of app args');
-      assert(btoi(txn.applicationArgs[1]) === this.app.id, 'Invalid app arg');
     }
 
     assert(rekeyedBack);
