@@ -3,8 +3,9 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import algosdk, { Algodv2, makeBasicAccountTransactionSigner } from 'algosdk';
 import { microAlgos } from '@algorandfoundation/algokit-utils';
-import { AbstractedAccountClient } from '../contracts/clients/AbstractedAccountClient';
+import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
 
+const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 const fixture = algorandFixture();
 
 describe('Rekeying Test', () => {
@@ -22,31 +23,21 @@ describe('Rekeying Test', () => {
 
   beforeAll(async () => {
     await fixture.beforeEach();
-    algod = fixture.context.algod;
+    const { algorand, algod } = fixture.context;
     suggestedParams = await algod.getTransactionParams().do();
     aliceEOA = await fixture.context.generateAccount({ initialFunds: microAlgos(100_000_000) });
 
     await algod.setBlockOffsetTimestamp(60).do();
 
-    abstractedAccountClient = new AbstractedAccountClient(
-      {
-        sender: aliceEOA,
-        resolveBy: 'id',
-        id: 0,
-      },
-      algod
-    );
-
-    // Create an abstracted account app
-    await abstractedAccountClient.create.createApplication({
-      // Set address to ZERO_ADDRESS so the app address is used
-      controlledAddress: ZERO_ADDRESS,
-      // aliceEOA will be the admin
-      admin: aliceEOA.addr,
+    const minter = new AbstractedAccountFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand,
     });
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS } });
 
-    aliceAbstractedAccount = (await abstractedAccountClient.appClient.getAppReference()).appAddress;
-
+    abstractedAccountClient = results.appClient;
+    aliceAbstractedAccount = abstractedAccountClient.appAddress;
     // Fund the abstracted account with some ALGO to later spend
     await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(50_000_000) });
   });
@@ -54,26 +45,25 @@ describe('Rekeying Test', () => {
   test('Alice does not rekey back to the app', async () => {
     await expect(
       abstractedAccountClient
-        .compose()
+        .newGroup()
         // Step one: rekey abstracted account to Alice
-        .arc58RekeyTo(
-          { addr: aliceEOA.addr, flash: true },
-          {
-            sender: aliceEOA,
-            sendParams: { fee: microAlgos(2000) },
+        .arc58RekeyTo({
+          sender: aliceEOA.addr,
+          extraFee: (1000).microAlgos(),
+          args: {
+            addr: aliceEOA.addr,
+            flash: true,
           }
-        )
-        // Step two: make payment from abstracted account
-        .addTransaction({
-          txn: algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-            from: aliceAbstractedAccount,
-            to: aliceAbstractedAccount,
-            amount: 0,
-            suggestedParams: { ...suggestedParams, fee: 1000, flatFee: true },
-          }),
-          signer: makeBasicAccountTransactionSigner(aliceEOA),
         })
-        .execute()
+        // Step two: make payment from abstracted account
+        .addTransaction(algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+          from: aliceAbstractedAccount,
+          to: aliceAbstractedAccount,
+          amount: 0,
+          suggestedParams: { ...suggestedParams, fee: 1000, flatFee: true },
+        }),
+          // signer: makeBasicAccountTransactionSigner(aliceEOA),
+        ).send()
     ).rejects.toThrowError();
   });
 });
