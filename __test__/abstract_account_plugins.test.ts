@@ -7,6 +7,7 @@ import { SubscriptionPluginClient, SubscriptionPluginFactory } from '../contract
 import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
+algokit.Config.configure({ populateAppCallResources: true });
 const fixture = algorandFixture();
 
 describe('Abstracted Subscription Program', () => {
