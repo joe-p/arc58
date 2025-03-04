@@ -47,7 +47,7 @@ export class AbstractedAccount extends Contract {
     for (let i = this.txn.groupIndex + 1; i < this.txnGroup.length; i += 1) {
       const txn = this.txnGroup[i];
 
-      // The transaction is an explicit rekey back
+      // The transaction is an explicit rekey back used outside of plugins
       if (txn.sender === this.controlledAddress.value && txn.rekeyTo === this.app.address) {
         rekeyedBack = true;
         break;
@@ -64,6 +64,46 @@ export class AbstractedAccount extends Contract {
         rekeyedBack = true;
         break;
       }
+    }
+
+    assert(rekeyedBack);
+  }
+
+  /**
+   * Ensure that by the end of the group the abstracted account has control of its address
+   */
+  private verifyGroup(app: AppID): void {
+    let rekeyedBack = false;
+
+    for (let i = this.txn.groupIndex + 1; i < this.txnGroup.length; i += 1) {
+      const txn = this.txnGroup[i];
+
+      // The transaction is an explicit rekey back used outside of plugins
+      if (txn.sender === this.controlledAddress.value && txn.rekeyTo === this.app.address) {
+        rekeyedBack = true;
+        break;
+      }
+
+      // The transaction is an application call to this app's arc58_verifyAuthAddr method
+      if (
+        txn.typeEnum === TransactionType.ApplicationCall &&
+        txn.applicationID === this.app &&
+        txn.onCompletion === 0 && // OnCompletion.NoOp
+        txn.numAppArgs === 1 &&
+        txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
+      ) {
+        rekeyedBack = true;
+        break;
+      }
+
+      if (txn.typeEnum !== TransactionType.ApplicationCall) {
+        continue;
+      }
+
+      assert(txn.applicationID === app, 'Invalid app call');
+      assert(txn.onCompletion === 0, 'Invalid onCompletion');
+      assert(txn.numAppArgs >= 2, 'Invalid number of app args');
+      assert(btoi(txn.applicationArgs[1]) === this.app.id, 'Invalid app arg');
     }
 
     assert(rekeyedBack);
@@ -208,7 +248,7 @@ export class AbstractedAccount extends Contract {
       allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender,
     }).value.lastCalled = globals.round;
 
-    this.verifyRekeyToAbstractedAccount();
+    this.verifyGroup(plugin);
   }
 
   /**
