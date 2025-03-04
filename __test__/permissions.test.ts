@@ -28,6 +28,7 @@ describe('ARC58 Plugin Permissions', () => {
   const fixture = algorandFixture();
 
   async function callPlugin(
+    caller: algosdk.Account,
     suggestedParams: algosdk.SuggestedParams,
     pluginClient: OptInPluginClient,
     asset: bigint,
@@ -155,7 +156,7 @@ describe('ARC58 Plugin Permissions', () => {
       }
     });
 
-    await callPlugin(suggestedParams, optInPluginClient, asset);
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
 
     const globalPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -188,7 +189,7 @@ describe('ARC58 Plugin Permissions', () => {
       }
     });
 
-    await callPlugin(suggestedParams, optInPluginClient, asset);
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
 
     const globalPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -220,7 +221,7 @@ describe('ARC58 Plugin Permissions', () => {
       }
     });
 
-    await callPlugin(suggestedParams, optInPluginClient, asset);
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
 
     const callerPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -251,11 +252,11 @@ describe('ARC58 Plugin Permissions', () => {
       }
     });
 
-    await callPlugin(suggestedParams, optInPluginClient, asset);
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
 
     let error = 'no error';
     try {
-      await callPlugin(suggestedParams, optInPluginClient, asset);
+      await callPlugin(caller, suggestedParams, optInPluginClient, asset);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
@@ -267,7 +268,7 @@ describe('ARC58 Plugin Permissions', () => {
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
     try {
-      await callPlugin(suggestedParams, optInPluginClient, asset);
+      await callPlugin(caller, suggestedParams, optInPluginClient, asset);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
@@ -292,7 +293,7 @@ describe('ARC58 Plugin Permissions', () => {
 
     let error = 'no error';
     try {
-      await callPlugin(suggestedParams, optInPluginClient, asset);
+      await callPlugin(caller, suggestedParams, optInPluginClient, asset);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
