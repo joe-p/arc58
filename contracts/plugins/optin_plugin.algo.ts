@@ -3,20 +3,22 @@ import { Contract } from '@algorandfoundation/tealscript';
 export class OptInPlugin extends Contract {
   programVersion = 10;
 
-  optInToAsset(sender: Address, asset: AssetID, mbrPayment: PayTxn): void {
+  optInToAsset(sender: AppID, asset: AssetID, mbrPayment: PayTxn): void {
+    const controlledAccount = sender.globalState('c') as Address;
+
     verifyPayTxn(mbrPayment, {
-      receiver: sender,
+      receiver: controlledAccount,
       amount: {
         greaterThanEqualTo: globals.assetOptInMinBalance,
       },
     });
 
     sendAssetTransfer({
-      sender: sender,
-      assetReceiver: sender,
+      sender: controlledAccount,
+      assetReceiver: controlledAccount,
       assetAmount: 0,
       xferAsset: asset,
-      rekeyTo: sender,
+      rekeyTo: sender.address,
     });
   }
 }

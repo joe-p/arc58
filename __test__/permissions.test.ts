@@ -47,7 +47,7 @@ describe('ARC58 Plugin Permissions', () => {
           sender: caller.addr,
           signer: makeBasicAccountTransactionSigner(caller),
           args: {
-            sender: abstractedAccountClient.appAddress,
+            sender: abstractedAccountClient.appId,
             asset,
             mbrPayment
           },
@@ -263,7 +263,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=864');
+    expect(error).toMatch('pc=893');
   });
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
@@ -275,7 +275,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=864');
+    expect(error).toMatch('pc=893');
   });
 
   test('expired', async () => {
@@ -300,7 +300,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=864');
+    expect(error).toMatch('pc=893');
   });
 
   test('erroneous app call in sandwich', async () => {
@@ -345,7 +345,7 @@ describe('ARC58 Plugin Permissions', () => {
           sender: caller.addr,
           signer: makeBasicAccountTransactionSigner(caller),
           args: {
-            sender: abstractedAccountClient.appAddress,
+            sender: abstractedAccountClient.appId,
             asset,
             mbrPayment
           },
@@ -378,6 +378,6 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    expect(error).toMatch('pc=342');
+    expect(error).toMatch('pc=343');
   });
 });
