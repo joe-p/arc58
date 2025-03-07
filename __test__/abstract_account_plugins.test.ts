@@ -136,7 +136,7 @@ describe('Abstracted Subscription Program', () => {
             sender: testAccount.addr,
             // Send a payment from the abstracted account to Joe
             args: {
-              sender: abstractedAccountClient.appAddress,
+              sender: abstractedAccountClient.appId,
               _acctRef: joe
             },
             // Double the fee to cover the inner txn fee
@@ -239,7 +239,7 @@ describe('Abstracted Subscription Program', () => {
           .optInToAsset({
             sender: bob.addr,
             args: {
-              sender: abstractedAccountClient.appAddress,
+              sender: abstractedAccountClient.appId,
               asset,
               mbrPayment
             },
