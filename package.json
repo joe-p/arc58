@@ -12,21 +12,13 @@
     "fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@algorandfoundation/algokit-utils": "^7.0.1",
-=======
     "@algorandfoundation/algokit-utils": "^7.1.0",
     "@algorandfoundation/algorand-typescript": "^1.0.0-beta.20",
     "@algorandfoundation/puya-ts": "^1.0.0-beta.37",
->>>>>>> feat/puya-ts
     "algosdk": "^2.9.0"
   },
   "devDependencies": {
     "@algorandfoundation/algokit-client-generator": "^4.0.8",
-<<<<<<< HEAD
-    "@algorandfoundation/tealscript": "^0.106.2",
-=======
->>>>>>> feat/puya-ts
     "@jest/globals": "^29.5.0",
     "@joe-p/algokit-generate-component": "^0.2.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
