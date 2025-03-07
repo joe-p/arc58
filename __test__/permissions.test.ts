@@ -263,7 +263,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=893');
+    expect(error).toMatch('pc=853');
   });
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
@@ -275,7 +275,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=893');
+    expect(error).toMatch('pc=853');
   });
 
   test('expired', async () => {
@@ -300,7 +300,7 @@ describe('ARC58 Plugin Permissions', () => {
     }
 
     // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=893');
+    expect(error).toMatch('pc=853');
   });
 
   test('erroneous app call in sandwich', async () => {
@@ -378,6 +378,6 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    expect(error).toMatch('pc=343');
+    expect(error).toMatch('pc=1075');
   });
 });

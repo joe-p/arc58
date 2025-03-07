@@ -76,7 +76,8 @@ describe('Abstracted Subscription Program', () => {
 
   describe('Unnamed Subscription Plugin', () => {
     /** Another account that the subscription payments will go to */
-    const joe = '46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M';
+    // const joe = '46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M';
+    const joe = ZERO_ADDRESS;
     /** The box key for the subscription plugin */
     let pluginBox: Uint8Array;
     /** The boxes to pass to app calls */

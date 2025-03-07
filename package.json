@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "generate-client": "algokit generate client contracts/artifacts/ --language typescript  --output contracts/clients/{contract_name}Client.ts",
-    "compile-contracts": "puya-ts build contracts/*.algo.ts --out-dir contracts/artifacts && puya-ts build contracts/plugins/*.algo.ts --out-dir contracts/artifacts",
+    "compile-contracts": "puya-ts build contracts/*.algo.ts --out-dir ./artifacts && puya-ts build contracts/plugins/*.algo.ts --out-dir ./../artifacts",
     "generate-components": "algokit-generate-component contracts/artifacts/*.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contracts && npm run generate-client",
     "test": "npm run build && jest",
@@ -14,7 +14,7 @@
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^7.1.0",
     "@algorandfoundation/algorand-typescript": "^1.0.0-beta.20",
-    "@algorandfoundation/puya-ts": "^1.0.0-beta.36",
+    "@algorandfoundation/puya-ts": "^1.0.0-beta.37",
     "algosdk": "^2.9.0"
   },
   "devDependencies": {
