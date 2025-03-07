@@ -51,7 +51,7 @@ describe('Rekeying Test', () => {
           sender: aliceEOA.addr,
           extraFee: (1000).microAlgos(),
           args: {
-            addr: aliceEOA.addr,
+            address: aliceEOA.addr,
             flash: true,
           }
         })
