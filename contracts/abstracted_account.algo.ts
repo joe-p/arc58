@@ -1,10 +1,13 @@
-import { Contract } from '@algorandfoundation/tealscript';
+import { Contract, GlobalState, BoxMap, assert, arc4, uint64, Account, TransactionType, Application, bytes, abimethod, gtxn } from '@algorandfoundation/algorand-typescript'
+import { methodSelector } from '@algorandfoundation/algorand-typescript/arc4';
+import { payment } from '@algorandfoundation/algorand-typescript/itxn';
+import { btoi, Global, len, Txn } from '@algorandfoundation/algorand-typescript/op'
 
 type PluginsKey = {
   /** The application containing plugin logic */
-  application: AppID;
+  application: Application;
   /** The address that is allowed to initiate a rekey to the plugin */
-  allowedCaller: Address;
+  allowedCaller: Account;
 };
 
 type PluginInfo = {
@@ -19,24 +22,22 @@ type PluginInfo = {
 };
 
 export class AbstractedAccount extends Contract {
-  /** Target AVM 10 */
-  programVersion = 10;
 
   /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
-  admin = GlobalStateKey<Address>({ key: 'a' });
+  admin = GlobalState<Account>({ key: 'a' });
 
   /** The address this app controls */
-  controlledAddress = GlobalStateKey<Address>({ key: 'c' });
+  controlledAddress = GlobalState<Account>({ key: 'c' });
 
   /**
    * Plugins that add functionality to the controlledAddress and the account that has permission to use it.
    */
-  plugins = BoxMap<PluginsKey, PluginInfo>({ prefix: 'p' });
+  plugins = BoxMap<PluginsKey, PluginInfo>({ keyPrefix: 'p' });
 
   /**
    * Plugins that have been given a name for discoverability
    */
-  namedPlugins = BoxMap<bytes, PluginsKey>({ prefix: 'n' });
+  namedPlugins = BoxMap<string, PluginsKey>({ keyPrefix: 'n' });
 
   /**
    * Ensure that by the end of the group the abstracted account has control of its address
@@ -44,22 +45,22 @@ export class AbstractedAccount extends Contract {
   private verifyRekeyToAbstractedAccount(): void {
     let rekeyedBack = false;
 
-    for (let i = this.txn.groupIndex + 1; i < this.txnGroup.length; i += 1) {
-      const txn = this.txnGroup[i];
+    for (let i = (Txn.groupIndex + 1); i < Global.groupSize; i += 1) {
+      const txn = gtxn.Transaction(i)
 
       // The transaction is an explicit rekey back used outside of plugins
-      if (txn.sender === this.controlledAddress.value && txn.rekeyTo === this.app.address) {
+      if (txn.sender === this.controlledAddress.value && txn.rekeyTo === Global.currentApplicationAddress) {
         rekeyedBack = true;
         break;
       }
 
       // The transaction is an application call to this app's arc58_verifyAuthAddr method
       if (
-        txn.typeEnum === TransactionType.ApplicationCall &&
-        txn.applicationID === this.app &&
-        txn.onCompletion === 0 && // OnCompletion.NoOp
+        txn.type === TransactionType.ApplicationCall &&
+        txn.appId === Global.currentApplicationId &&
+        txn.onCompletion === 'NoOp' &&
         txn.numAppArgs === 1 &&
-        txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
+        txn.appArgs(0) === methodSelector('arc58_verifyAuthAddr()void')
       ) {
         rekeyedBack = true;
         break;
@@ -72,39 +73,39 @@ export class AbstractedAccount extends Contract {
   /**
    * Ensure that by the end of the group the abstracted account has control of its address
    */
-  private verifyGroup(app: AppID): void {
+  private verifyGroup(app: arc4.UintN64): void {
     let rekeyedBack = false;
 
-    for (let i = this.txn.groupIndex + 1; i < this.txnGroup.length; i += 1) {
-      const txn = this.txnGroup[i];
+    for (let i = (Txn.groupIndex + 1); i < (Global.groupSize - Txn.groupIndex); i += 1) {
+      const txn = gtxn.Transaction(i)
 
       // The transaction is an explicit rekey back used outside of plugins
-      if (txn.sender === this.controlledAddress.value && txn.rekeyTo === this.app.address) {
+      if (txn.sender === this.controlledAddress.value && txn.rekeyTo === Global.currentApplicationAddress) {
         rekeyedBack = true;
         break;
       }
 
       // The transaction is an application call to this app's arc58_verifyAuthAddr method
       if (
-        txn.typeEnum === TransactionType.ApplicationCall &&
-        txn.applicationID === this.app &&
-        txn.onCompletion === 0 && // OnCompletion.NoOp
+        txn.type === TransactionType.ApplicationCall &&
+        txn.appId === Global.currentApplicationId &&
+        txn.onCompletion === 'NoOp' && // OnCompletion.NoOp
         txn.numAppArgs === 1 &&
-        txn.applicationArgs[0] === method('arc58_verifyAuthAddr()void')
+        txn.appArgs(0) === methodSelector('arc58_verifyAuthAddr()void')
       ) {
         rekeyedBack = true;
         break;
       }
 
-      if (txn.typeEnum !== TransactionType.ApplicationCall) {
+      if (txn.type !== TransactionType.ApplicationCall) {
         continue;
       }
 
-      assert(txn.applicationID === app, 'Invalid app call');
-      assert(txn.onCompletion === 0, 'Invalid onCompletion');
+      assert(txn.appId === Application(app.native), 'Invalid app call');
+      assert(txn.onCompletion === 'NoOp', 'Invalid onCompletion');
       assert(txn.numAppArgs > 1, 'Invalid number of app args');
-      assert(len(txn.applicationArgs[1]) === 8, 'Invalid app arg length');
-      assert(btoi(txn.applicationArgs[1]) === this.app.id, 'Invalid app arg');
+      assert(len(txn.appArgs(1)) === 8, 'Invalid app arg length');
+      assert(Application(btoi(txn.appArgs(1))) === Global.currentApplicationId, 'Invalid app arg');
     }
 
     assert(rekeyedBack);
@@ -114,8 +115,10 @@ export class AbstractedAccount extends Contract {
    * What the value of this.address.value.authAddr should be when this.controlledAddress
    * is able to be controlled by this app. It will either be this.app.address or zeroAddress
    */
-  private getAuthAddr(): Address {
-    return this.controlledAddress.value === this.app.address ? Address.zeroAddress : this.app.address;
+  private getAuthAddr(): Account {
+    return this.controlledAddress.value === Global.currentApplicationAddress
+      ? Global.zeroAddress // contract controls itself
+      : Global.currentApplicationAddress; // contract controls a different account
   }
 
   /**
@@ -125,15 +128,20 @@ export class AbstractedAccount extends Contract {
    * @param controlledAddress The address of the abstracted account. If zeroAddress, then the address of the contract account will be used
    * @param admin The admin for this app
    */
-  createApplication(controlledAddress: Address, admin: Address): void {
-    verifyAppCallTxn(this.txn, {
-      sender: { includedIn: [controlledAddress, admin] },
-    });
-
+  constructor(controlledAddress: arc4.Address, admin: arc4.Address) {
+    super();
+    // verifyAppCallTxn(this.txn, {
+    //   sender: { includedIn: [controlledAddress, admin] },
+    // });
+    assert(
+      Txn.sender === controlledAddress.native
+      || Txn.sender === admin.native,
+      'Sender must be either controlledAddress or admin'
+    );
     assert(admin !== controlledAddress);
 
-    this.admin.value = admin;
-    this.controlledAddress.value = controlledAddress === Address.zeroAddress ? this.app.address : controlledAddress;
+    this.admin.value = admin.native;
+    this.controlledAddress.value = controlledAddress.native === Global.zeroAddress ? Global.currentApplicationAddress : controlledAddress.native;
   }
 
   /**
@@ -141,9 +149,10 @@ export class AbstractedAccount extends Contract {
    *
    * @param newAdmin The new admin
    */
-  arc58_changeAdmin(newAdmin: Address): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
-    this.admin.value = newAdmin;
+  arc58_changeAdmin(newAdmin: arc4.Address): void {
+    // verifyTxn(this.txn, { sender: this.admin.value });
+    assert(Txn.sender === this.admin.value, 'Sender must be the admin');
+    this.admin.value = newAdmin.native;
   }
 
   /**
@@ -154,33 +163,39 @@ export class AbstractedAccount extends Contract {
    * @param newAdmin The new admin
    *
    */
-  arc58_pluginChangeAdmin(plugin: AppID, allowedCaller: Address, newAdmin: Address): void {
-    verifyTxn(this.txn, { sender: plugin.address });
-    assert(this.controlledAddress.value.authAddr === plugin.address, 'This plugin is not in control of the account');
-
-    const key: PluginsKey = { application: plugin, allowedCaller: allowedCaller };
+  arc58_pluginChangeAdmin(plugin: arc4.UintN64, allowedCaller: arc4.Address, newAdmin: arc4.Address): void {
+    // verifyTxn(this.txn, { sender: Application(plugin.native).address });
+    assert(Txn.sender === Application(plugin.native).address, 'Sender must be the plugin');
     assert(
-      this.plugins(key).exists && this.plugins(key).value.adminPrivileges,
+      this.controlledAddress.value.authAddress === Application(plugin.native).address,
+      'This plugin is not in control of the account'
+    );
+
+    const key: PluginsKey = { application: Application(plugin.native), allowedCaller: allowedCaller.native };
+
+    const [p, exists] = this.plugins.maybe(key);
+    assert(
+      exists && p.adminPrivileges,
       'This plugin does not have admin privileges'
     );
 
-    this.admin.value = newAdmin;
+    this.admin.value = newAdmin.native;
   }
 
   /**
    * Get the admin of this app. This method SHOULD always be used rather than reading directly from state
    * because different implementations may have different ways of determining the admin.
    */
-  @abi.readonly
-  arc58_getAdmin(): Address {
-    return this.admin.value;
+  @abimethod({ readonly: true })
+  arc58_getAdmin(): arc4.Address {
+    return new arc4.Address(this.admin.value);
   }
 
   /**
    * Verify the abstracted account is rekeyed to this app
    */
   arc58_verifyAuthAddr(): void {
-    assert(this.controlledAddress.value.authAddr === this.getAuthAddr());
+    assert(this.controlledAddress.value.authAddress === this.getAuthAddr());
   }
 
   /**
@@ -189,26 +204,28 @@ export class AbstractedAccount extends Contract {
    * @param addr The address to rekey to
    * @param flash Whether or not this should be a flash rekey. If true, the rekey back to the app address must done in the same txn group as this call
    */
-  arc58_rekeyTo(addr: Address, flash: boolean): void {
-    verifyAppCallTxn(this.txn, { sender: this.admin.value });
+  arc58_rekeyTo(addr: arc4.Address, flash: arc4.Bool): void {
+    // verifyAppCallTxn(this.txn, { sender: this.admin.value });
+    assert(Txn.sender === this.admin.value, 'Sender must be the admin');
 
-    sendPayment({
+    payment({
       sender: this.controlledAddress.value,
-      receiver: addr,
-      rekeyTo: addr,
+      receiver: addr.native,
+      rekeyTo: addr.native,
       note: 'rekeying abstracted account',
-    });
+    })
 
     if (flash) this.verifyRekeyToAbstractedAccount();
   }
 
-  private pluginCallAllowed(app: AppID, caller: Address): boolean {
+  private pluginCallAllowed(app: Application, caller: Account): boolean {
     const key: PluginsKey = { application: app, allowedCaller: caller };
+    const [plugin, exists] = this.plugins.maybe(key);
 
     return (
-      this.plugins(key).exists &&
-      this.plugins(key).value.lastValidRound >= globals.round &&
-      globals.round - this.plugins(key).value.lastCalled >= this.plugins(key).value.cooldown
+      exists
+      && plugin.lastValidRound >= Global.round
+      && Global.round - plugin.lastCalled >= plugin.cooldown
     );
   }
 
@@ -218,12 +235,12 @@ export class AbstractedAccount extends Contract {
    * @param plugin the plugin to be rekeyed to
    * @returns whether the plugin can be called via txn sender or globally
    */
-  @abi.readonly
-  arc58_canCall(plugin: AppID, address: Address): boolean {
-    const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
+  @abimethod({ readonly: true })
+  arc58_canCall(plugin: arc4.UintN64, address: arc4.Address): boolean {
+    const globalAllowed = this.pluginCallAllowed(Application(plugin.native), Global.zeroAddress);
     if (globalAllowed) return true;
 
-    return this.pluginCallAllowed(plugin, address);
+    return this.pluginCallAllowed(Application(plugin.native), address.native);
   }
 
   /**
@@ -231,23 +248,30 @@ export class AbstractedAccount extends Contract {
    *
    * @param plugin The app to rekey to
    */
-  arc58_rekeyToPlugin(plugin: AppID): void {
-    const globalAllowed = this.pluginCallAllowed(plugin, Address.zeroAddress);
+  arc58_rekeyToPlugin(plugin: arc4.UintN64): void {
+    const globalAllowed = this.pluginCallAllowed(Application(plugin.native), Global.zeroAddress);
 
-    if (!globalAllowed)
-      assert(this.pluginCallAllowed(plugin, this.txn.sender), 'This sender is not allowed to trigger this plugin');
-
-    sendPayment({
+    if (!globalAllowed) {
+      assert(this.pluginCallAllowed(Application(plugin.native), Txn.sender), 'This sender is not allowed to trigger this plugin');
+    }
+    
+    payment({
       sender: this.controlledAddress.value,
       receiver: this.controlledAddress.value,
-      rekeyTo: plugin.address,
+      rekeyTo: Application(plugin.native).address,
       note: 'rekeying to plugin app',
     });
 
-    this.plugins({
-      application: plugin,
-      allowedCaller: globalAllowed ? Address.zeroAddress : this.txn.sender,
-    }).value.lastCalled = globals.round;
+    const key: PluginsKey = {
+      application: Application(plugin.native),
+      allowedCaller: globalAllowed ? Global.zeroAddress : Txn.sender,
+    };
+
+    const previousValue = this.plugins.get(key)
+    this.plugins.set(key, {
+      ...previousValue,
+      lastCalled: Global.round,
+    })
 
     this.verifyGroup(plugin);
   }
@@ -257,8 +281,8 @@ export class AbstractedAccount extends Contract {
    *
    * @param name The name of the plugin to rekey to
    */
-  arc58_rekeyToNamedPlugin(name: string): void {
-    this.arc58_rekeyToPlugin(this.namedPlugins(name).value.application);
+  arc58_rekeyToNamedPlugin(name: arc4.Str): void {
+    this.arc58_rekeyToPlugin(new arc4.UintN64(this.namedPlugins.get(name.native).application.id));
   }
 
   /**
@@ -272,20 +296,22 @@ export class AbstractedAccount extends Contract {
    * @param adminPrivileges Whether the plugin has permissions to change the admin account
    */
   arc58_addPlugin(
-    app: AppID,
-    allowedCaller: Address,
-    lastValidRound: uint64,
-    cooldown: uint64,
-    adminPrivileges: boolean
+    app: arc4.UintN64,
+    allowedCaller: arc4.Address,
+    lastValidRound: arc4.UintN64,
+    cooldown: arc4.UintN64,
+    adminPrivileges: arc4.Bool
   ): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
-    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
-    this.plugins(key).value = {
-      lastValidRound: lastValidRound,
-      cooldown: cooldown,
+    // verifyTxn(this.txn, { sender: this.admin.value });
+    assert(Txn.sender === this.admin.value, 'Sender must be the admin');
+
+    const key: PluginsKey = { application: Application(app.native), allowedCaller: allowedCaller.native };
+    this.plugins.set(key, {
+      lastValidRound: lastValidRound.native,
+      cooldown: cooldown.native,
       lastCalled: 0,
-      adminPrivileges: adminPrivileges,
-    };
+      adminPrivileges: adminPrivileges.native,
+    });
   }
 
   /**
@@ -293,11 +319,12 @@ export class AbstractedAccount extends Contract {
    *
    * @param app The app to remove
    */
-  arc58_removePlugin(app: AppID, allowedCaller: Address): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
+  arc58_removePlugin(app: arc4.UintN64, allowedCaller: arc4.Address): void {
+    // verifyTxn(this.txn, { sender: this.admin.value });
+    assert(Txn.sender === this.admin.value, 'Sender must be the admin');
 
-    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
-    this.plugins(key).delete();
+    const key: PluginsKey = { application: Application(app.native), allowedCaller: allowedCaller.native };
+    this.plugins.delete(key);
   }
 
   /**
@@ -312,27 +339,28 @@ export class AbstractedAccount extends Contract {
    * @param adminPrivileges Whether the plugin has permissions to change the admin account
    */
   arc58_addNamedPlugin(
-    name: string,
-    app: AppID,
-    allowedCaller: Address,
-    lastValidRound: uint64,
-    cooldown: uint64,
-    adminPrivileges: boolean
+    name: arc4.Str,
+    app: arc4.UintN64,
+    allowedCaller: arc4.Address,
+    lastValidRound: arc4.UintN64,
+    cooldown: arc4.UintN64,
+    adminPrivileges: arc4.Bool
   ): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
-    assert(!this.namedPlugins(name).exists);
+    // verifyTxn(this.txn, { sender: this.admin.value });
+    assert(Txn.sender === this.admin.value, 'Sender must be the admin');
+    assert(!this.namedPlugins.has(name.native));
 
-    const key: PluginsKey = { application: app, allowedCaller: allowedCaller };
-    this.namedPlugins(name).value = key;
+    const key: PluginsKey = { application: Application(app.native), allowedCaller: allowedCaller.native };
+    this.namedPlugins.set(name.native, key);
 
     const pluginInfo: PluginInfo = {
-      lastValidRound: lastValidRound,
-      cooldown: cooldown,
+      lastValidRound: lastValidRound.native,
+      cooldown: cooldown.native,
       lastCalled: 0,
-      adminPrivileges: adminPrivileges,
+      adminPrivileges: adminPrivileges.native,
     };
 
-    this.plugins(key).value = pluginInfo;
+    this.plugins.set(key, pluginInfo);
   }
 
   /**
@@ -340,11 +368,12 @@ export class AbstractedAccount extends Contract {
    *
    * @param name The plugin name
    */
-  arc58_removeNamedPlugin(name: string): void {
-    verifyTxn(this.txn, { sender: this.admin.value });
+  arc58_removeNamedPlugin(name: arc4.Str): void {
+    // verifyTxn(this.txn, { sender: this.admin.value });
+    assert(Txn.sender === this.admin.value, 'Sender must be the admin');
 
-    const app = this.namedPlugins(name).value;
-    this.namedPlugins(name).delete();
-    this.plugins(app).delete();
+    const app = this.namedPlugins.get(name.native);
+    this.namedPlugins.delete(name.native);
+    this.plugins.delete(app);
   }
 }

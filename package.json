@@ -4,20 +4,21 @@
   "license": "MIT",
   "scripts": {
     "generate-client": "algokit generate client contracts/artifacts/ --language typescript  --output contracts/clients/{contract_name}Client.ts",
-    "compile-contract": "tealscript contracts/*.algo.ts contracts/artifacts && tealscript contracts/plugins/*.algo.ts contracts/artifacts",
+    "compile-contracts": "puya-ts build contracts/*.algo.ts --out-dir contracts/artifacts && puya-ts build contracts/plugins/*.algo.ts --out-dir contracts/artifacts",
     "generate-components": "algokit-generate-component contracts/artifacts/*.arc32.json contracts/artifacts/components",
-    "build": "npm run compile-contract && npm run generate-client",
+    "build": "npm run compile-contracts && npm run generate-client",
     "test": "npm run build && jest",
     "lint": "eslint . --ext .ts",
     "fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^7.1.0",
+    "@algorandfoundation/algorand-typescript": "^1.0.0-beta.20",
+    "@algorandfoundation/puya-ts": "^1.0.0-beta.36",
     "algosdk": "^2.9.0"
   },
   "devDependencies": {
     "@algorandfoundation/algokit-client-generator": "^4.0.8",
-    "@algorandfoundation/tealscript": "^0.106.2",
     "@jest/globals": "^29.5.0",
     "@joe-p/algokit-generate-component": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",

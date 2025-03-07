@@ -1,4 +1,5 @@
-import { Contract } from '@algorandfoundation/tealscript';
+import { Contract, GlobalState, uint64, Global, arc4, assert, Account, Bytes, Application, op } from '@algorandfoundation/algorand-typescript';
+import { payment } from '@algorandfoundation/algorand-typescript/itxn';
 
 // These constants should be template variables, but I made them constants because I'm lazy
 
@@ -10,28 +11,29 @@ const AMOUNT = 100_000;
 export class SubscriptionPlugin extends Contract {
   programVersion = 10;
 
-  lastPayment = GlobalStateKey<uint64>();
+  lastPayment = GlobalState<uint64>({ initialValue: 0 });
 
-  @allow.bareCreate()
-  createApplication(): void {
-    this.lastPayment.value = 0;
+  constructor() {
+    super();
   }
 
   makePayment(
-    sender: AppID,
+    sender: arc4.UintN64,
     // eslint-disable-next-line no-unused-vars
-    _acctRef: Address
+    _acctRef: arc4.Address
   ): void {
-    assert(globals.round - this.lastPayment.value > FREQUENCY);
-    this.lastPayment.value = globals.round;
+    assert(Global.round - this.lastPayment.value > FREQUENCY);
+    this.lastPayment.value = Global.round;
 
-    const controlledAccount = sender.globalState('c') as Address;
+    const [controlledAccountBytes] = op.AppGlobal.getExBytes(Application(sender.native), Bytes('c'));
+    
+    // .globalState('c') as Address;
 
-    sendPayment({
-      sender: controlledAccount,
+    payment({
+      sender: Account(Bytes(controlledAccountBytes)),
       amount: AMOUNT,
-      receiver: addr('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M'),
-      rekeyTo: sender.address,
+      receiver: Account(Bytes.fromBase32('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M')),
+      rekeyTo: Application(sender.native).address,
     });
   }
 }
