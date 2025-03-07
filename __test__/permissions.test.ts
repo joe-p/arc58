@@ -1,11 +1,17 @@
 import { describe, test, beforeAll, beforeEach, expect, afterEach } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
+<<<<<<< HEAD
 import algosdk, { ABIMethod, getMethodByName, makeBasicAccountTransactionSigner } from 'algosdk';
 import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
 import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
 // import { consoleLogger } from '@algorandfoundation/algokit-utils/types/logging'
 import { algoKitLogCaptureFixture } from '@algorandfoundation/algokit-utils/testing'
+=======
+import algosdk, { makeBasicAccountTransactionSigner } from 'algosdk';
+import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
+import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
+>>>>>>> feat/puya-ts
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 algokit.Config.configure({ populateAppCallResources: true });
@@ -31,10 +37,17 @@ describe('ARC58 Plugin Permissions', () => {
   const logs = algoKitLogCaptureFixture()
 
   async function callPlugin(
+<<<<<<< HEAD
     suggestedParams: algosdk.SuggestedParams,
     pluginClient: OptInPluginClient,
     asset: bigint,
     offsets: number[] = []
+=======
+    caller: algosdk.Account,
+    suggestedParams: algosdk.SuggestedParams,
+    pluginClient: OptInPluginClient,
+    asset: bigint,
+>>>>>>> feat/puya-ts
   ) {
     const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
       from: caller.addr,
@@ -42,6 +55,7 @@ describe('ARC58 Plugin Permissions', () => {
       amount: 200_000,
       suggestedParams,
     });
+<<<<<<< HEAD
 
     const optInGroup = (
       await (pluginClient
@@ -61,11 +75,34 @@ describe('ARC58 Plugin Permissions', () => {
     console.log('optInGroup', optInGroup[1].appArgs)
 
     const results = await abstractedAccountClient
+=======
+
+    const optInGroup = (
+      await (pluginClient
+        .createTransaction
+        .optInToAsset({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: {
+            sender: abstractedAccountClient.appId,
+            asset,
+            mbrPayment
+          },
+          extraFee: (1_000).microAlgos()
+        }))
+    ).transactions;
+
+    await abstractedAccountClient
+>>>>>>> feat/puya-ts
       .newGroup()
       .arc58RekeyToPlugin({
         sender: caller.addr,
         signer: makeBasicAccountTransactionSigner(caller),
+<<<<<<< HEAD
         args: { plugin, methodOffsets: offsets },
+=======
+        args: { plugin },
+>>>>>>> feat/puya-ts
         extraFee: (1000).microAlgos()
       })
       // Add the mbr payment
@@ -78,10 +115,13 @@ describe('ARC58 Plugin Permissions', () => {
         args: {}
       })
       .send();
+<<<<<<< HEAD
 
     console.log('results', results.confirmations[0].logs);
 
     // dumpLogs(results.confirmations[0].logs)
+=======
+>>>>>>> feat/puya-ts
   }
 
   beforeEach(async () => {
@@ -140,7 +180,11 @@ describe('ARC58 Plugin Permissions', () => {
       decimals: 0,
       defaultFrozen: false,
     });
+<<<<<<< HEAD
     // .sendTransaction({ transaction: assetCreateTxn, from: bob });
+=======
+
+>>>>>>> feat/puya-ts
     asset = BigInt(txn.confirmation!.assetIndex!);
   });
 
@@ -155,7 +199,10 @@ describe('ARC58 Plugin Permissions', () => {
         cooldown: 0,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
+<<<<<<< HEAD
         methods: []
+=======
+>>>>>>> feat/puya-ts
       }
     });
 
@@ -166,11 +213,18 @@ describe('ARC58 Plugin Permissions', () => {
         cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
+<<<<<<< HEAD
         methods: []
       }
     });
 
     await callPlugin(suggestedParams, optInPluginClient, asset);
+=======
+      }
+    });
+
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
+>>>>>>> feat/puya-ts
 
     const globalPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -200,11 +254,18 @@ describe('ARC58 Plugin Permissions', () => {
         cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
+<<<<<<< HEAD
         methods: []
       }
     });
 
     await callPlugin(suggestedParams, optInPluginClient, asset);
+=======
+      }
+    });
+
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
+>>>>>>> feat/puya-ts
 
     const globalPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -233,11 +294,18 @@ describe('ARC58 Plugin Permissions', () => {
         cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
+<<<<<<< HEAD
         methods: []
       }
     });
 
     await callPlugin(suggestedParams, optInPluginClient, asset);
+=======
+      }
+    });
+
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
+>>>>>>> feat/puya-ts
 
     const callerPluginBox = (await abstractedAccountClient.appClient.getBoxValueFromABIType(
       new Uint8Array(
@@ -310,6 +378,7 @@ describe('ARC58 Plugin Permissions', () => {
         cooldown: 100,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
+<<<<<<< HEAD
         methods: []
       }
     });
@@ -319,26 +388,48 @@ describe('ARC58 Plugin Permissions', () => {
     let error = 'no error';
     try {
       await callPlugin(suggestedParams, optInPluginClient, asset);
+=======
+      }
+    });
+
+    await callPlugin(caller, suggestedParams, optInPluginClient, asset);
+
+    let error = 'no error';
+    try {
+      await callPlugin(caller, suggestedParams, optInPluginClient, asset);
+>>>>>>> feat/puya-ts
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
     }
 
     // TODO: Parse this from src_map json
+<<<<<<< HEAD
     expect(error).toMatch('pc=176');
+=======
+    expect(error).toMatch('pc=853');
+>>>>>>> feat/puya-ts
   });
 
   test('neither sender nor global plugin exists', async () => {
     let error = 'no error';
     try {
+<<<<<<< HEAD
       await callPlugin(suggestedParams, optInPluginClient, asset);
+=======
+      await callPlugin(caller, suggestedParams, optInPluginClient, asset);
+>>>>>>> feat/puya-ts
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
     }
 
     // TODO: Parse this from src_map json
+<<<<<<< HEAD
     expect(error).toMatch('pc=125');
+=======
+    expect(error).toMatch('pc=853');
+>>>>>>> feat/puya-ts
   });
 
   test('expired', async () => {
@@ -351,23 +442,37 @@ describe('ARC58 Plugin Permissions', () => {
         cooldown: 0,
         lastValidRound: 1,
         adminPrivileges: false,
+<<<<<<< HEAD
         methods: []
+=======
+>>>>>>> feat/puya-ts
       }
     });
 
     let error = 'no error';
     try {
+<<<<<<< HEAD
       await callPlugin(suggestedParams, optInPluginClient, asset);
+=======
+      await callPlugin(caller, suggestedParams, optInPluginClient, asset);
+>>>>>>> feat/puya-ts
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       error = e.message;
     }
 
     // TODO: Parse this from src_map json
+<<<<<<< HEAD
     expect(error).toMatch('pc=143');
   });
 
   test('method not allowed', async () => {
+=======
+    expect(error).toMatch('pc=853');
+  });
+
+  test('erroneous app call in sandwich', async () => {
+>>>>>>> feat/puya-ts
     await abstractedAccountClient.send.arc58AddPlugin({
       sender: aliceEOA.addr,
       signer: makeBasicAccountTransactionSigner(aliceEOA),
@@ -377,6 +482,7 @@ describe('ARC58 Plugin Permissions', () => {
         cooldown: 0,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
+<<<<<<< HEAD
         methods: [
           [new Uint8Array(Buffer.from('dddd')), 0, 0]
         ]
@@ -387,11 +493,78 @@ describe('ARC58 Plugin Permissions', () => {
     try {
       await callPlugin(suggestedParams, optInPluginClient, asset);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+=======
+      }
+    });
+
+    const mbrPayment = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+      from: caller.addr,
+      to: abstractedAccountClient.appAddress,
+      amount: 200_000,
+      suggestedParams,
+    });
+
+    // create an extra app call that on its own would succeed
+    const erroneousAppCall = (
+      await abstractedAccountClient.createTransaction.arc58AddPlugin({
+        sender: aliceEOA.addr,
+        signer: makeBasicAccountTransactionSigner(aliceEOA),
+        args: {
+          app: plugin,
+          allowedCaller: caller.addr,
+          cooldown: 0,
+          lastValidRound: MAX_UINT64,
+          adminPrivileges: false,
+        }
+      })
+    ).transactions[0];
+
+    const optInGroup = (
+      await (optInPluginClient
+        .createTransaction
+        .optInToAsset({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: {
+            sender: abstractedAccountClient.appId,
+            asset,
+            mbrPayment
+          },
+          extraFee: (1_000).microAlgos()
+        }))
+    ).transactions;
+
+    let error = 'no error';
+    try {
+      await abstractedAccountClient
+        .newGroup()
+        .arc58RekeyToPlugin({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: { plugin },
+          extraFee: (1000).microAlgos()
+        })
+        // Add the mbr payment
+        .addTransaction(optInGroup[0], makeBasicAccountTransactionSigner(caller)) // mbrPayment
+        // Add the opt-in plugin call
+        .addTransaction(optInGroup[1], makeBasicAccountTransactionSigner(caller)) // optInToAsset
+        .addTransaction(erroneousAppCall, makeBasicAccountTransactionSigner(aliceEOA)) // erroneous app call
+        .arc58VerifyAuthAddr({
+          sender: caller.addr,
+          signer: makeBasicAccountTransactionSigner(caller),
+          args: {}
+        })
+        .send();
+>>>>>>> feat/puya-ts
     } catch (e: any) {
       error = e.message;
     }
 
+<<<<<<< HEAD
     // TODO: Parse this from src_map json
     expect(error).toMatch('pc=878');
+=======
+    expect(error).toMatch('pc=1075');
+>>>>>>> feat/puya-ts
   });
 });

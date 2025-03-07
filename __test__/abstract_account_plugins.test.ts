@@ -1,7 +1,11 @@
 import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
+<<<<<<< HEAD
 import algosdk, { encodeUint64, makeBasicAccountTransactionSigner } from 'algosdk';
+=======
+import algosdk, { makeBasicAccountTransactionSigner } from 'algosdk';
+>>>>>>> feat/puya-ts
 import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
 import { SubscriptionPluginClient, SubscriptionPluginFactory } from '../contracts/clients/SubscriptionPluginClient';
 import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
@@ -51,16 +55,28 @@ describe('Abstracted Subscription Program', () => {
     // Fund the abstracted account with 0.2 ALGO so it can hold an ASA
     await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(200_000) });
 
+<<<<<<< HEAD
+=======
+    // Deploy the subscription plugin
+>>>>>>> feat/puya-ts
     const subPluginMinter = new SubscriptionPluginFactory({
       defaultSender: aliceEOA.addr,
       defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
       algorand
     });
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> feat/puya-ts
     const subPluginMintResults = await subPluginMinter.send.create.createApplication();
     subPluginClient = subPluginMintResults.appClient;
     subPluginID = subPluginClient.appId;
 
+<<<<<<< HEAD
+=======
+    // Deploy the opt-in plugin
+>>>>>>> feat/puya-ts
     const optinPluginMinter = new OptInPluginFactory({
       defaultSender: aliceEOA.addr,
       defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
@@ -74,7 +90,8 @@ describe('Abstracted Subscription Program', () => {
 
   describe('Unnamed Subscription Plugin', () => {
     /** Another account that the subscription payments will go to */
-    const joe = '46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M';
+    // const joe = '46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M';
+    const joe = ZERO_ADDRESS;
     /** The box key for the subscription plugin */
     let pluginBox: Uint8Array;
     /** The boxes to pass to app calls */
@@ -93,6 +110,7 @@ describe('Abstracted Subscription Program', () => {
     });
 
     test('Alice adds the app to the abstracted account', async () => {
+<<<<<<< HEAD
       // const { algorand } = fixture.context;
 
       // await algorand.send.payment({
@@ -111,6 +129,10 @@ describe('Abstracted Subscription Program', () => {
       await abstractedAccountClient.send.arc58AddPlugin({
         // sender: aliceEOA.addr,
         // signer: makeBasicAccountTransactionSigner(aliceEOA),
+=======
+      await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(34900) });
+      await abstractedAccountClient.send.arc58AddPlugin({
+>>>>>>> feat/puya-ts
         args: {
           // Add the subscription plugin
           app: subPluginID,
@@ -167,7 +189,11 @@ describe('Abstracted Subscription Program', () => {
         .arc58RekeyToPlugin({
           sender: testAccount.addr,
           signer: makeBasicAccountTransactionSigner(testAccount),
+<<<<<<< HEAD
           args: { plugin: subPluginID, methodOffsets: [] },
+=======
+          args: { plugin: subPluginID },
+>>>>>>> feat/puya-ts
           extraFee: (1_000).microAlgos(),
           boxReferences: boxes,
           accountReferences: [aliceAbstractedAccount, joe],
@@ -207,7 +233,10 @@ describe('Abstracted Subscription Program', () => {
         decimals: 0,
         defaultFrozen: false,
       });
+<<<<<<< HEAD
       // .sendTransaction({ transaction: assetCreateTxn, from: bob });
+=======
+>>>>>>> feat/puya-ts
       asset = BigInt(txn.confirmation!.assetIndex!);
 
       pluginBox = new Uint8Array(
@@ -239,7 +268,10 @@ describe('Abstracted Subscription Program', () => {
           lastValidRound: maxUint64,
           cooldown: 0,
           adminPrivileges: false,
+<<<<<<< HEAD
           methods: []
+=======
+>>>>>>> feat/puya-ts
         }
       });
     });
@@ -275,7 +307,11 @@ describe('Abstracted Subscription Program', () => {
         .arc58RekeyToNamedPlugin({
           sender: bob.addr,
           signer: makeBasicAccountTransactionSigner(bob),
+<<<<<<< HEAD
           args: { name: 'optIn', methodOffsets: [] },
+=======
+          args: { name: 'optIn' },
+>>>>>>> feat/puya-ts
           extraFee: (1_000).microAlgo(),
           boxReferences: boxes,
           assetReferences: [asset],
