@@ -1,710 +1,152 @@
 {
-  "name": "OptInPlugin",
-  "desc": "",
-  "methods": [
-    {
-      "name": "optInToAsset",
-      "args": [
+    "name": "OptInPlugin",
+    "structs": {},
+    "methods": [
         {
-          "name": "sender",
-          "type": "uint64"
+            "name": "createApplication",
+            "args": [],
+            "returns": {
+                "type": "void"
+            },
+            "actions": {
+                "create": [
+                    "NoOp"
+                ],
+                "call": []
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
         },
         {
-          "name": "asset",
-          "type": "uint64"
-        },
-        {
-          "name": "mbrPayment",
-          "type": "pay"
+            "name": "optInToAsset",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "sender"
+                },
+                {
+                    "type": "bool",
+                    "name": "rekeyBack"
+                },
+                {
+                    "type": "uint64",
+                    "name": "asset"
+                },
+                {
+                    "type": "pay",
+                    "name": "mbrPayment"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            },
+            "actions": {
+                "create": [],
+                "call": [
+                    "NoOp"
+                ]
+            },
+            "readonly": false,
+            "events": [],
+            "recommendations": {}
         }
-      ],
-      "returns": {
-        "type": "void"
-      },
-      "actions": {
+    ],
+    "arcs": [
+        22,
+        28
+    ],
+    "networks": {},
+    "state": {
+        "schema": {
+            "global": {
+                "ints": 0,
+                "bytes": 0
+            },
+            "local": {
+                "ints": 0,
+                "bytes": 0
+            }
+        },
+        "keys": {
+            "global": {},
+            "local": {},
+            "box": {}
+        },
+        "maps": {
+            "global": {},
+            "local": {},
+            "box": {}
+        }
+    },
+    "bareActions": {
         "create": [],
-        "call": [
-          "NoOp"
-        ]
-      }
-    },
-    {
-      "name": "createApplication",
-      "args": [],
-      "returns": {
-        "type": "void"
-      },
-      "actions": {
-        "create": [
-          "NoOp"
-        ],
         "call": []
-      }
-    }
-  ],
-  "arcs": [
-    4,
-    56
-  ],
-  "structs": {},
-  "state": {
-    "schema": {
-      "global": {
-        "bytes": 0,
-        "ints": 0
-      },
-      "local": {
-        "bytes": 0,
-        "ints": 0
-      }
     },
-    "keys": {
-      "global": {},
-      "local": {},
-      "box": {}
-    },
-    "maps": {
-      "global": {},
-      "local": {},
-      "box": {}
-    }
-  },
-  "bareActions": {
-    "create": [],
-    "call": []
-  },
-  "sourceInfo": {
-    "approval": {
-      "sourceInfo": [
-        {
-          "teal": 1,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            0
-          ]
-        },
-        {
-          "teal": 2,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            1,
-            2,
-            3,
-            4
-          ]
-        },
-        {
-          "teal": 14,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            5,
-            6
-          ]
-        },
-        {
-          "teal": 15,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            7
-          ]
-        },
-        {
-          "teal": 16,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            8,
-            9
-          ]
-        },
-        {
-          "teal": 17,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            10
-          ]
-        },
-        {
-          "teal": 18,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            11,
-            12
-          ]
-        },
-        {
-          "teal": 19,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            13
-          ]
-        },
-        {
-          "teal": 20,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27,
-            28,
-            29,
-            30,
-            31,
-            32,
-            33,
-            34,
-            35,
-            36,
-            37,
-            38,
-            39
-          ]
-        },
-        {
-          "teal": 24,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
-          "pc": [
-            40
-          ]
-        },
-        {
-          "teal": 29,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            41,
-            42
-          ]
-        },
-        {
-          "teal": 30,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            43
-          ]
-        },
-        {
-          "teal": 31,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            44
-          ]
-        },
-        {
-          "teal": 32,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            45
-          ]
-        },
-        {
-          "teal": 33,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            46,
-            47
-          ]
-        },
-        {
-          "teal": 34,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            48
-          ]
-        },
-        {
-          "teal": 35,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            49
-          ]
-        },
-        {
-          "teal": 38,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "errorMessage": "argument 0 (mbrPayment) for optInToAsset must be a pay transaction",
-          "pc": [
-            50
-          ]
-        },
-        {
-          "teal": 41,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            51,
-            52,
-            53
-          ]
-        },
-        {
-          "teal": 42,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            54
-          ]
-        },
-        {
-          "teal": 45,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            55,
-            56,
-            57
-          ]
-        },
-        {
-          "teal": 46,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            58
-          ]
-        },
-        {
-          "teal": 49,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            59,
-            60,
-            61
-          ]
-        },
-        {
-          "teal": 50,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            62
-          ]
-        },
-        {
-          "teal": 51,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            63
-          ]
-        },
-        {
-          "teal": 55,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            64,
-            65,
-            66
-          ]
-        },
-        {
-          "teal": 58,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            67,
-            68
-          ]
-        },
-        {
-          "teal": 62,
-          "source": "contracts/plugins/optin_plugin.algo.ts:7",
-          "pc": [
-            69,
-            70
-          ]
-        },
-        {
-          "teal": 63,
-          "source": "contracts/plugins/optin_plugin.algo.ts:7",
-          "pc": [
-            71,
-            72,
-            73,
-            74,
-            75,
-            76,
-            77,
-            78,
-            79,
-            80,
-            81,
-            82,
-            83,
-            84,
-            85,
-            86,
-            87,
-            88,
-            89,
-            90
-          ]
-        },
-        {
-          "teal": 64,
-          "source": "contracts/plugins/optin_plugin.algo.ts:7",
-          "pc": [
-            91
-          ]
-        },
-        {
-          "teal": 67,
-          "source": "contracts/plugins/optin_plugin.algo.ts:7",
-          "errorMessage": "global state value does not exist: sender.globalState('controlled_address')",
-          "pc": [
-            92
-          ]
-        },
-        {
-          "teal": 68,
-          "source": "contracts/plugins/optin_plugin.algo.ts:7",
-          "pc": [
-            93,
-            94
-          ]
-        },
-        {
-          "teal": 78,
-          "source": "contracts/plugins/optin_plugin.algo.ts:9",
-          "pc": [
-            95,
-            96
-          ]
-        },
-        {
-          "teal": 79,
-          "source": "contracts/plugins/optin_plugin.algo.ts:10",
-          "pc": [
-            97,
-            98
-          ]
-        },
-        {
-          "teal": 80,
-          "source": "contracts/plugins/optin_plugin.algo.ts:10",
-          "pc": [
-            99,
-            100
-          ]
-        },
-        {
-          "teal": 81,
-          "source": "contracts/plugins/optin_plugin.algo.ts:10",
-          "pc": [
-            101
-          ]
-        },
-        {
-          "teal": 84,
-          "source": "contracts/plugins/optin_plugin.algo.ts:10",
-          "errorMessage": "transaction verification failed: {\"txn\":\"mbrPayment\",\"field\":\"receiver\",\"expected\":\"controlledAccount\"}",
-          "pc": [
-            102
-          ]
-        },
-        {
-          "teal": 87,
-          "source": "contracts/plugins/optin_plugin.algo.ts:9",
-          "pc": [
-            103,
-            104
-          ]
-        },
-        {
-          "teal": 88,
-          "source": "contracts/plugins/optin_plugin.algo.ts:11",
-          "pc": [
-            105,
-            106
-          ]
-        },
-        {
-          "teal": 89,
-          "source": "contracts/plugins/optin_plugin.algo.ts:12",
-          "pc": [
-            107,
-            108
-          ]
-        },
-        {
-          "teal": 90,
-          "source": "contracts/plugins/optin_plugin.algo.ts:12",
-          "pc": [
-            109
-          ]
-        },
-        {
-          "teal": 93,
-          "source": "contracts/plugins/optin_plugin.algo.ts:12",
-          "errorMessage": "transaction verification failed: {\"txn\":\"mbrPayment\",\"field\":\"amount\",\"condition\":\"greaterThanEqualTo\",\"expected\":\">=globals.assetOptInMinBalance\"}",
-          "pc": [
-            110
-          ]
-        },
-        {
-          "teal": 103,
-          "source": "contracts/plugins/optin_plugin.algo.ts:16",
-          "pc": [
-            111
-          ]
-        },
-        {
-          "teal": 104,
-          "source": "contracts/plugins/optin_plugin.algo.ts:16",
-          "pc": [
-            112,
-            113
-          ]
-        },
-        {
-          "teal": 105,
-          "source": "contracts/plugins/optin_plugin.algo.ts:16",
-          "pc": [
-            114,
-            115
-          ]
-        },
-        {
-          "teal": 109,
-          "source": "contracts/plugins/optin_plugin.algo.ts:17",
-          "pc": [
-            116,
-            117
-          ]
-        },
-        {
-          "teal": 110,
-          "source": "contracts/plugins/optin_plugin.algo.ts:17",
-          "pc": [
-            118,
-            119
-          ]
-        },
-        {
-          "teal": 114,
-          "source": "contracts/plugins/optin_plugin.algo.ts:18",
-          "pc": [
-            120,
-            121
-          ]
-        },
-        {
-          "teal": 115,
-          "source": "contracts/plugins/optin_plugin.algo.ts:18",
-          "pc": [
-            122,
-            123
-          ]
-        },
-        {
-          "teal": 119,
-          "source": "contracts/plugins/optin_plugin.algo.ts:19",
-          "pc": [
-            124
-          ]
-        },
-        {
-          "teal": 120,
-          "source": "contracts/plugins/optin_plugin.algo.ts:19",
-          "pc": [
-            125,
-            126
-          ]
-        },
-        {
-          "teal": 124,
-          "source": "contracts/plugins/optin_plugin.algo.ts:20",
-          "pc": [
-            127,
-            128
-          ]
-        },
-        {
-          "teal": 125,
-          "source": "contracts/plugins/optin_plugin.algo.ts:20",
-          "pc": [
-            129,
-            130
-          ]
-        },
-        {
-          "teal": 129,
-          "source": "contracts/plugins/optin_plugin.algo.ts:21",
-          "pc": [
-            131,
-            132
-          ]
-        },
-        {
-          "teal": 130,
-          "source": "contracts/plugins/optin_plugin.algo.ts:21",
-          "pc": [
-            133,
-            134
-          ]
-        },
-        {
-          "teal": 131,
-          "source": "contracts/plugins/optin_plugin.algo.ts:21",
-          "pc": [
-            135
-          ]
-        },
-        {
-          "teal": 132,
-          "source": "contracts/plugins/optin_plugin.algo.ts:21",
-          "pc": [
-            136,
-            137
-          ]
-        },
-        {
-          "teal": 135,
-          "source": "contracts/plugins/optin_plugin.algo.ts:16",
-          "pc": [
-            138
-          ]
-        },
-        {
-          "teal": 136,
-          "source": "contracts/plugins/optin_plugin.algo.ts:16",
-          "pc": [
-            139,
-            140
-          ]
-        },
-        {
-          "teal": 139,
-          "source": "contracts/plugins/optin_plugin.algo.ts:16",
-          "pc": [
-            141
-          ]
-        },
-        {
-          "teal": 140,
-          "source": "contracts/plugins/optin_plugin.algo.ts:6",
-          "pc": [
-            142
-          ]
-        },
-        {
-          "teal": 143,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            143
-          ]
-        },
-        {
-          "teal": 144,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            144
-          ]
-        },
-        {
-          "teal": 147,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            145,
-            146,
-            147,
-            148,
-            149,
-            150
-          ]
-        },
-        {
-          "teal": 148,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            151,
-            152,
-            153
-          ]
-        },
-        {
-          "teal": 149,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            154,
-            155,
-            156,
-            157
-          ]
-        },
-        {
-          "teal": 152,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "errorMessage": "this contract does not implement the given ABI method for create NoOp",
-          "pc": [
-            158
-          ]
-        },
-        {
-          "teal": 155,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            159,
-            160,
-            161,
-            162,
-            163,
-            164
-          ]
-        },
-        {
-          "teal": 156,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            165,
-            166,
-            167
-          ]
-        },
-        {
-          "teal": 157,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "pc": [
-            168,
-            169,
-            170,
-            171
-          ]
-        },
-        {
-          "teal": 160,
-          "source": "contracts/plugins/optin_plugin.algo.ts:3",
-          "errorMessage": "this contract does not implement the given ABI method for call NoOp",
-          "pc": [
-            172
-          ]
+    "sourceInfo": {
+        "approval": {
+            "sourceInfo": [
+                {
+                    "pc": [
+                        36,
+                        67
+                    ],
+                    "errorMessage": "OnCompletion is not NoOp"
+                },
+                {
+                    "pc": [
+                        126
+                    ],
+                    "errorMessage": "application exists"
+                },
+                {
+                    "pc": [
+                        110
+                    ],
+                    "errorMessage": "asset mismatch"
+                },
+                {
+                    "pc": [
+                        71
+                    ],
+                    "errorMessage": "can only call when creating"
+                },
+                {
+                    "pc": [
+                        39
+                    ],
+                    "errorMessage": "can only call when not creating"
+                },
+                {
+                    "pc": [
+                        58
+                    ],
+                    "errorMessage": "transaction type is pay"
+                }
+            ],
+            "pcOffsetMethod": "none"
+        },
+        "clear": {
+            "sourceInfo": [],
+            "pcOffsetMethod": "none"
         }
-      ],
-      "pcOffsetMethod": "none"
     },
-    "clear": {
-      "sourceInfo": [],
-      "pcOffsetMethod": "none"
-    }
-  },
-  "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayAxIDAKCi8vIFRoaXMgVEVBTCB3YXMgZ2VuZXJhdGVkIGJ5IFRFQUxTY3JpcHQgdjAuMTA2LjIKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbGVtZW50ZWQgaW4gdGhlIGNvbnRyYWN0LCBpdHMgcmVzcGVjdGl2ZSBicmFuY2ggd2lsbCBiZSAiKk5PVF9JTVBMRU1FTlRFRCIgd2hpY2gganVzdCBjb250YWlucyAiZXJyIgp0eG4gQXBwbGljYXRpb25JRAohCnB1c2hpbnQgNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggKmNhbGxfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKmNyZWF0ZV9Ob09wICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRAoKKk5PVF9JTVBMRU1FTlRFRDoKCS8vIFRoZSByZXF1ZXN0ZWQgYWN0aW9uIGlzIG5vdCBpbXBsZW1lbnRlZCBpbiB0aGlzIGNvbnRyYWN0LiBBcmUgeW91IHVzaW5nIHRoZSBjb3JyZWN0IE9uQ29tcGxldGU/IERpZCB5b3Ugc2V0IHlvdXIgYXBwIElEPwoJZXJyCgovLyBvcHRJblRvQXNzZXQodWludDY0LHVpbnQ2NCxwYXkpdm9pZAoqYWJpX3JvdXRlX29wdEluVG9Bc3NldDoKCS8vIG1iclBheW1lbnQ6IHBheQoJdHhuIEdyb3VwSW5kZXgKCWludGMgMCAvLyAxCgktCglkdXAKCWd0eG5zIFR5cGVFbnVtCglpbnRjIDAgLy8gIHBheQoJPT0KCgkvLyBhcmd1bWVudCAwIChtYnJQYXltZW50KSBmb3Igb3B0SW5Ub0Fzc2V0IG11c3QgYmUgYSBwYXkgdHJhbnNhY3Rpb24KCWFzc2VydAoKCS8vIGFzc2V0OiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWJ0b2kKCgkvLyBzZW5kZXI6IHVpbnQ2NAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoKCS8vIGV4ZWN1dGUgb3B0SW5Ub0Fzc2V0KHVpbnQ2NCx1aW50NjQscGF5KXZvaWQKCWNhbGxzdWIgb3B0SW5Ub0Fzc2V0CglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBvcHRJblRvQXNzZXQoc2VuZGVyOiBBcHBJRCwgYXNzZXQ6IEFzc2V0SUQsIG1iclBheW1lbnQ6IFBheVR4bik6IHZvaWQKb3B0SW5Ub0Fzc2V0OgoJcHJvdG8gMyAwCgoJLy8gUHVzaCBlbXB0eSBieXRlcyBhZnRlciB0aGUgZnJhbWUgcG9pbnRlciB0byByZXNlcnZlIHNwYWNlIGZvciBsb2NhbCB2YXJpYWJsZXMKCXB1c2hieXRlcyAweAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL29wdGluX3BsdWdpbi5hbGdvLnRzOjcKCS8vIGNvbnRyb2xsZWRBY2NvdW50ID0gc2VuZGVyLmdsb2JhbFN0YXRlKCdjb250cm9sbGVkX2FkZHJlc3MnKSBhcyBBZGRyZXNzCglmcmFtZV9kaWcgLTEgLy8gc2VuZGVyOiBBcHBJRAoJcHVzaGJ5dGVzIDB4NjM2ZjZlNzQ3MjZmNmM2YzY1NjQ1ZjYxNjQ2NDcyNjU3MzczIC8vICJjb250cm9sbGVkX2FkZHJlc3MiCglhcHBfZ2xvYmFsX2dldF9leAoKCS8vIGdsb2JhbCBzdGF0ZSB2YWx1ZSBkb2VzIG5vdCBleGlzdDogc2VuZGVyLmdsb2JhbFN0YXRlKCdjb250cm9sbGVkX2FkZHJlc3MnKQoJYXNzZXJ0CglmcmFtZV9idXJ5IDAgLy8gY29udHJvbGxlZEFjY291bnQ6IGFkZHJlc3MKCgkvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czo5CgkvLyB2ZXJpZnlQYXlUeG4obWJyUGF5bWVudCwgewoJLy8gICAgICAgcmVjZWl2ZXI6IGNvbnRyb2xsZWRBY2NvdW50LAoJLy8gICAgICAgYW1vdW50OiB7CgkvLyAgICAgICAgIGdyZWF0ZXJUaGFuRXF1YWxUbzogZ2xvYmFscy5hc3NldE9wdEluTWluQmFsYW5jZSwKCS8vICAgICAgIH0sCgkvLyAgICAgfSkKCS8vIHZlcmlmeSByZWNlaXZlcgoJZnJhbWVfZGlnIC0zIC8vIG1iclBheW1lbnQ6IFBheVR4bgoJZ3R4bnMgUmVjZWl2ZXIKCWZyYW1lX2RpZyAwIC8vIGNvbnRyb2xsZWRBY2NvdW50OiBhZGRyZXNzCgk9PQoKCS8vIHRyYW5zYWN0aW9uIHZlcmlmaWNhdGlvbiBmYWlsZWQ6IHsidHhuIjoibWJyUGF5bWVudCIsImZpZWxkIjoicmVjZWl2ZXIiLCJleHBlY3RlZCI6ImNvbnRyb2xsZWRBY2NvdW50In0KCWFzc2VydAoKCS8vIHZlcmlmeSBhbW91bnQKCWZyYW1lX2RpZyAtMyAvLyBtYnJQYXltZW50OiBQYXlUeG4KCWd0eG5zIEFtb3VudAoJZ2xvYmFsIEFzc2V0T3B0SW5NaW5CYWxhbmNlCgk+PQoKCS8vIHRyYW5zYWN0aW9uIHZlcmlmaWNhdGlvbiBmYWlsZWQ6IHsidHhuIjoibWJyUGF5bWVudCIsImZpZWxkIjoiYW1vdW50IiwiY29uZGl0aW9uIjoiZ3JlYXRlclRoYW5FcXVhbFRvIiwiZXhwZWN0ZWQiOiI+PWdsb2JhbHMuYXNzZXRPcHRJbk1pbkJhbGFuY2UifQoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MTYKCS8vIHNlbmRBc3NldFRyYW5zZmVyKHsKCS8vICAgICAgIHNlbmRlcjogY29udHJvbGxlZEFjY291bnQsCgkvLyAgICAgICBhc3NldFJlY2VpdmVyOiBjb250cm9sbGVkQWNjb3VudCwKCS8vICAgICAgIGFzc2V0QW1vdW50OiAwLAoJLy8gICAgICAgeGZlckFzc2V0OiBhc3NldCwKCS8vICAgICAgIHJla2V5VG86IHNlbmRlci5hZGRyZXNzLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglwdXNoaW50IDQgLy8gYXhmZXIKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czoxNwoJLy8gc2VuZGVyOiBjb250cm9sbGVkQWNjb3VudAoJZnJhbWVfZGlnIDAgLy8gY29udHJvbGxlZEFjY291bnQ6IGFkZHJlc3MKCWl0eG5fZmllbGQgU2VuZGVyCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MTgKCS8vIGFzc2V0UmVjZWl2ZXI6IGNvbnRyb2xsZWRBY2NvdW50CglmcmFtZV9kaWcgMCAvLyBjb250cm9sbGVkQWNjb3VudDogYWRkcmVzcwoJaXR4bl9maWVsZCBBc3NldFJlY2VpdmVyCgoJLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MTkKCS8vIGFzc2V0QW1vdW50OiAwCglpbnRjIDEgLy8gMAoJaXR4bl9maWVsZCBBc3NldEFtb3VudAoKCS8vIGNvbnRyYWN0cy9wbHVnaW5zL29wdGluX3BsdWdpbi5hbGdvLnRzOjIwCgkvLyB4ZmVyQXNzZXQ6IGFzc2V0CglmcmFtZV9kaWcgLTIgLy8gYXNzZXQ6IEFzc2V0SUQKCWl0eG5fZmllbGQgWGZlckFzc2V0CgoJLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6MjEKCS8vIHJla2V5VG86IHNlbmRlci5hZGRyZXNzCglmcmFtZV9kaWcgLTEgLy8gc2VuZGVyOiBBcHBJRAoJYXBwX3BhcmFtc19nZXQgQXBwQWRkcmVzcwoJcG9wCglpdHhuX2ZpZWxkIFJla2V5VG8KCgkvLyBGZWUgZmllbGQgbm90IHNldCwgZGVmYXVsdGluZyB0byAwCglpbnRjIDEgLy8gMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglyZXRzdWIKCiphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CglpbnRjIDAgLy8gMQoJcmV0dXJuCgoqY3JlYXRlX05vT3A6CglwdXNoYnl0ZXMgMHhiODQ0N2IzNiAvLyBtZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9jcmVhdGVBcHBsaWNhdGlvbgoKCS8vIHRoaXMgY29udHJhY3QgZG9lcyBub3QgaW1wbGVtZW50IHRoZSBnaXZlbiBBQkkgbWV0aG9kIGZvciBjcmVhdGUgTm9PcAoJZXJyCgoqY2FsbF9Ob09wOgoJcHVzaGJ5dGVzIDB4ZTExOGQ3YWYgLy8gbWV0aG9kICJvcHRJblRvQXNzZXQodWludDY0LHVpbnQ2NCxwYXkpdm9pZCIKCXR4bmEgQXBwbGljYXRpb25BcmdzIDAKCW1hdGNoICphYmlfcm91dGVfb3B0SW5Ub0Fzc2V0CgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNhbGwgTm9PcAoJZXJy",
-    "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
-  },
-  "byteCode": {
-    "approval": "CiACAQAxGBSBBgsxGQiNDAB3AAAAAAAAAAAAAABpAAAAAAAAAAAAAAAxFiIJSTgQIhJENhoCFzYaAReIAAIiQ4oDAIAAi/+AEmNvbnRyb2xsZWRfYWRkcmVzc2VEjACL/TgHiwASRIv9OAgyEA9EsYEEshCLALIAiwCyFCOyEov+shGL/3IISLIgI7IBs4kiQ4AEuER7NjYaAI4B//EAgAThGNevNhoAjgH/fQA=",
-    "clear": "Cg=="
-  },
-  "compilerInfo": {
-    "compiler": "algod",
-    "compilerVersion": {
-      "major": 4,
-      "minor": 0,
-      "patch": 2,
-      "commitHash": "6b940281"
-    }
-  }
+    "source": {
+        "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYXJjNC9pbmRleC5kLnRzOjpDb250cmFjdC5hcHByb3ZhbFByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBpbnRjYmxvY2sgMCAxCiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czozCiAgICAvLyBleHBvcnQgY2xhc3MgT3B0SW5QbHVnaW4gZXh0ZW5kcyBDb250cmFjdCB7CiAgICB0eG4gTnVtQXBwQXJncwogICAgYnogbWFpbl9hZnRlcl9pZl9lbHNlQDgKICAgIHB1c2hieXRlc3MgMHhiODQ0N2IzNiAweGJmY2JlZWU5IC8vIG1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiLCBtZXRob2QgIm9wdEluVG9Bc3NldCh1aW50NjQsYm9vbCx1aW50NjQscGF5KXZvaWQiCiAgICB0eG5hIEFwcGxpY2F0aW9uQXJncyAwCiAgICBtYXRjaCBtYWluX2NyZWF0ZUFwcGxpY2F0aW9uX3JvdXRlQDMgbWFpbl9vcHRJblRvQXNzZXRfcm91dGVANAoKbWFpbl9hZnRlcl9pZl9lbHNlQDg6CiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czozCiAgICAvLyBleHBvcnQgY2xhc3MgT3B0SW5QbHVnaW4gZXh0ZW5kcyBDb250cmFjdCB7CiAgICBpbnRjXzAgLy8gMAogICAgcmV0dXJuCgptYWluX29wdEluVG9Bc3NldF9yb3V0ZUA0OgogICAgLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6OAogICAgLy8gb3B0SW5Ub0Fzc2V0KHNlbmRlcjogYXJjNC5VaW50TjY0LCByZWtleUJhY2s6IGFyYzQuQm9vbCwgYXNzZXQ6IGFyYzQuVWludE42NCwgbWJyUGF5bWVudDogZ3R4bi5QYXltZW50VHhuKTogdm9pZCB7CiAgICB0eG4gT25Db21wbGV0aW9uCiAgICAhCiAgICBhc3NlcnQgLy8gT25Db21wbGV0aW9uIGlzIG5vdCBOb09wCiAgICB0eG4gQXBwbGljYXRpb25JRAogICAgYXNzZXJ0IC8vIGNhbiBvbmx5IGNhbGwgd2hlbiBub3QgY3JlYXRpbmcKICAgIC8vIGNvbnRyYWN0cy9wbHVnaW5zL29wdGluX3BsdWdpbi5hbGdvLnRzOjMKICAgIC8vIGV4cG9ydCBjbGFzcyBPcHRJblBsdWdpbiBleHRlbmRzIENvbnRyYWN0IHsKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDEKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDIKICAgIHR4bmEgQXBwbGljYXRpb25BcmdzIDMKICAgIHR4biBHcm91cEluZGV4CiAgICBpbnRjXzEgLy8gMQogICAgLQogICAgZHVwCiAgICBndHhucyBUeXBlRW51bQogICAgaW50Y18xIC8vIHBheQogICAgPT0KICAgIGFzc2VydCAvLyB0cmFuc2FjdGlvbiB0eXBlIGlzIHBheQogICAgLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6OAogICAgLy8gb3B0SW5Ub0Fzc2V0KHNlbmRlcjogYXJjNC5VaW50TjY0LCByZWtleUJhY2s6IGFyYzQuQm9vbCwgYXNzZXQ6IGFyYzQuVWludE42NCwgbWJyUGF5bWVudDogZ3R4bi5QYXltZW50VHhuKTogdm9pZCB7CiAgICBjYWxsc3ViIG9wdEluVG9Bc3NldAogICAgaW50Y18xIC8vIDEKICAgIHJldHVybgoKbWFpbl9jcmVhdGVBcHBsaWNhdGlvbl9yb3V0ZUAzOgogICAgLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6NQogICAgLy8gQGFiaW1ldGhvZCh7IG9uQ3JlYXRlOiAncmVxdWlyZScgfSkKICAgIHR4biBPbkNvbXBsZXRpb24KICAgICEKICAgIGFzc2VydCAvLyBPbkNvbXBsZXRpb24gaXMgbm90IE5vT3AKICAgIHR4biBBcHBsaWNhdGlvbklECiAgICAhCiAgICBhc3NlcnQgLy8gY2FuIG9ubHkgY2FsbCB3aGVuIGNyZWF0aW5nCiAgICBpbnRjXzEgLy8gMQogICAgcmV0dXJuCgoKLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6Ok9wdEluUGx1Z2luLm9wdEluVG9Bc3NldChzZW5kZXI6IGJ5dGVzLCByZWtleUJhY2s6IGJ5dGVzLCBhc3NldDogYnl0ZXMsIG1iclBheW1lbnQ6IHVpbnQ2NCkgLT4gdm9pZDoKb3B0SW5Ub0Fzc2V0OgogICAgLy8gY29udHJhY3RzL3BsdWdpbnMvb3B0aW5fcGx1Z2luLmFsZ28udHM6OAogICAgLy8gb3B0SW5Ub0Fzc2V0KHNlbmRlcjogYXJjNC5VaW50TjY0LCByZWtleUJhY2s6IGFyYzQuQm9vbCwgYXNzZXQ6IGFyYzQuVWludE42NCwgbWJyUGF5bWVudDogZ3R4bi5QYXltZW50VHhuKTogdm9pZCB7CiAgICBwcm90byA0IDAKICAgIC8vIGNvbnRyYWN0cy9wbHVnaW5zL29wdGluX3BsdWdpbi5hbGdvLnRzOjkKICAgIC8vIGNvbnN0IFtjb250cm9sbGVkQWNjb3VudEJ5dGVzXSA9IG9wLkFwcEdsb2JhbC5nZXRFeEJ5dGVzKHNlbmRlci5uYXRpdmUsIEJ5dGVzKCdjb250cm9sbGVkX2FkZHJlc3MnKSk7CiAgICBmcmFtZV9kaWcgLTQKICAgIGJ0b2kKICAgIGR1cAogICAgcHVzaGJ5dGVzICJjb250cm9sbGVkX2FkZHJlc3MiCiAgICBhcHBfZ2xvYmFsX2dldF9leAogICAgcG9wCiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czoxNwogICAgLy8gYXNzZXJ0KG1iclBheW1lbnQuYW1vdW50ID49IEdsb2JhbC5hc3NldE9wdEluTWluQmFsYW5jZSwgJ2Fzc2V0IG1pc21hdGNoJyk7CiAgICBmcmFtZV9kaWcgLTEKICAgIGd0eG5zIEFtb3VudAogICAgZ2xvYmFsIEFzc2V0T3B0SW5NaW5CYWxhbmNlCiAgICA+PQogICAgYXNzZXJ0IC8vIGFzc2V0IG1pc21hdGNoCiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czoxOS0yOAogICAgLy8gaXR4bgogICAgLy8gICAuYXNzZXRUcmFuc2Zlcih7CiAgICAvLyAgICAgc2VuZGVyOiBjb250cm9sbGVkQWNjb3VudCwKICAgIC8vICAgICBhc3NldFJlY2VpdmVyOiBjb250cm9sbGVkQWNjb3VudCwKICAgIC8vICAgICBhc3NldEFtb3VudDogMCwKICAgIC8vICAgICB4ZmVyQXNzZXQ6IEFzc2V0KGFzc2V0Lm5hdGl2ZSksCiAgICAvLyAgICAgcmVrZXlUbzogcmVrZXlCYWNrLm5hdGl2ZSA/IEFwcGxpY2F0aW9uKHNlbmRlci5uYXRpdmUpLmFkZHJlc3MgOiBHbG9iYWwuemVyb0FkZHJlc3MsCiAgICAvLyAgICAgZmVlOiAwLAogICAgLy8gICB9KQogICAgLy8gICAuc3VibWl0KCk7CiAgICBpdHhuX2JlZ2luCiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czoyNAogICAgLy8geGZlckFzc2V0OiBBc3NldChhc3NldC5uYXRpdmUpLAogICAgZnJhbWVfZGlnIC0yCiAgICBidG9pCiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czoyNQogICAgLy8gcmVrZXlUbzogcmVrZXlCYWNrLm5hdGl2ZSA/IEFwcGxpY2F0aW9uKHNlbmRlci5uYXRpdmUpLmFkZHJlc3MgOiBHbG9iYWwuemVyb0FkZHJlc3MsCiAgICBmcmFtZV9kaWcgLTMKICAgIGludGNfMCAvLyAwCiAgICBnZXRiaXQKICAgIGJ6IG9wdEluVG9Bc3NldF90ZXJuYXJ5X2ZhbHNlQDIKICAgIGZyYW1lX2RpZyAwCiAgICBhcHBfcGFyYW1zX2dldCBBcHBBZGRyZXNzCiAgICBhc3NlcnQgLy8gYXBwbGljYXRpb24gZXhpc3RzCgpvcHRJblRvQXNzZXRfdGVybmFyeV9tZXJnZUAzOgogICAgaXR4bl9maWVsZCBSZWtleVRvCiAgICBmcmFtZV9kaWcgMgogICAgaXR4bl9maWVsZCBYZmVyQXNzZXQKICAgIC8vIGNvbnRyYWN0cy9wbHVnaW5zL29wdGluX3BsdWdpbi5hbGdvLnRzOjIzCiAgICAvLyBhc3NldEFtb3VudDogMCwKICAgIGludGNfMCAvLyAwCiAgICBpdHhuX2ZpZWxkIEFzc2V0QW1vdW50CiAgICBmcmFtZV9kaWcgMQogICAgZHVwCiAgICBpdHhuX2ZpZWxkIEFzc2V0UmVjZWl2ZXIKICAgIGl0eG5fZmllbGQgU2VuZGVyCiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czoxOS0yNwogICAgLy8gaXR4bgogICAgLy8gICAuYXNzZXRUcmFuc2Zlcih7CiAgICAvLyAgICAgc2VuZGVyOiBjb250cm9sbGVkQWNjb3VudCwKICAgIC8vICAgICBhc3NldFJlY2VpdmVyOiBjb250cm9sbGVkQWNjb3VudCwKICAgIC8vICAgICBhc3NldEFtb3VudDogMCwKICAgIC8vICAgICB4ZmVyQXNzZXQ6IEFzc2V0KGFzc2V0Lm5hdGl2ZSksCiAgICAvLyAgICAgcmVrZXlUbzogcmVrZXlCYWNrLm5hdGl2ZSA/IEFwcGxpY2F0aW9uKHNlbmRlci5uYXRpdmUpLmFkZHJlc3MgOiBHbG9iYWwuemVyb0FkZHJlc3MsCiAgICAvLyAgICAgZmVlOiAwLAogICAgLy8gICB9KQogICAgcHVzaGludCA0IC8vIDQKICAgIGl0eG5fZmllbGQgVHlwZUVudW0KICAgIC8vIGNvbnRyYWN0cy9wbHVnaW5zL29wdGluX3BsdWdpbi5hbGdvLnRzOjI2CiAgICAvLyBmZWU6IDAsCiAgICBpbnRjXzAgLy8gMAogICAgaXR4bl9maWVsZCBGZWUKICAgIC8vIGNvbnRyYWN0cy9wbHVnaW5zL29wdGluX3BsdWdpbi5hbGdvLnRzOjE5LTI4CiAgICAvLyBpdHhuCiAgICAvLyAgIC5hc3NldFRyYW5zZmVyKHsKICAgIC8vICAgICBzZW5kZXI6IGNvbnRyb2xsZWRBY2NvdW50LAogICAgLy8gICAgIGFzc2V0UmVjZWl2ZXI6IGNvbnRyb2xsZWRBY2NvdW50LAogICAgLy8gICAgIGFzc2V0QW1vdW50OiAwLAogICAgLy8gICAgIHhmZXJBc3NldDogQXNzZXQoYXNzZXQubmF0aXZlKSwKICAgIC8vICAgICByZWtleVRvOiByZWtleUJhY2submF0aXZlID8gQXBwbGljYXRpb24oc2VuZGVyLm5hdGl2ZSkuYWRkcmVzcyA6IEdsb2JhbC56ZXJvQWRkcmVzcywKICAgIC8vICAgICBmZWU6IDAsCiAgICAvLyAgIH0pCiAgICAvLyAgIC5zdWJtaXQoKTsKICAgIGl0eG5fc3VibWl0CiAgICByZXRzdWIKCm9wdEluVG9Bc3NldF90ZXJuYXJ5X2ZhbHNlQDI6CiAgICAvLyBjb250cmFjdHMvcGx1Z2lucy9vcHRpbl9wbHVnaW4uYWxnby50czoyNQogICAgLy8gcmVrZXlUbzogcmVrZXlCYWNrLm5hdGl2ZSA/IEFwcGxpY2F0aW9uKHNlbmRlci5uYXRpdmUpLmFkZHJlc3MgOiBHbG9iYWwuemVyb0FkZHJlc3MsCiAgICBnbG9iYWwgWmVyb0FkZHJlc3MKICAgIGIgb3B0SW5Ub0Fzc2V0X3Rlcm5hcnlfbWVyZ2VAMwo=",
+        "clear": "I3ByYWdtYSB2ZXJzaW9uIDEwCiNwcmFnbWEgdHlwZXRyYWNrIGZhbHNlCgovLyBAYWxnb3JhbmRmb3VuZGF0aW9uL2FsZ29yYW5kLXR5cGVzY3JpcHQvYmFzZS1jb250cmFjdC5kLnRzOjpCYXNlQ29udHJhY3QuY2xlYXJTdGF0ZVByb2dyYW0oKSAtPiB1aW50NjQ6Cm1haW46CiAgICBwdXNoaW50IDEgLy8gMQogICAgcmV0dXJuCg=="
+    },
+    "byteCode": {
+        "approval": "CiACAAExG0EAFYICBLhEezYEv8vu6TYaAI4CACEAAiJDMRkURDEYRDYaATYaAjYaAzEWIwlJOBAjEkSIAAwjQzEZFEQxGBREI0OKBACL/BdJgBJjb250cm9sbGVkX2FkZHJlc3NlSIv/OAgyEA9EsYv+F4v9IlNBAB6LAHIIRLIgiwKyESKyEosBSbIUsgCBBLIQIrIBs4kyA0L/4g==",
+        "clear": "CoEBQw=="
+    },
+    "compilerInfo": {
+        "compiler": "puya",
+        "compilerVersion": {
+            "major": 4,
+            "minor": 4,
+            "patch": 4
+        }
+    },
+    "events": [],
+    "templateVariables": {}
 }
