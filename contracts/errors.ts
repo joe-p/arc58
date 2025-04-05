@@ -1,3 +1,4 @@
+export const ERR_ONLY_CREATOR_CAN_REKEY = 'only the creator can rekey a spend contract'
 export const ERR_SENDER_MUST_BE_ADMIN_OR_CONTROLLED_ADDRESS = 'sender must be either controlledAddress or admin'
 export const ERR_ADMIN_ONLY = 'admin only'
 export const ERR_ADMIN_CANNOT_BE_CONTROLLED = 'admin and controlled address cannot be the same'

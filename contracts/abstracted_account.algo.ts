@@ -1,7 +1,13 @@
 import { Contract, GlobalState, BoxMap, assert, arc4, uint64, Account, TransactionType, Application, abimethod, gtxn, itxn, OnCompleteAction } from '@algorandfoundation/algorand-typescript'
 import { methodSelector } from '@algorandfoundation/algorand-typescript/arc4';
 import { btoi, Global, len, Txn } from '@algorandfoundation/algorand-typescript/op'
-import { ERR_ADMIN_ONLY, ERR_CANNOT_CALL_OTHER_APPS_DURING_REKEY, ERR_INVALID_METHOD_SIGNATURE_LENGTH, ERR_INVALID_ONCOMPLETE, ERR_INVALID_PLUGIN_CALL, ERR_INVALID_SENDER_ARG, ERR_INVALID_SENDER_VALUE, ERR_MALFORMED_OFFSETS, ERR_METHOD_ON_COOLDOWN, ERR_MISSING_REKEY_BACK, ERR_ONLY_ADMIN_CAN_CHANGE_ADMIN, ERR_PLUGIN_DOES_NOT_EXIST, ERR_PLUGIN_EXPIRED, ERR_PLUGIN_ON_COOLDOWN, ERR_SENDER_MUST_BE_ADMIN_OR_CONTROLLED_ADDRESS, ERR_SENDER_MUST_BE_ADMIN_PLUGIN, ERR_ZERO_ADDRESS_DELEGATION_TYPE } from './errors';
+import { ERR_ADMIN_ONLY, ERR_CANNOT_CALL_OTHER_APPS_DURING_REKEY, ERR_INVALID_METHOD_SIGNATURE_LENGTH, ERR_INVALID_ONCOMPLETE, ERR_INVALID_PLUGIN_CALL, ERR_INVALID_SENDER_ARG, ERR_INVALID_SENDER_VALUE, ERR_MALFORMED_OFFSETS, ERR_METHOD_ON_COOLDOWN, ERR_MISSING_REKEY_BACK, ERR_ONLY_ADMIN_CAN_CHANGE_ADMIN, ERR_ONLY_CREATOR_CAN_REKEY, ERR_PLUGIN_DOES_NOT_EXIST, ERR_PLUGIN_EXPIRED, ERR_PLUGIN_ON_COOLDOWN, ERR_SENDER_MUST_BE_ADMIN_OR_CONTROLLED_ADDRESS, ERR_SENDER_MUST_BE_ADMIN_PLUGIN, ERR_ZERO_ADDRESS_DELEGATION_TYPE } from './errors';
+
+export class SpendPermissions extends arc4.Struct<{
+  // mechanism?: 'absolute' | 'window' | 'cumulative'?
+  // which assets is it allowed to touch?
+
+}> { }
 
 export class PluginsKey extends arc4.Struct<{
   /** The application containing plugin logic */
@@ -15,16 +21,18 @@ export const DelegationTypeAgent = new arc4.UintN8(2)
 export const DelegationTypeOther = new arc4.UintN8(3)
 
 export class PluginInfo extends arc4.Struct<{
+  /** Whether the plugin has permissions to change the admin account */
+  adminPrivileges: arc4.Bool;
   /** the type of delegation the plugin is using */
   delegationType: arc4.UintN8;
+  /** the spending account for the plugin */
+  spendingAccount: arc4.Address;
   /** The last round at which this plugin can be called */
   lastValidRound: arc4.UintN64;
   /** The number of rounds that must pass before the plugin can be called again */
   cooldown: arc4.UintN64;
   /** The last round the plugin was called */
   lastCalled: arc4.UintN64;
-  /** Whether the plugin has permissions to change the admin account */
-  adminPrivileges: arc4.Bool;
   /** The methods that are allowed to be called for the plugin by the address */
   methods: arc4.DynamicArray<MethodInfo>;
 }> { }
@@ -72,16 +80,40 @@ type FullPluginValidation = {
   valid: boolean;
 }
 
+export class SpendContract extends Contract {
+  rekey(): void {
+    assert(Txn.sender === Global.creatorAddress, ERR_ONLY_CREATOR_CAN_REKEY)
+
+    itxn
+      .payment({
+        amount: 0,
+        rekeyTo: Global.creatorAddress,
+        fee: 0,
+      })
+      .submit()
+  }
+}
+
 export class AbstractedAccount extends Contract {
 
   /** The admin of the abstracted account. This address can add plugins and initiate rekeys */
-  admin = GlobalState<Account>({ key: 'admin' });
+  admin = GlobalState<Account>({ key: 'admin' })
   /** The address this app controls */
   controlledAddress = GlobalState<Account>({ key: 'controlled_address' });
   /** The last time the contract was interacted with in unix time */
   lastUserInteraction = GlobalState<uint64>({ key: 'last_user_interaction' })
   /** The last time state has changed on the abstracted account (not including lastCalled for cooldowns) in unix time */
   lastChange = GlobalState<uint64>({ key: 'last_change' })
+
+  /**
+   * TEMPORARY STATE FIELDS
+   * 
+   * These are global state fields that are used for sharing metadata about usage
+   * of the smart wallet and cleared before the end of the group
+   */
+
+  /** The spending address for the currently active plugin */
+  activeSpendingAddress = GlobalState<uint64>({ key: 'active_spending_address' })
 
   /**
    * Plugins that add functionality to the controlledAddress and the account that has permission to use it.
@@ -609,7 +641,7 @@ export class AbstractedAccount extends Contract {
     const key = new PluginsKey({ application: app, allowedCaller: allowedCaller });
     assert(this.plugins(key).exists, ERR_PLUGIN_DOES_NOT_EXIST);
     this.plugins(key).delete();
-    
+
     this.updateLastUserInteraction();
     this.updateLastChange();
   }
