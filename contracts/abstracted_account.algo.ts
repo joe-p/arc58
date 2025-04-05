@@ -126,7 +126,7 @@ export class AbstractedAccount extends Contract {
   }
 
   private txnRekeysBack(txn: gtxn.Transaction): boolean {
-    if (txn.sender === Global.currentApplicationAddress && txn.rekeyTo === Global.currentApplicationAddress) {
+    if (txn.sender === this.controlledAddress.value && txn.rekeyTo === Global.currentApplicationAddress) {
       return true;
     }
 
