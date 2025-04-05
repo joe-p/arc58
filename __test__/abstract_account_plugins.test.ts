@@ -117,6 +117,8 @@ describe('Abstracted Subscription Program', () => {
           app: subPluginID,
           // Set address to ZERO_ADDRESS so anyone can call it
           allowedCaller: ZERO_ADDRESS,
+          // Delegation type of other
+          delegationType: 3,
           // Set end to maxUint64 so it never expires
           lastValidRound: maxUint64,
           // Set cooldown to 0 so it can always be called
@@ -237,6 +239,7 @@ describe('Abstracted Subscription Program', () => {
           name: 'optIn',
           app: optInPluginID,
           allowedCaller: ZERO_ADDRESS,
+          delegationType: 3,
           lastValidRound: maxUint64,
           cooldown: 0,
           adminPrivileges: false,

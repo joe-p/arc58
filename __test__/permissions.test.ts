@@ -1,12 +1,56 @@
-import { describe, test, beforeAll, beforeEach, expect, afterEach } from '@jest/globals';
+import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import algosdk, { makeBasicAccountTransactionSigner } from 'algosdk';
 import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
 import { OptInPluginClient, OptInPluginFactory } from '../contracts/clients/OptInPluginClient';
+import fs from "node:fs";
+import { ERR_CANNOT_CALL_OTHER_APPS_DURING_REKEY, ERR_MALFORMED_OFFSETS, ERR_METHOD_ON_COOLDOWN, ERR_PLUGIN_DOES_NOT_EXIST, ERR_PLUGIN_EXPIRED, ERR_PLUGIN_ON_COOLDOWN } from '../contracts/errors';
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
+const PluginInfoAbiType = algosdk.ABIType.from('(uint8,uint64,uint64,uint64,bool,(byte[4],uint64,uint64)[])')
+type PluginInfoTuple = [number, number, number, number, boolean, [string, number, number][]]
 algokit.Config.configure({ populateAppCallResources: true });
+
+function getPCFromThrow(error: string): number {
+  const index = error.indexOf('pc=')
+  if (index < 0) {
+    throw new Error('cant find pc')
+  }
+
+  const period = error.indexOf('.', (index + 3))
+
+  return Number(error.slice((index + 3), period))
+}
+
+function getErrorStringFromPC(pc: number): string {
+  const puyaMapJSON = fs.readFileSync("contracts/artifacts/AbstractedAccount.approval.puya.map", "utf-8");
+  const puyaMap = JSON.parse(puyaMapJSON)
+  if (!('pc_events' in puyaMap)) {
+    throw new Error('pc_events not found')
+  }
+
+  if (!('op_pc_offset' in puyaMap)) {
+    throw new Error('op_pc_offset not found')
+  }
+
+  pc += puyaMap['op_pc_offset']
+
+  if (!(pc in puyaMap['pc_events'])) {
+    throw new Error('pc not found in events')
+  }
+  
+  if (!('error' in puyaMap['pc_events'][String(pc)])) {
+    throw new Error('error not found in pc map')
+  }
+  
+  return puyaMap['pc_events'][String(pc)]['error']
+}
+
+function pcError(error: string): string {
+  const pc = getPCFromThrow(error)
+  return getErrorStringFromPC(pc)
+}
 
 describe('ARC58 Plugin Permissions', () => {
   /** Alice's externally owned account (ie. a keypair account she has in Pera) */
@@ -142,6 +186,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: caller.addr,
+        delegationType: 3,
         cooldown: 0,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -153,6 +198,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
+        delegationType: 3,
         cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -170,12 +216,12 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
-    )) as [number, number, number, boolean, string[]];
+      PluginInfoAbiType
+    )) as PluginInfoTuple;
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
-    expect(globalPluginBox[2]).toBe(BigInt(round));
+    expect(globalPluginBox[3]).toBe(BigInt(round));
   });
 
   test('global valid, global is used', async () => {
@@ -187,6 +233,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
+        delegationType: 3,
         cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -204,12 +251,12 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
-    )) as [number, number, number, boolean, string[]];
+      PluginInfoAbiType
+    )) as PluginInfoTuple;
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
-    expect(globalPluginBox[2]).toBe(BigInt(round));
+    expect(globalPluginBox[3]).toBe(BigInt(round));
   });
 
   test('global does not exist, sender valid', async () => {
@@ -220,6 +267,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: caller.addr,
+        delegationType: 3,
         cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -237,12 +285,12 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(caller.addr).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool,byte[4][])')
-    )) as [number, number, number, boolean, string[]];
+      PluginInfoAbiType
+    )) as PluginInfoTuple;
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
-    expect(callerPluginBox[2]).toBe(BigInt(round));
+    expect(callerPluginBox[3]).toBe(BigInt(round));
   });
 
   test('global does not exist, sender valid, method allowed', async () => {
@@ -254,6 +302,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: caller.addr,
+        delegationType: 3,
         cooldown: 1,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -280,15 +329,15 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(caller.addr).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool,(byte[4],uint64,uint64)[])')
-    )) as [number, number, number, boolean, [string, number, number][]];
+      PluginInfoAbiType
+    )) as PluginInfoTuple;
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
-    expect(callerPluginBox[2]).toBe(BigInt(round));
+    expect(callerPluginBox[3]).toBe(BigInt(round));
   });
 
-  test('methods on cooldown, single group', async () => {
+  test('methods on cooldown', async () => {
     const { algorand } = fixture;
     const optInToAssetSelector = optInPluginClient.appClient.getABIMethod('optInToAsset').getSelector();
     await abstractedAccountClient.send.arc58AddPlugin({
@@ -297,6 +346,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
+        delegationType: 3,
         cooldown: 0,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -316,12 +366,12 @@ describe('ARC58 Plugin Permissions', () => {
           algosdk.decodeAddress(ZERO_ADDRESS).publicKey,
         ])
       ),
-      algosdk.ABIType.from('(uint64,uint64,uint64,bool,(byte[4],uint64,uint64)[])')
-    )) as [number, number, number, boolean, [string, number, number][]];
+      PluginInfoAbiType
+    )) as PluginInfoTuple;
 
     const round = (await algorand.client.algod.status().do())['last-round'];
 
-    expect(callerPluginBox[4][0][2]).toBe(BigInt(round));
+    expect(callerPluginBox[5][0][2]).toBe(BigInt(round));
 
     let error = 'no error';
     try {
@@ -330,8 +380,7 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=2395');
+    expect(pcError(error)).toMatch(ERR_METHOD_ON_COOLDOWN);
   });
 
   test('methods on cooldown, single group', async () => {
@@ -343,6 +392,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
+        delegationType: 3,
         cooldown: 0,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -426,8 +476,8 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=2395');
+    
+    expect(pcError(error)).toMatch(ERR_METHOD_ON_COOLDOWN);
   });
 
   test('plugins on cooldown', async () => {
@@ -437,6 +487,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: caller.addr,
+        delegationType: 3,
         cooldown: 100,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -454,8 +505,8 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=2158');
+    
+    expect(pcError(error)).toMatch(ERR_PLUGIN_ON_COOLDOWN);
   });
 
   test('neither sender nor global plugin exists', async () => {
@@ -467,8 +518,7 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=2134');
+    expect(pcError(error)).toMatch(ERR_PLUGIN_DOES_NOT_EXIST);
   });
 
   test('expired', async () => {
@@ -478,6 +528,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
+        delegationType: 3,
         cooldown: 0,
         lastValidRound: 1,
         adminPrivileges: false,
@@ -493,8 +544,8 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=2146');
+    
+    expect(pcError(error)).toMatch(ERR_PLUGIN_EXPIRED);
   });
 
   test('erroneous app call in sandwich', async () => {
@@ -504,6 +555,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
+        delegationType: 3,
         cooldown: 0,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -526,6 +578,7 @@ describe('ARC58 Plugin Permissions', () => {
         args: {
           app: plugin,
           allowedCaller: caller.addr,
+          delegationType: 3,
           cooldown: 0,
           lastValidRound: MAX_UINT64,
           adminPrivileges: false,
@@ -575,8 +628,8 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=2300');
+    
+    expect(pcError(error)).toMatch(ERR_CANNOT_CALL_OTHER_APPS_DURING_REKEY);
   });
 
   test('malformed methodOffsets', async () => {
@@ -586,6 +639,7 @@ describe('ARC58 Plugin Permissions', () => {
       args: {
         app: plugin,
         allowedCaller: ZERO_ADDRESS,
+        delegationType: 0,
         cooldown: 0,
         lastValidRound: MAX_UINT64,
         adminPrivileges: false,
@@ -602,7 +656,7 @@ describe('ARC58 Plugin Permissions', () => {
       error = e.message;
     }
 
-    // TODO: Parse this from src_map json
-    expect(error).toMatch('pc=902');
+    
+    expect(pcError(error)).toMatch(ERR_MALFORMED_OFFSETS);
   });
 });
