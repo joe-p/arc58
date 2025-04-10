@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "generate-client": "algokit generate client contracts/artifacts/ --language typescript  --output contracts/clients/{contract_name}Client.ts",
-    "compile-contracts": "puya-ts build contracts/*.algo.ts --out-dir ./artifacts && puya-ts build contracts/plugins/*.algo.ts --out-dir ./../artifacts",
+    "compile-contracts": "puya-ts build contracts/*.algo.ts --puya-path=puya --optimization-level=0 --output-ssa-ir --output-optimization-ir --out-dir ./artifacts && puya-ts build contracts/plugins/*.algo.ts --out-dir ./../artifacts",
     "generate-components": "algokit-generate-component contracts/artifacts/*.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contracts && npm run generate-client",
     "test": "npm run build && jest",
