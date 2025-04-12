@@ -5,8 +5,8 @@ export class OptInPlugin extends Contract {
   @abimethod({ onCreate: 'require' })
   createApplication(): void {}
 
-  optInToAsset(sender: arc4.UintN64, asset: arc4.UintN64, mbrPayment: gtxn.PaymentTxn): void {
-    const [controlledAccountBytes] = op.AppGlobal.getExBytes(Application(sender.native), Bytes('c'));
+  optInToAsset(sender: arc4.UintN64, rekeyBack: arc4.Bool, asset: arc4.UintN64, mbrPayment: gtxn.PaymentTxn): void {
+    const [controlledAccountBytes] = op.AppGlobal.getExBytes(sender.native, Bytes('controlled_address'));
     const controlledAccount = Account(Bytes(controlledAccountBytes));
     // verifyPayTxn(mbrPayment, {
     //   receiver: controlledAccount,
@@ -22,7 +22,7 @@ export class OptInPlugin extends Contract {
         assetReceiver: controlledAccount,
         assetAmount: 0,
         xferAsset: Asset(asset.native),
-        rekeyTo: Application(sender.native).address,
+        rekeyTo: rekeyBack.native ? Application(sender.native).address : Global.zeroAddress,
         fee: 0,
       })
       .submit();

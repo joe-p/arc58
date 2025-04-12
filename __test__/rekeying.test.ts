@@ -9,7 +9,7 @@ const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ
 const fixture = algorandFixture();
 
 describe('Rekeying Test', () => {
-  let algod: Algodv2;
+  // let algod: Algodv2;
   /** Alice's externally owned account (ie. a keypair account she has in Defly) */
   let aliceEOA: algosdk.Account;
   /** The address of Alice's new abstracted account. Sends app calls from aliceEOA unless otherwise specified */
@@ -24,7 +24,7 @@ describe('Rekeying Test', () => {
   beforeAll(async () => {
     await fixture.beforeEach();
     const { algorand, algod } = fixture.context;
-    suggestedParams = await algod.getTransactionParams().do();
+    suggestedParams = await algorand.getSuggestedParams();
     aliceEOA = await fixture.context.generateAccount({ initialFunds: microAlgos(100_000_000) });
 
     await algod.setBlockOffsetTimestamp(60).do();
@@ -34,12 +34,13 @@ describe('Rekeying Test', () => {
       defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
       algorand,
     });
-    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS } });
+    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS }});
 
     abstractedAccountClient = results.appClient;
     aliceAbstractedAccount = abstractedAccountClient.appAddress;
+
     // Fund the abstracted account with some ALGO to later spend
-    await abstractedAccountClient.appClient.fundAppAccount({ amount: algokit.microAlgos(50_000_000) });
+    await abstractedAccountClient.appClient.fundAppAccount({ amount: microAlgos(50_000_000) });
   });
 
   test('Alice does not rekey back to the app', async () => {

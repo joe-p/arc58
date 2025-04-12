@@ -1,0 +1,318 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1
+    bytecblock "plugin_id"
+
+main_block@0:
+
+main_block@1:
+    // contracts/abstracted_account.algo.ts:118
+    // export class SpendContract extends Contract {
+    txn NumAppArgs
+    intc_0 // 0
+    !=
+    bz main_bare_routing@9
+
+main_abi_routing@2:
+    // contracts/abstracted_account.algo.ts:118
+    // export class SpendContract extends Contract {
+    txna ApplicationArgs 0
+    pushbytes 0x973b616f // method "createApplication(uint64)void"
+    pushbytes 0x8f15b582 // method "rekey()void"
+    pushbytes 0x3ea11832 // method "optin(pay,uint64)void"
+    pushbytes 0x2487c32c // method "deleteApplication()void"
+    uncover 4
+    match main_createApplication_route@3 main_rekey_route@4 main_optin_route@5 main_deleteApplication_route@6
+
+main_switch_case_default@7:
+
+main_switch_case_next@8:
+
+main_after_if_else@10:
+    // contracts/abstracted_account.algo.ts:118
+    // export class SpendContract extends Contract {
+    intc_0 // 0
+
+main_after_inlined_contracts/abstracted_account.algo.ts::SpendContract.__puya_arc4_router__@11:
+    return
+
+main_deleteApplication_route@6:
+    // contracts/abstracted_account.algo.ts:164
+    // @abimethod({ allowActions: ['DeleteApplication'] })
+    txn OnCompletion
+    pushint 5 // DeleteApplication
+    ==
+    assert // OnCompletion is not DeleteApplication
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    callsub deleteApplication
+    intc_1 // 1
+    b main_after_inlined_contracts/abstracted_account.algo.ts::SpendContract.__puya_arc4_router__@11
+
+main_optin_route@5:
+    // contracts/abstracted_account.algo.ts:145
+    // optin(payment: gtxn.PaymentTxn, asset: uint64): void {
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/abstracted_account.algo.ts:118
+    // export class SpendContract extends Contract {
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    // contracts/abstracted_account.algo.ts:145
+    // optin(payment: gtxn.PaymentTxn, asset: uint64): void {
+    callsub optin
+    intc_1 // 1
+    b main_after_inlined_contracts/abstracted_account.algo.ts::SpendContract.__puya_arc4_router__@11
+
+main_rekey_route@4:
+    // contracts/abstracted_account.algo.ts:128
+    // rekey(): void {
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    callsub rekey
+    intc_1 // 1
+    b main_after_inlined_contracts/abstracted_account.algo.ts::SpendContract.__puya_arc4_router__@11
+
+main_createApplication_route@3:
+    // contracts/abstracted_account.algo.ts:123
+    // @abimethod({ onCreate: 'require' })
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    ==
+    assert // can only call when creating
+    // contracts/abstracted_account.algo.ts:118
+    // export class SpendContract extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // contracts/abstracted_account.algo.ts:123
+    // @abimethod({ onCreate: 'require' })
+    callsub createApplication
+    intc_1 // 1
+    b main_after_inlined_contracts/abstracted_account.algo.ts::SpendContract.__puya_arc4_router__@11
+
+main_bare_routing@9:
+    b main_after_if_else@10
+
+
+// contracts/abstracted_account.algo.ts::SpendContract.createApplication(plugin: uint64) -> void:
+createApplication:
+    // contracts/abstracted_account.algo.ts:123-124
+    // @abimethod({ onCreate: 'require' })
+    // createApplication(plugin: uint64): void {
+    proto 1 0
+
+createApplication_block@0:
+    // contracts/abstracted_account.algo.ts:120
+    // pluginID = GlobalState<Application>({ key: 'plugin_id' })
+    bytec_0 // "plugin_id"
+    // contracts/abstracted_account.algo.ts:125
+    // this.pluginID.value = Application(plugin)
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// contracts/abstracted_account.algo.ts::SpendContract.rekey() -> void:
+rekey:
+
+rekey_block@0:
+    // contracts/abstracted_account.algo.ts:129
+    // assert(Txn.sender === Global.creatorAddress, ERR_ONLY_CREATOR_CAN_REKEY)
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // only the creator can rekey a spend contract
+    // contracts/abstracted_account.algo.ts:131-137
+    // itxn
+    //   .payment({
+    //     amount: 0,
+    //     rekeyTo: Global.creatorAddress,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // contracts/abstracted_account.algo.ts:134
+    // rekeyTo: Global.creatorAddress,
+    global CreatorAddress
+    itxn_field RekeyTo
+    // contracts/abstracted_account.algo.ts:133
+    // amount: 0,
+    intc_0 // 0
+    itxn_field Amount
+    // contracts/abstracted_account.algo.ts:131-136
+    // itxn
+    //   .payment({
+    //     amount: 0,
+    //     rekeyTo: Global.creatorAddress,
+    //     fee: 0,
+    //   })
+    intc_1 // 1
+    itxn_field TypeEnum
+    // contracts/abstracted_account.algo.ts:135
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+
+rekey_next_txn@1:
+    // contracts/abstracted_account.algo.ts:131-137
+    // itxn
+    //   .payment({
+    //     amount: 0,
+    //     rekeyTo: Global.creatorAddress,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    retsub
+
+
+// contracts/abstracted_account.algo.ts::SpendContract.optin(payment: uint64, asset: uint64) -> void:
+optin:
+    // contracts/abstracted_account.algo.ts:145
+    // optin(payment: gtxn.PaymentTxn, asset: uint64): void {
+    proto 2 0
+
+optin_block@0:
+    // contracts/abstracted_account.algo.ts:147
+    // Txn.sender === Global.creatorAddress ||
+    txn Sender
+    global CreatorAddress
+    ==
+    // contracts/abstracted_account.algo.ts:147-148
+    // Txn.sender === Global.creatorAddress ||
+    // Txn.sender === this.pluginID.value.address,
+    bnz optin_bool_true@2
+
+optin_or_contd@1:
+    // contracts/abstracted_account.algo.ts:148
+    // Txn.sender === this.pluginID.value.address,
+    txn Sender
+    // contracts/abstracted_account.algo.ts:120
+    // pluginID = GlobalState<Application>({ key: 'plugin_id' })
+    intc_0 // 0
+    bytec_0 // "plugin_id"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // contracts/abstracted_account.algo.ts:148
+    // Txn.sender === this.pluginID.value.address,
+    app_params_get AppAddress
+    assert // application exists
+    ==
+    // contracts/abstracted_account.algo.ts:147-148
+    // Txn.sender === Global.creatorAddress ||
+    // Txn.sender === this.pluginID.value.address,
+    bz optin_bool_false@3
+
+optin_bool_true@2:
+    intc_1 // 1
+
+optin_bool_merge@4:
+    // contracts/abstracted_account.algo.ts:146-149
+    // assert(
+    //   Txn.sender === Global.creatorAddress ||
+    //   Txn.sender === this.pluginID.value.address,
+    // )
+    assert
+    // contracts/abstracted_account.algo.ts:150
+    // assert(payment.receiver === Global.currentApplicationAddress)
+    frame_dig -2
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert
+    // contracts/abstracted_account.algo.ts:151
+    // assert(payment.amount === Global.assetOptInMinBalance)
+    frame_dig -2
+    gtxns Amount
+    global AssetOptInMinBalance
+    ==
+    assert
+    // contracts/abstracted_account.algo.ts:153-160
+    // itxn
+    //   .assetTransfer({
+    //     assetReceiver: Global.currentApplicationAddress,
+    //     assetAmount: 0,
+    //     xferAsset: asset,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // contracts/abstracted_account.algo.ts:155
+    // assetReceiver: Global.currentApplicationAddress,
+    global CurrentApplicationAddress
+    // contracts/abstracted_account.algo.ts:157
+    // xferAsset: asset,
+    frame_dig -1
+    itxn_field XferAsset
+    // contracts/abstracted_account.algo.ts:156
+    // assetAmount: 0,
+    intc_0 // 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    // contracts/abstracted_account.algo.ts:153-159
+    // itxn
+    //   .assetTransfer({
+    //     assetReceiver: Global.currentApplicationAddress,
+    //     assetAmount: 0,
+    //     xferAsset: asset,
+    //     fee: 0,
+    //   })
+    pushint 4 // 4
+    itxn_field TypeEnum
+    // contracts/abstracted_account.algo.ts:158
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+
+optin_next_txn@5:
+    // contracts/abstracted_account.algo.ts:153-160
+    // itxn
+    //   .assetTransfer({
+    //     assetReceiver: Global.currentApplicationAddress,
+    //     assetAmount: 0,
+    //     xferAsset: asset,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    retsub
+
+optin_bool_false@3:
+    intc_0 // 0
+    b optin_bool_merge@4
+
+
+// contracts/abstracted_account.algo.ts::SpendContract.deleteApplication() -> void:
+deleteApplication:
+
+deleteApplication_block@0:
+    retsub

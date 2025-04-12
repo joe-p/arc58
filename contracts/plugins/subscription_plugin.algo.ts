@@ -22,15 +22,14 @@ export class SubscriptionPlugin extends Contract {
     assert(Global.round - this.lastPayment.value > FREQUENCY);
     this.lastPayment.value = Global.round;
 
-    const [controlledAccountBytes] = op.AppGlobal.getExBytes(Application(sender.native), Bytes('c'));
+    const [controlledAccountBytes] = op.AppGlobal.getExBytes(sender.native, Bytes('controlled_address'));
     
     itxn
       .payment({
-        sender: Account(Bytes(controlledAccountBytes)),
+        sender: Account(controlledAccountBytes),
         amount: AMOUNT,
-        // Bytes.fromBase32 appears to be broken
-        // receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M")),
-        receiver: Global.zeroAddress,
+        receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M").slice(0, 32)),
+        // receiver: Global.zeroAddress,
         rekeyTo: Application(sender.native).address,
         fee: 0,
       })

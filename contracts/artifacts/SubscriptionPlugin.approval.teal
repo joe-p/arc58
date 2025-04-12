@@ -103,67 +103,63 @@ makePayment:
     global Round
     app_global_put
     // contracts/plugins/subscription_plugin.algo.ts:25
-    // const [controlledAccountBytes] = op.AppGlobal.getExBytes(Application(sender.native), Bytes('c'));
+    // const [controlledAccountBytes] = op.AppGlobal.getExBytes(sender.native, Bytes('controlled_address'));
     frame_dig -2
     btoi
     dup
-    pushbytes "c"
+    pushbytes "controlled_address"
     app_global_get_ex
     pop
     swap
-    // contracts/plugins/subscription_plugin.algo.ts:27-37
+    // contracts/plugins/subscription_plugin.algo.ts:27-36
     // itxn
     //   .payment({
-    //     sender: Account(Bytes(controlledAccountBytes)),
+    //     sender: Account(controlledAccountBytes),
     //     amount: AMOUNT,
-    //     // Bytes.fromBase32 appears to be broken
-    //     // receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M")),
-    //     receiver: Global.zeroAddress,
+    //     receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M").slice(0, 32)),
+    //     // receiver: Global.zeroAddress,
     //     rekeyTo: Application(sender.native).address,
     //     fee: 0,
     //   })
     //   .submit();
     itxn_begin
     // contracts/plugins/subscription_plugin.algo.ts:33
-    // receiver: Global.zeroAddress,
-    global ZeroAddress
-    // contracts/plugins/subscription_plugin.algo.ts:34
     // rekeyTo: Application(sender.native).address,
-    swap
     app_params_get AppAddress
     assert // application exists
     itxn_field RekeyTo
+    // contracts/plugins/subscription_plugin.algo.ts:31
+    // receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M").slice(0, 32)),
+    pushbytes base32(46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBQ)
     itxn_field Receiver
     // contracts/plugins/subscription_plugin.algo.ts:8
     // const AMOUNT: uint64 = 100_000;
     pushint 100000 // 100000
     itxn_field Amount
     itxn_field Sender
-    // contracts/plugins/subscription_plugin.algo.ts:27-36
+    // contracts/plugins/subscription_plugin.algo.ts:27-35
     // itxn
     //   .payment({
-    //     sender: Account(Bytes(controlledAccountBytes)),
+    //     sender: Account(controlledAccountBytes),
     //     amount: AMOUNT,
-    //     // Bytes.fromBase32 appears to be broken
-    //     // receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M")),
-    //     receiver: Global.zeroAddress,
+    //     receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M").slice(0, 32)),
+    //     // receiver: Global.zeroAddress,
     //     rekeyTo: Application(sender.native).address,
     //     fee: 0,
     //   })
     intc_1 // 1
     itxn_field TypeEnum
-    // contracts/plugins/subscription_plugin.algo.ts:35
+    // contracts/plugins/subscription_plugin.algo.ts:34
     // fee: 0,
     intc_0 // 0
     itxn_field Fee
-    // contracts/plugins/subscription_plugin.algo.ts:27-37
+    // contracts/plugins/subscription_plugin.algo.ts:27-36
     // itxn
     //   .payment({
-    //     sender: Account(Bytes(controlledAccountBytes)),
+    //     sender: Account(controlledAccountBytes),
     //     amount: AMOUNT,
-    //     // Bytes.fromBase32 appears to be broken
-    //     // receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M")),
-    //     receiver: Global.zeroAddress,
+    //     receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M").slice(0, 32)),
+    //     // receiver: Global.zeroAddress,
     //     rekeyTo: Application(sender.native).address,
     //     fee: 0,
     //   })
