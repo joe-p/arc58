@@ -1,35 +1,39 @@
-import { Contract } from '@algorandfoundation/tealscript';
+import { Contract, GlobalState, uint64, Global, arc4, assert, Account, Bytes, Application, op, itxn, abimethod } from '@algorandfoundation/algorand-typescript';
 
 // These constants should be template variables, but I made them constants because I'm lazy
 
 /** How frequent this payment can be made */
-const FREQUENCY = 1;
+const FREQUENCY: uint64 = 1;
 /** Amount of the payment */
-const AMOUNT = 100_000;
+const AMOUNT: uint64 = 100_000;
 
 export class SubscriptionPlugin extends Contract {
-  programVersion = 10;
 
-  lastPayment = GlobalStateKey<uint64>();
+  lastPayment = GlobalState<uint64>({ initialValue: 0 });
 
-  @allow.bareCreate()
-  createApplication(): void {
-    this.lastPayment.value = 0;
-  }
+  @abimethod({ onCreate: 'require' })
+  createApplication(): void {}
 
   makePayment(
-    sender: Address,
+    sender: arc4.UintN64,
     // eslint-disable-next-line no-unused-vars
-    _acctRef: Address
+    _acctRef: arc4.Address
   ): void {
-    assert(globals.round - this.lastPayment.value > FREQUENCY);
-    this.lastPayment.value = globals.round;
+    assert(Global.round - this.lastPayment.value > FREQUENCY);
+    this.lastPayment.value = Global.round;
 
-    sendPayment({
-      sender: sender,
-      amount: AMOUNT,
-      receiver: addr('46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M'),
-      rekeyTo: sender,
-    });
+    const [controlledAccountBytes] = op.AppGlobal.getExBytes(Application(sender.native), Bytes('c'));
+    
+    itxn
+      .payment({
+        sender: Account(Bytes(controlledAccountBytes)),
+        amount: AMOUNT,
+        // Bytes.fromBase32 appears to be broken
+        // receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M")),
+        receiver: Global.zeroAddress,
+        rekeyTo: Application(sender.native).address,
+        fee: 0,
+      })
+      .submit();
   }
 }

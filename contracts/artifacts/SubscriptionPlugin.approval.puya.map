@@ -1,0 +1,549 @@
+{
+  "version": 3,
+  "sources": [
+    "/Users/kylebreeding/akita/contracts/joe-arc58/contracts/plugins/subscription_plugin.algo.ts"
+  ],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAWE;AAAkD;AAAlD;AAFF;;AAAA;;;AAAA;;;;;;;;;;;;AAAA;;;AAAA;;;;;;AAAA;;AAOE;;AAAA;AAAA;AAAA;;AAAA;AAPF;;;AAAA;;;AAOE;;;AAAA;;AAHC;;AAAA;AAAA;AAAA;;AAAA;AAAA;AAAA;;AAGD;;;AAKgB;;AAVhB;AAAA;AAAA;AAAA;AAUS;AAhBe;AAgBf;AAAP;AAVF;AAWkC;;AAAhC;AAE4E;;AAAA;AAA3C;AAA0D;;;AAA1D;AAAA;AAAA;AAEjC;AAMqB;;AACmB;AAAA;;AAAA;;;;;AA1BrB;;;;;;;;AAmBnB;;;AAQS;;;AART;",
+  "op_pc_offset": 0,
+  "pc_events": {
+    "1": {
+      "subroutine": "@algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram",
+      "params": {},
+      "block": "main",
+      "stack_in": [],
+      "op": "intcblock 0 1"
+    },
+    "5": {
+      "op": "bytecblock \"lastPayment\""
+    },
+    "19": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "reinterpret_bool%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_bool%0#0"
+      ]
+    },
+    "21": {
+      "op": "bnz main_after_if_else@2",
+      "stack_out": []
+    },
+    "24": {
+      "op": "bytec_0 // \"lastPayment\"",
+      "defined_out": [
+        "\"lastPayment\""
+      ],
+      "stack_out": [
+        "\"lastPayment\""
+      ]
+    },
+    "25": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "\"lastPayment\"",
+        "0"
+      ],
+      "stack_out": [
+        "\"lastPayment\"",
+        "0"
+      ]
+    },
+    "26": {
+      "op": "app_global_put",
+      "stack_out": []
+    },
+    "27": {
+      "block": "main_after_if_else@2",
+      "stack_in": [],
+      "op": "txn NumAppArgs",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "29": {
+      "op": "bz main_after_if_else@10",
+      "stack_out": []
+    },
+    "32": {
+      "op": "pushbytess 0xb8447b36 0xef4ab70e // method \"createApplication()void\", method \"makePayment(uint64,address)void\"",
+      "defined_out": [
+        "Method(createApplication()void)",
+        "Method(makePayment(uint64,address)void)"
+      ],
+      "stack_out": [
+        "Method(createApplication()void)",
+        "Method(makePayment(uint64,address)void)"
+      ]
+    },
+    "44": {
+      "op": "txna ApplicationArgs 0",
+      "defined_out": [
+        "Method(createApplication()void)",
+        "Method(makePayment(uint64,address)void)",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "Method(createApplication()void)",
+        "Method(makePayment(uint64,address)void)",
+        "tmp%2#0"
+      ]
+    },
+    "47": {
+      "op": "match main_createApplication_route@5 main_makePayment_route@6",
+      "stack_out": []
+    },
+    "53": {
+      "block": "main_after_if_else@10",
+      "stack_in": [],
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "54": {
+      "op": "return",
+      "stack_out": []
+    },
+    "55": {
+      "block": "main_makePayment_route@6",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%7#0"
+      ],
+      "stack_out": [
+        "tmp%7#0"
+      ]
+    },
+    "57": {
+      "op": "!",
+      "defined_out": [
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0"
+      ]
+    },
+    "58": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "59": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%9#0"
+      ],
+      "stack_out": [
+        "tmp%9#0"
+      ]
+    },
+    "61": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "62": {
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "reinterpret_bytes[8]%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_bytes[8]%0#0"
+      ]
+    },
+    "65": {
+      "op": "txna ApplicationArgs 2",
+      "defined_out": [
+        "reinterpret_bytes[32]%0#0",
+        "reinterpret_bytes[8]%0#0"
+      ],
+      "stack_out": [
+        "reinterpret_bytes[8]%0#0",
+        "reinterpret_bytes[32]%0#0"
+      ]
+    },
+    "68": {
+      "callsub": "contracts/plugins/subscription_plugin.algo.ts::SubscriptionPlugin.makePayment",
+      "op": "callsub makePayment",
+      "stack_out": []
+    },
+    "71": {
+      "op": "intc_1 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "72": {
+      "op": "return",
+      "stack_out": []
+    },
+    "73": {
+      "block": "main_createApplication_route@5",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "75": {
+      "op": "!",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "76": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "77": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%5#0"
+      ],
+      "stack_out": [
+        "tmp%5#0"
+      ]
+    },
+    "79": {
+      "op": "!",
+      "defined_out": [
+        "tmp%6#0"
+      ],
+      "stack_out": [
+        "tmp%6#0"
+      ]
+    },
+    "80": {
+      "error": "can only call when creating",
+      "op": "assert // can only call when creating",
+      "stack_out": []
+    },
+    "81": {
+      "op": "intc_1 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "82": {
+      "op": "return",
+      "stack_out": []
+    },
+    "83": {
+      "subroutine": "contracts/plugins/subscription_plugin.algo.ts::SubscriptionPlugin.makePayment",
+      "params": {
+        "sender#0": "bytes",
+        "_acctRef#0": "bytes"
+      },
+      "block": "makePayment",
+      "stack_in": [],
+      "op": "proto 2 0"
+    },
+    "86": {
+      "op": "global Round",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "88": {
+      "op": "intc_0 // 0",
+      "defined_out": [
+        "0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "0"
+      ]
+    },
+    "89": {
+      "op": "bytec_0 // \"lastPayment\"",
+      "defined_out": [
+        "\"lastPayment\"",
+        "0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "0",
+        "\"lastPayment\""
+      ]
+    },
+    "90": {
+      "op": "app_global_get_ex",
+      "defined_out": [
+        "maybe_exists%0#0",
+        "maybe_value%0#0",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "maybe_value%0#0",
+        "maybe_exists%0#0"
+      ]
+    },
+    "91": {
+      "error": "check GlobalState exists",
+      "op": "assert // check GlobalState exists",
+      "stack_out": [
+        "tmp%0#0",
+        "maybe_value%0#0"
+      ]
+    },
+    "92": {
+      "op": "-",
+      "defined_out": [
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0"
+      ]
+    },
+    "93": {
+      "op": "intc_1 // 1",
+      "defined_out": [
+        "1",
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0",
+        "1"
+      ]
+    },
+    "94": {
+      "op": ">",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "95": {
+      "op": "assert",
+      "stack_out": []
+    },
+    "96": {
+      "op": "bytec_0 // \"lastPayment\"",
+      "stack_out": [
+        "\"lastPayment\""
+      ]
+    },
+    "97": {
+      "op": "global Round",
+      "defined_out": [
+        "\"lastPayment\"",
+        "new_state_value%0#0"
+      ],
+      "stack_out": [
+        "\"lastPayment\"",
+        "new_state_value%0#0"
+      ]
+    },
+    "99": {
+      "op": "app_global_put",
+      "stack_out": []
+    },
+    "100": {
+      "op": "frame_dig -2",
+      "defined_out": [
+        "sender#0 (copy)"
+      ],
+      "stack_out": [
+        "sender#0 (copy)"
+      ]
+    },
+    "102": {
+      "op": "btoi",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "103": {
+      "op": "dup",
+      "defined_out": [
+        "tmp%3#0",
+        "tmp%3#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%3#0",
+        "tmp%3#0 (copy)"
+      ]
+    },
+    "104": {
+      "op": "pushbytes \"c\"",
+      "defined_out": [
+        "\"c\"",
+        "tmp%3#0",
+        "tmp%3#0 (copy)"
+      ],
+      "stack_out": [
+        "tmp%3#0",
+        "tmp%3#0 (copy)",
+        "\"c\""
+      ]
+    },
+    "107": {
+      "op": "app_global_get_ex",
+      "defined_out": [
+        "_#0",
+        "controlledAccountBytes#0",
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0",
+        "controlledAccountBytes#0",
+        "_#0"
+      ]
+    },
+    "108": {
+      "op": "pop",
+      "stack_out": [
+        "tmp%3#0",
+        "controlledAccountBytes#0"
+      ]
+    },
+    "109": {
+      "op": "swap",
+      "stack_out": [
+        "controlledAccountBytes#0",
+        "tmp%3#0"
+      ]
+    },
+    "110": {
+      "op": "itxn_begin"
+    },
+    "111": {
+      "op": "global ZeroAddress",
+      "defined_out": [
+        "controlledAccountBytes#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "controlledAccountBytes#0",
+        "tmp%3#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0"
+      ]
+    },
+    "113": {
+      "op": "swap",
+      "stack_out": [
+        "controlledAccountBytes#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "tmp%3#0"
+      ]
+    },
+    "114": {
+      "op": "app_params_get AppAddress",
+      "defined_out": [
+        "check%0#0",
+        "controlledAccountBytes#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "value%0#0"
+      ],
+      "stack_out": [
+        "controlledAccountBytes#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "value%0#0",
+        "check%0#0"
+      ]
+    },
+    "116": {
+      "error": "application exists",
+      "op": "assert // application exists",
+      "stack_out": [
+        "controlledAccountBytes#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0",
+        "value%0#0"
+      ]
+    },
+    "117": {
+      "op": "itxn_field RekeyTo",
+      "stack_out": [
+        "controlledAccountBytes#0",
+        "inner_txn_params%0%%param_Receiver_idx_0#0"
+      ]
+    },
+    "119": {
+      "op": "itxn_field Receiver",
+      "stack_out": [
+        "controlledAccountBytes#0"
+      ]
+    },
+    "121": {
+      "op": "pushint 100000 // 100000",
+      "defined_out": [
+        "100000",
+        "controlledAccountBytes#0"
+      ],
+      "stack_out": [
+        "controlledAccountBytes#0",
+        "100000"
+      ]
+    },
+    "125": {
+      "op": "itxn_field Amount",
+      "stack_out": [
+        "controlledAccountBytes#0"
+      ]
+    },
+    "127": {
+      "op": "itxn_field Sender",
+      "stack_out": []
+    },
+    "129": {
+      "op": "intc_1 // 1",
+      "stack_out": [
+        "1"
+      ]
+    },
+    "130": {
+      "op": "itxn_field TypeEnum",
+      "stack_out": []
+    },
+    "132": {
+      "op": "intc_0 // 0",
+      "stack_out": [
+        "0"
+      ]
+    },
+    "133": {
+      "op": "itxn_field Fee",
+      "stack_out": []
+    },
+    "135": {
+      "op": "itxn_submit"
+    },
+    "136": {
+      "retsub": true,
+      "op": "retsub"
+    }
+  }
+}
