@@ -1,0 +1,409 @@
+main @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram:
+    block@0: // L1
+        goto block@1
+    block@1: // L12
+        let tmp%0#1: uint64 = (txn NumAppArgs)
+        let tmp%1#0: bool = (!= tmp%0#1 0u)
+        goto tmp%1#0 ? block@2 : block@12
+    block@2: // abi_routing_L12
+        let tmp%2#0: bytes = (txna ApplicationArgs 0)
+        switch tmp%2#0 {method "create(pay,uint64)uint64" => block@3, method "delete(uint64)void" => block@4, method "exists(address)bool" => block@5, method "get(address)uint64" => block@6, method "mustGet(address)uint64" => block@7, method "getList(address[])uint64[]" => block@8, method "mustGetList(address[])uint64[]" => block@9, * => block@10}
+    block@3: // create_route_L16
+        let tmp%3#0: uint64 = (txn OnCompletion)
+        let tmp%4#0: bool = (== tmp%3#0 NoOp)
+        (assert tmp%4#0) // OnCompletion is not NoOp
+        let tmp%5#0: uint64 = (txn ApplicationID)
+        let tmp%6#0: bool = (!= tmp%5#0 0u)
+        (assert tmp%6#0) // can only call when not creating
+        let tmp%7#0: uint64 = (txn GroupIndex)
+        let gtxn_idx%0#0: uint64 = (- tmp%7#0 1u)
+        let gtxn_type%0#0: uint64 = ((gtxns TypeEnum) gtxn_idx%0#0)
+        let gtxn_type_matches%0#0: bool = (== gtxn_type%0#0 pay)
+        (assert gtxn_type_matches%0#0) // transaction type is pay
+        let reinterpret_bytes[8]%0#0: bytes[8] = (txna ApplicationArgs 1)
+        let tmp%8#0: uint64 = (btoi reinterpret_bytes[8]%0#0)
+        let to_encode%0#0: uint64 = contracts/spending_account_factory.algo.ts::SpendingAccountFactory.create(gtxn_idx%0#0, tmp%8#0)
+        let val_as_bytes%0#0: bytes[8] = (itob to_encode%0#0)
+        let tmp%9#0: bytes = (concat 0x151f7c75 val_as_bytes%0#0)
+        (log tmp%9#0)
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#0: bool = 1u
+        goto block@17
+    block@4: // delete_route_L61
+        let tmp%10#0: uint64 = (txn OnCompletion)
+        let tmp%11#0: bool = (== tmp%10#0 NoOp)
+        (assert tmp%11#0) // OnCompletion is not NoOp
+        let tmp%12#0: uint64 = (txn ApplicationID)
+        let tmp%13#0: bool = (!= tmp%12#0 0u)
+        (assert tmp%13#0) // can only call when not creating
+        let reinterpret_bytes[8]%1#0: bytes[8] = (txna ApplicationArgs 1)
+        let tmp%14#0: uint64 = (btoi reinterpret_bytes[8]%1#0)
+        contracts/spending_account_factory.algo.ts::SpendingAccountFactory.delete(tmp%14#0)
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#1: bool = 1u
+        goto block@17
+    block@5: // exists_route_L94
+        let tmp%15#0: uint64 = (txn OnCompletion)
+        let tmp%16#0: bool = (== tmp%15#0 NoOp)
+        (assert tmp%16#0) // OnCompletion is not NoOp
+        let tmp%17#0: uint64 = (txn ApplicationID)
+        let tmp%18#0: bool = (!= tmp%17#0 0u)
+        (assert tmp%18#0) // can only call when not creating
+        let reinterpret_bytes[32]%0#0: bytes[32] = (txna ApplicationArgs 1)
+        let to_encode%1#0: bool = contracts/spending_account_factory.algo.ts::SpendingAccountFactory.exists(reinterpret_bytes[32]%0#0)
+        let encoded_bool%0#0: bytes[1] = (setbit 0x00 0u to_encode%1#0)
+        let tmp%19#0: bytes = (concat 0x151f7c75 encoded_bool%0#0)
+        (log tmp%19#0)
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#2: bool = 1u
+        goto block@17
+    block@6: // get_route_L100
+        let tmp%20#0: uint64 = (txn OnCompletion)
+        let tmp%21#0: bool = (== tmp%20#0 NoOp)
+        (assert tmp%21#0) // OnCompletion is not NoOp
+        let tmp%22#0: uint64 = (txn ApplicationID)
+        let tmp%23#0: bool = (!= tmp%22#0 0u)
+        (assert tmp%23#0) // can only call when not creating
+        let reinterpret_bytes[32]%1#0: bytes[32] = (txna ApplicationArgs 1)
+        let to_encode%2#0: uint64 = contracts/spending_account_factory.algo.ts::SpendingAccountFactory.get(reinterpret_bytes[32]%1#0)
+        let val_as_bytes%1#0: bytes[8] = (itob to_encode%2#0)
+        let tmp%24#0: bytes = (concat 0x151f7c75 val_as_bytes%1#0)
+        (log tmp%24#0)
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#3: bool = 1u
+        goto block@17
+    block@7: // mustGet_route_L109
+        let tmp%25#0: uint64 = (txn OnCompletion)
+        let tmp%26#0: bool = (== tmp%25#0 NoOp)
+        (assert tmp%26#0) // OnCompletion is not NoOp
+        let tmp%27#0: uint64 = (txn ApplicationID)
+        let tmp%28#0: bool = (!= tmp%27#0 0u)
+        (assert tmp%28#0) // can only call when not creating
+        let reinterpret_bytes[32]%2#0: bytes[32] = (txna ApplicationArgs 1)
+        let to_encode%3#0: uint64 = contracts/spending_account_factory.algo.ts::SpendingAccountFactory.mustGet(reinterpret_bytes[32]%2#0)
+        let val_as_bytes%2#0: bytes[8] = (itob to_encode%3#0)
+        let tmp%29#0: bytes = (concat 0x151f7c75 val_as_bytes%2#0)
+        (log tmp%29#0)
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#4: bool = 1u
+        goto block@17
+    block@8: // getList_route_L116
+        let tmp%30#0: uint64 = (txn OnCompletion)
+        let tmp%31#0: bool = (== tmp%30#0 NoOp)
+        (assert tmp%31#0) // OnCompletion is not NoOp
+        let tmp%32#0: uint64 = (txn ApplicationID)
+        let tmp%33#0: bool = (!= tmp%32#0 0u)
+        (assert tmp%33#0) // can only call when not creating
+        let tmp%34#0: bytes = (txna ApplicationArgs 1)
+        let tmp%35#0: bytes = contracts/spending_account_factory.algo.ts::SpendingAccountFactory.getList(tmp%34#0)
+        let tmp%36#0: bytes = (concat 0x151f7c75 tmp%35#0)
+        (log tmp%36#0)
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#5: bool = 1u
+        goto block@17
+    block@9: // mustGetList_route_L131
+        let tmp%37#0: uint64 = (txn OnCompletion)
+        let tmp%38#0: bool = (== tmp%37#0 NoOp)
+        (assert tmp%38#0) // OnCompletion is not NoOp
+        let tmp%39#0: uint64 = (txn ApplicationID)
+        let tmp%40#0: bool = (!= tmp%39#0 0u)
+        (assert tmp%40#0) // can only call when not creating
+        let tmp%41#0: bytes = (txna ApplicationArgs 1)
+        let tmp%42#0: bytes = contracts/spending_account_factory.algo.ts::SpendingAccountFactory.mustGetList(tmp%41#0)
+        let tmp%43#0: bytes = (concat 0x151f7c75 tmp%42#0)
+        (log tmp%43#0)
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#6: bool = 1u
+        goto block@17
+    block@10: // switch_case_default_L12
+        goto block@11
+    block@11: // switch_case_next_L12
+        goto block@16
+    block@12: // bare_routing_L12
+        let tmp%44#0: uint64 = (txn OnCompletion)
+        switch tmp%44#0 {0u => block@13, * => block@14}
+    block@13: // __algots__.defaultCreate_L12
+        let tmp%45#0: uint64 = (txn ApplicationID)
+        let tmp%46#0: bool = (== tmp%45#0 0u)
+        (assert tmp%46#0) // can only call when creating
+        contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__algots__.defaultCreate()
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#7: bool = 1u
+        goto block@17
+    block@14: // switch_case_default_L12
+        goto block@15
+    block@15: // switch_case_next_L12
+        goto block@16
+    block@16: // after_if_else_L12
+        let contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#8: bool = 0u
+        goto block@17
+    block@17: // after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router___L1
+        let tmp%0#0: bool = φ(contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#0 <- block@3, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#1 <- block@4, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#2 <- block@5, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#3 <- block@6, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#4 <- block@7, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#5 <- block@8, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#6 <- block@9, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#7 <- block@13, contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__%0#8 <- block@16)
+        return tmp%0#0
+
+subroutine contracts/spending_account_factory.algo.ts::bytes16(acc: bytes[32]) -> bytes[16]:
+    block@0: // L8
+        let length%0#0: uint64 = (len acc#0)
+        let is_out_of_bounds%0#0: bool = (>= 0u length%0#0)
+        let bounded_index%0#0: uint64 = (select 0u length%0#0 is_out_of_bounds%0#0)
+        let is_out_of_bounds%1#0: bool = (>= 16u length%0#0)
+        let bounded_index%1#0: uint64 = (select 16u length%0#0 is_out_of_bounds%1#0)
+        let to_encode%0#0: bytes = (substring3 acc#0 bounded_index%0#0 bounded_index%1#0)
+        let length%1#0: uint64 = (len to_encode%0#0)
+        let lengths_equal%0#0: bool = (== length%1#0 16u)
+        (assert lengths_equal%0#0) // invalid size
+        return to_encode%0#0
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.create(payment: uint64, plugin: uint64) -> uint64:
+    block@0: // L16
+        let caller#0: uint64 = (global CallerApplicationID)
+        let tmp%0#0: bool = (!= caller#0 0u)
+        (assert tmp%0#0) // Only applications can create spending accounts
+        let tmp%1#0: uint64 = (* 28500u 2u)
+        let tmp%2#0: uint64 = (+ 200000u tmp%1#0)
+        let tmp%3#0: uint64 = (* 50000u 0u)
+        let tmp%4#0: uint64 = (+ tmp%2#0 tmp%3#0)
+        let childAppMBR#0: uint64 = (+ tmp%4#0 12500u)
+        let tmp%5#0: bytes[32] = ((gtxns Receiver) payment#0)
+        let tmp%6#0: bytes[32] = (global CurrentApplicationAddress)
+        let tmp%7#0: bool = (== tmp%5#0 tmp%6#0)
+        goto tmp%7#0 ? block@1 : block@3
+    block@1: // and_contd_L29
+        let tmp%8#0: uint64 = ((gtxns Amount) payment#0)
+        let tmp%9#0: bool = (== tmp%8#0 childAppMBR#0)
+        goto tmp%9#0 ? block@2 : block@3
+    block@2: // bool_true_L29
+        let and_result%0#0: bool = 1u
+        goto block@4
+    block@3: // bool_false_L29
+        let and_result%0#1: bool = 0u
+        goto block@4
+    block@4: // bool_merge_L29
+        let and_result%0#2: bool = φ(and_result%0#0 <- block@2, and_result%0#1 <- block@3)
+        (assert and_result%0#2) // assert target is match for conditions
+        itxn_begin
+        let val_as_bytes%0#0: bytes[8] = (itob caller#0)
+        let val_as_bytes%1#0: bytes[8] = (itob plugin#0)
+        let inner_txn_params%0%%param_ApplicationArgs_idx_1#0: bytes[8] = val_as_bytes%0#0
+        let inner_txn_params%0%%param_ApplicationArgs_idx_2#0: bytes[8] = val_as_bytes%1#0
+        ((itxn_field ApplicationArgs) method "createApplication(uint64,uint64)void")
+        ((itxn_field ApplicationArgs) inner_txn_params%0%%param_ApplicationArgs_idx_1#0)
+        ((itxn_field ApplicationArgs) inner_txn_params%0%%param_ApplicationArgs_idx_2#0)
+        ((itxn_field ExtraProgramPages) 0u)
+        ((itxn_field LocalNumUint) 0u)
+        ((itxn_field LocalNumByteSlice) 0u)
+        ((itxn_field GlobalNumByteSlice) 0u)
+        ((itxn_field GlobalNumUint) 2u)
+        ((itxn_field ClearStateProgramPages) CoEBQw==)
+        (itxn_field ClearStateProgramPages)
+        ((itxn_field ApprovalProgramPages) CiACAAEmAgl3YWxsZXRfaWQJcGx1Z2luX2lkMRsiE0EAhzYaAIAEkXxItoAEZal7zIAEPqEYMoAEJIfDLE8EjgQARwAzABQAAiJDMRmBBRJEMRgiE0SIANAjQv/tMRkiEkQxGCITRDEWIwlJOBAjEkQ2GgEXiABtI0L/zjEZIhJEMRgiE0Q2GgGIAEIjQv+6MRkiEkQxGCISRDYaARc2GgIXiAAdI0L/oUL/nTEAIihlRHIIRBKJMQAiKWVEcghEEomKAgAoi/5nKYv/Z4mKAQCI/9hEsYv/siAisggjshAisgGziYoCAIj/wUAABoj/xkEAMSNEi/44BzIKEkEAIYv+OAgyEBJBABcjRLEyCov/shEishKyFIEEshAisgGziSJC/+YiQv/MMQAyCRJEiQ==)
+        (itxn_field ApprovalProgramPages)
+        ((itxn_field OnCompletion) 0u)
+        ((itxn_field TypeEnum) appl)
+        ((itxn_field Fee) 0u)
+        goto block@5
+    block@5: // next_txn_L37
+        itxn_submit
+        let newSpendAccount#0: uint64 = (gitxn 0 CreatedApplicationID)
+        let id#0: uint64 = newSpendAccount#0
+        let (value%0#0: bytes[32], check%0#0: bool) = ((app_params_get AppAddress) newSpendAccount#0)
+        (assert check%0#0) // application exists
+        let spendAccount#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(value%0#0)
+        let tmp%10#0: bytes = (concat "a" spendAccount#0)
+        let new_box_value%0#0: bytes[8] = (itob caller#0)
+        (box_put tmp%10#0 new_box_value%0#0)
+        itxn_begin
+        let (value%1#0: bytes[32], check%1#0: bool) = ((app_params_get AppAddress) newSpendAccount#0)
+        (assert check%1#0) // application exists
+        let inner_txn_params%1%%param_Receiver_idx_0#0: bytes[32] = value%1#0
+        ((itxn_field Amount) 100000u)
+        ((itxn_field Receiver) inner_txn_params%1%%param_Receiver_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
+        goto block@6
+    block@6: // next_txn_L50
+        itxn_submit
+        return id#0
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.delete(id: uint64) -> void:
+    block@0: // L61
+        let caller#0: uint64 = (global CallerApplicationID)
+        let tmp%0#0: bool = (!= caller#0 0u)
+        (assert tmp%0#0) // Only applications can create spending accounts
+        let (value%0#0: bytes[32], check%0#0: bool) = ((app_params_get AppAddress) id#0)
+        (assert check%0#0) // application exists
+        let key#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(value%0#0)
+        let tmp%1#0: bytes = (concat "a" key#0)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%1#0)
+        goto maybe_exists%0#0 ? block@1 : block@3
+    block@1: // and_contd_L66
+        let tmp%2#0: bytes = (concat "a" key#0)
+        let (maybe_value%1#0: bytes, maybe_exists%1#0: bool) = (box_get tmp%2#0)
+        let maybe_value_converted%0#0: uint64 = (btoi maybe_value%1#0)
+        (assert maybe_exists%1#0) // Box must have value
+        let tmp%3#0: bool = (== caller#0 maybe_value_converted%0#0)
+        goto tmp%3#0 ? block@2 : block@3
+    block@2: // bool_true_L66
+        let and_result%0#0: bool = 1u
+        goto block@4
+    block@3: // bool_false_L66
+        let and_result%0#1: bool = 0u
+        goto block@4
+    block@4: // bool_merge_L66
+        let and_result%0#2: bool = φ(and_result%0#0 <- block@2, and_result%0#1 <- block@3)
+        (assert and_result%0#2) // only the creator wallet can delete a spending account
+        let tmp%4#0: uint64 = (* 28500u 2u)
+        let tmp%5#0: uint64 = (+ 200000u tmp%4#0)
+        let tmp%6#0: uint64 = (* 50000u 0u)
+        let tmp%7#0: uint64 = (+ tmp%5#0 tmp%6#0)
+        let childAppMBR#0: uint64 = (+ tmp%7#0 12500u)
+        itxn_begin
+        let inner_txn_params%0%%param_ApplicationID_idx_0#0: uint64 = id#0
+        ((itxn_field ApplicationArgs) method "deleteApplication()void")
+        ((itxn_field OnCompletion) 5u)
+        ((itxn_field ApplicationID) inner_txn_params%0%%param_ApplicationID_idx_0#0)
+        ((itxn_field TypeEnum) appl)
+        ((itxn_field Fee) 0u)
+        goto block@5
+    block@5: // next_txn_L80
+        itxn_submit
+        let tmp%8#0: bytes = (concat "a" key#0)
+        (box_del tmp%8#0)
+        itxn_begin
+        let inner_txn_params%1%%param_Amount_idx_0#0: uint64 = childAppMBR#0
+        let inner_txn_params%1%%param_RekeyTo_idx_0#0: bytes[32] = (global CallerApplicationAddress)
+        ((itxn_field RekeyTo) inner_txn_params%1%%param_RekeyTo_idx_0#0)
+        ((itxn_field Amount) inner_txn_params%1%%param_Amount_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
+        goto block@6
+    block@6: // next_txn_L84
+        itxn_submit
+        return 
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.exists(address: bytes[32]) -> bool:
+    block@0: // L94
+        let tmp%0#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%1#0: bytes = (concat "a" tmp%0#0)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%1#0)
+        return maybe_exists%0#0
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.get(address: bytes[32]) -> uint64:
+    block@0: // L100
+        let tmp%0#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%1#0: bytes = (concat "a" tmp%0#0)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%1#0)
+        goto maybe_exists%0#0 ? block@2 : block@1
+    block@1: // if_body_L102
+        return 0u
+    block@2: // after_if_else_L102
+        let tmp%2#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%3#0: bytes = (concat "a" tmp%2#0)
+        let (maybe_value%1#0: bytes, maybe_exists%1#0: bool) = (box_get tmp%3#0)
+        let maybe_value_converted%0#0: uint64 = (btoi maybe_value%1#0)
+        (assert maybe_exists%1#0) // Box must have value
+        return maybe_value_converted%0#0
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.mustGet(address: bytes[32]) -> uint64:
+    block@0: // L109
+        let tmp%0#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%1#0: bytes = (concat "a" tmp%0#0)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%1#0)
+        (assert maybe_exists%0#0) // Account not found
+        let tmp%2#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%3#0: bytes = (concat "a" tmp%2#0)
+        let (maybe_value%1#0: bytes, maybe_exists%1#0: bool) = (box_get tmp%3#0)
+        let maybe_value_converted%0#0: uint64 = (btoi maybe_value%1#0)
+        (assert maybe_exists%1#0) // Box must have value
+        return maybe_value_converted%0#0
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.getList(addresses: bytes) -> bytes:
+    block@0: // L116
+        let array_data%0#0: bytes = (concat 0x0000 0x)
+        let apps#0: bytes = array_data%0#0
+        let i#0: uint64 = 0u
+        goto block@1
+    block@1: // while_top_L119
+        let i#1: uint64 = φ(i#0 <- block@0, i#3 <- block@5)
+        let apps#1: bytes = φ(apps#0 <- block@0, apps#4 <- block@5)
+        let tmp%0#0: uint64 = (extract_uint16 addresses#0 0u)
+        let tmp%1#0: bool = (< i#1 tmp%0#0)
+        goto tmp%1#0 ? block@2 : block@6
+    block@2: // while_body_L119
+        let array_head_and_tail%0#0: bytes = ((extract 2 0) addresses#0)
+        let item_offset%0#0: uint64 = (* i#1 32u)
+        let address#0: bytes[32] = (extract3 array_head_and_tail%0#0 item_offset%0#0 32u) // on error: Index access is out of bounds
+        let tmp%2#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%3#0: bytes = (concat "a" tmp%2#0)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%3#0)
+        goto maybe_exists%0#0 ? block@3 : block@4
+    block@3: // if_body_L121
+        let expr_value_trimmed%0#0: bytes = ((extract 2 0) apps#1)
+        let tmp%4#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%5#0: bytes = (concat "a" tmp%4#0)
+        let (maybe_value%1#0: bytes, maybe_exists%1#0: bool) = (box_get tmp%5#0)
+        let maybe_value_converted%0#0: uint64 = (btoi maybe_value%1#0)
+        (assert maybe_exists%1#0) // Box must have value
+        let val_as_bytes%0#0: bytes[8] = (itob maybe_value_converted%0#0)
+        let encoded%0#0: bytes[8][] = encode<bytes[8]>(val_as_bytes%0#0)
+        let concatenated%0#0: bytes = (concat expr_value_trimmed%0#0 encoded%0#0)
+        let byte_len%0#0: uint64 = (len concatenated%0#0)
+        let len_%0#0: uint64 = (/ byte_len%0#0 8u)
+        let as_bytes%0#0: bytes[8] = (itob len_%0#0)
+        let len_16_bit%0#0: bytes = ((extract 6 2) as_bytes%0#0)
+        let concat_result%0#0: bytes = (concat len_16_bit%0#0 concatenated%0#0)
+        let apps#2: bytes = concat_result%0#0
+        goto block@5
+    block@4: // else_body_L123
+        let expr_value_trimmed%1#0: bytes = ((extract 2 0) apps#1)
+        let encoded%1#0: bytes[8][] = encode<bytes[8]>(0x0000000000000000)
+        let concatenated%1#0: bytes = (concat expr_value_trimmed%1#0 encoded%1#0)
+        let byte_len%1#0: uint64 = (len concatenated%1#0)
+        let len_%1#0: uint64 = (/ byte_len%1#0 8u)
+        let as_bytes%1#0: bytes[8] = (itob len_%1#0)
+        let len_16_bit%1#0: bytes = ((extract 6 2) as_bytes%1#0)
+        let concat_result%1#0: bytes = (concat len_16_bit%1#0 concatenated%1#0)
+        let apps#3: bytes = concat_result%1#0
+        goto block@5
+    block@5: // after_if_else_L121
+        let apps#4: bytes = φ(apps#2 <- block@3, apps#3 <- block@4)
+        let i#3: uint64 = (+ i#1 1u)
+        goto block@1
+    block@6: // after_while_L119
+        return apps#1
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.mustGetList(addresses: bytes) -> bytes:
+    block@0: // L131
+        let array_data%0#0: bytes = (concat 0x0000 0x)
+        let apps#0: bytes = array_data%0#0
+        let i#0: uint64 = 0u
+        goto block@1
+    block@1: // while_top_L134
+        let i#1: uint64 = φ(i#0 <- block@0, i#2 <- block@2)
+        let apps#1: bytes = φ(apps#0 <- block@0, apps#2 <- block@2)
+        let tmp%0#0: uint64 = (extract_uint16 addresses#0 0u)
+        let tmp%1#0: bool = (< i#1 tmp%0#0)
+        goto tmp%1#0 ? block@2 : block@3
+    block@2: // while_body_L134
+        let array_head_and_tail%0#0: bytes = ((extract 2 0) addresses#0)
+        let item_offset%0#0: uint64 = (* i#1 32u)
+        let address#0: bytes[32] = (extract3 array_head_and_tail%0#0 item_offset%0#0 32u) // on error: Index access is out of bounds
+        let tmp%2#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%3#0: bytes = (concat "a" tmp%2#0)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%3#0)
+        (assert maybe_exists%0#0) // Account not found
+        let expr_value_trimmed%0#0: bytes = ((extract 2 0) apps#1)
+        let tmp%4#0: bytes[16] = contracts/spending_account_factory.algo.ts::bytes16(address#0)
+        let tmp%5#0: bytes = (concat "a" tmp%4#0)
+        let (maybe_value%1#0: bytes, maybe_exists%1#0: bool) = (box_get tmp%5#0)
+        let maybe_value_converted%0#0: uint64 = (btoi maybe_value%1#0)
+        (assert maybe_exists%1#0) // Box must have value
+        let val_as_bytes%0#0: bytes[8] = (itob maybe_value_converted%0#0)
+        let encoded%0#0: bytes[8][] = encode<bytes[8]>(val_as_bytes%0#0)
+        let concatenated%0#0: bytes = (concat expr_value_trimmed%0#0 encoded%0#0)
+        let byte_len%0#0: uint64 = (len concatenated%0#0)
+        let len_%0#0: uint64 = (/ byte_len%0#0 8u)
+        let as_bytes%0#0: bytes[8] = (itob len_%0#0)
+        let len_16_bit%0#0: bytes = ((extract 6 2) as_bytes%0#0)
+        let concat_result%0#0: bytes = (concat len_16_bit%0#0 concatenated%0#0)
+        let apps#2: bytes = concat_result%0#0
+        let i#2: uint64 = (+ i#1 1u)
+        goto block@1
+    block@3: // after_while_L134
+        return apps#1
+
+subroutine contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__algots__.defaultCreate() -> void:
+    block@0: // L12
+        return 

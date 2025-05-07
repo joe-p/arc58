@@ -1,4 +1,6 @@
-import { Contract, GlobalState, uint64, Global, arc4, assert, Account, Bytes, Application, op, itxn, abimethod } from '@algorandfoundation/algorand-typescript';
+import { GlobalState, uint64, Global, assert, Account, Bytes, Application, itxn, abimethod } from '@algorandfoundation/algorand-typescript';
+import { Plugin } from './plugin';
+import { Address } from '@algorandfoundation/algorand-typescript/arc4';
 
 // These constants should be template variables, but I made them constants because I'm lazy
 
@@ -7,31 +9,32 @@ const FREQUENCY: uint64 = 1;
 /** Amount of the payment */
 const AMOUNT: uint64 = 100_000;
 
-export class SubscriptionPlugin extends Contract {
+export class SubscriptionPlugin extends Plugin {
 
   lastPayment = GlobalState<uint64>({ initialValue: 0 });
 
+  // @ts-ignore
   @abimethod({ onCreate: 'require' })
   createApplication(): void {}
 
   makePayment(
-    sender: arc4.UintN64,
+    walletID: uint64,
+    rekeyBack: boolean,
     // eslint-disable-next-line no-unused-vars
-    _acctRef: arc4.Address
+    _acctRef: Address
   ): void {
+    const wallet = Application(walletID);
+    const sender = this.getSpendingAccount(wallet);
+
     assert(Global.round - this.lastPayment.value > FREQUENCY);
     this.lastPayment.value = Global.round;
-
-    const [controlledAccountBytes] = op.AppGlobal.getExBytes(Application(sender.native), Bytes('c'));
     
     itxn
       .payment({
-        sender: Account(Bytes(controlledAccountBytes)),
+        sender,
         amount: AMOUNT,
-        // Bytes.fromBase32 appears to be broken
-        // receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M")),
-        receiver: Global.zeroAddress,
-        rekeyTo: Application(sender.native).address,
+        receiver: Account(Bytes.fromBase32("46XYR7OTRZXISI2TRSBDWPUVQT4ECBWNI7TFWPPS6EKAPJ7W5OBXSNG66M").slice(0, 32)),
+        rekeyTo: this.rekeyAddress(rekeyBack, wallet),
         fee: 0,
       })
       .submit();

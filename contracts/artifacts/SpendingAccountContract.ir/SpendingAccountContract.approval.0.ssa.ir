@@ -1,0 +1,275 @@
+main @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram:
+    block@0: // L1
+        let tmp%0#0: bool = contracts/spending_account.algo.ts::SpendingAccountContract.__puya_arc4_router__()
+        return tmp%0#0
+
+subroutine contracts/spending_account.algo.ts::SpendingAccountContract.__puya_arc4_router__() -> bool:
+    block@0: // L9
+        let tmp%0#0: uint64 = (txn NumAppArgs)
+        let tmp%1#0: bool = (!= tmp%0#0 0u)
+        goto tmp%1#0 ? block@1 : block@8
+    block@1: // abi_routing_L9
+        let tmp%2#0: bytes = (txna ApplicationArgs 0)
+        switch tmp%2#0 {method "createApplication(uint64,uint64)void" => block@2, method "rekey(address)void" => block@3, method "optin(pay,uint64)void" => block@4, method "deleteApplication()void" => block@5, * => block@6}
+    block@2: // createApplication_route_L23
+        let tmp%3#0: uint64 = (txn OnCompletion)
+        let tmp%4#0: bool = (== tmp%3#0 NoOp)
+        (assert tmp%4#0) // OnCompletion is not NoOp
+        let tmp%5#0: uint64 = (txn ApplicationID)
+        let tmp%6#0: bool = (== tmp%5#0 0u)
+        (assert tmp%6#0) // can only call when creating
+        let reinterpret_bytes[8]%0#0: bytes[8] = (txna ApplicationArgs 1)
+        let tmp%7#0: uint64 = (btoi reinterpret_bytes[8]%0#0)
+        let reinterpret_bytes[8]%1#0: bytes[8] = (txna ApplicationArgs 2)
+        let tmp%8#0: uint64 = (btoi reinterpret_bytes[8]%1#0)
+        contracts/spending_account.algo.ts::SpendingAccountContract.createApplication(tmp%7#0, tmp%8#0)
+        return 1u
+    block@3: // rekey_route_L29
+        let tmp%9#0: uint64 = (txn OnCompletion)
+        let tmp%10#0: bool = (== tmp%9#0 NoOp)
+        (assert tmp%10#0) // OnCompletion is not NoOp
+        let tmp%11#0: uint64 = (txn ApplicationID)
+        let tmp%12#0: bool = (!= tmp%11#0 0u)
+        (assert tmp%12#0) // can only call when not creating
+        let reinterpret_bytes[32]%0#0: bytes[32] = (txna ApplicationArgs 1)
+        contracts/spending_account.algo.ts::SpendingAccountContract.rekey(reinterpret_bytes[32]%0#0)
+        return 1u
+    block@4: // optin_route_L46
+        let tmp%13#0: uint64 = (txn OnCompletion)
+        let tmp%14#0: bool = (== tmp%13#0 NoOp)
+        (assert tmp%14#0) // OnCompletion is not NoOp
+        let tmp%15#0: uint64 = (txn ApplicationID)
+        let tmp%16#0: bool = (!= tmp%15#0 0u)
+        (assert tmp%16#0) // can only call when not creating
+        let tmp%17#0: uint64 = (txn GroupIndex)
+        let gtxn_idx%0#0: uint64 = (- tmp%17#0 1u)
+        let gtxn_type%0#0: uint64 = ((gtxns TypeEnum) gtxn_idx%0#0)
+        let gtxn_type_matches%0#0: bool = (== gtxn_type%0#0 pay)
+        (assert gtxn_type_matches%0#0) // transaction type is pay
+        let reinterpret_bytes[8]%2#0: bytes[8] = (txna ApplicationArgs 1)
+        let tmp%18#0: uint64 = (btoi reinterpret_bytes[8]%2#0)
+        contracts/spending_account.algo.ts::SpendingAccountContract.optin(gtxn_idx%0#0, tmp%18#0)
+        return 1u
+    block@5: // deleteApplication_route_L69
+        let tmp%19#0: uint64 = (txn OnCompletion)
+        let tmp%20#0: bool = (== tmp%19#0 DeleteApplication)
+        (assert tmp%20#0) // OnCompletion is not DeleteApplication
+        let tmp%21#0: uint64 = (txn ApplicationID)
+        let tmp%22#0: bool = (!= tmp%21#0 0u)
+        (assert tmp%22#0) // can only call when not creating
+        contracts/spending_account.algo.ts::SpendingAccountContract.deleteApplication()
+        return 1u
+    block@6: // switch_case_default_L9
+        goto block@7
+    block@7: // switch_case_next_L9
+        goto block@9
+    block@8: // bare_routing_L9
+        goto block@9
+    block@9: // after_if_else_L9
+        return 0u
+
+subroutine contracts/spending_account.algo.ts::SpendingAccountContract.isWallet() -> bool:
+    block@0: // L14
+        let tmp%0#0: bytes[32] = (txn Sender)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (app_global_get_ex 0u "wallet_id")
+        (assert maybe_exists%0#0) // check GlobalState exists
+        let (value%0#0: bytes[32], check%0#0: bool) = ((app_params_get AppAddress) maybe_value%0#0)
+        (assert check%0#0) // application exists
+        let tmp%1#0: bool = (== tmp%0#0 value%0#0)
+        return tmp%1#0
+
+subroutine contracts/spending_account.algo.ts::SpendingAccountContract.isPlugin() -> bool:
+    block@0: // L18
+        let tmp%0#0: bytes[32] = (txn Sender)
+        let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (app_global_get_ex 0u "plugin_id")
+        (assert maybe_exists%0#0) // check GlobalState exists
+        let (value%0#0: bytes[32], check%0#0: bool) = ((app_params_get AppAddress) maybe_value%0#0)
+        (assert check%0#0) // application exists
+        let tmp%1#0: bool = (== tmp%0#0 value%0#0)
+        return tmp%1#0
+
+subroutine contracts/spending_account.algo.ts::SpendingAccountContract.createApplication(walletID: uint64, plugin: uint64) -> void:
+    block@0: // L23
+        (app_global_put "wallet_id" walletID#0)
+        (app_global_put "plugin_id" plugin#0)
+        return 
+
+subroutine contracts/spending_account.algo.ts::SpendingAccountContract.rekey(address: bytes[32]) -> void:
+    block@0: // L29
+        let tmp%0#0: bool = contracts/spending_account.algo.ts::SpendingAccountContract.isWallet()
+        (assert tmp%0#0) // only the creator can rekey a spend contract
+        itxn_begin
+        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
+        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
+        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
+        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
+        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
+        let inner_txn_params%0%%param_Amount_idx_0#0: uint64 = 0u
+        let inner_txn_params%0%%Amount_length#0: uint64 = 1u
+        let inner_txn_params%0%%param_RekeyTo_idx_0#0: bytes[32] = address#0
+        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 1u
+        let inner_txn_params%0%%Sender_length#0: uint64 = 0u
+        let inner_txn_params%0%%Note_length#0: uint64 = 0u
+        let inner_txn_params%0%%Receiver_length#0: uint64 = 0u
+        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
+        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
+        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
+        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
+        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
+        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
+        let inner_txn_params%0%%Type_length#0: uint64 = 0u
+        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
+        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
+        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
+        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
+        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
+        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
+        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
+        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
+        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
+        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
+        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
+        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
+        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
+        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
+        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
+        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
+        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
+        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
+        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
+        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
+        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
+        ((itxn_field RekeyTo) inner_txn_params%0%%param_RekeyTo_idx_0#0)
+        ((itxn_field Amount) inner_txn_params%0%%param_Amount_idx_0#0)
+        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
+        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        goto block@1
+    block@1: // next_txn_L32
+        itxn_submit
+        return 
+
+subroutine contracts/spending_account.algo.ts::SpendingAccountContract.optin(payment: uint64, asset: uint64) -> void:
+    block@0: // L46
+        let tmp%0#0: bool = contracts/spending_account.algo.ts::SpendingAccountContract.isWallet()
+        goto tmp%0#0 ? block@2 : block@1
+    block@1: // or_contd_L47
+        let tmp%1#0: bool = contracts/spending_account.algo.ts::SpendingAccountContract.isPlugin()
+        goto tmp%1#0 ? block@2 : block@3
+    block@2: // bool_true_L47
+        let or_result%0#0: bool = 1u
+        goto block@4
+    block@3: // bool_false_L47
+        let or_result%0#1: bool = 0u
+        goto block@4
+    block@4: // bool_merge_L47
+        let or_result%0#2: bool = φ(or_result%0#0 <- block@2, or_result%0#1 <- block@3)
+        (assert or_result%0#2) // Only the wallet or plugin can opt in
+        let tmp%2#0: bytes[32] = ((gtxns Receiver) payment#0)
+        let tmp%3#0: bytes[32] = (global CurrentApplicationAddress)
+        let tmp%4#0: bool = (== tmp%2#0 tmp%3#0)
+        goto tmp%4#0 ? block@5 : block@7
+    block@5: // and_contd_L49
+        let tmp%5#0: uint64 = ((gtxns Amount) payment#0)
+        let tmp%6#0: uint64 = (global AssetOptInMinBalance)
+        let tmp%7#0: bool = (== tmp%5#0 tmp%6#0)
+        goto tmp%7#0 ? block@6 : block@7
+    block@6: // bool_true_L49
+        let and_result%0#0: bool = 1u
+        goto block@8
+    block@7: // bool_false_L49
+        let and_result%0#1: bool = 0u
+        goto block@8
+    block@8: // bool_merge_L49
+        let and_result%0#2: bool = φ(and_result%0#0 <- block@6, and_result%0#1 <- block@7)
+        (assert and_result%0#2) // Invalid payment transaction
+        itxn_begin
+        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
+        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
+        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
+        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 4u
+        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
+        let inner_txn_params%0%%param_AssetReceiver_idx_0#0: bytes[32] = (global CurrentApplicationAddress)
+        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 1u
+        let inner_txn_params%0%%param_AssetAmount_idx_0#0: uint64 = 0u
+        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 1u
+        let inner_txn_params%0%%param_XferAsset_idx_0#0: uint64 = asset#0
+        let inner_txn_params%0%%XferAsset_length#0: uint64 = 1u
+        let inner_txn_params%0%%Sender_length#0: uint64 = 0u
+        let inner_txn_params%0%%Note_length#0: uint64 = 0u
+        let inner_txn_params%0%%Receiver_length#0: uint64 = 0u
+        let inner_txn_params%0%%Amount_length#0: uint64 = 0u
+        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
+        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
+        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
+        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
+        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
+        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
+        let inner_txn_params%0%%Type_length#0: uint64 = 0u
+        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
+        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
+        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
+        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
+        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
+        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
+        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
+        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
+        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
+        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
+        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
+        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
+        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
+        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
+        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
+        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
+        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
+        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
+        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
+        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
+        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
+        ((itxn_field XferAsset) inner_txn_params%0%%param_XferAsset_idx_0#0)
+        ((itxn_field AssetAmount) inner_txn_params%0%%param_AssetAmount_idx_0#0)
+        ((itxn_field AssetReceiver) inner_txn_params%0%%param_AssetReceiver_idx_0#0)
+        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
+        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        goto block@9
+    block@9: // next_txn_L58
+        itxn_submit
+        return 
+
+subroutine contracts/spending_account.algo.ts::SpendingAccountContract.deleteApplication() -> void:
+    block@0: // L69
+        let tmp%0#0: bytes[32] = (txn Sender)
+        let tmp%1#0: bytes[32] = (global CreatorAddress)
+        let tmp%2#0: bool = (== tmp%0#0 tmp%1#0)
+        (assert tmp%2#0) // Only the factory can delete the application
+        return 

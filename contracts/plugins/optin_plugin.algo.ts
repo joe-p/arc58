@@ -1,28 +1,33 @@
-import { Account, Application, Asset, Bytes, Contract, Global, arc4, assert, gtxn, op, itxn, abimethod } from "@algorandfoundation/algorand-typescript";
+import { Application, Asset, Global, gtxn, itxn, abimethod, assertMatch, uint64 } from "@algorandfoundation/algorand-typescript";
+import { Plugin } from "./plugin";
+import { ERR_INVALID_PAYMENT } from "../errors";
 
-export class OptInPlugin extends Contract {
+export class OptInPlugin extends Plugin {
 
+  // @ts-ignore
   @abimethod({ onCreate: 'require' })
   createApplication(): void {}
 
-  optInToAsset(sender: arc4.UintN64, asset: arc4.UintN64, mbrPayment: gtxn.PaymentTxn): void {
-    const [controlledAccountBytes] = op.AppGlobal.getExBytes(Application(sender.native), Bytes('c'));
-    const controlledAccount = Account(Bytes(controlledAccountBytes));
-    // verifyPayTxn(mbrPayment, {
-    //   receiver: controlledAccount,
-    //   amount: {
-    //     greaterThanEqualTo: globals.assetOptInMinBalance,
-    //   },
-    // });
-    assert(mbrPayment.amount >= Global.assetOptInMinBalance, 'asset mismatch');
+  optInToAsset(walletID: uint64, rekeyBack: boolean, asset: uint64, mbrPayment: gtxn.PaymentTxn): void {
+    const wallet = Application(walletID)
+    const sender = this.getSpendingAccount(wallet)
+
+    assertMatch(
+      mbrPayment,
+      {
+        receiver: sender,
+        amount: Global.assetOptInMinBalance
+      },
+      ERR_INVALID_PAYMENT
+    )
 
     itxn
       .assetTransfer({
-        sender: controlledAccount,
-        assetReceiver: controlledAccount,
+        sender,
+        assetReceiver: sender,
         assetAmount: 0,
-        xferAsset: Asset(asset.native),
-        rekeyTo: Application(sender.native).address,
+        xferAsset: Asset(asset),
+        rekeyTo: this.rekeyAddress(rekeyBack, wallet),
         fee: 0,
       })
       .submit();

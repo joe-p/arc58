@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "generate-client": "algokit generate client contracts/artifacts/ --language typescript  --output contracts/clients/{contract_name}Client.ts",
-    "compile-contracts": "puya-ts build contracts/*.algo.ts --out-dir ./artifacts && puya-ts build contracts/plugins/*.algo.ts --out-dir ./../artifacts",
+    "compile-contracts": "puya-ts build contracts/*.algo.ts --puya-path=puya --optimization-level=0 --output-ssa-ir --output-optimization-ir --out-dir ./artifacts && puya-ts build contracts/plugins/*.algo.ts --out-dir ./../artifacts",
     "generate-components": "algokit-generate-component contracts/artifacts/*.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contracts && npm run generate-client",
     "test": "npm run build && jest",
@@ -13,14 +13,14 @@
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^7.1.0",
-    "@algorandfoundation/algorand-typescript": "^1.0.0-beta.20",
-    "@algorandfoundation/puya-ts": "^1.0.0-beta.37",
+    "@algorandfoundation/algorand-typescript": "^1.0.0-beta.69",
+    "@algorandfoundation/puya-ts": "^1.0.0-beta.69",
     "algosdk": "^2.9.0"
   },
   "devDependencies": {
     "@algorandfoundation/algokit-client-generator": "^4.0.8",
     "@jest/globals": "^29.5.0",
-    "@joe-p/algokit-generate-component": "^0.2.0",
+    "@joe-p/algokit-generate-component": "^0.2.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^7.32.0 || ^8.2.0",
@@ -29,7 +29,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^5.0.1",
-    "jest": "^29.5.0",
+    "jest": "^29.7.0",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.0",
     "typescript": "5.0.2"

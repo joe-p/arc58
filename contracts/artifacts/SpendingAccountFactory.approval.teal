@@ -1,0 +1,1065 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1 32 16 28500 200000 50000
+    bytecblock "a" 0x 0x151f7c75 0x0000
+
+main_block@0:
+
+main_block@1:
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txn NumAppArgs
+    intc_0 // 0
+    !=
+    bz main_bare_routing@12
+
+main_abi_routing@2:
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txna ApplicationArgs 0
+    pushbytes 0x47c79d5f // method "create(pay,uint64)uint64"
+    pushbytes 0x8a39e79f // method "delete(uint64)void"
+    pushbytes 0x4c9fb656 // method "exists(address)bool"
+    pushbytes 0x89e79924 // method "get(address)uint64"
+    pushbytes 0x40e65262 // method "mustGet(address)uint64"
+    pushbytes 0xb561c256 // method "getList(address[])uint64[]"
+    pushbytes 0x82b435f8 // method "mustGetList(address[])uint64[]"
+    uncover 7
+    match main_create_route@3 main_delete_route@4 main_exists_route@5 main_get_route@6 main_mustGet_route@7 main_getList_route@8 main_mustGetList_route@9
+
+main_switch_case_default@10:
+
+main_switch_case_next@11:
+
+main_after_if_else@16:
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    intc_0 // 0
+
+main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17:
+    return
+
+main_mustGetList_route@9:
+    // contracts/spending_account_factory.algo.ts:131
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txna ApplicationArgs 1
+    // contracts/spending_account_factory.algo.ts:131
+    // @abimethod({ readonly: true })
+    callsub mustGetList
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+main_getList_route@8:
+    // contracts/spending_account_factory.algo.ts:116
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txna ApplicationArgs 1
+    // contracts/spending_account_factory.algo.ts:116
+    // @abimethod({ readonly: true })
+    callsub getList
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+main_mustGet_route@7:
+    // contracts/spending_account_factory.algo.ts:109
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txna ApplicationArgs 1
+    // contracts/spending_account_factory.algo.ts:109
+    // @abimethod({ readonly: true })
+    callsub mustGet
+    itob
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+main_get_route@6:
+    // contracts/spending_account_factory.algo.ts:100
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txna ApplicationArgs 1
+    // contracts/spending_account_factory.algo.ts:100
+    // @abimethod({ readonly: true })
+    callsub get
+    itob
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+main_exists_route@5:
+    // contracts/spending_account_factory.algo.ts:94
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txna ApplicationArgs 1
+    // contracts/spending_account_factory.algo.ts:94
+    // @abimethod({ readonly: true })
+    callsub exists
+    pushbytes 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+main_delete_route@4:
+    // contracts/spending_account_factory.algo.ts:61
+    // delete(id: uint64): void {
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // contracts/spending_account_factory.algo.ts:61
+    // delete(id: uint64): void {
+    callsub delete
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+main_create_route@3:
+    // contracts/spending_account_factory.algo.ts:16
+    // create(payment: gtxn.PaymentTxn, plugin: uint64): uint64 {
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    // contracts/spending_account_factory.algo.ts:16
+    // create(payment: gtxn.PaymentTxn, plugin: uint64): uint64 {
+    callsub create
+    itob
+    bytec_2 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+main_bare_routing@12:
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txn OnCompletion
+    intc_0 // 0
+    swap
+    match main___algots__.defaultCreate@13
+
+main_switch_case_default@14:
+
+main_switch_case_next@15:
+    b main_after_if_else@16
+
+main___algots__.defaultCreate@13:
+    // contracts/spending_account_factory.algo.ts:12
+    // export class SpendingAccountFactory extends Contract {
+    txn ApplicationID
+    intc_0 // 0
+    ==
+    assert // can only call when creating
+    callsub __algots__.defaultCreate
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__puya_arc4_router__@17
+
+
+// contracts/spending_account_factory.algo.ts::bytes16(acc: bytes) -> bytes:
+bytes16:
+    // contracts/spending_account_factory.algo.ts:8
+    // function bytes16(acc: Account): StaticBytes<16> {
+    proto 1 1
+
+bytes16_block@0:
+    // contracts/spending_account_factory.algo.ts:9
+    // return new StaticBytes<16>(acc.bytes.slice(0, 16))
+    frame_dig -1
+    len
+    intc_0 // 0
+    dig 1
+    >=
+    intc_0 // 0
+    dig 2
+    uncover 2
+    select
+    swap
+    intc_3 // 16
+    dig 1
+    >=
+    intc_3 // 16
+    uncover 2
+    uncover 2
+    select
+    frame_dig -1
+    uncover 2
+    uncover 2
+    substring3
+    dup
+    len
+    intc_3 // 16
+    ==
+    assert // invalid size
+    retsub
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.create(payment: uint64, plugin: uint64) -> uint64:
+create:
+    // contracts/spending_account_factory.algo.ts:16
+    // create(payment: gtxn.PaymentTxn, plugin: uint64): uint64 {
+    proto 2 1
+
+create_block@0:
+    // contracts/spending_account_factory.algo.ts:17
+    // const caller = Global.callerApplicationId
+    global CallerApplicationID
+    dup
+    // contracts/spending_account_factory.algo.ts:18
+    // assert(caller !== 0, ERR_ONLY_APPS)
+    intc_0 // 0
+    !=
+    assert // Only applications can create spending accounts
+    // contracts/spending_account_factory.algo.ts:24
+    // + (28_500 * spendingAccount.globalUints)
+    intc 4 // 28500
+    // contracts/spending_account_factory.algo.ts:20
+    // const spendingAccount = compileArc4(SpendingAccountContract);
+    pushint 2 // 2
+    // contracts/spending_account_factory.algo.ts:24
+    // + (28_500 * spendingAccount.globalUints)
+    *
+    // contracts/spending_account_factory.algo.ts:23
+    // 200_000
+    intc 5 // 200000
+    // contracts/spending_account_factory.algo.ts:23-24
+    // 200_000
+    // + (28_500 * spendingAccount.globalUints)
+    +
+    // contracts/spending_account_factory.algo.ts:25
+    // + (50_000 * spendingAccount.globalBytes)
+    intc 6 // 50000
+    // contracts/spending_account_factory.algo.ts:20
+    // const spendingAccount = compileArc4(SpendingAccountContract);
+    intc_0 // 0
+    // contracts/spending_account_factory.algo.ts:25
+    // + (50_000 * spendingAccount.globalBytes)
+    *
+    // contracts/spending_account_factory.algo.ts:23-25
+    // 200_000
+    // + (28_500 * spendingAccount.globalUints)
+    // + (50_000 * spendingAccount.globalBytes)
+    +
+    // contracts/spending_account_factory.algo.ts:26
+    // + 12_500
+    pushint 12500 // 12500
+    // contracts/spending_account_factory.algo.ts:23-26
+    // 200_000
+    // + (28_500 * spendingAccount.globalUints)
+    // + (50_000 * spendingAccount.globalBytes)
+    // + 12_500
+    +
+    // contracts/spending_account_factory.algo.ts:29-35
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: childAppMBR,
+    //   }
+    // )
+    frame_dig -2
+    gtxns Receiver
+    // contracts/spending_account_factory.algo.ts:32
+    // receiver: Global.currentApplicationAddress,
+    global CurrentApplicationAddress
+    // contracts/spending_account_factory.algo.ts:29-35
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: childAppMBR,
+    //   }
+    // )
+    ==
+    bz create_bool_false@3
+
+create_and_contd@1:
+    // contracts/spending_account_factory.algo.ts:29-35
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: childAppMBR,
+    //   }
+    // )
+    frame_dig -2
+    gtxns Amount
+    frame_dig 1
+    ==
+    bz create_bool_false@3
+
+create_bool_true@2:
+    intc_1 // 1
+
+create_bool_merge@4:
+    // contracts/spending_account_factory.algo.ts:29-35
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: childAppMBR,
+    //   }
+    // )
+    assert // assert target is match for conditions
+    // contracts/spending_account_factory.algo.ts:37-41
+    // const newSpendAccount = spendingAccount.call
+    //   .createApplication({
+    //     args: [caller, plugin],
+    //     fee: 0
+    //   })
+    itxn_begin
+    // contracts/spending_account_factory.algo.ts:39
+    // args: [caller, plugin],
+    frame_dig 0
+    itob
+    frame_dig -1
+    itob
+    swap
+    // contracts/spending_account_factory.algo.ts:37-41
+    // const newSpendAccount = spendingAccount.call
+    //   .createApplication({
+    //     args: [caller, plugin],
+    //     fee: 0
+    //   })
+    pushbytes 0x917c48b6 // method "createApplication(uint64,uint64)void"
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    itxn_field ApplicationArgs
+    // contracts/spending_account_factory.algo.ts:20
+    // const spendingAccount = compileArc4(SpendingAccountContract);
+    intc_0 // 0
+    itxn_field ExtraProgramPages
+    intc_0 // 0
+    itxn_field LocalNumUint
+    intc_0 // 0
+    itxn_field LocalNumByteSlice
+    intc_0 // 0
+    itxn_field GlobalNumByteSlice
+    pushint 2 // 2
+    itxn_field GlobalNumUint
+    pushbytes base64(CoEBQw==)
+    itxn_field ClearStateProgramPages
+    bytec_1 // 0x
+    itxn_field ClearStateProgramPages
+    pushbytes base64(CiACAAEmAgl3YWxsZXRfaWQJcGx1Z2luX2lkMRsiE0EAhzYaAIAEkXxItoAEZal7zIAEPqEYMoAEJIfDLE8EjgQARwAzABQAAiJDMRmBBRJEMRgiE0SIANAjQv/tMRkiEkQxGCITRDEWIwlJOBAjEkQ2GgEXiABtI0L/zjEZIhJEMRgiE0Q2GgGIAEIjQv+6MRkiEkQxGCISRDYaARc2GgIXiAAdI0L/oUL/nTEAIihlRHIIRBKJMQAiKWVEcghEEomKAgAoi/5nKYv/Z4mKAQCI/9hEsYv/siAisggjshAisgGziYoCAIj/wUAABoj/xkEAMSNEi/44BzIKEkEAIYv+OAgyEBJBABcjRLEyCov/shEishKyFIEEshAisgGziSJC/+YiQv/MMQAyCRJEiQ==)
+    itxn_field ApprovalProgramPages
+    bytec_1 // 0x
+    itxn_field ApprovalProgramPages
+    // contracts/spending_account_factory.algo.ts:37-41
+    // const newSpendAccount = spendingAccount.call
+    //   .createApplication({
+    //     args: [caller, plugin],
+    //     fee: 0
+    //   })
+    intc_0 // 0
+    itxn_field OnCompletion
+    pushint 6 // appl
+    itxn_field TypeEnum
+    // contracts/spending_account_factory.algo.ts:40
+    // fee: 0
+    intc_0 // 0
+    itxn_field Fee
+
+create_next_txn@5:
+    // contracts/spending_account_factory.algo.ts:37-41
+    // const newSpendAccount = spendingAccount.call
+    //   .createApplication({
+    //     args: [caller, plugin],
+    //     fee: 0
+    //   })
+    itxn_submit
+    // contracts/spending_account_factory.algo.ts:43
+    // .createdApp
+    gitxn 0 CreatedApplicationID
+    // contracts/spending_account_factory.algo.ts:45
+    // const id = newSpendAccount.id
+    dupn 2
+    // contracts/spending_account_factory.algo.ts:46
+    // const spendAccount = bytes16(newSpendAccount.address)
+    app_params_get AppAddress
+    assert // application exists
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:48
+    // this.walletIDsByAccounts(spendAccount).value = caller
+    frame_dig 0
+    itob
+    box_put
+    // contracts/spending_account_factory.algo.ts:50-56
+    // itxn
+    //   .payment({
+    //     receiver: newSpendAccount.address,
+    //     amount: 100_000,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // contracts/spending_account_factory.algo.ts:52
+    // receiver: newSpendAccount.address,
+    app_params_get AppAddress
+    assert // application exists
+    // contracts/spending_account_factory.algo.ts:53
+    // amount: 100_000,
+    pushint 100000 // 100000
+    itxn_field Amount
+    itxn_field Receiver
+    // contracts/spending_account_factory.algo.ts:50-55
+    // itxn
+    //   .payment({
+    //     receiver: newSpendAccount.address,
+    //     amount: 100_000,
+    //     fee: 0,
+    //   })
+    intc_1 // 1
+    itxn_field TypeEnum
+    // contracts/spending_account_factory.algo.ts:54
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+
+create_next_txn@6:
+    // contracts/spending_account_factory.algo.ts:50-56
+    // itxn
+    //   .payment({
+    //     receiver: newSpendAccount.address,
+    //     amount: 100_000,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    // contracts/spending_account_factory.algo.ts:58
+    // return id
+    frame_bury 0
+    retsub
+
+create_bool_false@3:
+    intc_0 // 0
+    b create_bool_merge@4
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.delete(id: uint64) -> void:
+delete:
+    // contracts/spending_account_factory.algo.ts:61
+    // delete(id: uint64): void {
+    proto 1 0
+
+delete_block@0:
+    // contracts/spending_account_factory.algo.ts:62
+    // const caller = Global.callerApplicationId
+    global CallerApplicationID
+    dup
+    // contracts/spending_account_factory.algo.ts:63
+    // assert(caller !== 0, ERR_ONLY_APPS)
+    intc_0 // 0
+    !=
+    assert // Only applications can create spending accounts
+    // contracts/spending_account_factory.algo.ts:64
+    // const key = bytes16(Application(id).address)
+    frame_dig -1
+    app_params_get AppAddress
+    assert // application exists
+    callsub bytes16
+    dup
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:66
+    // this.walletIDsByAccounts(key).exists &&
+    box_len
+    bury 1
+    // contracts/spending_account_factory.algo.ts:66-67
+    // this.walletIDsByAccounts(key).exists &&
+    // caller === this.walletIDsByAccounts(key).value,
+    bz delete_bool_false@3
+
+delete_and_contd@1:
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    frame_dig 1
+    concat
+    // contracts/spending_account_factory.algo.ts:67
+    // caller === this.walletIDsByAccounts(key).value,
+    box_get
+    swap
+    btoi
+    swap
+    assert // Box must have value
+    frame_dig 0
+    ==
+    // contracts/spending_account_factory.algo.ts:66-67
+    // this.walletIDsByAccounts(key).exists &&
+    // caller === this.walletIDsByAccounts(key).value,
+    bz delete_bool_false@3
+
+delete_bool_true@2:
+    intc_1 // 1
+
+delete_bool_merge@4:
+    // contracts/spending_account_factory.algo.ts:65-69
+    // assert(
+    //   this.walletIDsByAccounts(key).exists &&
+    //   caller === this.walletIDsByAccounts(key).value,
+    //   ERR_FORBIDDEN
+    // )
+    assert // only the creator wallet can delete a spending account
+    // contracts/spending_account_factory.algo.ts:75
+    // + (28_500 * spendingAccount.globalUints)
+    intc 4 // 28500
+    // contracts/spending_account_factory.algo.ts:71
+    // const spendingAccount = compileArc4(SpendingAccountContract);
+    pushint 2 // 2
+    // contracts/spending_account_factory.algo.ts:75
+    // + (28_500 * spendingAccount.globalUints)
+    *
+    // contracts/spending_account_factory.algo.ts:74
+    // 200_000
+    intc 5 // 200000
+    // contracts/spending_account_factory.algo.ts:74-75
+    // 200_000
+    // + (28_500 * spendingAccount.globalUints)
+    +
+    // contracts/spending_account_factory.algo.ts:76
+    // + (50_000 * spendingAccount.globalBytes)
+    intc 6 // 50000
+    // contracts/spending_account_factory.algo.ts:71
+    // const spendingAccount = compileArc4(SpendingAccountContract);
+    intc_0 // 0
+    // contracts/spending_account_factory.algo.ts:76
+    // + (50_000 * spendingAccount.globalBytes)
+    *
+    // contracts/spending_account_factory.algo.ts:74-76
+    // 200_000
+    // + (28_500 * spendingAccount.globalUints)
+    // + (50_000 * spendingAccount.globalBytes)
+    +
+    // contracts/spending_account_factory.algo.ts:77
+    // + 12_500
+    pushint 12500 // 12500
+    // contracts/spending_account_factory.algo.ts:74-77
+    // 200_000
+    // + (28_500 * spendingAccount.globalUints)
+    // + (50_000 * spendingAccount.globalBytes)
+    // + 12_500
+    +
+    // contracts/spending_account_factory.algo.ts:80
+    // spendingAccount.call.deleteApplication({ appId: id, fee: 0 })
+    itxn_begin
+    frame_dig -1
+    pushbytes 0x2487c32c // method "deleteApplication()void"
+    itxn_field ApplicationArgs
+    pushint 5 // 5
+    itxn_field OnCompletion
+    itxn_field ApplicationID
+    pushint 6 // appl
+    itxn_field TypeEnum
+    intc_0 // 0
+    itxn_field Fee
+
+delete_next_txn@5:
+    // contracts/spending_account_factory.algo.ts:80
+    // spendingAccount.call.deleteApplication({ appId: id, fee: 0 })
+    itxn_submit
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    frame_dig 1
+    concat
+    // contracts/spending_account_factory.algo.ts:82
+    // this.walletIDsByAccounts(key).delete()
+    box_del
+    pop
+    // contracts/spending_account_factory.algo.ts:84-90
+    // itxn
+    //   .payment({
+    //     amount: childAppMBR,
+    //     rekeyTo: Global.callerApplicationAddress,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // contracts/spending_account_factory.algo.ts:87
+    // rekeyTo: Global.callerApplicationAddress,
+    global CallerApplicationAddress
+    itxn_field RekeyTo
+    itxn_field Amount
+    // contracts/spending_account_factory.algo.ts:84-89
+    // itxn
+    //   .payment({
+    //     amount: childAppMBR,
+    //     rekeyTo: Global.callerApplicationAddress,
+    //     fee: 0,
+    //   })
+    intc_1 // 1
+    itxn_field TypeEnum
+    // contracts/spending_account_factory.algo.ts:88
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+
+delete_next_txn@6:
+    // contracts/spending_account_factory.algo.ts:84-90
+    // itxn
+    //   .payment({
+    //     amount: childAppMBR,
+    //     rekeyTo: Global.callerApplicationAddress,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    retsub
+
+delete_bool_false@3:
+    intc_0 // 0
+    b delete_bool_merge@4
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.exists(address: bytes) -> uint64:
+exists:
+    // contracts/spending_account_factory.algo.ts:94-95
+    // @abimethod({ readonly: true })
+    // exists(address: Address): boolean {
+    proto 1 1
+
+exists_block@0:
+    // contracts/spending_account_factory.algo.ts:96
+    // return this.walletIDsByAccounts(bytes16(address.native)).exists
+    frame_dig -1
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:96
+    // return this.walletIDsByAccounts(bytes16(address.native)).exists
+    box_len
+    bury 1
+    retsub
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.get(address: bytes) -> uint64:
+get:
+    // contracts/spending_account_factory.algo.ts:100-101
+    // @abimethod({ readonly: true })
+    // get(address: Address): uint64 {
+    proto 1 1
+
+get_block@0:
+    // contracts/spending_account_factory.algo.ts:102
+    // if (!this.walletIDsByAccounts(bytes16(address.native)).exists) {
+    frame_dig -1
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:102
+    // if (!this.walletIDsByAccounts(bytes16(address.native)).exists) {
+    box_len
+    bury 1
+    bnz get_after_if_else@2
+
+get_if_body@1:
+    // contracts/spending_account_factory.algo.ts:103
+    // return 0
+    intc_0 // 0
+    retsub
+
+get_after_if_else@2:
+    // contracts/spending_account_factory.algo.ts:105
+    // return this.walletIDsByAccounts(bytes16(address.native)).value
+    frame_dig -1
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:105
+    // return this.walletIDsByAccounts(bytes16(address.native)).value
+    box_get
+    swap
+    btoi
+    swap
+    assert // Box must have value
+    retsub
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.mustGet(address: bytes) -> uint64:
+mustGet:
+    // contracts/spending_account_factory.algo.ts:109-110
+    // @abimethod({ readonly: true })
+    // mustGet(address: Address): uint64 {
+    proto 1 1
+
+mustGet_block@0:
+    // contracts/spending_account_factory.algo.ts:111
+    // assert(this.walletIDsByAccounts(bytes16(address.native)).exists, 'Account not found')
+    frame_dig -1
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:111
+    // assert(this.walletIDsByAccounts(bytes16(address.native)).exists, 'Account not found')
+    box_len
+    bury 1
+    assert // Account not found
+    // contracts/spending_account_factory.algo.ts:112
+    // return this.walletIDsByAccounts(bytes16(address.native)).value
+    frame_dig -1
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:112
+    // return this.walletIDsByAccounts(bytes16(address.native)).value
+    box_get
+    swap
+    btoi
+    swap
+    assert // Box must have value
+    retsub
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.getList(addresses: bytes) -> bytes:
+getList:
+    // contracts/spending_account_factory.algo.ts:116-117
+    // @abimethod({ readonly: true })
+    // getList(addresses: DynamicArray<Address>): DynamicArray<UintN64> {
+    proto 1 1
+    intc_0 // 0
+
+getList_block@0:
+    // contracts/spending_account_factory.algo.ts:118
+    // const apps = new DynamicArray<UintN64>()
+    bytec_3 // 0x0000
+    bytec_1 // 0x
+    concat
+    // contracts/spending_account_factory.algo.ts:119
+    // for (let i: uint64 = 0; i < addresses.length; i++) {
+    intc_0 // 0
+
+getList_while_top@1:
+    // contracts/spending_account_factory.algo.ts:119
+    // for (let i: uint64 = 0; i < addresses.length; i++) {
+    frame_dig -1
+    intc_0 // 0
+    extract_uint16
+    frame_dig 2
+    >
+    bz getList_after_while@6
+
+getList_while_body@2:
+    // contracts/spending_account_factory.algo.ts:120
+    // const address = addresses[i]
+    frame_dig -1
+    extract 2 0
+    frame_dig 2
+    intc_2 // 32
+    *
+    intc_2 // 32
+    extract3 // on error: Index access is out of bounds
+    dup
+    frame_bury 0
+    // contracts/spending_account_factory.algo.ts:121
+    // if (this.walletIDsByAccounts(bytes16(address.native)).exists) {
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:121
+    // if (this.walletIDsByAccounts(bytes16(address.native)).exists) {
+    box_len
+    bury 1
+    bz getList_else_body@4
+
+getList_if_body@3:
+    // contracts/spending_account_factory.algo.ts:122
+    // apps.push(new UintN64(this.walletIDsByAccounts(bytes16(address.native)).value))
+    frame_dig 1
+    extract 2 0
+    frame_dig 0
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:122
+    // apps.push(new UintN64(this.walletIDsByAccounts(bytes16(address.native)).value))
+    box_get
+    swap
+    btoi
+    swap
+    assert // Box must have value
+    itob
+    bytec_1 // 0x
+    swap
+    concat
+    bytec_1 // 0x
+    swap
+    concat
+    concat
+    dup
+    len
+    pushint 8 // 8
+    /
+    itob
+    extract 6 2
+    swap
+    concat
+    frame_bury 1
+
+getList_after_if_else@5:
+    // contracts/spending_account_factory.algo.ts:119
+    // for (let i: uint64 = 0; i < addresses.length; i++) {
+    frame_dig 2
+    intc_1 // 1
+    +
+    frame_bury 2
+    b getList_while_top@1
+
+getList_else_body@4:
+    // contracts/spending_account_factory.algo.ts:124
+    // apps.push(new UintN64(0))
+    frame_dig 1
+    extract 2 0
+    bytec_1 // 0x
+    pushbytes 0x0000000000000000
+    concat
+    bytec_1 // 0x
+    swap
+    concat
+    concat
+    dup
+    len
+    pushint 8 // 8
+    /
+    itob
+    extract 6 2
+    swap
+    concat
+    frame_bury 1
+    b getList_after_if_else@5
+
+getList_after_while@6:
+    // contracts/spending_account_factory.algo.ts:127
+    // return apps
+    frame_dig 1
+    frame_bury 0
+    retsub
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.mustGetList(addresses: bytes) -> bytes:
+mustGetList:
+    // contracts/spending_account_factory.algo.ts:131-132
+    // @abimethod({ readonly: true })
+    // mustGetList(addresses: DynamicArray<Address>): DynamicArray<UintN64> {
+    proto 1 1
+
+mustGetList_block@0:
+    // contracts/spending_account_factory.algo.ts:133
+    // const apps = new DynamicArray<UintN64>()
+    bytec_3 // 0x0000
+    bytec_1 // 0x
+    concat
+    // contracts/spending_account_factory.algo.ts:134
+    // for (let i: uint64 = 0; i < addresses.length; i++) {
+    intc_0 // 0
+
+mustGetList_while_top@1:
+    // contracts/spending_account_factory.algo.ts:134
+    // for (let i: uint64 = 0; i < addresses.length; i++) {
+    frame_dig -1
+    intc_0 // 0
+    extract_uint16
+    frame_dig 1
+    >
+    bz mustGetList_after_while@3
+
+mustGetList_while_body@2:
+    // contracts/spending_account_factory.algo.ts:135
+    // const address = addresses[i]
+    frame_dig -1
+    extract 2 0
+    frame_dig 1
+    dup
+    cover 2
+    intc_2 // 32
+    *
+    intc_2 // 32
+    extract3 // on error: Index access is out of bounds
+    // contracts/spending_account_factory.algo.ts:136
+    // assert(this.walletIDsByAccounts(bytes16(address.native)).exists, 'Account not found')
+    dup
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:136
+    // assert(this.walletIDsByAccounts(bytes16(address.native)).exists, 'Account not found')
+    box_len
+    bury 1
+    assert // Account not found
+    // contracts/spending_account_factory.algo.ts:137
+    // apps.push(new UintN64(this.walletIDsByAccounts(bytes16(address.native)).value))
+    frame_dig 0
+    extract 2 0
+    swap
+    callsub bytes16
+    // contracts/spending_account_factory.algo.ts:14
+    // walletIDsByAccounts = BoxMap<StaticBytes<16>, uint64>({ keyPrefix: 'a' })
+    bytec_0 // "a"
+    swap
+    concat
+    // contracts/spending_account_factory.algo.ts:137
+    // apps.push(new UintN64(this.walletIDsByAccounts(bytes16(address.native)).value))
+    box_get
+    swap
+    btoi
+    swap
+    assert // Box must have value
+    itob
+    bytec_1 // 0x
+    swap
+    concat
+    bytec_1 // 0x
+    swap
+    concat
+    concat
+    dup
+    len
+    pushint 8 // 8
+    /
+    itob
+    extract 6 2
+    swap
+    concat
+    frame_bury 0
+    // contracts/spending_account_factory.algo.ts:134
+    // for (let i: uint64 = 0; i < addresses.length; i++) {
+    intc_1 // 1
+    +
+    frame_bury 1
+    b mustGetList_while_top@1
+
+mustGetList_after_while@3:
+    // contracts/spending_account_factory.algo.ts:139
+    // return apps
+    retsub
+
+
+// contracts/spending_account_factory.algo.ts::SpendingAccountFactory.__algots__.defaultCreate() -> void:
+__algots__.defaultCreate:
+
+__algots__.defaultCreate_block@0:
+    retsub
