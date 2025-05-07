@@ -4,6 +4,7 @@ import * as algokit from '@algorandfoundation/algokit-utils';
 import algosdk, { Algodv2, makeBasicAccountTransactionSigner } from 'algosdk';
 import { microAlgos } from '@algorandfoundation/algokit-utils';
 import { AbstractedAccountClient, AbstractedAccountFactory } from '../contracts/clients/AbstractedAccountClient';
+import { SpendingAccountFactoryFactory } from '../contracts/clients/SpendingAccountFactoryClient';
 
 const ZERO_ADDRESS = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ';
 const fixture = algorandFixture();
@@ -29,18 +30,34 @@ describe('Rekeying Test', () => {
 
     await algod.setBlockOffsetTimestamp(60).do();
 
+    const spendingAccountFactory = new SpendingAccountFactoryFactory({
+      defaultSender: aliceEOA.addr,
+      defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
+      algorand
+    })
+
+    const spendingAccountFactoryResults = await spendingAccountFactory.send.create.bare()
+
+    await spendingAccountFactoryResults.appClient.appClient.fundAppAccount({ amount: (100_000).microAlgos() });
+
     const minter = new AbstractedAccountFactory({
       defaultSender: aliceEOA.addr,
       defaultSigner: makeBasicAccountTransactionSigner(aliceEOA),
       algorand,
     });
-    const results = await minter.send.create.createApplication({ args: { admin: aliceEOA.addr, controlledAddress: ZERO_ADDRESS }});
+    const results = await minter.send.create.createApplication({
+      args: {
+        admin: aliceEOA.addr,
+        controlledAddress: ZERO_ADDRESS,
+        spendingAccountFactoryApp: spendingAccountFactoryResults.appClient.appId,
+      },
+    });
 
     abstractedAccountClient = results.appClient;
     aliceAbstractedAccount = abstractedAccountClient.appAddress;
 
     // Fund the abstracted account with some ALGO to later spend
-    await abstractedAccountClient.appClient.fundAppAccount({ amount: microAlgos(50_000_000) });
+    await abstractedAccountClient.appClient.fundAppAccount({ amount: (4).algos() });
   });
 
   test('Alice does not rekey back to the app', async () => {

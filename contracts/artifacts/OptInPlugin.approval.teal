@@ -4,8 +4,9 @@
 // @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
 main:
     intcblock 0 1
-    // contracts/plugins/optin_plugin.algo.ts:3
-    // export class OptInPlugin extends Contract {
+    bytecblock "spending_address"
+    // contracts/plugins/optin_plugin.algo.ts:5
+    // export class OptInPlugin extends Plugin {
     txn NumAppArgs
     bz main_after_if_else@8
     pushbytess 0xb8447b36 0xbfcbeee9 // method "createApplication()void", method "optInToAsset(uint64,bool,uint64,pay)void"
@@ -13,24 +14,28 @@ main:
     match main_createApplication_route@3 main_optInToAsset_route@4
 
 main_after_if_else@8:
-    // contracts/plugins/optin_plugin.algo.ts:3
-    // export class OptInPlugin extends Contract {
+    // contracts/plugins/optin_plugin.algo.ts:5
+    // export class OptInPlugin extends Plugin {
     intc_0 // 0
     return
 
 main_optInToAsset_route@4:
-    // contracts/plugins/optin_plugin.algo.ts:8
-    // optInToAsset(sender: arc4.UintN64, rekeyBack: arc4.Bool, asset: arc4.UintN64, mbrPayment: gtxn.PaymentTxn): void {
+    // contracts/plugins/optin_plugin.algo.ts:11
+    // optInToAsset(walletID: uint64, rekeyBack: boolean, asset: uint64, mbrPayment: gtxn.PaymentTxn): void {
     txn OnCompletion
     !
     assert // OnCompletion is not NoOp
     txn ApplicationID
     assert // can only call when not creating
-    // contracts/plugins/optin_plugin.algo.ts:3
-    // export class OptInPlugin extends Contract {
+    // contracts/plugins/optin_plugin.algo.ts:5
+    // export class OptInPlugin extends Plugin {
     txna ApplicationArgs 1
+    btoi
     txna ApplicationArgs 2
+    intc_0 // 0
+    getbit
     txna ApplicationArgs 3
+    btoi
     txn GroupIndex
     intc_1 // 1
     -
@@ -39,14 +44,14 @@ main_optInToAsset_route@4:
     intc_1 // pay
     ==
     assert // transaction type is pay
-    // contracts/plugins/optin_plugin.algo.ts:8
-    // optInToAsset(sender: arc4.UintN64, rekeyBack: arc4.Bool, asset: arc4.UintN64, mbrPayment: gtxn.PaymentTxn): void {
+    // contracts/plugins/optin_plugin.algo.ts:11
+    // optInToAsset(walletID: uint64, rekeyBack: boolean, asset: uint64, mbrPayment: gtxn.PaymentTxn): void {
     callsub optInToAsset
     intc_1 // 1
     return
 
 main_createApplication_route@3:
-    // contracts/plugins/optin_plugin.algo.ts:5
+    // contracts/plugins/optin_plugin.algo.ts:8
     // @abimethod({ onCreate: 'require' })
     txn OnCompletion
     !
@@ -58,96 +63,191 @@ main_createApplication_route@3:
     return
 
 
-// contracts/plugins/optin_plugin.algo.ts::OptInPlugin.optInToAsset(sender: bytes, rekeyBack: bytes, asset: bytes, mbrPayment: uint64) -> void:
+// contracts/plugins/optin_plugin.algo.ts::OptInPlugin.optInToAsset(walletID: uint64, rekeyBack: uint64, asset: uint64, mbrPayment: uint64) -> void:
 optInToAsset:
-    // contracts/plugins/optin_plugin.algo.ts:8
-    // optInToAsset(sender: arc4.UintN64, rekeyBack: arc4.Bool, asset: arc4.UintN64, mbrPayment: gtxn.PaymentTxn): void {
+    // contracts/plugins/optin_plugin.algo.ts:11
+    // optInToAsset(walletID: uint64, rekeyBack: boolean, asset: uint64, mbrPayment: gtxn.PaymentTxn): void {
     proto 4 0
-    // contracts/plugins/optin_plugin.algo.ts:9
-    // const [controlledAccountBytes] = op.AppGlobal.getExBytes(sender.native, Bytes('controlled_address'));
-    frame_dig -4
-    btoi
+    intc_0 // 0
     dup
-    pushbytes "controlled_address"
+    // contracts/plugins/plugin.ts:37-40
+    // const [spendingAddressBytes] = op.AppGlobal.getExBytes(
+    //   wallet,
+    //   Bytes(AbstractAccountGlobalStateKeysSpendingAddress)
+    // )
+    frame_dig -4
+    // contracts/constants.ts:6
+    // export const AbstractAccountGlobalStateKeysSpendingAddress = 'spending_address'
+    bytec_0 // "spending_address"
+    // contracts/plugins/plugin.ts:37-40
+    // const [spendingAddressBytes] = op.AppGlobal.getExBytes(
+    //   wallet,
+    //   Bytes(AbstractAccountGlobalStateKeysSpendingAddress)
+    // )
     app_global_get_ex
     pop
-    // contracts/plugins/optin_plugin.algo.ts:17
-    // assert(mbrPayment.amount >= Global.assetOptInMinBalance, 'asset mismatch');
+    dup
+    // contracts/plugins/optin_plugin.algo.ts:15-22
+    // assertMatch(
+    //   mbrPayment,
+    //   {
+    //     receiver: sender,
+    //     amount: Global.assetOptInMinBalance
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    frame_dig -1
+    gtxns Receiver
+    ==
+    bz optInToAsset_bool_false@3
     frame_dig -1
     gtxns Amount
+    // contracts/plugins/optin_plugin.algo.ts:19
+    // amount: Global.assetOptInMinBalance
     global AssetOptInMinBalance
-    >=
-    assert // asset mismatch
-    // contracts/plugins/optin_plugin.algo.ts:19-28
+    // contracts/plugins/optin_plugin.algo.ts:15-22
+    // assertMatch(
+    //   mbrPayment,
+    //   {
+    //     receiver: sender,
+    //     amount: Global.assetOptInMinBalance
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    ==
+    bz optInToAsset_bool_false@3
+    intc_1 // 1
+
+optInToAsset_bool_merge@4:
+    // contracts/plugins/optin_plugin.algo.ts:15-22
+    // assertMatch(
+    //   mbrPayment,
+    //   {
+    //     receiver: sender,
+    //     amount: Global.assetOptInMinBalance
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    assert // invalid payment
+    // contracts/plugins/optin_plugin.algo.ts:24-33
     // itxn
     //   .assetTransfer({
-    //     sender: controlledAccount,
-    //     assetReceiver: controlledAccount,
+    //     sender,
+    //     assetReceiver: sender,
     //     assetAmount: 0,
-    //     xferAsset: Asset(asset.native),
-    //     rekeyTo: rekeyBack.native ? Application(sender.native).address : Global.zeroAddress,
+    //     xferAsset: Asset(asset),
+    //     rekeyTo: this.rekeyAddress(rekeyBack, wallet),
     //     fee: 0,
     //   })
     //   .submit();
     itxn_begin
-    // contracts/plugins/optin_plugin.algo.ts:24
-    // xferAsset: Asset(asset.native),
-    frame_dig -2
-    btoi
-    // contracts/plugins/optin_plugin.algo.ts:25
-    // rekeyTo: rekeyBack.native ? Application(sender.native).address : Global.zeroAddress,
+    // contracts/plugins/plugin.ts:45
+    // if (!rekeyBack) {
     frame_dig -3
-    intc_0 // 0
-    getbit
-    bz optInToAsset_ternary_false@2
-    frame_dig 0
-    app_params_get AppAddress
-    assert // application exists
+    bnz optInToAsset_after_if_else@8
+    // contracts/plugins/plugin.ts:46
+    // return Global.zeroAddress
+    global ZeroAddress
 
-optInToAsset_ternary_merge@3:
+optInToAsset_after_inlined_contracts/plugins/plugin.ts::Plugin.rekeyAddress@11:
     itxn_field RekeyTo
-    frame_dig 2
+    frame_dig -2
     itxn_field XferAsset
-    // contracts/plugins/optin_plugin.algo.ts:23
+    // contracts/plugins/optin_plugin.algo.ts:28
     // assetAmount: 0,
     intc_0 // 0
     itxn_field AssetAmount
-    frame_dig 1
+    frame_dig 2
     dup
     itxn_field AssetReceiver
     itxn_field Sender
-    // contracts/plugins/optin_plugin.algo.ts:19-27
+    // contracts/plugins/optin_plugin.algo.ts:24-32
     // itxn
     //   .assetTransfer({
-    //     sender: controlledAccount,
-    //     assetReceiver: controlledAccount,
+    //     sender,
+    //     assetReceiver: sender,
     //     assetAmount: 0,
-    //     xferAsset: Asset(asset.native),
-    //     rekeyTo: rekeyBack.native ? Application(sender.native).address : Global.zeroAddress,
+    //     xferAsset: Asset(asset),
+    //     rekeyTo: this.rekeyAddress(rekeyBack, wallet),
     //     fee: 0,
     //   })
     pushint 4 // 4
     itxn_field TypeEnum
-    // contracts/plugins/optin_plugin.algo.ts:26
+    // contracts/plugins/optin_plugin.algo.ts:31
     // fee: 0,
     intc_0 // 0
     itxn_field Fee
-    // contracts/plugins/optin_plugin.algo.ts:19-28
+    // contracts/plugins/optin_plugin.algo.ts:24-33
     // itxn
     //   .assetTransfer({
-    //     sender: controlledAccount,
-    //     assetReceiver: controlledAccount,
+    //     sender,
+    //     assetReceiver: sender,
     //     assetAmount: 0,
-    //     xferAsset: Asset(asset.native),
-    //     rekeyTo: rekeyBack.native ? Application(sender.native).address : Global.zeroAddress,
+    //     xferAsset: Asset(asset),
+    //     rekeyTo: this.rekeyAddress(rekeyBack, wallet),
     //     fee: 0,
     //   })
     //   .submit();
     itxn_submit
     retsub
 
-optInToAsset_ternary_false@2:
-    // contracts/plugins/optin_plugin.algo.ts:25
-    // rekeyTo: rekeyBack.native ? Application(sender.native).address : Global.zeroAddress,
-    global ZeroAddress
-    b optInToAsset_ternary_merge@3
+optInToAsset_after_if_else@8:
+    // contracts/plugins/plugin.ts:29-32
+    // const [controlledAccountBytes] = op.AppGlobal.getExBytes(
+    //   wallet,
+    //   Bytes(AbstractAccountGlobalStateKeysControlledAddress)
+    // )
+    frame_dig -4
+    // contracts/constants.ts:2
+    // export const AbstractAccountGlobalStateKeysControlledAddress = 'controlled_address'
+    pushbytes "controlled_address"
+    // contracts/plugins/plugin.ts:29-32
+    // const [controlledAccountBytes] = op.AppGlobal.getExBytes(
+    //   wallet,
+    //   Bytes(AbstractAccountGlobalStateKeysControlledAddress)
+    // )
+    app_global_get_ex
+    pop
+    // contracts/plugins/plugin.ts:37-40
+    // const [spendingAddressBytes] = op.AppGlobal.getExBytes(
+    //   wallet,
+    //   Bytes(AbstractAccountGlobalStateKeysSpendingAddress)
+    // )
+    frame_dig -4
+    // contracts/constants.ts:6
+    // export const AbstractAccountGlobalStateKeysSpendingAddress = 'spending_address'
+    bytec_0 // "spending_address"
+    // contracts/plugins/plugin.ts:37-40
+    // const [spendingAddressBytes] = op.AppGlobal.getExBytes(
+    //   wallet,
+    //   Bytes(AbstractAccountGlobalStateKeysSpendingAddress)
+    // )
+    app_global_get_ex
+    pop
+    dup
+    frame_bury 0
+    // contracts/plugins/plugin.ts:17
+    // walletAddress: wallet.address,
+    frame_dig -4
+    app_params_get AppAddress
+    swap
+    frame_bury 1
+    assert // application exists
+    // contracts/plugins/plugin.ts:50
+    // if (sender !== origin) {
+    !=
+    bz optInToAsset_after_if_else@10
+    frame_dig 0
+    // contracts/plugins/optin_plugin.algo.ts:30
+    // rekeyTo: this.rekeyAddress(rekeyBack, wallet),
+    b optInToAsset_after_inlined_contracts/plugins/plugin.ts::Plugin.rekeyAddress@11
+
+optInToAsset_after_if_else@10:
+    frame_dig 1
+    // contracts/plugins/optin_plugin.algo.ts:30
+    // rekeyTo: this.rekeyAddress(rekeyBack, wallet),
+    b optInToAsset_after_inlined_contracts/plugins/plugin.ts::Plugin.rekeyAddress@11
+
+optInToAsset_bool_false@3:
+    intc_0 // 0
+    b optInToAsset_bool_merge@4

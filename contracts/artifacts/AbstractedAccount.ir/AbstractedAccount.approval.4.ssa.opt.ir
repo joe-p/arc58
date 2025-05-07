@@ -1,17 +1,14 @@
 main @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram:
     block@0: // L1
-        let tmp%0#0: bool = contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__()
-        return tmp%0#0
-
-subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__() -> bool:
-    block@0: // L10
-        let tmp%0#0: uint64 = (txn NumAppArgs)
-        let tmp%1#0: bool = (!= tmp%0#0 0u)
-        goto tmp%1#0 ? block@1 : block@19
-    block@1: // abi_routing_L10
+        goto block@1
+    block@1: // L10
+        let tmp%0#1: uint64 = (txn NumAppArgs)
+        let tmp%1#0: bool = (!= tmp%0#1 0u)
+        goto tmp%1#0 ? block@2 : block@20
+    block@2: // abi_routing_L10
         let tmp%2#0: bytes = (txna ApplicationArgs 0)
-        switch tmp%2#0 {method "createApplication(address,address,application)void" => block@2, method "arc58_changeAdmin(address)void" => block@3, method "arc58_pluginChangeAdmin(uint64,address,address)void" => block@4, method "arc58_getAdmin()address" => block@5, method "arc58_verifyAuthAddr()void" => block@6, method "arc58_rekeyTo(address,bool)void" => block@7, method "arc58_canCall(uint64,bool,address,byte[4])bool" => block@8, method "arc58_rekeyToPlugin(uint64,bool,uint64[],(uint64,uint64)[])void" => block@9, method "arc58_rekeyToNamedPlugin(string,bool,uint64[],(uint64,uint64)[])void" => block@10, method "arc58_addPlugin(uint64,address,bool,uint8,uint64,uint64,(byte[4],uint64)[],bool,bool)void" => block@11, method "arc58_removePlugin(uint64,address)void" => block@12, method "arc58_addNamedPlugin(string,uint64,address,bool,uint8,uint64,uint64,(byte[4],uint64)[],bool,bool)void" => block@13, method "arc58_removeNamedPlugin(string)void" => block@14, method "arc58_addAllowance(uint64,address,uint64,uint8,uint64,uint64,uint64)void" => block@15, method "arc58_removeAllowance(uint64,address,uint64)void" => block@16, * => block@17}
-    block@2: // createApplication_route_L421
+        switch tmp%2#0 {method "createApplication(address,address,application)void" => block@3, method "arc58_changeAdmin(address)void" => block@4, method "arc58_pluginChangeAdmin(uint64,address,address)void" => block@5, method "arc58_getAdmin()address" => block@6, method "arc58_verifyAuthAddr()void" => block@7, method "arc58_rekeyTo(address,bool)void" => block@8, method "arc58_canCall(uint64,bool,address,byte[4])bool" => block@9, method "arc58_rekeyToPlugin(uint64,bool,uint64[],(uint64,uint64)[])void" => block@10, method "arc58_rekeyToNamedPlugin(string,bool,uint64[],(uint64,uint64)[])void" => block@11, method "arc58_addPlugin(uint64,address,bool,uint8,uint64,uint64,(byte[4],uint64)[],bool,bool)void" => block@12, method "arc58_removePlugin(uint64,address)void" => block@13, method "arc58_addNamedPlugin(string,uint64,address,bool,uint8,uint64,uint64,(byte[4],uint64)[],bool,bool)void" => block@14, method "arc58_removeNamedPlugin(string)void" => block@15, method "arc58_addAllowance(uint64,address,uint64,uint8,uint64,uint64,uint64)void" => block@16, method "arc58_removeAllowance(uint64,address,uint64)void" => block@17, * => block@18}
+    block@3: // createApplication_route_L421
         let tmp%3#0: uint64 = (txn OnCompletion)
         let tmp%4#0: bool = (== tmp%3#0 NoOp)
         (assert tmp%4#0) // OnCompletion is not NoOp
@@ -24,8 +21,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let tmp%7#0: uint64 = (btoi reinterpret_bytes[1]%0#0)
         let tmp%8#0: uint64 = ((txnas Applications) tmp%7#0)
         contracts/abstracted_account.algo.ts::AbstractedAccount.createApplication(reinterpret_bytes[32]%0#0, reinterpret_bytes[32]%1#0, tmp%8#0)
-        return 1u
-    block@3: // arc58_changeAdmin_route_L443
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#0: bool = 1u
+        goto block@22
+    block@4: // arc58_changeAdmin_route_L443
         let tmp%9#0: uint64 = (txn OnCompletion)
         let tmp%10#0: bool = (== tmp%9#0 NoOp)
         (assert tmp%10#0) // OnCompletion is not NoOp
@@ -34,8 +32,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         (assert tmp%12#0) // can only call when not creating
         let reinterpret_bytes[32]%2#0: bytes[32] = (txna ApplicationArgs 1)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_changeAdmin(reinterpret_bytes[32]%2#0)
-        return 1u
-    block@4: // arc58_pluginChangeAdmin_route_L458
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#1: bool = 1u
+        goto block@22
+    block@5: // arc58_pluginChangeAdmin_route_L458
         let tmp%13#0: uint64 = (txn OnCompletion)
         let tmp%14#0: bool = (== tmp%13#0 NoOp)
         (assert tmp%14#0) // OnCompletion is not NoOp
@@ -47,8 +46,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let reinterpret_bytes[32]%3#0: bytes[32] = (txna ApplicationArgs 2)
         let reinterpret_bytes[32]%4#0: bytes[32] = (txna ApplicationArgs 3)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_pluginChangeAdmin(tmp%17#0, reinterpret_bytes[32]%3#0, reinterpret_bytes[32]%4#0)
-        return 1u
-    block@5: // arc58_getAdmin_route_L487
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#2: bool = 1u
+        goto block@22
+    block@6: // arc58_getAdmin_route_L487
         let tmp%18#0: uint64 = (txn OnCompletion)
         let tmp%19#0: bool = (== tmp%18#0 NoOp)
         (assert tmp%19#0) // OnCompletion is not NoOp
@@ -58,8 +58,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let tmp%22#0: bytes[32] = contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_getAdmin()
         let tmp%23#0: bytes = (concat 0x151f7c75 tmp%22#0)
         (log tmp%23#0)
-        return 1u
-    block@6: // arc58_verifyAuthAddr_route_L495
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#3: bool = 1u
+        goto block@22
+    block@7: // arc58_verifyAuthAddr_route_L495
         let tmp%24#0: uint64 = (txn OnCompletion)
         let tmp%25#0: bool = (== tmp%24#0 NoOp)
         (assert tmp%25#0) // OnCompletion is not NoOp
@@ -67,8 +68,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let tmp%27#0: bool = (!= tmp%26#0 0u)
         (assert tmp%27#0) // can only call when not creating
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_verifyAuthAddr()
-        return 1u
-    block@7: // arc58_rekeyTo_route_L506
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#4: bool = 1u
+        goto block@22
+    block@8: // arc58_rekeyTo_route_L506
         let tmp%28#0: uint64 = (txn OnCompletion)
         let tmp%29#0: bool = (== tmp%28#0 NoOp)
         (assert tmp%29#0) // OnCompletion is not NoOp
@@ -79,8 +81,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let reinterpret_bytes[1]%1#0: bytes[1] = (txna ApplicationArgs 2)
         let tmp%32#0: bool = (getbit reinterpret_bytes[1]%1#0 0u)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo(reinterpret_bytes[32]%5#0, tmp%32#0)
-        return 1u
-    block@8: // arc58_canCall_route_L532
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#5: bool = 1u
+        goto block@22
+    block@9: // arc58_canCall_route_L532
         let tmp%33#0: uint64 = (txn OnCompletion)
         let tmp%34#0: bool = (== tmp%33#0 NoOp)
         (assert tmp%34#0) // OnCompletion is not NoOp
@@ -97,8 +100,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let encoded_bool%0#0: bytes[1] = (setbit 0x00 0u to_encode%0#0)
         let tmp%39#0: bytes = (concat 0x151f7c75 encoded_bool%0#0)
         (log tmp%39#0)
-        return 1u
-    block@9: // arc58_rekeyToPlugin_route_L554
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#6: bool = 1u
+        goto block@22
+    block@10: // arc58_rekeyToPlugin_route_L554
         let tmp%40#0: uint64 = (txn OnCompletion)
         let tmp%41#0: bool = (== tmp%40#0 NoOp)
         (assert tmp%41#0) // OnCompletion is not NoOp
@@ -112,10 +116,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let tmp%46#0: bytes = (txna ApplicationArgs 3)
         let tmp%47#0: bytes = (txna ApplicationArgs 4)
         let (arc58_rekeyToPlugin%0#0: bytes, arc58_rekeyToPlugin%1#0: bytes) = contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyToPlugin(tmp%44#0, tmp%45#0, tmp%46#0, tmp%47#0)
-        let tmp%47#1: bytes = arc58_rekeyToPlugin%1#0
-        let tmp%46#1: bytes = arc58_rekeyToPlugin%0#0
-        return 1u
-    block@10: // arc58_rekeyToNamedPlugin_route_L615
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#7: bool = 1u
+        goto block@22
+    block@11: // arc58_rekeyToNamedPlugin_route_L615
         let tmp%48#0: uint64 = (txn OnCompletion)
         let tmp%49#0: bool = (== tmp%48#0 NoOp)
         (assert tmp%49#0) // OnCompletion is not NoOp
@@ -129,8 +132,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let tmp%55#0: bytes = (txna ApplicationArgs 3)
         let tmp%56#0: bytes = (txna ApplicationArgs 4)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyToNamedPlugin(tmp%53#0, tmp%54#0, tmp%55#0, tmp%56#0)
-        return 1u
-    block@11: // arc58_addPlugin_route_L637
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#8: bool = 1u
+        goto block@22
+    block@12: // arc58_addPlugin_route_L637
         let tmp%57#0: uint64 = (txn OnCompletion)
         let tmp%58#0: bool = (== tmp%57#0 NoOp)
         (assert tmp%58#0) // OnCompletion is not NoOp
@@ -153,8 +157,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let reinterpret_bytes[1]%8#0: bytes[1] = (txna ApplicationArgs 9)
         let tmp%67#0: bool = (getbit reinterpret_bytes[1]%8#0 0u)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addPlugin(tmp%61#0, reinterpret_bytes[32]%7#0, tmp%62#0, reinterpret_bytes[1]%6#0, tmp%63#0, tmp%64#0, tmp%65#0, tmp%66#0, tmp%67#0)
-        return 1u
-    block@12: // arc58_removePlugin_route_L728
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#9: bool = 1u
+        goto block@22
+    block@13: // arc58_removePlugin_route_L728
         let tmp%68#0: uint64 = (txn OnCompletion)
         let tmp%69#0: bool = (== tmp%68#0 NoOp)
         (assert tmp%69#0) // OnCompletion is not NoOp
@@ -165,8 +170,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let tmp%72#0: uint64 = (btoi reinterpret_bytes[8]%6#0)
         let reinterpret_bytes[32]%8#0: bytes[32] = (txna ApplicationArgs 2)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removePlugin(tmp%72#0, reinterpret_bytes[32]%8#0)
-        return 1u
-    block@13: // arc58_addNamedPlugin_route_L782
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#10: bool = 1u
+        goto block@22
+    block@14: // arc58_addNamedPlugin_route_L782
         let tmp%73#0: uint64 = (txn OnCompletion)
         let tmp%74#0: bool = (== tmp%73#0 NoOp)
         (assert tmp%74#0) // OnCompletion is not NoOp
@@ -191,8 +197,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let reinterpret_bytes[1]%12#0: bytes[1] = (txna ApplicationArgs 10)
         let tmp%85#0: bool = (getbit reinterpret_bytes[1]%12#0 0u)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addNamedPlugin(tmp%78#0, tmp%79#0, reinterpret_bytes[32]%9#0, tmp%80#0, reinterpret_bytes[1]%10#0, tmp%81#0, tmp%82#0, tmp%83#0, tmp%84#0, tmp%85#0)
-        return 1u
-    block@14: // arc58_removeNamedPlugin_route_L869
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#11: bool = 1u
+        goto block@22
+    block@15: // arc58_removeNamedPlugin_route_L869
         let tmp%86#0: uint64 = (txn OnCompletion)
         let tmp%87#0: bool = (== tmp%86#0 NoOp)
         (assert tmp%87#0) // OnCompletion is not NoOp
@@ -202,8 +209,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let tmp%90#0: bytes = (txna ApplicationArgs 1)
         let tmp%91#0: bytes = ((extract 2 0) tmp%90#0)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeNamedPlugin(tmp%91#0)
-        return 1u
-    block@15: // arc58_addAllowance_route_L906
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#12: bool = 1u
+        goto block@22
+    block@16: // arc58_addAllowance_route_L906
         let tmp%92#0: uint64 = (txn OnCompletion)
         let tmp%93#0: bool = (== tmp%92#0 NoOp)
         (assert tmp%93#0) // OnCompletion is not NoOp
@@ -223,8 +231,9 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let reinterpret_bytes[8]%14#0: bytes[8] = (txna ApplicationArgs 7)
         let tmp%100#0: uint64 = (btoi reinterpret_bytes[8]%14#0)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addAllowance(tmp%96#0, reinterpret_bytes[32]%10#0, tmp%97#0, reinterpret_bytes[1]%13#0, tmp%98#0, tmp%99#0, tmp%100#0)
-        return 1u
-    block@16: // arc58_removeAllowance_route_L954
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#13: bool = 1u
+        goto block@22
+    block@17: // arc58_removeAllowance_route_L954
         let tmp%101#0: uint64 = (txn OnCompletion)
         let tmp%102#0: bool = (== tmp%101#0 NoOp)
         (assert tmp%102#0) // OnCompletion is not NoOp
@@ -237,15 +246,20 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_r
         let reinterpret_bytes[8]%16#0: bytes[8] = (txna ApplicationArgs 3)
         let tmp%106#0: uint64 = (btoi reinterpret_bytes[8]%16#0)
         contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeAllowance(tmp%105#0, reinterpret_bytes[32]%11#0, tmp%106#0)
-        return 1u
-    block@17: // switch_case_default_L10
-        goto block@18
-    block@18: // switch_case_next_L10
-        goto block@20
-    block@19: // bare_routing_L10
-        goto block@20
-    block@20: // after_if_else_L10
-        return 0u
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#14: bool = 1u
+        goto block@22
+    block@18: // switch_case_default_L10
+        goto block@19
+    block@19: // switch_case_next_L10
+        goto block@21
+    block@20: // bare_routing_L10
+        goto block@21
+    block@21: // after_if_else_L10
+        let contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#15: bool = 0u
+        goto block@22
+    block@22: // after_inlined_contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router___L1
+        let tmp%0#0: bool = φ(contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#0 <- block@3, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#1 <- block@4, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#2 <- block@5, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#3 <- block@6, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#4 <- block@7, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#5 <- block@8, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#6 <- block@9, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#7 <- block@10, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#8 <- block@11, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#9 <- block@12, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#10 <- block@13, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#11 <- block@14, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#12 <- block@15, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#13 <- block@16, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#14 <- block@17, contracts/abstracted_account.algo.ts::AbstractedAccount.__puya_arc4_router__%0#15 <- block@21)
+        return tmp%0#0
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.updateLastUserInteraction() -> void:
     block@0: // L44
@@ -262,9 +276,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.updateLastCha
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCallAllowed(app: uint64, caller: bytes[32], method: bytes[4]) -> bool:
     block@0: // L52
         let val_as_bytes%0#0: bytes[8] = (itob app#0)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 caller#0)
         let key#0: bytes[40] = encoded_tuple_buffer%2#0
         let tmp%0#0: bytes = (concat "p" key#0)
@@ -313,30 +325,16 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCallAll
         let (maybe_value%2#0: bytes, maybe_exists%2#0: bool) = (box_get tmp%10#0)
         (assert maybe_exists%2#0) // Box must have value
         let copy%1#0: bytes = maybe_value%2#0
-        let is_true%0#0: uint64 = (getbit copy%1#0 0u)
-        let encoded_bool%0#0: bytes[1] = (setbit 0x00 0u is_true%0#0)
-        let item0%0#0: bool = (getbit encoded_bool%0#0 0u)
-        let item1%0#0: bytes = (extract3 copy%1#0 1u 1u) // on error: Index access is out of bounds
-        let item2%0#0: bytes = (extract3 copy%1#0 2u 8u) // on error: Index access is out of bounds
-        let item2%1#0: uint64 = (btoi item2%0#0)
-        let item3%0#0: bytes = (extract3 copy%1#0 10u 8u) // on error: Index access is out of bounds
-        let item3%1#0: uint64 = (btoi item3%0#0)
         let item4%0#0: bytes = (extract3 copy%1#0 18u 8u) // on error: Index access is out of bounds
         let item4%1#0: uint64 = (btoi item4%0#0)
-        let item_start_offset%1#0: uint64 = (extract_uint16 copy%1#0 26u)
-        let item_end_offset%1#0: uint64 = (len copy%1#0)
-        let item5%0#0: bytes = (substring3 copy%1#0 item_start_offset%1#0 item_end_offset%1#0)
-        let is_true%1#0: uint64 = (getbit copy%1#0 224u)
-        let encoded_bool%1#0: bytes[1] = (setbit 0x00 0u is_true%1#0)
-        let item6%0#0: bool = (getbit encoded_bool%1#0 0u)
         let is_true%2#0: uint64 = (getbit copy%1#0 225u)
         let encoded_bool%2#0: bytes[1] = (setbit 0x00 0u is_true%2#0)
         let item7%0#0: bool = (getbit encoded_bool%2#0 0u)
         let item8%0#0: bytes = (extract3 copy%1#0 29u 8u) // on error: Index access is out of bounds
         let item8%1#0: uint64 = (btoi item8%0#0)
-        let item9%0#0: bytes = (extract3 copy%1#0 37u 8u) // on error: Index access is out of bounds
-        let item9%1#0: uint64 = (btoi item9%0#0)
-        let (p.admin#0: bool, p.delegationType#0: bytes[1], p.spendingApp#0: uint64, p.lastValid#0: uint64, p.cooldown#0: uint64, p.methods#0: bytes, p.useAllowance#0: bool, p.useRounds#0: bool, p.lastCalled#0: uint64, p.start#0: uint64) = (item0%0#0, item1%0#0, item2%1#0, item3%1#0, item4%1#0, item5%0#0, item6%0#0, item7%0#0, item8%1#0, item9%1#0)
+        let p.cooldown#0: uint64 = item4%1#0
+        let p.useRounds#0: bool = item7%0#0
+        let p.lastCalled#0: uint64 = item8%1#0
         goto p.useRounds#0 ? block@9 : block@10
     block@9: // ternary_true_L72
         let ternary_result%0#0: uint64 = (global Round)
@@ -439,8 +437,6 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.assertRekeysB
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCheck(key: bytes[40]) -> <bool, bool, bool, bool, bool, bool, bytes[40]>:
     block@0: // L113
-        let key%is_original#0: bool = 1u
-        let key%out#0: bytes[40] = key#0
         let tmp%0#0: bytes = (concat "p" key#0)
         let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%0#0)
         let exists#0: bool = maybe_exists%0#0
@@ -452,12 +448,6 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCheck(k
         let (maybe_value%1#0: bytes, maybe_exists%1#0: bool) = (box_get tmp%1#0)
         (assert maybe_exists%1#0) // Box must have value
         let copy%0#0: bytes = maybe_value%1#0
-        let is_true%0#0: uint64 = (getbit copy%0#0 0u)
-        let encoded_bool%0#0: bytes[1] = (setbit 0x00 0u is_true%0#0)
-        let item0%0#0: bool = (getbit encoded_bool%0#0 0u)
-        let item1%0#0: bytes = (extract3 copy%0#0 1u 1u) // on error: Index access is out of bounds
-        let item2%0#0: bytes = (extract3 copy%0#0 2u 8u) // on error: Index access is out of bounds
-        let item2%1#0: uint64 = (btoi item2%0#0)
         let item3%0#0: bytes = (extract3 copy%0#0 10u 8u) // on error: Index access is out of bounds
         let item3%1#0: uint64 = (btoi item3%0#0)
         let item4%0#0: bytes = (extract3 copy%0#0 18u 8u) // on error: Index access is out of bounds
@@ -465,17 +455,16 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCheck(k
         let item_start_offset%0#0: uint64 = (extract_uint16 copy%0#0 26u)
         let item_end_offset%0#0: uint64 = (len copy%0#0)
         let item5%0#0: bytes = (substring3 copy%0#0 item_start_offset%0#0 item_end_offset%0#0)
-        let is_true%1#0: uint64 = (getbit copy%0#0 224u)
-        let encoded_bool%1#0: bytes[1] = (setbit 0x00 0u is_true%1#0)
-        let item6%0#0: bool = (getbit encoded_bool%1#0 0u)
         let is_true%2#0: uint64 = (getbit copy%0#0 225u)
         let encoded_bool%2#0: bytes[1] = (setbit 0x00 0u is_true%2#0)
         let item7%0#0: bool = (getbit encoded_bool%2#0 0u)
         let item8%0#0: bytes = (extract3 copy%0#0 29u 8u) // on error: Index access is out of bounds
         let item8%1#0: uint64 = (btoi item8%0#0)
-        let item9%0#0: bytes = (extract3 copy%0#0 37u 8u) // on error: Index access is out of bounds
-        let item9%1#0: uint64 = (btoi item9%0#0)
-        let (pluginInfo.admin#0: bool, pluginInfo.delegationType#0: bytes[1], pluginInfo.spendingApp#0: uint64, pluginInfo.lastValid#0: uint64, pluginInfo.cooldown#0: uint64, pluginInfo.methods#0: bytes, pluginInfo.useAllowance#0: bool, pluginInfo.useRounds#0: bool, pluginInfo.lastCalled#0: uint64, pluginInfo.start#0: uint64) = (item0%0#0, item1%0#0, item2%1#0, item3%1#0, item4%1#0, item5%0#0, item6%0#0, item7%0#0, item8%1#0, item9%1#0)
+        let pluginInfo.lastValid#0: uint64 = item3%1#0
+        let pluginInfo.cooldown#0: uint64 = item4%1#0
+        let pluginInfo.methods#0: bytes = item5%0#0
+        let pluginInfo.useRounds#0: bool = item7%0#0
+        let pluginInfo.lastCalled#0: uint64 = item8%1#0
         goto pluginInfo.useRounds#0 ? block@3 : block@4
     block@3: // ternary_true_L128
         let ternary_result%0#0: uint64 = (global Round)
@@ -510,24 +499,26 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCheck(k
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.fullPluginCheck(key: bytes[40], txn: uint64, methodOffsets: bytes, methodIndex: uint64) -> <bool, bool, bool, bool, bool, bool, bool, bool, bool, bytes[40], bytes>:
     block@0: // L147
-        let key%is_original#0: bool = 1u
-        let key%out#0: bytes[40] = key#0
-        let methodOffsets%is_original#0: bool = 1u
-        let methodOffsets%out#0: bytes = methodOffsets#0
         let (pluginCheck%0#0: bool, pluginCheck%1#0: bool, pluginCheck%2#0: bool, pluginCheck%3#0: bool, pluginCheck%4#0: bool, pluginCheck%5#0: bool, pluginCheck%6#0: bytes[40]) = contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCheck(key#0)
         let key#1: bytes[40] = pluginCheck%6#0
-        goto key%is_original#0 ? block@1 : block@2
+        goto 1u ? block@1 : block@2
     block@1: // if_body_L1
-        let key%out#1: bytes[40] = key#1
         goto block@2
     block@2: // after_if_else_L1
-        let (check.exists#0: bool, check.expired#0: bool, check.hasCooldown#0: bool, check.onCooldown#0: bool, check.hasMethodRestrictions#0: bool, check.valid#0: bool) = (pluginCheck%0#0, pluginCheck%1#0, pluginCheck%2#0, pluginCheck%3#0, pluginCheck%4#0, pluginCheck%5#0)
+        let check.exists#0: bool = pluginCheck%0#0
+        let check.expired#0: bool = pluginCheck%1#0
+        let check.hasCooldown#0: bool = pluginCheck%2#0
+        let check.onCooldown#0: bool = pluginCheck%3#0
+        let check.hasMethodRestrictions#0: bool = pluginCheck%4#0
+        let check.valid#0: bool = pluginCheck%5#0
         goto check.valid#0 ? block@4 : block@3
     block@3: // if_body_L156
         return check.exists#0 check.expired#0 check.hasCooldown#0 check.onCooldown#0 check.hasMethodRestrictions#0 0u 1u 1u check.valid#0 key#1 methodOffsets#0
     block@4: // after_if_else_L156
         let tmp%0#0: bool = (! check.hasMethodRestrictions#0)
-        let (mCheck.methodAllowed#0: bool, mCheck.methodHasCooldown#0: bool, mCheck.methodOnCooldown#0: bool) = (tmp%0#0, 0u, 0u)
+        let mCheck.methodAllowed#0: bool = tmp%0#0
+        let mCheck.methodHasCooldown#0: bool = 0u
+        let mCheck.methodOnCooldown#0: bool = 0u
         goto check.hasMethodRestrictions#0 ? block@5 : block@8
     block@5: // if_body_L171
         let tmp%1#0: uint64 = (extract_uint16 methodOffsets#0 0u)
@@ -539,12 +530,13 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.fullPluginChe
         let tmp%4#0: uint64 = (btoi tmp%3#0)
         let (methodCheck%0#0: bool, methodCheck%1#0: bool, methodCheck%2#0: bool, methodCheck%3#0: bytes[40]) = contracts/abstracted_account.algo.ts::AbstractedAccount.methodCheck(key#1, txn#0, tmp%4#0)
         let key#3: bytes[40] = methodCheck%3#0
-        goto key%is_original#0 ? block@6 : block@7
+        goto 1u ? block@6 : block@7
     block@6: // if_body_L1
-        let key%out#2: bytes[40] = key#3
         goto block@7
     block@7: // after_if_else_L1
-        let (mCheck.methodAllowed#1: bool, mCheck.methodHasCooldown#1: bool, mCheck.methodOnCooldown#1: bool) = (methodCheck%0#0, methodCheck%1#0, methodCheck%2#0)
+        let mCheck.methodAllowed#1: bool = methodCheck%0#0
+        let mCheck.methodHasCooldown#1: bool = methodCheck%1#0
+        let mCheck.methodOnCooldown#1: bool = methodCheck%2#0
         goto block@8
     block@8: // after_if_else_L171
         let mCheck.methodAllowed#2: bool = φ(mCheck.methodAllowed#0 <- block@4, mCheck.methodAllowed#1 <- block@7)
@@ -566,9 +558,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.fullPluginChe
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.assertValidGroup(key: bytes[40], methodOffsets: bytes) -> <bytes[40], bytes>:
     block@0: // L189
-        let key%is_original#0: bool = 1u
         let key%out#0: bytes[40] = key#0
-        let methodOffsets%is_original#0: bool = 1u
         let methodOffsets%out#0: bytes = methodOffsets#0
         let tmp%0#0: bytes = (concat "p" key#0)
         let (maybe_value%0#0: bytes, maybe_exists%0#0: bool) = (box_get tmp%0#0)
@@ -588,13 +578,16 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.assertValidGr
         let epochRef#0: uint64 = ternary_result%0#2
         let (pluginCheck%0#0: bool, pluginCheck%1#0: bool, pluginCheck%2#0: bool, pluginCheck%3#0: bool, pluginCheck%4#0: bool, pluginCheck%5#0: bool, pluginCheck%6#0: bytes[40]) = contracts/abstracted_account.algo.ts::AbstractedAccount.pluginCheck(key#0)
         let key#2: bytes[40] = pluginCheck%6#0
-        goto key%is_original#0 ? block@4 : block@5
+        goto 1u ? block@4 : block@5
     block@4: // if_body_L1
         let key%out#1: bytes[40] = key#2
         goto block@5
     block@5: // after_if_else_L1
         let key%out#5: bytes[40] = φ(key%out#0 <- block@3, key%out#1 <- block@4)
-        let (initialCheck.exists#0: bool, initialCheck.expired#0: bool, initialCheck.hasCooldown#0: bool, initialCheck.onCooldown#0: bool, initialCheck.hasMethodRestrictions#0: bool, initialCheck.valid#0: bool) = (pluginCheck%0#0, pluginCheck%1#0, pluginCheck%2#0, pluginCheck%3#0, pluginCheck%4#0, pluginCheck%5#0)
+        let initialCheck.exists#0: bool = pluginCheck%0#0
+        let initialCheck.expired#0: bool = pluginCheck%1#0
+        let initialCheck.hasCooldown#0: bool = pluginCheck%2#0
+        let initialCheck.onCooldown#0: bool = pluginCheck%3#0
         (assert initialCheck.exists#0) // plugin does not exist
         let tmp%2#0: bool = (! initialCheck.expired#0)
         (assert tmp%2#0) // plugin expired
@@ -647,20 +640,21 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.assertValidGr
         (assert tmp%21#0) // invalid sender app id
         let (fullPluginCheck%0#0: bool, fullPluginCheck%1#0: bool, fullPluginCheck%2#0: bool, fullPluginCheck%3#0: bool, fullPluginCheck%4#0: bool, fullPluginCheck%5#0: bool, fullPluginCheck%6#0: bool, fullPluginCheck%7#0: bool, fullPluginCheck%8#0: bool, fullPluginCheck%9#0: bytes[40], fullPluginCheck%10#0: bytes) = contracts/abstracted_account.algo.ts::AbstractedAccount.fullPluginCheck(key#3, txn#0, methodOffsets#1, methodIndex#1)
         let methodOffsets#2: bytes = fullPluginCheck%10#0
-        goto methodOffsets%is_original#0 ? block@12 : block@13
+        goto 1u ? block@12 : block@13
     block@12: // if_body_L1
         let methodOffsets%out#1: bytes = methodOffsets#2
         goto block@13
     block@13: // after_if_else_L1
         let methodOffsets%out#9: bytes = φ(methodOffsets%out#3 <- block@11, methodOffsets%out#1 <- block@12)
         let key#4: bytes[40] = fullPluginCheck%9#0
-        goto key%is_original#0 ? block@14 : block@15
+        goto 1u ? block@14 : block@15
     block@14: // if_body_L1
         let key%out#2: bytes[40] = key#4
         goto block@15
     block@15: // after_if_else_L1
         let key%out#9: bytes[40] = φ(key%out#4 <- block@13, key%out#2 <- block@14)
-        let (check.exists#0: bool, check.expired#0: bool, check.hasCooldown#0: bool, check.onCooldown#0: bool, check.hasMethodRestrictions#0: bool, check.methodAllowed#0: bool, check.methodHasCooldown#0: bool, check.methodOnCooldown#0: bool, check.valid#0: bool) = (fullPluginCheck%0#0, fullPluginCheck%1#0, fullPluginCheck%2#0, fullPluginCheck%3#0, fullPluginCheck%4#0, fullPluginCheck%5#0, fullPluginCheck%6#0, fullPluginCheck%7#0, fullPluginCheck%8#0)
+        let check.methodOnCooldown#0: bool = fullPluginCheck%7#0
+        let check.valid#0: bool = fullPluginCheck%8#0
         let tmp%22#0: bool = (! check.methodOnCooldown#0)
         (assert tmp%22#0) // method on cooldown
         (assert check.valid#0) // invalid plugin call
@@ -695,8 +689,6 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.assertValidGr
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.methodCheck(key: bytes[40], txn: uint64, offset: uint64) -> <bool, bool, bool, bytes[40]>:
     block@0: // L246
-        let key%is_original#0: bool = 1u
-        let key%out#0: bytes[40] = key#0
         let tmp%0#0: bytes = ((gtxnsas ApplicationArgs) txn#0 0u)
         let tmp%1#0: uint64 = (len tmp%0#0)
         let tmp%2#0: bool = (== tmp%1#0 4u)
@@ -821,18 +813,14 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.methodCheck(k
         let (maybe_value%10#0: bytes, maybe_exists%10#0: bool) = (box_get tmp%30#0)
         (assert maybe_exists%10#0) // Box must have value
         let tmp%31#0: bytes = (extract3 maybe_value%10#0 37u 8u) // on error: Index access is out of bounds
-        let current_tail_offset%0#0: uint64 = 45u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 encoded_bool%1#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x encoded_bool%1#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 tmp%19#0)
         let encoded_tuple_buffer%3#0: bytes = (concat encoded_tuple_buffer%2#0 tmp%21#0)
         let encoded_tuple_buffer%4#0: bytes = (concat encoded_tuple_buffer%3#0 tmp%23#0)
         let encoded_tuple_buffer%5#0: bytes = (concat encoded_tuple_buffer%4#0 tmp%25#0)
-        let as_bytes%0#0: bytes[8] = (itob current_tail_offset%0#0)
+        let as_bytes%0#0: bytes[8] = (itob 45u)
         let offset_as_uint16%0#0: bytes = ((extract 6 2) as_bytes%0#0)
         let encoded_tuple_buffer%6#0: bytes = (concat encoded_tuple_buffer%5#0 offset_as_uint16%0#0)
-        let data_length%0#0: uint64 = (len copy%2#0)
-        let current_tail_offset%1#0: uint64 = (+ current_tail_offset%0#0 data_length%0#0)
         let encoded_tuple_buffer%7#0: bytes = (concat encoded_tuple_buffer%6#0 encoded_bool%2#0)
         let is_true%4#0: uint64 = (getbit encoded_bool%3#0 0u)
         let encoded_tuple_buffer%8#0: bytes = (setbit encoded_tuple_buffer%7#0 225u is_true%4#0)
@@ -850,9 +838,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.methodCheck(k
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.transferFunds(key: bytes[40], fundsRequests: bytes) -> <bytes[40], bytes>:
     block@0: // L290
-        let key%is_original#0: bool = 1u
         let key%out#0: bytes[40] = key#0
-        let fundsRequests%is_original#0: bool = 1u
         let fundsRequests%out#0: bytes = fundsRequests#0
         let i#0: uint64 = 0u
         goto block@1
@@ -869,190 +855,63 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.transferFunds
         let item0%1#0: uint64 = (btoi item0%0#0)
         let item1%0#0: bytes = (extract3 reinterpret_bytes[16]%0#0 8u 8u) // on error: Index access is out of bounds
         let item1%1#0: uint64 = (btoi item1%0#0)
-        let (request.asset#0: uint64, request.amount#0: uint64) = (item0%1#0, item1%1#0)
+        let request.asset#0: uint64 = item0%1#0
+        let request.amount#0: uint64 = item1%1#0
         let tmp%2#0: bytes = (concat "p" key#0)
         let (maybe_value%0#0: bytes, maybe_exists%0#0: bool) = (box_get tmp%2#0)
         (assert maybe_exists%0#0) // Box must have value
         let copy%0#0: bytes = maybe_value%0#0
-        let is_true%0#0: uint64 = (getbit copy%0#0 0u)
-        let encoded_bool%0#0: bytes[1] = (setbit 0x00 0u is_true%0#0)
-        let item0%2#0: bool = (getbit encoded_bool%0#0 0u)
-        let item1%2#0: bytes = (extract3 copy%0#0 1u 1u) // on error: Index access is out of bounds
-        let item2%0#0: bytes = (extract3 copy%0#0 2u 8u) // on error: Index access is out of bounds
-        let item2%1#0: uint64 = (btoi item2%0#0)
-        let item3%0#0: bytes = (extract3 copy%0#0 10u 8u) // on error: Index access is out of bounds
-        let item3%1#0: uint64 = (btoi item3%0#0)
-        let item4%0#0: bytes = (extract3 copy%0#0 18u 8u) // on error: Index access is out of bounds
-        let item4%1#0: uint64 = (btoi item4%0#0)
-        let item_start_offset%0#0: uint64 = (extract_uint16 copy%0#0 26u)
-        let item_end_offset%0#0: uint64 = (len copy%0#0)
-        let item5%0#0: bytes = (substring3 copy%0#0 item_start_offset%0#0 item_end_offset%0#0)
-        let is_true%1#0: uint64 = (getbit copy%0#0 224u)
-        let encoded_bool%1#0: bytes[1] = (setbit 0x00 0u is_true%1#0)
-        let item6%0#0: bool = (getbit encoded_bool%1#0 0u)
         let is_true%2#0: uint64 = (getbit copy%0#0 225u)
         let encoded_bool%2#0: bytes[1] = (setbit 0x00 0u is_true%2#0)
         let item7%0#0: bool = (getbit encoded_bool%2#0 0u)
-        let item8%0#0: bytes = (extract3 copy%0#0 29u 8u) // on error: Index access is out of bounds
-        let item8%1#0: uint64 = (btoi item8%0#0)
         let item9%0#0: bytes = (extract3 copy%0#0 37u 8u) // on error: Index access is out of bounds
         let item9%1#0: uint64 = (btoi item9%0#0)
-        let (pluginInfo.admin#0: bool, pluginInfo.delegationType#0: bytes[1], pluginInfo.spendingApp#0: uint64, pluginInfo.lastValid#0: uint64, pluginInfo.cooldown#0: uint64, pluginInfo.methods#0: bytes, pluginInfo.useAllowance#0: bool, pluginInfo.useRounds#0: bool, pluginInfo.lastCalled#0: uint64, pluginInfo.start#0: uint64) = (item0%2#0, item1%2#0, item2%1#0, item3%1#0, item4%1#0, item5%0#0, item6%0#0, item7%0#0, item8%1#0, item9%1#0)
+        let pluginInfo.useRounds#0: bool = item7%0#0
+        let pluginInfo.start#0: uint64 = item9%1#0
         let tmp%3#0: bytes = (extract3 key#0 8u 32u) // on error: Index access is out of bounds
         let tmp%4#0: bytes = (extract3 key#0 0u 8u) // on error: Index access is out of bounds
         let val_as_bytes%0#0: bytes[8] = (itob request.asset#0)
-        let current_tail_offset%0#0: uint64 = 48u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 tmp%4#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x tmp%4#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 tmp%3#0)
         let encoded_tuple_buffer%3#0: bytes = (concat encoded_tuple_buffer%2#0 val_as_bytes%0#0)
         let allowanceKey#0: bytes[48] = encoded_tuple_buffer%3#0
         let verifyAllowance%0#0: bytes[48] = contracts/abstracted_account.algo.ts::AbstractedAccount.verifyAllowance(pluginInfo.start#0, pluginInfo.useRounds#0, allowanceKey#0, request.asset#0, request.amount#0)
-        let allowanceKey#1: bytes[48] = verifyAllowance%0#0
         let tmp%5#0: bool = (!= request.asset#0 0u)
         goto tmp%5#0 ? block@3 : block@5
     block@3: // if_body_L308
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 4u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%1#0: bytes[32], maybe_exists%1#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%1#0) // check GlobalState exists
         let inner_txn_params%0%%param_Sender_idx_0#0: bytes[32] = maybe_value%1#0
-        let inner_txn_params%0%%Sender_length#0: uint64 = 1u
         let (maybe_value%2#0: bytes[32], maybe_exists%2#0: bool) = (app_global_get_ex 0u "spending_address")
         (assert maybe_exists%2#0) // check GlobalState exists
         let inner_txn_params%0%%param_AssetReceiver_idx_0#0: bytes[32] = maybe_value%2#0
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 1u
         let inner_txn_params%0%%param_AssetAmount_idx_0#0: uint64 = request.amount#0
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 1u
         let inner_txn_params%0%%param_XferAsset_idx_0#0: uint64 = request.asset#0
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 1u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field XferAsset) inner_txn_params%0%%param_XferAsset_idx_0#0)
         ((itxn_field AssetAmount) inner_txn_params%0%%param_AssetAmount_idx_0#0)
         ((itxn_field AssetReceiver) inner_txn_params%0%%param_AssetReceiver_idx_0#0)
         ((itxn_field Sender) inner_txn_params%0%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 4u)
+        ((itxn_field Fee) 0u)
         goto block@4
     block@4: // next_txn_L309
         itxn_submit
         goto block@7
     block@5: // else_body_L318
         itxn_begin
-        let inner_txn_params%1#0: itxn_field_set = itxn_field_set(1)
-        let inner_txn_params%1%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%1%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%1%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%3#0: bytes[32], maybe_exists%3#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%3#0) // check GlobalState exists
         let inner_txn_params%1%%param_Sender_idx_0#0: bytes[32] = maybe_value%3#0
-        let inner_txn_params%1%%Sender_length#0: uint64 = 1u
         let (maybe_value%4#0: bytes[32], maybe_exists%4#0: bool) = (app_global_get_ex 0u "spending_address")
         (assert maybe_exists%4#0) // check GlobalState exists
         let inner_txn_params%1%%param_Receiver_idx_0#0: bytes[32] = maybe_value%4#0
-        let inner_txn_params%1%%Receiver_length#0: uint64 = 1u
         let inner_txn_params%1%%param_Amount_idx_0#0: uint64 = request.amount#0
-        let inner_txn_params%1%%Amount_length#0: uint64 = 1u
-        let inner_txn_params%1%%Note_length#0: uint64 = 0u
-        let inner_txn_params%1%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%1%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%1%%Type_length#0: uint64 = 0u
-        let inner_txn_params%1%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%1%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%1%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%1%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%1%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%1%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field Amount) inner_txn_params%1%%param_Amount_idx_0#0)
         ((itxn_field Receiver) inner_txn_params%1%%param_Receiver_idx_0#0)
         ((itxn_field Sender) inner_txn_params%1%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%1%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%1%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@6
     block@6: // next_txn_L319
         itxn_submit
@@ -1065,7 +924,6 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.transferFunds
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.verifyAllowance(start: uint64, useRounds: bool, key: bytes[48], fundRequest.asset: uint64, fundRequest.amount: uint64) -> bytes[48]:
     block@0: // L331
-        let key%is_original#0: bool = 1u
         let key%out#0: bytes[48] = key#0
         let tmp%0#0: bytes = (concat "a" key#0)
         let (maybe_value%0#0: uint64, maybe_exists%0#0: bool) = (box_len tmp%0#0)
@@ -1158,9 +1016,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.verifyAllowan
         let (maybe_value%6#0: bytes[41], maybe_exists%6#0: bool) = (box_get tmp%15#0)
         (assert maybe_exists%6#0) // Box must have value
         let tmp%16#0: bytes = (extract3 maybe_value%6#0 25u 8u) // on error: Index access is out of bounds
-        let current_tail_offset%0#0: uint64 = 41u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 tmp%10#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x tmp%10#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 tmp%12#0)
         let encoded_tuple_buffer%3#0: bytes = (concat encoded_tuple_buffer%2#0 tmp%14#0)
         let encoded_tuple_buffer%4#0: bytes = (concat encoded_tuple_buffer%3#0 newSpent#0)
@@ -1214,9 +1070,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.verifyAllowan
         let (maybe_value%10#0: bytes[41], maybe_exists%10#0: bool) = (box_get tmp%29#0)
         (assert maybe_exists%10#0) // Box must have value
         let tmp%30#0: bytes = (extract3 maybe_value%10#0 25u 8u) // on error: Index access is out of bounds
-        let current_tail_offset%1#0: uint64 = 41u
-        let encoded_tuple_buffer%7#0: bytes[0] = 0x
-        let encoded_tuple_buffer%8#0: bytes = (concat encoded_tuple_buffer%7#0 tmp%24#0)
+        let encoded_tuple_buffer%8#0: bytes = (concat 0x tmp%24#0)
         let encoded_tuple_buffer%9#0: bytes = (concat encoded_tuple_buffer%8#0 tmp%26#0)
         let encoded_tuple_buffer%10#0: bytes = (concat encoded_tuple_buffer%9#0 tmp%28#0)
         let encoded_tuple_buffer%11#0: bytes = (concat encoded_tuple_buffer%10#0 leftover₂#0)
@@ -1349,9 +1203,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_pluginC
         let tmp%2#0: bool = (== value%1#0 value%2#0)
         (assert tmp%2#0) // This plugin is not in control of the account
         let val_as_bytes%0#0: bytes[8] = (itob plugin#0)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 allowedCaller#0)
         let key#0: bytes[40] = encoded_tuple_buffer%2#0
         let tmp%3#0: bytes = (concat "p" key#0)
@@ -1415,72 +1267,17 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo
         let tmp%1#0: bool = (== tmp%0#0 maybe_value%0#0)
         (assert tmp%1#0) // admin only
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%1#0: bytes[32], maybe_exists%1#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%1#0) // check GlobalState exists
         let inner_txn_params%0%%param_Sender_idx_0#0: bytes[32] = maybe_value%1#0
-        let inner_txn_params%0%%Sender_length#0: uint64 = 1u
         let inner_txn_params%0%%param_Receiver_idx_0#0: bytes[32] = address#0
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 1u
         let inner_txn_params%0%%param_RekeyTo_idx_0#0: bytes[32] = address#0
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_Note_idx_0#0: bytes = "rekeying abstracted account"
-        let inner_txn_params%0%%Note_length#0: uint64 = 1u
-        let inner_txn_params%0%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field Note) inner_txn_params%0%%param_Note_idx_0#0)
+        ((itxn_field Note) "rekeying abstracted account")
         ((itxn_field RekeyTo) inner_txn_params%0%%param_RekeyTo_idx_0#0)
         ((itxn_field Receiver) inner_txn_params%0%%param_Receiver_idx_0#0)
         ((itxn_field Sender) inner_txn_params%0%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@1
     block@1: // next_txn_L509
         itxn_submit
@@ -1505,9 +1302,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_canCall
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyToPlugin(plugin: uint64, global: bool, methodOffsets: bytes, fundsRequest: bytes) -> <bytes, bytes>:
     block@0: // L554
-        let methodOffsets%is_original#0: bool = 1u
         let methodOffsets%out#0: bytes = methodOffsets#0
-        let fundsRequest%is_original#0: bool = 1u
         let fundsRequest%out#0: bytes = fundsRequest#0
         let pluginApp#0: uint64 = plugin#0
         let val_as_bytes%0#0: bytes[8] = (itob plugin#0)
@@ -1520,9 +1315,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo
         goto block@3
     block@3: // ternary_merge_L564
         let ternary_result%0#2: bytes[32] = φ(ternary_result%0#0 <- block@1, ternary_result%0#1 <- block@2)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 ternary_result%0#2)
         let key#0: bytes[40] = encoded_tuple_buffer%2#0
         let tmp%0#0: bytes = (concat "p" key#0)
@@ -1530,7 +1323,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo
         (assert maybe_exists%0#0) // plugin does not exist
         let (assertValidGroup%0#0: bytes[40], assertValidGroup%1#0: bytes) = contracts/abstracted_account.algo.ts::AbstractedAccount.assertValidGroup(key#0, methodOffsets#0)
         let methodOffsets#2: bytes = assertValidGroup%1#0
-        goto methodOffsets%is_original#0 ? block@4 : block@5
+        goto 1u ? block@4 : block@5
     block@4: // if_body_L1
         let methodOffsets%out#1: bytes = methodOffsets#2
         goto block@5
@@ -1555,7 +1348,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo
         (app_global_put "spending_address" value%0#0)
         let (transferFunds%0#0: bytes[40], transferFunds%1#0: bytes) = contracts/abstracted_account.algo.ts::AbstractedAccount.transferFunds(key#1, fundsRequest#0)
         let fundsRequest#3: bytes = transferFunds%1#0
-        goto fundsRequest%is_original#0 ? block@7 : block@8
+        goto 1u ? block@7 : block@8
     block@7: // if_body_L1
         let fundsRequest%out#1: bytes = fundsRequest#3
         goto block@8
@@ -1563,70 +1356,15 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo
         let fundsRequest%out#4: bytes = φ(fundsRequest%out#0 <- block@6, fundsRequest%out#1 <- block@7)
         let key#2: bytes[40] = transferFunds%0#0
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = appl
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let inner_txn_params%0%%param_ApplicationID_idx_0#0: uint64 = spendingApp#0
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 1u
         let (value%1#0: bytes[32], check%1#0: bool) = ((app_params_get AppAddress) pluginApp#0)
         (assert check%1#0) // application exists
-        let inner_txn_params%0%%param_ApplicationArgs_idx_0#0: bytes[4] = method "rekey(address)void"
         let inner_txn_params%0%%param_ApplicationArgs_idx_1#0: bytes[32] = value%1#0
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 2u
-        let inner_txn_params%0%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field ApplicationArgs) inner_txn_params%0%%param_ApplicationArgs_idx_0#0)
+        ((itxn_field ApplicationArgs) method "rekey(address)void")
         ((itxn_field ApplicationArgs) inner_txn_params%0%%param_ApplicationArgs_idx_1#0)
         ((itxn_field ApplicationID) inner_txn_params%0%%param_ApplicationID_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) appl)
+        ((itxn_field Fee) 0u)
         goto block@9
     block@9: // next_txn_L578
         itxn_submit
@@ -1636,76 +1374,21 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo
         (assert maybe_exists%3#0) // check GlobalState exists
         (app_global_put "spending_address" maybe_value%3#0)
         itxn_begin
-        let inner_txn_params%1#0: itxn_field_set = itxn_field_set(1)
-        let inner_txn_params%1%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%1%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%1%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%4#0: bytes[32], maybe_exists%4#0: bool) = (app_global_get_ex 0u "spending_address")
         (assert maybe_exists%4#0) // check GlobalState exists
         let inner_txn_params%1%%param_Sender_idx_0#0: bytes[32] = maybe_value%4#0
-        let inner_txn_params%1%%Sender_length#0: uint64 = 1u
         let (maybe_value%5#0: bytes[32], maybe_exists%5#0: bool) = (app_global_get_ex 0u "spending_address")
         (assert maybe_exists%5#0) // check GlobalState exists
         let inner_txn_params%1%%param_Receiver_idx_0#0: bytes[32] = maybe_value%5#0
-        let inner_txn_params%1%%Receiver_length#0: uint64 = 1u
         let (value%2#0: bytes[32], check%2#0: bool) = ((app_params_get AppAddress) pluginApp#0)
         (assert check%2#0) // application exists
         let inner_txn_params%1%%param_RekeyTo_idx_0#0: bytes[32] = value%2#0
-        let inner_txn_params%1%%RekeyTo_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_Note_idx_0#0: bytes = "rekeying to plugin app"
-        let inner_txn_params%1%%Note_length#0: uint64 = 1u
-        let inner_txn_params%1%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%1%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%1%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%1%%Type_length#0: uint64 = 0u
-        let inner_txn_params%1%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%1%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%1%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%1%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%1%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%1%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field Note) inner_txn_params%1%%param_Note_idx_0#0)
+        ((itxn_field Note) "rekeying to plugin app")
         ((itxn_field RekeyTo) inner_txn_params%1%%param_RekeyTo_idx_0#0)
         ((itxn_field Receiver) inner_txn_params%1%%param_Receiver_idx_0#0)
         ((itxn_field Sender) inner_txn_params%1%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%1%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%1%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@11
     block@11: // next_txn_L589
         itxn_submit
@@ -1733,8 +1416,6 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyTo
         let tmp%1#0: bytes = (extract3 maybe_value%0#0 0u 8u) // on error: Index access is out of bounds
         let tmp%2#0: uint64 = (btoi tmp%1#0)
         let (arc58_rekeyToPlugin%0#0: bytes, arc58_rekeyToPlugin%1#0: bytes) = contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_rekeyToPlugin(tmp%2#0, global#0, methodOffsets#0, fundsRequest#0)
-        let fundsRequest#1: bytes = arc58_rekeyToPlugin%1#0
-        let methodOffsets#1: bytes = arc58_rekeyToPlugin%0#0
         return 
 
 subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addPlugin(app: uint64, allowedCaller: bytes[32], admin: bool, delegationType: bytes[1], lastValid: uint64, cooldown: uint64, methods: bytes, useAllowance: bool, useRounds: bool) -> void:
@@ -1762,9 +1443,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addPlug
         let tmp%5#0: bool = (! badDelegationCombo#0)
         (assert tmp%5#0) // delegation type must not be self for global plugins
         let val_as_bytes%0#0: bytes[8] = (itob app#0)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 allowedCaller#0)
         let key#0: bytes[40] = encoded_tuple_buffer%2#0
         let array_data%0#0: bytes = (concat 0x0000 0x)
@@ -1787,9 +1466,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addPlug
         let item_offset%1#0: uint64 = (* i#1 12u)
         let tmp%10#0: bytes = (extract3 array_head_and_tail%1#0 item_offset%1#0 12u) // on error: Index access is out of bounds
         let tmp%11#0: bytes = (extract3 tmp%10#0 4u 8u) // on error: Index access is out of bounds
-        let current_tail_offset%1#0: uint64 = 20u
-        let encoded_tuple_buffer%3#0: bytes[0] = 0x
-        let encoded_tuple_buffer%4#0: bytes = (concat encoded_tuple_buffer%3#0 tmp%9#0)
+        let encoded_tuple_buffer%4#0: bytes = (concat 0x tmp%9#0)
         let encoded_tuple_buffer%5#0: bytes = (concat encoded_tuple_buffer%4#0 tmp%11#0)
         let encoded_tuple_buffer%6#0: bytes = (concat encoded_tuple_buffer%5#0 0x0000000000000000)
         let encoded%0#0: bytes[20][] = encode<bytes[20]>(encoded_tuple_buffer%6#0)
@@ -1820,72 +1497,18 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addPlug
         goto tmp%13#0 ? block@11 : block@13
     block@11: // if_body_L670
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%2#0: bytes[32], maybe_exists%2#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%2#0) // check GlobalState exists
         let inner_txn_params%0%%param_Sender_idx_0#0: bytes[32] = maybe_value%2#0
-        let inner_txn_params%0%%Sender_length#0: uint64 = 1u
         let inner_txn_params%0%%param_Receiver_idx_0#0: bytes[32] = (global CurrentApplicationAddress)
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 1u
         let tmp%14#0: uint64 = (len methods#0)
         let tmp%15#0: uint64 = (* 400u tmp%14#0)
         let inner_txn_params%0%%param_Amount_idx_0#0: uint64 = (+ 36500u tmp%15#0)
-        let inner_txn_params%0%%Amount_length#0: uint64 = 1u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field Amount) inner_txn_params%0%%param_Amount_idx_0#0)
         ((itxn_field Receiver) inner_txn_params%0%%param_Receiver_idx_0#0)
         ((itxn_field Sender) inner_txn_params%0%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@12
     block@12: // next_txn_L671
         itxn_submit
@@ -1895,146 +1518,36 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addPlug
         goto useAllowance#0 ? block@14 : block@17
     block@14: // if_body_L682
         itxn_begin
-        let inner_txn_params%1#0: itxn_field_set = itxn_field_set(1)
-        let inner_txn_params%1%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%1%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%1%%TypeEnum_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_Amount_idx_0#0: uint64 = 269500u
-        let inner_txn_params%1%%Amount_length#0: uint64 = 1u
         let (maybe_value%3#0: uint64, maybe_exists%3#0: bool) = (app_global_get_ex 0u "spend_factory")
         (assert maybe_exists%3#0) // check GlobalState exists
         let (value%0#0: bytes[32], check%0#0: bool) = ((app_params_get AppAddress) maybe_value%3#0)
         (assert check%0#0) // application exists
         let inner_txn_params%1%%param_Receiver_idx_0#0: bytes[32] = value%0#0
-        let inner_txn_params%1%%Receiver_length#0: uint64 = 1u
-        let inner_txn_params%1%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%1%%Note_length#0: uint64 = 0u
-        let inner_txn_params%1%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%1%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%1%%Type_length#0: uint64 = 0u
-        let inner_txn_params%1%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%1%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%1%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%1%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%1%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%1%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field Receiver) inner_txn_params%1%%param_Receiver_idx_0#0)
-        ((itxn_field Amount) inner_txn_params%1%%param_Amount_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%1%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%1%%param_Fee_idx_0#0)
+        ((itxn_field Amount) 269500u)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@15
     block@15: // next_txn_L690
         itxn_next
-        let inner_txn_params%2#0: itxn_field_set = itxn_field_set(2)
-        let inner_txn_params%2%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%2%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%2%%param_TypeEnum_idx_0#0: uint64 = appl
-        let inner_txn_params%2%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%4#0: bytes[32], maybe_exists%4#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%4#0) // check GlobalState exists
         let inner_txn_params%2%%param_Sender_idx_0#0: bytes[32] = maybe_value%4#0
-        let inner_txn_params%2%%Sender_length#0: uint64 = 1u
         let (maybe_value%5#0: uint64, maybe_exists%5#0: bool) = (app_global_get_ex 0u "spend_factory")
         (assert maybe_exists%5#0) // check GlobalState exists
         let inner_txn_params%2%%param_ApplicationID_idx_0#0: uint64 = maybe_value%5#0
-        let inner_txn_params%2%%ApplicationID_length#0: uint64 = 1u
         let val_as_bytes%1#0: bytes[8] = (itob app#0)
-        let inner_txn_params%2%%param_ApplicationArgs_idx_0#0: bytes[4] = method "create(pay,uint64)uint64"
         let inner_txn_params%2%%param_ApplicationArgs_idx_1#0: bytes[8] = val_as_bytes%1#0
-        let inner_txn_params%2%%ApplicationArgs_length#0: uint64 = 2u
-        let inner_txn_params%2%%Note_length#0: uint64 = 0u
-        let inner_txn_params%2%%Receiver_length#0: uint64 = 0u
-        let inner_txn_params%2%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%2%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%2%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%2%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%2%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%2%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%2%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%2%%Type_length#0: uint64 = 0u
-        let inner_txn_params%2%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%2%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%2%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%2%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%2%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%2%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%2%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%2%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%2%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%2%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%2%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%2%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%2%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%2%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%2%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%2%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%2%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%2%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%2%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%2%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field ApplicationArgs) inner_txn_params%2%%param_ApplicationArgs_idx_0#0)
+        ((itxn_field ApplicationArgs) method "create(pay,uint64)uint64")
         ((itxn_field ApplicationArgs) inner_txn_params%2%%param_ApplicationArgs_idx_1#0)
         ((itxn_field ApplicationID) inner_txn_params%2%%param_ApplicationID_idx_0#0)
         ((itxn_field Sender) inner_txn_params%2%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%2%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%2%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) appl)
+        ((itxn_field Fee) 0u)
         goto block@16
     block@16: // next_txn_L684
         itxn_submit
-        let awst_tmp%0#0: bytes = itxn[itxn_group_idx(1)].LastLog
+        let awst_tmp%0#0: bytes = (gitxn 1 LastLog)
         let tmp%16#0: bytes = ((extract 4 0) awst_tmp%0#0)
         let tmp%17#0: bytes = ((extract 0 4) awst_tmp%0#0)
         let tmp%18#0: bool = (== tmp%17#0 0x151f7c75)
@@ -2053,18 +1566,14 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addPlug
         let encoded_bool%1#0: bytes[1] = (setbit 0x00 0u useAllowance#0)
         let encoded_bool%2#0: bytes[1] = (setbit 0x00 0u useRounds#0)
         let val_as_bytes%5#0: bytes[8] = (itob epochRef#0)
-        let current_tail_offset%2#0: uint64 = 45u
-        let encoded_tuple_buffer%7#0: bytes[0] = 0x
-        let encoded_tuple_buffer%8#0: bytes = (concat encoded_tuple_buffer%7#0 encoded_bool%0#0)
+        let encoded_tuple_buffer%8#0: bytes = (concat 0x encoded_bool%0#0)
         let encoded_tuple_buffer%9#0: bytes = (concat encoded_tuple_buffer%8#0 delegationType#0)
         let encoded_tuple_buffer%10#0: bytes = (concat encoded_tuple_buffer%9#0 spendingApp#2)
         let encoded_tuple_buffer%11#0: bytes = (concat encoded_tuple_buffer%10#0 val_as_bytes%3#0)
         let encoded_tuple_buffer%12#0: bytes = (concat encoded_tuple_buffer%11#0 val_as_bytes%4#0)
-        let as_bytes%1#0: bytes[8] = (itob current_tail_offset%2#0)
+        let as_bytes%1#0: bytes[8] = (itob 45u)
         let offset_as_uint16%0#0: bytes = ((extract 6 2) as_bytes%1#0)
         let encoded_tuple_buffer%13#0: bytes = (concat encoded_tuple_buffer%12#0 offset_as_uint16%0#0)
-        let data_length%0#0: uint64 = (len copy%0#0)
-        let current_tail_offset%3#0: uint64 = (+ current_tail_offset%2#0 data_length%0#0)
         let encoded_tuple_buffer%14#0: bytes = (concat encoded_tuple_buffer%13#0 encoded_bool%1#0)
         let is_true%0#0: uint64 = (getbit encoded_bool%2#0 0u)
         let encoded_tuple_buffer%15#0: bytes = (setbit encoded_tuple_buffer%14#0 225u is_true%0#0)
@@ -2086,9 +1595,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeP
         let tmp%1#0: bool = (== tmp%0#0 maybe_value%0#0)
         (assert tmp%1#0) // admin only
         let val_as_bytes%0#0: bytes[8] = (itob app#0)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 allowedCaller#0)
         let key#0: bytes[40] = encoded_tuple_buffer%2#0
         let tmp%2#0: bytes = (concat "p" key#0)
@@ -2116,70 +1623,16 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeP
         goto tmp%9#0 ? block@1 : block@3
     block@1: // if_body_L743
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%5#0: bytes[32], maybe_exists%5#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%5#0) // check GlobalState exists
         let inner_txn_params%0%%param_Receiver_idx_0#0: bytes[32] = maybe_value%5#0
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 1u
         let tmp%10#0: uint64 = (len methods#0)
         let tmp%11#0: uint64 = (* 400u tmp%10#0)
         let inner_txn_params%0%%param_Amount_idx_0#0: uint64 = (+ 36500u tmp%11#0)
-        let inner_txn_params%0%%Amount_length#0: uint64 = 1u
-        let inner_txn_params%0%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field Amount) inner_txn_params%0%%param_Amount_idx_0#0)
         ((itxn_field Receiver) inner_txn_params%0%%param_Receiver_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@2
     block@2: // next_txn_L744
         itxn_submit
@@ -2189,71 +1642,16 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeP
         goto tmp%12#0 ? block@4 : block@6
     block@4: // if_body_L753
         itxn_begin
-        let inner_txn_params%1#0: itxn_field_set = itxn_field_set(1)
-        let inner_txn_params%1%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%1%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_TypeEnum_idx_0#0: uint64 = appl
-        let inner_txn_params%1%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%6#0: uint64, maybe_exists%6#0: bool) = (app_global_get_ex 0u "spend_factory")
         (assert maybe_exists%6#0) // check GlobalState exists
         let inner_txn_params%1%%param_ApplicationID_idx_0#0: uint64 = maybe_value%6#0
-        let inner_txn_params%1%%ApplicationID_length#0: uint64 = 1u
         let val_as_bytes%1#0: bytes[8] = (itob spendingApp#0)
-        let inner_txn_params%1%%param_ApplicationArgs_idx_0#0: bytes[4] = method "delete(uint64)void"
         let inner_txn_params%1%%param_ApplicationArgs_idx_1#0: bytes[8] = val_as_bytes%1#0
-        let inner_txn_params%1%%ApplicationArgs_length#0: uint64 = 2u
-        let inner_txn_params%1%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%1%%Note_length#0: uint64 = 0u
-        let inner_txn_params%1%%Receiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%1%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%1%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%1%%Type_length#0: uint64 = 0u
-        let inner_txn_params%1%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%1%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%1%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%1%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field ApplicationArgs) inner_txn_params%1%%param_ApplicationArgs_idx_0#0)
+        ((itxn_field ApplicationArgs) method "delete(uint64)void")
         ((itxn_field ApplicationArgs) inner_txn_params%1%%param_ApplicationArgs_idx_1#0)
         ((itxn_field ApplicationID) inner_txn_params%1%%param_ApplicationID_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%1%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%1%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) appl)
+        ((itxn_field Fee) 0u)
         goto block@5
     block@5: // next_txn_L754
         itxn_submit
@@ -2275,9 +1673,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addName
         let tmp%3#0: bool = (! maybe_exists%1#0)
         (assert tmp%3#0)
         let val_as_bytes%0#0: bytes[8] = (itob app#0)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 allowedCaller#0)
         let key#0: bytes[40] = encoded_tuple_buffer%2#0
         let copy%0#0: bytes[40] = key#0
@@ -2303,9 +1699,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addName
         let item_offset%1#0: uint64 = (* i#1 12u)
         let tmp%9#0: bytes = (extract3 array_head_and_tail%1#0 item_offset%1#0 12u) // on error: Index access is out of bounds
         let tmp%10#0: bytes = (extract3 tmp%9#0 4u 8u) // on error: Index access is out of bounds
-        let current_tail_offset%1#0: uint64 = 20u
-        let encoded_tuple_buffer%3#0: bytes[0] = 0x
-        let encoded_tuple_buffer%4#0: bytes = (concat encoded_tuple_buffer%3#0 tmp%8#0)
+        let encoded_tuple_buffer%4#0: bytes = (concat 0x tmp%8#0)
         let encoded_tuple_buffer%5#0: bytes = (concat encoded_tuple_buffer%4#0 tmp%10#0)
         let encoded_tuple_buffer%6#0: bytes = (concat encoded_tuple_buffer%5#0 0x0000000000000000)
         let encoded%0#0: bytes[20][] = encode<bytes[20]>(encoded_tuple_buffer%6#0)
@@ -2326,74 +1720,20 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addName
         goto tmp%12#0 ? block@4 : block@6
     block@4: // if_body_L812
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%3#0: bytes[32], maybe_exists%3#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%3#0) // check GlobalState exists
         let inner_txn_params%0%%param_Sender_idx_0#0: bytes[32] = maybe_value%3#0
-        let inner_txn_params%0%%Sender_length#0: uint64 = 1u
         let inner_txn_params%0%%param_Receiver_idx_0#0: bytes[32] = (global CurrentApplicationAddress)
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 1u
         let tmp%13#0: uint64 = (len methods#0)
         let tmp%14#0: uint64 = (len name#0)
         let tmp%15#0: uint64 = (+ tmp%13#0 tmp%14#0)
         let tmp%16#0: uint64 = (* 400u tmp%15#0)
         let inner_txn_params%0%%param_Amount_idx_0#0: uint64 = (+ 55400u tmp%16#0)
-        let inner_txn_params%0%%Amount_length#0: uint64 = 1u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field Amount) inner_txn_params%0%%param_Amount_idx_0#0)
         ((itxn_field Receiver) inner_txn_params%0%%param_Receiver_idx_0#0)
         ((itxn_field Sender) inner_txn_params%0%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@5
     block@5: // next_txn_L813
         itxn_submit
@@ -2403,146 +1743,36 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addName
         goto useAllowance#0 ? block@7 : block@10
     block@7: // if_body_L824
         itxn_begin
-        let inner_txn_params%1#0: itxn_field_set = itxn_field_set(1)
-        let inner_txn_params%1%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%1%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%1%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%4#0: bytes[32], maybe_exists%4#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%4#0) // check GlobalState exists
         let inner_txn_params%1%%param_Sender_idx_0#0: bytes[32] = maybe_value%4#0
-        let inner_txn_params%1%%Sender_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_Amount_idx_0#0: uint64 = 12500u
-        let inner_txn_params%1%%Amount_length#0: uint64 = 1u
         let (maybe_value%5#0: uint64, maybe_exists%5#0: bool) = (app_global_get_ex 0u "spend_factory")
         (assert maybe_exists%5#0) // check GlobalState exists
         let (value%0#0: bytes[32], check%0#0: bool) = ((app_params_get AppAddress) maybe_value%5#0)
         (assert check%0#0) // application exists
         let inner_txn_params%1%%param_Receiver_idx_0#0: bytes[32] = value%0#0
-        let inner_txn_params%1%%Receiver_length#0: uint64 = 1u
-        let inner_txn_params%1%%Note_length#0: uint64 = 0u
-        let inner_txn_params%1%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%1%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%1%%Type_length#0: uint64 = 0u
-        let inner_txn_params%1%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%1%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%1%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%1%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%1%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%1%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field Receiver) inner_txn_params%1%%param_Receiver_idx_0#0)
-        ((itxn_field Amount) inner_txn_params%1%%param_Amount_idx_0#0)
+        ((itxn_field Amount) 12500u)
         ((itxn_field Sender) inner_txn_params%1%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%1%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%1%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@8
     block@8: // next_txn_L831
         itxn_next
-        let inner_txn_params%2#0: itxn_field_set = itxn_field_set(2)
-        let inner_txn_params%2%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%2%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%2%%param_TypeEnum_idx_0#0: uint64 = appl
-        let inner_txn_params%2%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%6#0: uint64, maybe_exists%6#0: bool) = (app_global_get_ex 0u "spend_factory")
         (assert maybe_exists%6#0) // check GlobalState exists
         let inner_txn_params%2%%param_ApplicationID_idx_0#0: uint64 = maybe_value%6#0
-        let inner_txn_params%2%%ApplicationID_length#0: uint64 = 1u
         let val_as_bytes%1#0: bytes[8] = (itob 0u)
-        let inner_txn_params%2%%param_ApplicationArgs_idx_0#0: bytes[4] = method "create(pay,uint64)uint64"
         let inner_txn_params%2%%param_ApplicationArgs_idx_1#0: bytes[8] = val_as_bytes%1#0
-        let inner_txn_params%2%%ApplicationArgs_length#0: uint64 = 2u
-        let inner_txn_params%2%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%2%%Note_length#0: uint64 = 0u
-        let inner_txn_params%2%%Receiver_length#0: uint64 = 0u
-        let inner_txn_params%2%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%2%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%2%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%2%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%2%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%2%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%2%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%2%%Type_length#0: uint64 = 0u
-        let inner_txn_params%2%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%2%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%2%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%2%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%2%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%2%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%2%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%2%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%2%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%2%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%2%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%2%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%2%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%2%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%2%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%2%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%2%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%2%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%2%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%2%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%2%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%2%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field ApplicationArgs) inner_txn_params%2%%param_ApplicationArgs_idx_0#0)
+        ((itxn_field ApplicationArgs) method "create(pay,uint64)uint64")
         ((itxn_field ApplicationArgs) inner_txn_params%2%%param_ApplicationArgs_idx_1#0)
         ((itxn_field ApplicationID) inner_txn_params%2%%param_ApplicationID_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%2%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%2%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) appl)
+        ((itxn_field Fee) 0u)
         goto block@9
     block@9: // next_txn_L826
         itxn_submit
-        let awst_tmp%0#0: bytes = itxn[itxn_group_idx(1)].LastLog
+        let awst_tmp%0#0: bytes = (gitxn 1 LastLog)
         let tmp%17#0: bytes = ((extract 4 0) awst_tmp%0#0)
         let tmp%18#0: bytes = ((extract 0 4) awst_tmp%0#0)
         let tmp%19#0: bool = (== tmp%18#0 0x151f7c75)
@@ -2571,18 +1801,14 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addName
         let encoded_bool%1#0: bytes[1] = (setbit 0x00 0u useAllowance#0)
         let encoded_bool%2#0: bytes[1] = (setbit 0x00 0u useRounds#0)
         let val_as_bytes%5#0: bytes[8] = (itob epochRef#0)
-        let current_tail_offset%2#0: uint64 = 45u
-        let encoded_tuple_buffer%7#0: bytes[0] = 0x
-        let encoded_tuple_buffer%8#0: bytes = (concat encoded_tuple_buffer%7#0 encoded_bool%0#0)
+        let encoded_tuple_buffer%8#0: bytes = (concat 0x encoded_bool%0#0)
         let encoded_tuple_buffer%9#0: bytes = (concat encoded_tuple_buffer%8#0 delegationType#0)
         let encoded_tuple_buffer%10#0: bytes = (concat encoded_tuple_buffer%9#0 spendingApp#3)
         let encoded_tuple_buffer%11#0: bytes = (concat encoded_tuple_buffer%10#0 val_as_bytes%3#0)
         let encoded_tuple_buffer%12#0: bytes = (concat encoded_tuple_buffer%11#0 val_as_bytes%4#0)
-        let as_bytes%1#0: bytes[8] = (itob current_tail_offset%2#0)
+        let as_bytes%1#0: bytes[8] = (itob 45u)
         let offset_as_uint16%0#0: bytes = ((extract 6 2) as_bytes%1#0)
         let encoded_tuple_buffer%13#0: bytes = (concat encoded_tuple_buffer%12#0 offset_as_uint16%0#0)
-        let data_length%0#0: uint64 = (len copy%1#0)
-        let current_tail_offset%3#0: uint64 = (+ current_tail_offset%2#0 data_length%0#0)
         let encoded_tuple_buffer%14#0: bytes = (concat encoded_tuple_buffer%13#0 encoded_bool%1#0)
         let is_true%0#0: uint64 = (getbit encoded_bool%2#0 0u)
         let encoded_tuple_buffer%15#0: bytes = (setbit encoded_tuple_buffer%14#0 225u is_true%0#0)
@@ -2638,72 +1864,18 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeN
         goto tmp%12#0 ? block@1 : block@3
     block@1: // if_body_L881
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%7#0: bytes[32], maybe_exists%7#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%7#0) // check GlobalState exists
         let inner_txn_params%0%%param_Receiver_idx_0#0: bytes[32] = maybe_value%7#0
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 1u
         let tmp%13#0: uint64 = (len methods#0)
         let tmp%14#0: uint64 = (len name#0)
         let tmp%15#0: uint64 = (+ tmp%13#0 tmp%14#0)
         let tmp%16#0: uint64 = (* 400u tmp%15#0)
         let inner_txn_params%0%%param_Amount_idx_0#0: uint64 = (+ 55400u tmp%16#0)
-        let inner_txn_params%0%%Amount_length#0: uint64 = 1u
-        let inner_txn_params%0%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
         ((itxn_field Amount) inner_txn_params%0%%param_Amount_idx_0#0)
         ((itxn_field Receiver) inner_txn_params%0%%param_Receiver_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@2
     block@2: // next_txn_L882
         itxn_submit
@@ -2713,71 +1885,16 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeN
         goto tmp%17#0 ? block@4 : block@6
     block@4: // if_body_L891
         itxn_begin
-        let inner_txn_params%1#0: itxn_field_set = itxn_field_set(1)
-        let inner_txn_params%1%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%1%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%1%%param_TypeEnum_idx_0#0: uint64 = appl
-        let inner_txn_params%1%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%8#0: uint64, maybe_exists%8#0: bool) = (app_global_get_ex 0u "spend_factory")
         (assert maybe_exists%8#0) // check GlobalState exists
         let inner_txn_params%1%%param_ApplicationID_idx_0#0: uint64 = maybe_value%8#0
-        let inner_txn_params%1%%ApplicationID_length#0: uint64 = 1u
         let val_as_bytes%0#0: bytes[8] = (itob spendingApp#0)
-        let inner_txn_params%1%%param_ApplicationArgs_idx_0#0: bytes[4] = method "delete(uint64)void"
         let inner_txn_params%1%%param_ApplicationArgs_idx_1#0: bytes[8] = val_as_bytes%0#0
-        let inner_txn_params%1%%ApplicationArgs_length#0: uint64 = 2u
-        let inner_txn_params%1%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%1%%Note_length#0: uint64 = 0u
-        let inner_txn_params%1%%Receiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%Amount_length#0: uint64 = 0u
-        let inner_txn_params%1%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%1%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%1%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%1%%Type_length#0: uint64 = 0u
-        let inner_txn_params%1%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%1%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%1%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%1%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%1%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%1%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%1%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%1%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%1%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%1%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%1%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%1%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%1%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field ApplicationArgs) inner_txn_params%1%%param_ApplicationArgs_idx_0#0)
+        ((itxn_field ApplicationArgs) method "delete(uint64)void")
         ((itxn_field ApplicationArgs) inner_txn_params%1%%param_ApplicationArgs_idx_1#0)
         ((itxn_field ApplicationID) inner_txn_params%1%%param_ApplicationID_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%1%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%1%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) appl)
+        ((itxn_field Fee) 0u)
         goto block@5
     block@5: // next_txn_L892
         itxn_submit
@@ -2795,17 +1912,13 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addAllo
         let tmp%1#0: bool = (== tmp%0#0 maybe_value%0#0)
         (assert tmp%1#0) // admin only
         let val_as_bytes%0#0: bytes[8] = (itob plugin#0)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 caller#0)
         let pkey#0: bytes[40] = encoded_tuple_buffer%2#0
         let val_as_bytes%1#0: bytes[8] = (itob asset#0)
         let tmp%2#0: bytes = (extract3 pkey#0 0u 8u) // on error: Index access is out of bounds
         let tmp%3#0: bytes = (extract3 pkey#0 8u 32u) // on error: Index access is out of bounds
-        let current_tail_offset%1#0: uint64 = 48u
-        let encoded_tuple_buffer%3#0: bytes[0] = 0x
-        let encoded_tuple_buffer%4#0: bytes = (concat encoded_tuple_buffer%3#0 tmp%2#0)
+        let encoded_tuple_buffer%4#0: bytes = (concat 0x tmp%2#0)
         let encoded_tuple_buffer%5#0: bytes = (concat encoded_tuple_buffer%4#0 tmp%3#0)
         let encoded_tuple_buffer%6#0: bytes = (concat encoded_tuple_buffer%5#0 val_as_bytes%1#0)
         let key#0: bytes[48] = encoded_tuple_buffer%6#0
@@ -2823,70 +1936,15 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addAllo
         goto tmp%8#0 ? block@1 : block@3
     block@1: // if_body_L930
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%4#0: bytes[32], maybe_exists%4#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%4#0) // check GlobalState exists
         let inner_txn_params%0%%param_Sender_idx_0#0: bytes[32] = maybe_value%4#0
-        let inner_txn_params%0%%Sender_length#0: uint64 = 1u
         let inner_txn_params%0%%param_Receiver_idx_0#0: bytes[32] = (global CurrentApplicationAddress)
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_Amount_idx_0#0: uint64 = 38500u
-        let inner_txn_params%0%%Amount_length#0: uint64 = 1u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field Amount) inner_txn_params%0%%param_Amount_idx_0#0)
+        ((itxn_field Amount) 38500u)
         ((itxn_field Receiver) inner_txn_params%0%%param_Receiver_idx_0#0)
         ((itxn_field Sender) inner_txn_params%0%%param_Sender_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@2
     block@2: // next_txn_L931
         itxn_submit
@@ -2895,9 +1953,7 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_addAllo
         let val_as_bytes%2#0: bytes[8] = (itob allowed#0)
         let val_as_bytes%3#0: bytes[8] = (itob max#0)
         let val_as_bytes%4#0: bytes[8] = (itob interval#0)
-        let current_tail_offset%2#0: uint64 = 41u
-        let encoded_tuple_buffer%7#0: bytes[0] = 0x
-        let encoded_tuple_buffer%8#0: bytes = (concat encoded_tuple_buffer%7#0 type#0)
+        let encoded_tuple_buffer%8#0: bytes = (concat 0x type#0)
         let encoded_tuple_buffer%9#0: bytes = (concat encoded_tuple_buffer%8#0 val_as_bytes%3#0)
         let encoded_tuple_buffer%10#0: bytes = (concat encoded_tuple_buffer%9#0 val_as_bytes%2#0)
         let encoded_tuple_buffer%11#0: bytes = (concat encoded_tuple_buffer%10#0 0x0000000000000000)
@@ -2917,17 +1973,13 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeA
         let tmp%1#0: bool = (== tmp%0#0 maybe_value%0#0)
         (assert tmp%1#0) // admin only
         let val_as_bytes%0#0: bytes[8] = (itob plugin#0)
-        let current_tail_offset%0#0: uint64 = 40u
-        let encoded_tuple_buffer%0#0: bytes[0] = 0x
-        let encoded_tuple_buffer%1#0: bytes = (concat encoded_tuple_buffer%0#0 val_as_bytes%0#0)
+        let encoded_tuple_buffer%1#0: bytes = (concat 0x val_as_bytes%0#0)
         let encoded_tuple_buffer%2#0: bytes = (concat encoded_tuple_buffer%1#0 caller#0)
         let pkey#0: bytes[40] = encoded_tuple_buffer%2#0
         let val_as_bytes%1#0: bytes[8] = (itob asset#0)
         let tmp%2#0: bytes = (extract3 pkey#0 0u 8u) // on error: Index access is out of bounds
         let tmp%3#0: bytes = (extract3 pkey#0 8u 32u) // on error: Index access is out of bounds
-        let current_tail_offset%1#0: uint64 = 48u
-        let encoded_tuple_buffer%3#0: bytes[0] = 0x
-        let encoded_tuple_buffer%4#0: bytes = (concat encoded_tuple_buffer%3#0 tmp%2#0)
+        let encoded_tuple_buffer%4#0: bytes = (concat 0x tmp%2#0)
         let encoded_tuple_buffer%5#0: bytes = (concat encoded_tuple_buffer%4#0 tmp%3#0)
         let encoded_tuple_buffer%6#0: bytes = (concat encoded_tuple_buffer%5#0 val_as_bytes%1#0)
         let key#0: bytes[48] = encoded_tuple_buffer%6#0
@@ -2946,68 +1998,13 @@ subroutine contracts/abstracted_account.algo.ts::AbstractedAccount.arc58_removeA
         goto tmp%8#0 ? block@1 : block@3
     block@1: // if_body_L972
         itxn_begin
-        let inner_txn_params%0#0: itxn_field_set = itxn_field_set(0)
-        let inner_txn_params%0%%param_Fee_idx_0#0: uint64 = 0u
-        let inner_txn_params%0%%Fee_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_TypeEnum_idx_0#0: uint64 = 1u
-        let inner_txn_params%0%%TypeEnum_length#0: uint64 = 1u
         let (maybe_value%4#0: bytes[32], maybe_exists%4#0: bool) = (app_global_get_ex 0u "controlled_address")
         (assert maybe_exists%4#0) // check GlobalState exists
         let inner_txn_params%0%%param_Receiver_idx_0#0: bytes[32] = maybe_value%4#0
-        let inner_txn_params%0%%Receiver_length#0: uint64 = 1u
-        let inner_txn_params%0%%param_Amount_idx_0#0: uint64 = 38500u
-        let inner_txn_params%0%%Amount_length#0: uint64 = 1u
-        let inner_txn_params%0%%Sender_length#0: uint64 = 0u
-        let inner_txn_params%0%%Note_length#0: uint64 = 0u
-        let inner_txn_params%0%%CloseRemainderTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%VotePK_length#0: uint64 = 0u
-        let inner_txn_params%0%%SelectionPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteFirst_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteLast_length#0: uint64 = 0u
-        let inner_txn_params%0%%VoteKeyDilution_length#0: uint64 = 0u
-        let inner_txn_params%0%%Type_length#0: uint64 = 0u
-        let inner_txn_params%0%%XferAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetAmount_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetSender_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetReceiver_length#0: uint64 = 0u
-        let inner_txn_params%0%%AssetCloseTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationID_length#0: uint64 = 0u
-        let inner_txn_params%0%%OnCompletion_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgram_length#0: uint64 = 0u
-        let inner_txn_params%0%%RekeyTo_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetTotal_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDecimals_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetDefaultFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetUnitName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetName_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetURL_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetMetadataHash_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetManager_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetReserve_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetFreeze_length#0: uint64 = 0u
-        let inner_txn_params%0%%ConfigAssetClawback_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAsset_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetAccount_length#0: uint64 = 0u
-        let inner_txn_params%0%%FreezeAssetFrozen_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%GlobalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumUint_length#0: uint64 = 0u
-        let inner_txn_params%0%%LocalNumByteSlice_length#0: uint64 = 0u
-        let inner_txn_params%0%%ExtraProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%Nonparticipation_length#0: uint64 = 0u
-        let inner_txn_params%0%%StateProofPK_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApplicationArgs_length#0: uint64 = 0u
-        let inner_txn_params%0%%Accounts_length#0: uint64 = 0u
-        let inner_txn_params%0%%Assets_length#0: uint64 = 0u
-        let inner_txn_params%0%%Applications_length#0: uint64 = 0u
-        let inner_txn_params%0%%ApprovalProgramPages_length#0: uint64 = 0u
-        let inner_txn_params%0%%ClearStateProgramPages_length#0: uint64 = 0u
-        ((itxn_field Amount) inner_txn_params%0%%param_Amount_idx_0#0)
+        ((itxn_field Amount) 38500u)
         ((itxn_field Receiver) inner_txn_params%0%%param_Receiver_idx_0#0)
-        ((itxn_field TypeEnum) inner_txn_params%0%%param_TypeEnum_idx_0#0)
-        ((itxn_field Fee) inner_txn_params%0%%param_Fee_idx_0#0)
+        ((itxn_field TypeEnum) 1u)
+        ((itxn_field Fee) 0u)
         goto block@2
     block@2: // next_txn_L973
         itxn_submit

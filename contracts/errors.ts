@@ -26,3 +26,7 @@ export const ERR_MALFORMED_OFFSETS = 'malformed method offsets'
 export const ERR_INVALID_METHOD_SIGNATURE_LENGTH = 'invalid method signature length'
 export const ERR_SENDER_MUST_BE_ADMIN_PLUGIN = 'sender must be admin plugin'
 export const ERR_ZERO_ADDRESS_DELEGATION_TYPE = 'delegation type must not be self for global plugins'
+export const ERR_ALLOWANCE_ALREADY_EXISTS = 'allowance already exists'
+export const ERR_ALLOWANCE_DOES_NOT_EXIST = 'allowance does not exist'
+
+export const ERR_INVALID_PAYMENT = 'invalid payment'

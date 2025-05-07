@@ -1,0 +1,416 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1
+    bytecblock "wallet_id" "plugin_id"
+
+main_block@0:
+
+main_block@1:
+    // contracts/spending_account.algo.ts:9
+    // export class SpendingAccountContract extends Contract {
+    txn NumAppArgs
+    intc_0 // 0
+    !=
+    bz main_bare_routing@9
+
+main_abi_routing@2:
+    // contracts/spending_account.algo.ts:9
+    // export class SpendingAccountContract extends Contract {
+    txna ApplicationArgs 0
+    pushbytes 0x917c48b6 // method "createApplication(uint64,uint64)void"
+    pushbytes 0x65a97bcc // method "rekey(address)void"
+    pushbytes 0x3ea11832 // method "optin(pay,uint64)void"
+    pushbytes 0x2487c32c // method "deleteApplication()void"
+    uncover 4
+    match main_createApplication_route@3 main_rekey_route@4 main_optin_route@5 main_deleteApplication_route@6
+
+main_switch_case_default@7:
+
+main_switch_case_next@8:
+
+main_after_if_else@10:
+    // contracts/spending_account.algo.ts:9
+    // export class SpendingAccountContract extends Contract {
+    intc_0 // 0
+
+main_after_inlined_contracts/spending_account.algo.ts::SpendingAccountContract.__puya_arc4_router__@11:
+    return
+
+main_deleteApplication_route@6:
+    // contracts/spending_account.algo.ts:69
+    // @abimethod({ allowActions: ['DeleteApplication'] })
+    txn OnCompletion
+    pushint 5 // DeleteApplication
+    ==
+    assert // OnCompletion is not DeleteApplication
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    callsub deleteApplication
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account.algo.ts::SpendingAccountContract.__puya_arc4_router__@11
+
+main_optin_route@5:
+    // contracts/spending_account.algo.ts:46
+    // optin(payment: gtxn.PaymentTxn, asset: uint64): void {
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account.algo.ts:9
+    // export class SpendingAccountContract extends Contract {
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    // contracts/spending_account.algo.ts:46
+    // optin(payment: gtxn.PaymentTxn, asset: uint64): void {
+    callsub optin
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account.algo.ts::SpendingAccountContract.__puya_arc4_router__@11
+
+main_rekey_route@4:
+    // contracts/spending_account.algo.ts:29
+    // rekey(address: Address): void {
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    !=
+    assert // can only call when not creating
+    // contracts/spending_account.algo.ts:9
+    // export class SpendingAccountContract extends Contract {
+    txna ApplicationArgs 1
+    // contracts/spending_account.algo.ts:29
+    // rekey(address: Address): void {
+    callsub rekey
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account.algo.ts::SpendingAccountContract.__puya_arc4_router__@11
+
+main_createApplication_route@3:
+    // contracts/spending_account.algo.ts:23
+    // @abimethod({ onCreate: 'require' })
+    txn OnCompletion
+    intc_0 // NoOp
+    ==
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    intc_0 // 0
+    ==
+    assert // can only call when creating
+    // contracts/spending_account.algo.ts:9
+    // export class SpendingAccountContract extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    // contracts/spending_account.algo.ts:23
+    // @abimethod({ onCreate: 'require' })
+    callsub createApplication
+    intc_1 // 1
+    b main_after_inlined_contracts/spending_account.algo.ts::SpendingAccountContract.__puya_arc4_router__@11
+
+main_bare_routing@9:
+    b main_after_if_else@10
+
+
+// contracts/spending_account.algo.ts::SpendingAccountContract.isWallet() -> uint64:
+isWallet:
+
+isWallet_block@0:
+    // contracts/spending_account.algo.ts:15
+    // return Txn.sender === Application(this.walletID.value).address
+    txn Sender
+    // contracts/spending_account.algo.ts:11
+    // walletID = GlobalState<uint64>({ key: 'wallet_id' })
+    intc_0 // 0
+    bytec_0 // "wallet_id"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // contracts/spending_account.algo.ts:15
+    // return Txn.sender === Application(this.walletID.value).address
+    app_params_get AppAddress
+    assert // application exists
+    ==
+    retsub
+
+
+// contracts/spending_account.algo.ts::SpendingAccountContract.isPlugin() -> uint64:
+isPlugin:
+
+isPlugin_block@0:
+    // contracts/spending_account.algo.ts:19
+    // return Txn.sender === Application(this.pluginID.value).address
+    txn Sender
+    // contracts/spending_account.algo.ts:12
+    // pluginID = GlobalState<uint64>({ key: 'plugin_id' })
+    intc_0 // 0
+    bytec_1 // "plugin_id"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // contracts/spending_account.algo.ts:19
+    // return Txn.sender === Application(this.pluginID.value).address
+    app_params_get AppAddress
+    assert // application exists
+    ==
+    retsub
+
+
+// contracts/spending_account.algo.ts::SpendingAccountContract.createApplication(walletID: uint64, plugin: uint64) -> void:
+createApplication:
+    // contracts/spending_account.algo.ts:23-24
+    // @abimethod({ onCreate: 'require' })
+    // createApplication(walletID: uint64, plugin: uint64): void {
+    proto 2 0
+
+createApplication_block@0:
+    // contracts/spending_account.algo.ts:11
+    // walletID = GlobalState<uint64>({ key: 'wallet_id' })
+    bytec_0 // "wallet_id"
+    // contracts/spending_account.algo.ts:25
+    // this.walletID.value = walletID
+    frame_dig -2
+    app_global_put
+    // contracts/spending_account.algo.ts:12
+    // pluginID = GlobalState<uint64>({ key: 'plugin_id' })
+    bytec_1 // "plugin_id"
+    // contracts/spending_account.algo.ts:26
+    // this.pluginID.value = plugin
+    frame_dig -1
+    app_global_put
+    retsub
+
+
+// contracts/spending_account.algo.ts::SpendingAccountContract.rekey(address: bytes) -> void:
+rekey:
+    // contracts/spending_account.algo.ts:29
+    // rekey(address: Address): void {
+    proto 1 0
+
+rekey_block@0:
+    // contracts/spending_account.algo.ts:30
+    // assert(this.isWallet(), ERR_ONLY_CREATOR_CAN_REKEY)
+    callsub isWallet
+    assert // only the creator can rekey a spend contract
+    // contracts/spending_account.algo.ts:32-38
+    // itxn
+    //   .payment({
+    //     amount: 0,
+    //     rekeyTo: address.native,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // contracts/spending_account.algo.ts:35
+    // rekeyTo: address.native,
+    frame_dig -1
+    itxn_field RekeyTo
+    // contracts/spending_account.algo.ts:34
+    // amount: 0,
+    intc_0 // 0
+    itxn_field Amount
+    // contracts/spending_account.algo.ts:32-37
+    // itxn
+    //   .payment({
+    //     amount: 0,
+    //     rekeyTo: address.native,
+    //     fee: 0,
+    //   })
+    intc_1 // 1
+    itxn_field TypeEnum
+    // contracts/spending_account.algo.ts:36
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+
+rekey_next_txn@1:
+    // contracts/spending_account.algo.ts:32-38
+    // itxn
+    //   .payment({
+    //     amount: 0,
+    //     rekeyTo: address.native,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    retsub
+
+
+// contracts/spending_account.algo.ts::SpendingAccountContract.optin(payment: uint64, asset: uint64) -> void:
+optin:
+    // contracts/spending_account.algo.ts:46
+    // optin(payment: gtxn.PaymentTxn, asset: uint64): void {
+    proto 2 0
+
+optin_block@0:
+    // contracts/spending_account.algo.ts:47
+    // assert(this.isWallet() || this.isPlugin(), ERR_ONLY_WALLET_OR_PLUGIN)
+    callsub isWallet
+    bnz optin_bool_true@2
+
+optin_or_contd@1:
+    // contracts/spending_account.algo.ts:47
+    // assert(this.isWallet() || this.isPlugin(), ERR_ONLY_WALLET_OR_PLUGIN)
+    callsub isPlugin
+    bz optin_bool_false@3
+
+optin_bool_true@2:
+    intc_1 // 1
+
+optin_bool_merge@4:
+    // contracts/spending_account.algo.ts:47
+    // assert(this.isWallet() || this.isPlugin(), ERR_ONLY_WALLET_OR_PLUGIN)
+    assert // Only the wallet or plugin can opt in
+    // contracts/spending_account.algo.ts:49-56
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: Global.assetOptInMinBalance,
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    frame_dig -2
+    gtxns Receiver
+    // contracts/spending_account.algo.ts:52
+    // receiver: Global.currentApplicationAddress,
+    global CurrentApplicationAddress
+    // contracts/spending_account.algo.ts:49-56
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: Global.assetOptInMinBalance,
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    ==
+    bz optin_bool_false@7
+
+optin_and_contd@5:
+    // contracts/spending_account.algo.ts:49-56
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: Global.assetOptInMinBalance,
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    frame_dig -2
+    gtxns Amount
+    // contracts/spending_account.algo.ts:53
+    // amount: Global.assetOptInMinBalance,
+    global AssetOptInMinBalance
+    // contracts/spending_account.algo.ts:49-56
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: Global.assetOptInMinBalance,
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    ==
+    bz optin_bool_false@7
+
+optin_bool_true@6:
+    intc_1 // 1
+
+optin_bool_merge@8:
+    // contracts/spending_account.algo.ts:49-56
+    // assertMatch(
+    //   payment,
+    //   {
+    //     receiver: Global.currentApplicationAddress,
+    //     amount: Global.assetOptInMinBalance,
+    //   },
+    //   ERR_INVALID_PAYMENT
+    // )
+    assert // Invalid payment transaction
+    // contracts/spending_account.algo.ts:58-65
+    // itxn
+    //   .assetTransfer({
+    //     assetReceiver: Global.currentApplicationAddress,
+    //     assetAmount: 0,
+    //     xferAsset: asset,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // contracts/spending_account.algo.ts:60
+    // assetReceiver: Global.currentApplicationAddress,
+    global CurrentApplicationAddress
+    // contracts/spending_account.algo.ts:62
+    // xferAsset: asset,
+    frame_dig -1
+    itxn_field XferAsset
+    // contracts/spending_account.algo.ts:61
+    // assetAmount: 0,
+    intc_0 // 0
+    itxn_field AssetAmount
+    itxn_field AssetReceiver
+    // contracts/spending_account.algo.ts:58-64
+    // itxn
+    //   .assetTransfer({
+    //     assetReceiver: Global.currentApplicationAddress,
+    //     assetAmount: 0,
+    //     xferAsset: asset,
+    //     fee: 0,
+    //   })
+    pushint 4 // 4
+    itxn_field TypeEnum
+    // contracts/spending_account.algo.ts:63
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+
+optin_next_txn@9:
+    // contracts/spending_account.algo.ts:58-65
+    // itxn
+    //   .assetTransfer({
+    //     assetReceiver: Global.currentApplicationAddress,
+    //     assetAmount: 0,
+    //     xferAsset: asset,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    retsub
+
+optin_bool_false@7:
+    intc_0 // 0
+    b optin_bool_merge@8
+
+optin_bool_false@3:
+    intc_0 // 0
+    b optin_bool_merge@4
+
+
+// contracts/spending_account.algo.ts::SpendingAccountContract.deleteApplication() -> void:
+deleteApplication:
+
+deleteApplication_block@0:
+    // contracts/spending_account.algo.ts:71
+    // assert(Txn.sender === Global.creatorAddress, ERR_ONLY_FACTORY_CAN_DELETE)
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only the factory can delete the application
+    retsub
